@@ -1,0 +1,16 @@
+{
+  "name": "ome-electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "concurrently \"python backend/app.py\" \"npm run electron\"",
+    "electron": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^25.3.1"
+  }
+}
