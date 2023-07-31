@@ -4,18 +4,9 @@ function uploadFile() {
     const selectedFile = fileInput.files[0];
 
     if (selectedFile) {
-        const formData = new FormData();
-        formData.append("jsonFile", selectedFile);
-        console.log(selectedFile)
-
         fetch(selectedFile.path)
             .then(response => response.json())
             .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                } else {
-                    alert(data.error);
-                }
                 printSections(data)
             })
             .catch(error => {
@@ -29,6 +20,7 @@ function uploadFile() {
 function printSections(data) {
     const menuSections = data.MenuSections;
     const sections = document.getElementById('ulSecciones');
+    sections.innerHTML = ""
 
     menuSections.forEach(menuSection => {
         const name = menuSection.Name;
