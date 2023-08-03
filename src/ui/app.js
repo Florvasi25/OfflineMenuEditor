@@ -1,4 +1,4 @@
-// var jsonData = []
+var jsonData = []
 
 function uploadFile() {
     console.log("Hola")
@@ -6,22 +6,17 @@ function uploadFile() {
     const selectedFile = fileInput.files[0];
     
     if (selectedFile) {
-        // fetch(selectedFile.path).then(response => jsonData = response.json())
         fetch(selectedFile.path)
-            .then(response => response.json())
-            .then(data => {
-                createSections(data)
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
+        .then(response => response.json())
+        .then(data => jsonData = data)
+        .then(() => createSections())
     } else {
         alert("Please select a JSON file to upload.");
     }
 }
 
-function createSections(data) {
-    const menuSections = data.MenuSections;
+function createSections() {
+    const menuSections = jsonData.MenuSections;
     const sections = document.getElementById('ulSections');
     sections.innerHTML = ""
 
