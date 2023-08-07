@@ -1,6 +1,5 @@
 import { saveToFile } from './file.js';
 
-// let jsonData = {};
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? {};
 
 document.getElementById('jsonFileInput').addEventListener('change', function (event) {
@@ -9,6 +8,7 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 
     reader.onload = function (e) {
         jsonData = JSON.parse(e.target.result);
+        localStorage.setItem("jsonData", JSON.stringify(jsonData));
         generateHTML(jsonData);
     };
 
@@ -22,45 +22,40 @@ function generateHTML(data) {
 
     data.MenuSections.forEach(menuSection => {
         const sectionDiv = document.createElement('div');
-        sectionDiv.classList.add('menu');
+        sectionDiv.classList.add('mainSection');
         sectionDiv.id = menuSection.MenuSectionId;
-        
+
         if (!menuSection.IsAvailable) {
             sectionDiv.classList.add('unavailable');
         }
-        
-        sectionDiv.innerHTML = `
-            <p contenteditable="true" class="name">${menuSection.Name}</p>
-            <p contenteditable="true" class="IsAvailable">${menuSection.IsAvailable}</p>
-        `;
-        
-        sectionDiv.querySelectorAll('[contenteditable="true"]').forEach(editable => {
-            editable.addEventListener('input', function () {
-                updateDataFromUI();
-            });
+
+        const nameParagraph = document.createElement('p');
+        nameParagraph.contentEditable = true;
+        nameParagraph.classList.add('name');
+        nameParagraph.textContent = menuSection.Name;
+        sectionDiv.appendChild(nameParagraph);
+
+        nameParagraph.addEventListener('input', function () {
+            updateDataFromUI();
         });
 
         outputContainer.appendChild(sectionDiv);
     });
-
-    localStorage.setItem("jsonData", JSON.stringify(jsonData.MenuSections));
 }
 
 function updateDataFromUI() {
-    const menuSections = document.getElementsByClassName('menu');
+    const menuSections = document.getElementsByClassName('mainSection');
 
     Array.from(menuSections).forEach(section => {
         const sectionId = section.id;
         const sectionIndex = jsonData.MenuSections.findIndex(sectionIndex => sectionIndex.MenuSectionId == sectionId);
 
         const name = section.getElementsByClassName('name')[0].textContent;
-        const isAvailable = section.getElementsByClassName('IsAvailable')[0].textContent;
 
         jsonData.MenuSections[sectionIndex].Name = name;
-        jsonData.MenuSections[sectionIndex].IsAvailable = isAvailable;
     });
 
-    localStorage.setItem("jsonData", JSON.stringify(jsonData.MenuSections));
+    localStorage.setItem("jsonData", JSON.stringify(jsonData));
 }
 
 document.getElementById('saveButton').addEventListener('click', function () {
@@ -69,4 +64,7 @@ document.getElementById('saveButton').addEventListener('click', function () {
     console.log(jsonData);
     saveToFile(jsonData);
 });
+
+// Call generateHTML when the page loads
+generateHTML(jsonData);
 
