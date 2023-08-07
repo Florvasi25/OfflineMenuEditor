@@ -1,34 +1,51 @@
-var jsonData = []
+import { saveToFile } from './file.js';
 
-function uploadFile() {
-    console.log("Hola")
-    const fileInput = document.getElementById("jsonFile");
-    const selectedFile = fileInput.files[0];
-    
-    if (selectedFile) {
-        fetch(selectedFile.path)
-        .then(response => response.json())
-        .then(data => jsonData = data)
-        .then(() => createSections())
-    } else {
-        alert("Please select a JSON file to upload.");
-    }
+let jsonData = {}; // Global variable to store JSON data
+
+document.getElementById('jsonFileInput').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        jsonData = JSON.parse(e.target.result);
+        generateHTML(jsonData);
+    };
+
+    reader.readAsText(file);
+});
+
+function generateHTML(data) {
+    const outputContainer = document.getElementById('outputContainer');
+
+    // Clear existing content
+    outputContainer.innerHTML = '';
+
+    data.MenuSections.forEach(menuSection => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.classList.add('menu');
+        sectionDiv.id = menuSection.MenuSectionId;
+        sectionDiv.innerHTML = `
+            <p contenteditable="true" class="name">${menuSection.Name}</p>
+            <p contenteditable="true" class="IsAvailable">${menuSection.IsAvailable}</p>
+        `;
+        outputContainer.appendChild(sectionDiv);
+    });
 }
 
-function createSections() {
-    const menuSections = jsonData.MenuSections;
-    const sections = document.getElementById('ulSections');
-    sections.innerHTML = ""
+document.getElementById('saveButton').addEventListener('click', function () {
+    const menuSections = document.getElementsByClassName('menu');
 
-    menuSections.forEach(menuSection => {
-        const sectionName = menuSection.Name;
-        const sectionId = menuSection.MenuSectionId;
-        sections.insertAdjacentHTML('beforeend', 
-            `<li class="liSections" id=${sectionId}>
-                <p contenteditable="true">${sectionName}</p>
-                <button id=${sectionId}>Delete</button>
-            </li>`);
-        
-        });
-    console.log(sections)
-}
+    Array.from(menuSections).forEach(section => {
+        const sectionId = section.id;
+        const sectionIndex = jsonData.MenuSections.findIndex(sectionIndex => sectionIndex.MenuSectionId == sectionId);
+
+        const name = section.getElementsByClassName('name')[0].textContent;
+        const isAvailable = section.getElementsByClassName('IsAvailable')[0].textContent;
+
+        jsonData.MenuSections[sectionIndex].Name = name
+        jsonData.MenuSections[sectionIndex].IsAvailable = isAvailable
+    });
+
+    console.log(jsonData); // Check the console to see updated jsonData
+    saveToFile(jsonData)
+});
