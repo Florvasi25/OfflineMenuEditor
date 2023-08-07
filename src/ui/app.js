@@ -1,6 +1,6 @@
 import { saveToFile } from './file.js';
 
-let jsonData = {}; // Global variable to store JSON data
+let jsonData = {};
 
 document.getElementById('jsonFileInput').addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -17,7 +17,6 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 function generateHTML(data) {
     const outputContainer = document.getElementById('outputContainer');
 
-    // Clear existing content
     outputContainer.innerHTML = '';
 
     data.MenuSections.forEach(menuSection => {
@@ -30,6 +29,7 @@ function generateHTML(data) {
         `;
         outputContainer.appendChild(sectionDiv);
     });
+    localStorage.setItem("jsonData", JSON.stringify(jsonData.MenuSections));
 }
 
 document.getElementById('saveButton').addEventListener('click', function () {
@@ -46,6 +46,6 @@ document.getElementById('saveButton').addEventListener('click', function () {
         jsonData.MenuSections[sectionIndex].IsAvailable = isAvailable
     });
 
-    console.log(jsonData); // Check the console to see updated jsonData
+    console.log(jsonData);
     saveToFile(jsonData)
 });
