@@ -1,6 +1,10 @@
-.liSections {
-    height: 55px;
+.menu {
+    height: auto;
     background-color: lightblue;
     list-style: none;
     margin: 15px 0;
+}
+
+.unavailable {
+    background-color: #bbbbbb;
 }
