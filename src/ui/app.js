@@ -1,6 +1,7 @@
 import { saveToFile } from './file.js';
+import { emptyMenu } from './emptyMenu.js'
 
-let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? {};
+let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
 document.getElementById('jsonFileInput').addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -45,7 +46,6 @@ function createSection(menuSection){
     sectionName.addEventListener('input', updateDataFromUI);
 
     return sectionDiv
-    // outputContainer.appendChild(sectionDiv);
 }
 
 function updateDataFromUI() {
@@ -70,37 +70,46 @@ document.getElementById('saveButton').addEventListener('click', function () {
     saveToFile(jsonData);
 });
 
+
+let idCounter = 0;
 document.getElementById('addSectionButton').addEventListener('click', () => {
+    idCounter++;
 
     const emptySectionJson = {
-            MenuSectionId: 1,
-            Name: "EMPTY",
+            MenuSectionId: `${idCounter}`,
+            Name: "Empty",
             Description: null,
             DisplayOrder: 0,
             MenuItems: [],
             PublicId: "167876d3-b8ae-467e-ab8e-8a0dfda2b08e",
             IsDeleted: false,
-            IsAvailable: false,
-            IsHiddenFromUsers: true,
+            IsAvailable: true,
+            IsHiddenFromUsers: false,
             ImageName: null,
             ImageUrl: null,
             CellAspectRatio: 0,
             CellLayoutType: 0,
             MenuSectionAvailability: {
-                MenuSectionId: 129293,
+                MenuSectionId: `${idCounter}`,
                 AvailableTimes: null,
                 AvailabilityMode: 0
             },
             ConcessionStoreId: null,
             MenuSectionMetadata: []
         };
-
+    
     let sectionDiv = createSection(emptySectionJson)
+    
+    sectionDiv.addEventListener('input', updateDataFromUI);
+
     document.getElementById('outputContainer').appendChild(sectionDiv);
+    
+
     jsonData.MenuSections.push(emptySectionJson)
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
 
 });
 
 generateHTML(jsonData);
+
 

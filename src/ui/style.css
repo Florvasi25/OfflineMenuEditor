@@ -8,3 +8,7 @@
 .unavailable {
     background-color: #bbbbbb;
 }
+
+.emptyName {
+    color: rgb(203, 50, 76);
+}
