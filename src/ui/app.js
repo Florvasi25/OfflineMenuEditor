@@ -2,6 +2,7 @@ import { saveToFile } from './file.js';
 import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
+let idCounter = JSON.parse(localStorage.getItem("idCounter")) ?? 0;
 
 //Loading the File
 document.getElementById('jsonFileInput').addEventListener('change', function (event) {
@@ -85,7 +86,6 @@ document.getElementById('saveButton').addEventListener('click', function () {
 });
 
 //Add Section
-let idCounter = 0;
 document.getElementById('addSectionButton').addEventListener('click', () => {
     idCounter++;
 
@@ -119,6 +119,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
     
     jsonData.MenuSections.push(emptySectionJson)
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
+    localStorage.setItem("idCounter", JSON.stringify(idCounter));
 
 });
 
