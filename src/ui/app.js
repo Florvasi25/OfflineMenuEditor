@@ -11,7 +11,7 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 
     reader.onload = function (e) {
         jsonData = JSON.parse(e.target.result);
-        localStorage.setItem("jsonData", JSON.stringify(jsonData));
+        updateLocalStorage()
         generateHTML(jsonData);
     };
 
@@ -24,22 +24,17 @@ function generateHTML(data) {
     outputContainer.innerHTML = '';
 
     data.MenuSections.forEach(menuSection => {
-        let sectionDiv = createSection(menuSection)
+        let sectionDiv = createSection(menuSection);
         outputContainer.appendChild(sectionDiv);
     });
 }
 
 //Section components
-function createSection(menuSection){
+function createSection(menuSection) {
     //Section Container
     const sectionDiv = document.createElement('div');
     sectionDiv.classList.add('sectionContainer');
     sectionDiv.id = menuSection.MenuSectionId;
-
-    //Unavailable Sections -- Gray
-    if (!menuSection.IsAvailable) {
-        sectionDiv.classList.add('unavailable');
-    }
 
     //Name Component
     const sectionName = document.createElement('p');
@@ -58,6 +53,19 @@ function createSection(menuSection){
     });
     sectionDiv.appendChild(deleteButton);
 
+    //Unavailable Sections - Gray
+    if (!menuSection.IsAvailable) {
+        sectionDiv.classList.add('unavailable');
+    }
+
+    //Availability Button
+    const toggleButton = document.createElement('button');
+    toggleButton.textContent = 'Availability';
+    toggleButton.addEventListener('click', () => {
+        toggleSectionAvailability(sectionDiv.id);
+    });
+    sectionDiv.appendChild(toggleButton);
+
     return sectionDiv
 }
 
@@ -67,20 +75,27 @@ function updateDataFromUI() {
 
     Array.from(menuSections).forEach(section => {
         const sectionId = section.id;
-        const sectionIndex = jsonData.MenuSections.findIndex(sectionIndex => sectionIndex.MenuSectionId == sectionId);
+        const sectionIndex = getSectionIndex(sectionId);
 
         const name = section.getElementsByClassName('sectionName')[0].textContent;
 
         jsonData.MenuSections[sectionIndex].Name = name;
     });
 
-    localStorage.setItem("jsonData", JSON.stringify(jsonData));
+    updateLocalStorage()
+}
+
+//Gets Section Index
+function getSectionIndex(sectionId) {
+    const sectionIndex = jsonData.MenuSections.findIndex(sectionElement => sectionElement.MenuSectionId == sectionId)
+
+    return sectionIndex
 }
 
 //Saves JSON
 document.getElementById('saveButton').addEventListener('click', function () {
     updateDataFromUI();
-    
+
     console.log(jsonData);
     saveToFile(jsonData);
 });
@@ -90,35 +105,34 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
     idCounter++;
 
     const emptySectionJson = {
+        MenuSectionId: `${idCounter}`,
+        Name: "Empty",
+        Description: null,
+        DisplayOrder: 0,
+        MenuItems: [],
+        PublicId: crypto.randomUUID(),
+        IsDeleted: false,
+        IsAvailable: true,
+        IsHiddenFromUsers: false,
+        ImageName: null,
+        ImageUrl: null,
+        CellAspectRatio: 0,
+        CellLayoutType: 0,
+        MenuSectionAvailability: {
             MenuSectionId: `${idCounter}`,
-            Name: "Empty",
-            Description: null,
-            DisplayOrder: 0,
-            MenuItems: [],
-            PublicId: crypto.randomUUID(),
-            IsDeleted: false,
-            IsAvailable: true,
-            IsHiddenFromUsers: false,
-            ImageName: null,
-            ImageUrl: null,
-            CellAspectRatio: 0,
-            CellLayoutType: 0,
-            MenuSectionAvailability: {
-                MenuSectionId: `${idCounter}`,
-                AvailableTimes: null,
-                AvailabilityMode: 0
-            },
-            ConcessionStoreId: null,
-            MenuSectionMetadata: []
-        };
-    
+            AvailableTimes: null,
+            AvailabilityMode: 0
+        },
+        ConcessionStoreId: null,
+        MenuSectionMetadata: []
+    };
+
     let sectionDiv = createSection(emptySectionJson)
-    
-    sectionDiv.addEventListener('input', updateDataFromUI);
+
     document.getElementById('outputContainer').appendChild(sectionDiv);
-    
+
     jsonData.MenuSections.push(emptySectionJson)
-    localStorage.setItem("jsonData", JSON.stringify(jsonData));
+    updateLocalStorage()
     localStorage.setItem("idCounter", JSON.stringify(idCounter));
 
 });
@@ -128,17 +142,33 @@ function deleteSection(sectionId) {
     const sectionToRemove = document.getElementById(sectionId);
     if (sectionToRemove) {
         sectionToRemove.remove();
-        
-        const sectionIndex = jsonData.MenuSections.findIndex(sectionIndex => sectionIndex.MenuSectionId == sectionId)
-        
+
+        const sectionIndex = getSectionIndex(sectionId);
+
         if (sectionIndex !== -1) {
             jsonData.MenuSections.splice(sectionIndex, 1);
-            localStorage.setItem("jsonData", JSON.stringify(jsonData));
+            updateLocalStorage();
         }
+    }
+}
+
+//Updates LocalStorage
+function updateLocalStorage() {
+    localStorage.setItem("jsonData", JSON.stringify(jsonData));
+}
+
+function toggleSectionAvailability(sectionId) {
+    const sectionIndex = getSectionIndex(sectionId);
+    if (sectionIndex !== -1) {
+        const isAvailableNew = !jsonData.MenuSections[sectionIndex].IsAvailable
+        jsonData.MenuSections[sectionIndex].IsAvailable = isAvailableNew
+        const sectionDiv = document.getElementById(sectionId);
+        if (sectionDiv) {
+            sectionDiv.classList.toggle('unavailable', !isAvailableNew);
+        }
+        updateLocalStorage()
     }
 }
 
 //After loading the Data it generates the HTML
 generateHTML(jsonData);
-
-
