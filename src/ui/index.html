@@ -8,10 +8,17 @@
     <title>JSON Editor</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <input type="file" id="jsonFileInput" accept=".json">
-    <button id="saveButton">Save Changes</button>
-    <div id="outputContainer"></div>
+<body class="body">
+    <div>
+        <input type="file" id="jsonFileInput" accept=".json">
+        <button id="saveButton">Save Changes</button>
+    </div>
+    <table class="tablebody">
+        <tbody id="outputContainer">
+            <td id="sectionNameCell"></td>
+            <td id="sectionDescCell"></td>
+        </tbody>
+    </table>
     <button id="addSectionButton">Add New Section</button>
     <script type="module" src="app.js"></script>
 </body>

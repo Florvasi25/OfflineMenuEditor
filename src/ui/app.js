@@ -24,57 +24,75 @@ function generateHTML(data) {
     outputContainer.innerHTML = '';
 
     data.MenuSections.forEach(menuSection => {
-        let sectionDiv = createSection(menuSection);
-        outputContainer.appendChild(sectionDiv);
+        let sectionRow = createSection(menuSection);
+        outputContainer.appendChild(sectionRow);
     });
 }
 
 //Section components
 function createSection(menuSection) {
     //Section Container
-    const sectionDiv = document.createElement('div');
-    sectionDiv.classList.add('sectionContainer');
-    sectionDiv.id = menuSection.MenuSectionId;
+    const sectionRow = document.createElement('tr');
+    sectionRow.classList.add('sectionContainer');
+    sectionRow.id = menuSection.MenuSectionId;
+
+    const sectionNameCell = document.createElement('td');
+    sectionNameCell.classList.add('sectionNameCell');
+    sectionRow.append(sectionNameCell)
+    
+    const sectionDescCell = document.createElement('td');
+    sectionDescCell.classList.add('sectionDescCell');
+    sectionRow.append(sectionDescCell)
 
     //Name Component
     const sectionName = document.createElement('p');
     sectionName.contentEditable = true;
     sectionName.classList.add('sectionName');
     sectionName.textContent = menuSection.Name;
-    sectionDiv.appendChild(sectionName);
+    sectionNameCell.appendChild(sectionName);
 
     sectionName.addEventListener('input', updateDataFromUI);
+
+    //Section Description
+    const sectionDesc = document.createElement('p');
+    sectionDesc.contentEditable = true;
+    sectionDesc.classList.add('sectionDesc');
+    sectionDesc.textContent = menuSection.Description;
+    sectionDescCell.appendChild(sectionDesc);
+
+    sectionDesc.addEventListener('input', updateDataFromUI);
+
 
     //Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', () => {
-        deleteSection(sectionDiv.id);
+        deleteSection(sectionRow.id);
     });
-    sectionDiv.appendChild(deleteButton);
+    sectionNameCell.appendChild(deleteButton);
 
     //Unavailable Sections - Gray
     if (!menuSection.IsAvailable) {
-        sectionDiv.classList.add('unavailable');
+        sectionRow.classList.add('unavailable');
     }
 
     //Availability Button
     const toggleButton = document.createElement('button');
     toggleButton.textContent = 'Availability';
     toggleButton.addEventListener('click', () => {
-        toggleSectionAvailability(sectionDiv.id);
+        SectionAvailability(sectionRow.id);
     });
-    sectionDiv.appendChild(toggleButton);
+    sectionNameCell.appendChild(toggleButton);
 
     //Duplicate Button
     const duplicateButton = document.createElement('button');
     duplicateButton.textContent = 'Duplicate';
     duplicateButton.addEventListener('click', () => {
-        duplicateSection(sectionDiv.id);
+        duplicateSection(sectionRow.id);
     });
-    sectionDiv.appendChild(duplicateButton);
+    sectionNameCell.appendChild(duplicateButton);
 
-    return sectionDiv
+    return sectionRow
 }
 
 //Updates UI after changes
@@ -85,9 +103,11 @@ function updateDataFromUI() {
         const sectionId = section.id;
         const sectionIndex = getSectionIndex(sectionId);
 
-        const name = section.getElementsByClassName('sectionName')[0].textContent;
+        const sectionName = section.getElementsByClassName('sectionName')[0].textContent;
+        const sectionDesc = section.getElementsByClassName('sectionDesc')[0].textContent;
 
-        jsonData.MenuSections[sectionIndex].Name = name;
+        jsonData.MenuSections[sectionIndex].Name = sectionName;
+        jsonData.MenuSections[sectionIndex].Description = sectionDesc;
     });
 
     updateSectionLocalStorage()
@@ -135,9 +155,9 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
         MenuSectionMetadata: []
     };
 
-    let sectionDiv = createSection(emptySectionJson)
+    let sectionRow = createSection(emptySectionJson)
 
-    document.getElementById('outputContainer').appendChild(sectionDiv);
+    document.getElementById('outputContainer').appendChild(sectionRow);
 
     jsonData.MenuSections.push(emptySectionJson)
     updateSectionLocalStorage()
@@ -170,14 +190,15 @@ function updateCounterLocalStorage() {
     localStorage.setItem("idCounter", JSON.stringify(idCounter));
 }
 
-function toggleSectionAvailability(sectionId) {
+//Section Availability
+function SectionAvailability(sectionId) {
     const sectionIndex = getSectionIndex(sectionId);
     if (sectionIndex !== -1) {
         const isAvailableNew = !jsonData.MenuSections[sectionIndex].IsAvailable
         jsonData.MenuSections[sectionIndex].IsAvailable = isAvailableNew
-        const sectionDiv = document.getElementById(sectionId);
-        if (sectionDiv) {
-            sectionDiv.classList.toggle('unavailable', !isAvailableNew);
+        const sectionRow = document.getElementById(sectionId);
+        if (sectionRow) {
+            sectionRow.classList.toggle('unavailable', !isAvailableNew);
         }
         updateSectionLocalStorage()
     }
@@ -197,8 +218,8 @@ function duplicateSection(sectionId) {
         newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
         newSection.PublicId = crypto.randomUUID();
         
-        const newSectionDiv = createSection(newSection);
-        document.getElementById('outputContainer').appendChild(newSectionDiv);
+        const newSectionRow = createSection(newSection);
+        document.getElementById('outputContainer').appendChild(newSectionRow);
         
         jsonData.MenuSections.push(newSection);
         updateSectionLocalStorage();
