@@ -11,7 +11,7 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 
     reader.onload = function (e) {
         jsonData = JSON.parse(e.target.result);
-        updateLocalStorage()
+        updateSectionLocalStorage()
         generateHTML(jsonData);
     };
 
@@ -66,6 +66,14 @@ function createSection(menuSection) {
     });
     sectionDiv.appendChild(toggleButton);
 
+    //Duplicate Button
+    const duplicateButton = document.createElement('button');
+    duplicateButton.textContent = 'Duplicate';
+    duplicateButton.addEventListener('click', () => {
+        duplicateSection(sectionDiv.id);
+    });
+    sectionDiv.appendChild(duplicateButton);
+
     return sectionDiv
 }
 
@@ -82,7 +90,7 @@ function updateDataFromUI() {
         jsonData.MenuSections[sectionIndex].Name = name;
     });
 
-    updateLocalStorage()
+    updateSectionLocalStorage()
 }
 
 //Gets Section Index
@@ -132,8 +140,8 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
     document.getElementById('outputContainer').appendChild(sectionDiv);
 
     jsonData.MenuSections.push(emptySectionJson)
-    updateLocalStorage()
-    localStorage.setItem("idCounter", JSON.stringify(idCounter));
+    updateSectionLocalStorage()
+    updateCounterLocalStorage();
 
 });
 
@@ -147,14 +155,19 @@ function deleteSection(sectionId) {
 
         if (sectionIndex !== -1) {
             jsonData.MenuSections.splice(sectionIndex, 1);
-            updateLocalStorage();
+            updateSectionLocalStorage();
         }
     }
 }
 
-//Updates LocalStorage
-function updateLocalStorage() {
+//Updates JSON LocalStorage
+function updateSectionLocalStorage() {
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
+}
+
+//Updates Counter LocalStorage
+function updateCounterLocalStorage() {
+    localStorage.setItem("idCounter", JSON.stringify(idCounter));
 }
 
 function toggleSectionAvailability(sectionId) {
@@ -166,7 +179,30 @@ function toggleSectionAvailability(sectionId) {
         if (sectionDiv) {
             sectionDiv.classList.toggle('unavailable', !isAvailableNew);
         }
-        updateLocalStorage()
+        updateSectionLocalStorage()
+    }
+}
+
+//Duplicates Section
+function duplicateSection(sectionId) {
+    const sectionIndex = getSectionIndex(sectionId);
+    
+    if (sectionIndex !== -1) {
+        const originalSection = jsonData.MenuSections[sectionIndex];
+        const newSection = JSON.parse(JSON.stringify(originalSection));
+
+        const newSectionId = `${++idCounter}`
+                
+        newSection.MenuSectionId = newSectionId;
+        newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
+        newSection.PublicId = crypto.randomUUID();
+        
+        const newSectionDiv = createSection(newSection);
+        document.getElementById('outputContainer').appendChild(newSectionDiv);
+        
+        jsonData.MenuSections.push(newSection);
+        updateSectionLocalStorage();
+        updateCounterLocalStorage();
     }
 }
 
