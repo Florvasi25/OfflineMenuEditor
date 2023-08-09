@@ -95,7 +95,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
             Description: null,
             DisplayOrder: 0,
             MenuItems: [],
-            PublicId: "167876d3-b8ae-467e-ab8e-8a0dfda2b08e",
+            PublicId: crypto.randomUUID(),
             IsDeleted: false,
             IsAvailable: true,
             IsHiddenFromUsers: false,
@@ -123,11 +123,12 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
 
 });
 
-//Delete Section
+//Deletes Section from UI and LS
 function deleteSection(sectionId) {
     const sectionToRemove = document.getElementById(sectionId);
     if (sectionToRemove) {
         sectionToRemove.remove();
+        
         const sectionIndex = jsonData.MenuSections.findIndex(sectionIndex => sectionIndex.MenuSectionId == sectionId)
         
         if (sectionIndex !== -1) {
