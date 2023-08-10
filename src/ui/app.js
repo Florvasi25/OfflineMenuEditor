@@ -36,33 +36,20 @@ function createSection(menuSection) {
     sectionRow.classList.add('sectionContainer');
     sectionRow.id = menuSection.MenuSectionId;
 
+    //Name Cell
     const sectionNameCell = document.createElement('td');
     sectionNameCell.classList.add('sectionNameCell');
     sectionRow.append(sectionNameCell)
     
-    const sectionDescCell = document.createElement('td');
-    sectionDescCell.classList.add('sectionDescCell');
-    sectionRow.append(sectionDescCell)
-
     //Name Component
     const sectionName = document.createElement('p');
     sectionName.contentEditable = true;
     sectionName.classList.add('sectionName');
     sectionName.textContent = menuSection.Name;
     sectionNameCell.appendChild(sectionName);
-
+    
     sectionName.addEventListener('input', updateDataFromUI);
-
-    //Section Description
-    const sectionDesc = document.createElement('p');
-    sectionDesc.contentEditable = true;
-    sectionDesc.classList.add('sectionDesc');
-    sectionDesc.textContent = menuSection.Description;
-    sectionDescCell.appendChild(sectionDesc);
-
-    sectionDesc.addEventListener('input', updateDataFromUI);
-
-
+    
     //Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -91,6 +78,36 @@ function createSection(menuSection) {
         duplicateSection(sectionRow.id);
     });
     sectionNameCell.appendChild(duplicateButton);
+
+    //Section Cell
+    const sectionDescCell = document.createElement('td');
+    sectionDescCell.classList.add('sectionDescCell');
+    sectionRow.append(sectionDescCell)
+
+    //Section Description
+    const sectionDesc = document.createElement('p');
+    sectionDesc.contentEditable = true;
+    sectionDesc.classList.add('sectionDesc');
+    sectionDesc.textContent = menuSection.Description;
+    sectionDescCell.appendChild(sectionDesc);
+
+    sectionDesc.addEventListener('input', updateDataFromUI);
+
+    //OS Cell
+    const sectionOsCell = document.createElement('td');
+    sectionOsCell.classList.add('sectionOsCell');
+    sectionRow.append(sectionOsCell)
+    
+    //Price Cell
+    const sectionPriceCell = document.createElement('td');
+    sectionPriceCell.classList.add('sectionPriceCell');
+    sectionRow.append(sectionPriceCell)
+
+    //Tax Cell
+    const sectionTaxCell = document.createElement('td');
+    sectionTaxCell.classList.add('sectionTaxCell');
+    sectionRow.append(sectionTaxCell)
+
 
     return sectionRow
 }

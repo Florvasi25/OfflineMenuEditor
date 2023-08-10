@@ -1,8 +1,13 @@
-* 
+* {
+    /* font-family: 'Commissioner', sans-serif;
+    font-family: 'Fraunces', serif; */
+    font-family: 'Roboto', sans-serif;
+}
 
 .tablebody {
     width: 100vw;
     max-width: 100%;
+    table-layout: fixed;
 }
 
 .sectionContainer {
@@ -12,8 +17,43 @@
     margin: 15px 0;
 }
 
+.sectionNameCell {
+    padding: 5px;
+    width: 205px;
+}
+
+.sectionDescCell {
+    padding: 5px;
+    width: auto;
+}
+
+.sectionOsCell {
+    padding: 5px;
+    width: auto;
+}
+
+.sectionPriceCell {
+    padding: 5px;
+    width: 50px;
+}
+
+.sectionTaxCell {
+    padding: 5px;
+    width: 35px;
+}
+
+
 .unavailable {
     background-color: #bbbbbb;
+}
+
+.sectionName {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sectionDesc {
+    font-size: 12px;
 }
 
 .emptyName {
