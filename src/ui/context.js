@@ -1,11 +1,9 @@
 import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
-let idCounter = JSON.parse(localStorage.getItem("idCounter")) ?? 0;
+//let idCounter = 0;
 
-function nextId () {
-    return ++idCounter
-}
+
 
 function setJsonData(data) {
     jsonData = data
@@ -23,9 +21,11 @@ function updateSectionLocalStorage() {
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
 }
 
-//Updates Counter LocalStorage
-function updateCounterLocalStorage() {
-    localStorage.setItem("idCounter", JSON.stringify(idCounter));
+//Updates id LocalStorage
+function updateCounterLocalStorage(id) {
+    let existingIDs = JSON.parse(localStorage.getItem("sectionIDs"));
+    existingIDs.push(id);
+    localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
 }
 
 export {
@@ -33,6 +33,5 @@ export {
     getSectionIndex,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
-    nextId,
     setJsonData,
 }

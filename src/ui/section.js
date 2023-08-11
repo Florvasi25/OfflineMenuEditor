@@ -1,5 +1,5 @@
 import {
-    jsonData, nextId, getSectionIndex,
+    jsonData, /*nextId,*/ getSectionIndex,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
 } from './context.js';
@@ -35,16 +35,45 @@ function SectionAvailability(sectionRow) {
     }
 }
 
+function getRandomInt() {
+    return Math.floor(Math.random() * 9999999) + 1;
+  }
+  
+function getUniqueRandomInt() {
+  
+  const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
+  let randomNum = getRandomInt();
+  
+  while (storedNumbers.includes(randomNum)) {
+    randomNum = getRandomInt();
+  }
+
+  return randomNum;
+}
+
+//set sectionID for entire json file
+function setSectionId(jsonData)
+{
+    localStorage.setItem("sectionIDs", "[]");
+    for (const section of jsonData.MenuSections) {
+        let id = getRandomInt()
+        section.MenuSectionId = id;
+        section.MenuSectionAvailability.MenuSectionId = id;
+        updateCounterLocalStorage(id)
+    }
+    updateSectionLocalStorage()
+    
+}
 //Duplicates Section
 function duplicateSection(sectionId) {
     const sectionIndex = getSectionIndex(sectionId);
-    
+
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));
 
-        const newSectionId = nextId()
-                
+        const newSectionId = getUniqueRandomInt();
+        
         newSection.MenuSectionId = newSectionId;
         newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
         newSection.PublicId = crypto.randomUUID();
@@ -54,7 +83,7 @@ function duplicateSection(sectionId) {
         
         jsonData.MenuSections.push(newSection);
         updateSectionLocalStorage();
-        updateCounterLocalStorage();
+        updateCounterLocalStorage(newSectionId);
     }
 }
 
@@ -160,4 +189,4 @@ function createSection(menuSection) {
     return sectionRow
 }
 
-export { createSection }
+export { createSection, setSectionId, getUniqueRandomInt}

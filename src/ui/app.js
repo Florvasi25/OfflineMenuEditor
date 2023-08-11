@@ -1,10 +1,16 @@
 import { saveToFile } from './file.js';
-import { createSection } from "./section.js";
+
+import { 
+    createSection,
+    setSectionId,
+    getUniqueRandomInt
+} from "./section.js";
+
 import {
     jsonData, setJsonData,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
-    nextId,
+    //nextId,
 } from './context.js';
 
 //Loading the File
@@ -15,8 +21,11 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
     reader.onload = function (e) {
         setJsonData(JSON.parse(e.target.result));
         updateSectionLocalStorage()
+        setSectionId(jsonData);
         generateHTML(jsonData);
     };
+
+    if (!file) return
 
     reader.readAsText(file);
 });
@@ -40,7 +49,7 @@ document.getElementById('saveButton').addEventListener('click', function () {
 
 //Add Section
 document.getElementById('addSectionButton').addEventListener('click', () => {
-    const newId = nextId()
+    const newId = getUniqueRandomInt()
 
     const emptySectionJson = {
         MenuSectionId: newId,
@@ -71,7 +80,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
 
     jsonData.MenuSections.push(emptySectionJson)
     updateSectionLocalStorage()
-    updateCounterLocalStorage();
+    updateCounterLocalStorage(newId);
 
 });
 
