@@ -18,7 +18,7 @@
 - npm install --save-dev cross-env
 
 ## Packaging
-Install Electron Forge's CLI in the project's devDependencies and import the existing project with a handy conversion script.
+Install Electron Forge's CLI in the project's devDependencies and import the existing project with the following scripts:
 
 - npm install --save-dev @electron-forge/cli
 - npx electron-forge import
