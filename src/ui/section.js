@@ -59,7 +59,7 @@ function setSectionId(jsonData)
         let id = getRandomInt()
         section.MenuSectionId = id;
         section.MenuSectionAvailability.MenuSectionId = id;
-        updateCounterLocalStorage(id)
+        updateCounterLocalStorage(id, true)
     }
     updateSectionLocalStorage()
     
@@ -83,7 +83,7 @@ function duplicateSection(sectionId) {
         
         jsonData.MenuSections.push(newSection);
         updateSectionLocalStorage();
-        updateCounterLocalStorage(newSectionId);
+        updateCounterLocalStorage(newSectionId, true);
     }
 }
 
@@ -92,12 +92,12 @@ function deleteSection(sectionToRemove) {
     const sectionId = sectionToRemove.id;
     if (sectionToRemove) {
         sectionToRemove.remove();
-
         const sectionIndex = getSectionIndex(sectionId);
-
         if (sectionIndex !== -1) {
             jsonData.MenuSections.splice(sectionIndex, 1);
             updateSectionLocalStorage();
+            console.log("Section to remove " + sectionToRemove.Name);
+            updateCounterLocalStorage(sectionId, false);
         }
     }
 }
@@ -108,7 +108,7 @@ function createSection(menuSection) {
     const sectionRow = document.createElement('tr');
     sectionRow.classList.add('sectionContainer');
     sectionRow.id = menuSection.MenuSectionId;
-
+    
     //Name Cell
     const sectionNameCell = document.createElement('td');
     sectionNameCell.classList.add('sectionNameCell');

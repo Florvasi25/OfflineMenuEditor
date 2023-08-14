@@ -80,7 +80,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
 
     jsonData.MenuSections.push(emptySectionJson)
     updateSectionLocalStorage()
-    updateCounterLocalStorage(newId);
+    updateCounterLocalStorage(newId, true);
 
 });
 
