@@ -1,6 +1,6 @@
 import { saveToFile } from './file.js';
 
-import { 
+import {
     createSection,
     setSectionId,
     getUniqueRandomInt
@@ -26,7 +26,6 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
     };
 
     if (!file) return
-
     reader.readAsText(file);
 });
 
@@ -39,6 +38,32 @@ function generateHTML(data) {
         let sectionRow = createSection(menuSection);
         outputContainer.appendChild(sectionRow);
     });
+}
+
+outputContainer.addEventListener('dragenter', e => {
+    e.preventDefault()
+    const afterElement = getDragAfterElement(outputContainer, e.clientY)
+    const draggable = document.querySelector('.dragging')
+    console.log("hola");
+    if (afterElement == null) {
+        outputContainer.appendChild(draggable)
+    } else {
+        outputContainer.insertBefore(draggable, afterElement)
+    }
+})
+
+function getDragAfterElement(outputContainer, y) {
+    const draggableElements = [...outputContainer.querySelectorAll('.draggable:not(.dragging)')]
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+        } else {
+            return closest
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
 //Saves JSON
@@ -83,7 +108,6 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
     updateCounterLocalStorage(newId, true);
 
 });
-
 
 //After loading the Data it generates the HTML
 generateHTML(jsonData);

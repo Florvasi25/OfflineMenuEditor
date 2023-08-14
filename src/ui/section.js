@@ -37,23 +37,20 @@ function SectionAvailability(sectionRow) {
 
 function getRandomInt() {
     return Math.floor(Math.random() * 9999999) + 1;
-  }
-  
-function getUniqueRandomInt() {
-  
-  const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
-  let randomNum = getRandomInt();
-  
-  while (storedNumbers.includes(randomNum)) {
-    randomNum = getRandomInt();
-  }
+}
 
-  return randomNum;
+function getUniqueRandomInt() {
+    const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
+    let randomNum = getRandomInt();
+
+    while (storedNumbers.includes(randomNum)) {
+        randomNum = getRandomInt();
+    }
+    return randomNum;
 }
 
 //set sectionID for entire json file
-function setSectionId(jsonData)
-{
+function setSectionId(jsonData) {
     localStorage.setItem("sectionIDs", "[]");
     for (const section of jsonData.MenuSections) {
         let id = getRandomInt()
@@ -62,7 +59,6 @@ function setSectionId(jsonData)
         updateCounterLocalStorage(id, true)
     }
     updateSectionLocalStorage()
-    
 }
 //Duplicates Section
 function duplicateSection(sectionId) {
@@ -73,14 +69,14 @@ function duplicateSection(sectionId) {
         const newSection = JSON.parse(JSON.stringify(originalSection));
 
         const newSectionId = getUniqueRandomInt();
-        
+
         newSection.MenuSectionId = newSectionId;
         newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
         newSection.PublicId = crypto.randomUUID();
-        
+
         const newSectionRow = createSection(newSection);
         document.getElementById('outputContainer').appendChild(newSectionRow);
-        
+
         jsonData.MenuSections.push(newSection);
         updateSectionLocalStorage();
         updateCounterLocalStorage(newSectionId, true);
@@ -107,20 +103,30 @@ function createSection(menuSection) {
     //Section Container
     const sectionRow = document.createElement('tr');
     sectionRow.classList.add('sectionContainer');
+    sectionRow.classList.add('draggable');
+    sectionRow.setAttribute('draggable', true)
     sectionRow.id = menuSection.MenuSectionId;
-    
+
+    sectionRow.addEventListener('dragstart', () => {
+        sectionRow.classList.add('dragging')
+    })
+
+    sectionRow.addEventListener('dragend', () => {
+        sectionRow.classList.remove('dragging')
+    })
+
     //Name Cell
     const sectionNameCell = document.createElement('td');
     sectionNameCell.classList.add('sectionNameCell');
     sectionRow.append(sectionNameCell)
-    
+
     //Name Component
     const sectionName = document.createElement('p');
     sectionName.contentEditable = true;
     sectionName.classList.add('sectionName');
     sectionName.textContent = menuSection.Name;
     sectionNameCell.appendChild(sectionName);
-    
+
     sectionName.addEventListener('input', () => {
         updateName(sectionRow.id, sectionName.textContent);
     });
@@ -174,7 +180,7 @@ function createSection(menuSection) {
     const sectionOsCell = document.createElement('td');
     sectionOsCell.classList.add('sectionOsCell');
     sectionRow.append(sectionOsCell)
-    
+
     //Price Cell
     const sectionPriceCell = document.createElement('td');
     sectionPriceCell.classList.add('sectionPriceCell');
@@ -185,8 +191,7 @@ function createSection(menuSection) {
     sectionTaxCell.classList.add('sectionTaxCell');
     sectionRow.append(sectionTaxCell)
 
-
     return sectionRow
 }
 
-export { createSection, setSectionId, getUniqueRandomInt}
+export { createSection, setSectionId, getUniqueRandomInt }
