@@ -59,3 +59,8 @@
 .emptyName {
     color: rgb(203, 50, 76);
 }
+
+.sectionClicked {
+    background-color: white;
+    padding: 2px;
+}

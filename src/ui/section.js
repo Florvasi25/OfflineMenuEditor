@@ -122,14 +122,33 @@ function createSection(menuSection) {
 
     //Name Component
     const sectionName = document.createElement('p');
-    sectionName.contentEditable = true;
     sectionName.classList.add('sectionName');
+    sectionName.contentEditable = true;
     sectionName.textContent = menuSection.Name;
     sectionNameCell.appendChild(sectionName);
 
-    sectionName.addEventListener('input', () => {
-        updateName(sectionRow.id, sectionName.textContent);
+    let originalName = menuSection.Name; 
+    
+    sectionName.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            updateName(sectionRow.id, sectionName.textContent);
+            originalName = sectionName.textContent; 
+            sectionName.blur();
+        } else if (e.key === 'Escape') {
+            sectionName.textContent = originalName; 
+            sectionName.blur(); 
+        }
     });
+    
+    sectionName.addEventListener('blur', () => {
+        sectionName.textContent = originalName;
+        sectionName.classList.remove('sectionClicked')
+    });
+
+    sectionName.addEventListener('click', () => {
+        sectionName.classList.add('sectionClicked')
+    })
 
     //Delete Button
     const deleteButton = document.createElement('button');
@@ -165,17 +184,35 @@ function createSection(menuSection) {
     sectionDescCell.classList.add('sectionDescCell');
     sectionRow.append(sectionDescCell)
 
-    //Section Description
     const sectionDesc = document.createElement('p');
     sectionDesc.contentEditable = true;
     sectionDesc.classList.add('sectionDesc');
     sectionDesc.textContent = menuSection.Description;
     sectionDescCell.appendChild(sectionDesc);
-
-    sectionDesc.addEventListener('input', () => {
-        updateDesc(sectionRow.id, sectionDesc.textContent);
+    
+    let originalDesc = menuSection.Description; 
+    
+    sectionDesc.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            updateDesc(sectionRow.id, sectionDesc.textContent);
+            originalDesc = sectionDesc.textContent; 
+            sectionDesc.blur();
+        } else if (e.key === 'Escape') {
+            sectionDesc.textContent = originalDesc; 
+            sectionDesc.blur(); 
+        }
+    });
+    
+    sectionDesc.addEventListener('blur', () => {
+        sectionDesc.textContent = originalDesc;
+        sectionDesc.classList.remove('sectionClicked')
     });
 
+    sectionDesc.addEventListener('click', () => {
+        sectionDesc.classList.add('sectionClicked')
+    })
+    
     //OS Cell
     const sectionOsCell = document.createElement('td');
     sectionOsCell.classList.add('sectionOsCell');
