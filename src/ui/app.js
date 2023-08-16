@@ -2,15 +2,14 @@ import { saveToFile } from './file.js';
 
 import {
     createSection,
-    setSectionId,
-    getUniqueRandomInt
 } from "./section.js";
 
 import {
     jsonData, setJsonData,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
-    //nextId,
+    setSectionId,
+    getUniqueRandomInt,
 } from './context.js';
 
 //Loading the File

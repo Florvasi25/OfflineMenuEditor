@@ -3,8 +3,6 @@ import { emptyMenu } from './emptyMenu.js'
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 //let idCounter = 0;
 
-
-
 function setJsonData(data) {
     jsonData = data
 }
@@ -41,11 +39,38 @@ function updateCounterLocalStorage(id, addID) {
     
 }
 
+function getRandomInt() {
+    return Math.floor(Math.random() * 9999999) + 1;
+}
+
+function getUniqueRandomInt() {
+    const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
+    let randomNum = getRandomInt();
+
+    while (storedNumbers.includes(randomNum)) {
+        randomNum = getRandomInt();
+    }
+    return randomNum;
+}
+
+//set sectionID for entire json file
+function setSectionId(jsonData) {
+    localStorage.setItem("sectionIDs", "[]");
+    for (const section of jsonData.MenuSections) {
+        let id = getRandomInt()
+        section.MenuSectionId = id;
+        section.MenuSectionAvailability.MenuSectionId = id;
+        updateCounterLocalStorage(id, true)
+    }
+    updateSectionLocalStorage()
+}
+
 export {
     jsonData,
     getSectionIndex,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
     setJsonData,
-    
+    setSectionId,
+    getUniqueRandomInt,
 }
