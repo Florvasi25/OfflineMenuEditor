@@ -12,8 +12,16 @@ function createSection(menuSection) {
     const sectionRow = document.createElement('tr');
     sectionRow.classList.add('sectionContainer');
     sectionRow.classList.add('draggable');
+    sectionRow.classList.add('folded')
     sectionRow.setAttribute('draggable', true)
     sectionRow.id = menuSection.MenuSectionId;
+
+    sectionRow.addEventListener('click', event => {
+        const dropdownButton = event.currentTarget.querySelector('.boxDropdownButton');
+        if (dropdownButton) {
+            toggleSectionState(sectionRow);
+        }
+    });
 
     sectionRow.addEventListener('dragstart', () => {
         sectionRow.classList.add('dragging')
@@ -23,30 +31,92 @@ function createSection(menuSection) {
         sectionRow.classList.remove('dragging')
     })
 
+    //Creates Dropdown Cell
+    const sectionDropdownCell = createSectionDropdown()
+    sectionRow.appendChild(sectionDropdownCell)
+
     //Creates Section Name Cell
     const sectionNameCell = createSectionNameCell(sectionRow, menuSection)
-    sectionRow.append(sectionNameCell)
+    sectionRow.appendChild(sectionNameCell)
 
     //Section Desc Cell
     const sectionDescCell = createSectionDescCell(menuSection, sectionRow);
-    sectionRow.append(sectionDescCell)
+    sectionRow.appendChild(sectionDescCell)
 
     //OS Cell
     const sectionOsCell = document.createElement('td');
     sectionOsCell.classList.add('sectionOsCell');
-    sectionRow.append(sectionOsCell)
+    sectionRow.appendChild(sectionOsCell)
 
     //Price Cell
     const sectionPriceCell = document.createElement('td');
     sectionPriceCell.classList.add('sectionPriceCell');
-    sectionRow.append(sectionPriceCell)
+    sectionRow.appendChild(sectionPriceCell)
 
     //Tax Cell
     const sectionTaxCell = document.createElement('td');
     sectionTaxCell.classList.add('sectionTaxCell');
-    sectionRow.append(sectionTaxCell)
+    sectionRow.appendChild(sectionTaxCell)
 
     return sectionRow
+}
+
+//////////////////// SECTION DROPDOWN ////////////////////
+function createSectionDropdown(){
+    const sectionDropdownCell = document.createElement('td')
+    sectionDropdownCell.classList.add('sectionDropdownCell')
+
+    const boxDropdownButton = createSectionDropdownButton()
+    sectionDropdownCell.appendChild(boxDropdownButton)
+
+    return sectionDropdownCell
+}
+
+function createSectionDropdownButton(sectionId){
+    const boxDropdownButton = document.createElement('div')
+    boxDropdownButton.classList = 'boxDropdownButton'
+    boxDropdownButton.innerHTML = `
+    <div class="sectionDropdownButton"></div>`
+
+    boxDropdownButton.addEventListener('click', event => {
+        toggleSectionState(sectionRow);
+        event.stopPropagation();
+    });
+
+    return boxDropdownButton
+}
+
+// Function to toggle section state and show/hide content
+function toggleSectionState(sectionRow) {
+    const expandedClassName = 'expanded';
+    const foldedClassName = 'folded';
+
+    if (sectionRow.classList.contains(expandedClassName)) {
+        sectionRow.classList.remove(expandedClassName);
+        sectionRow.classList.add(foldedClassName);
+
+        const ItemsContainer = sectionRow.nextElementSibling;
+        if (ItemsContainer && ItemsContainer.classList.contains('ItemsContainer')) {
+            ItemsContainer.classList.add('itemContainer');
+            ItemsContainer.remove(); // Remove the content container
+        }
+    } else {
+        sectionRow.classList.remove(foldedClassName);
+        sectionRow.classList.add(expandedClassName);
+
+        let ItemsContainer = sectionRow.nextElementSibling;
+        if (!ItemsContainer || !ItemsContainer.classList.contains('ItemsContainer')) {
+            // Create a content container and add the content
+            ItemsContainer = document.createElement('div');
+            ItemsContainer.classList.add('ItemsContainer');
+            const contentParagraph = document.createElement('p');
+            contentParagraph.textContent = 'Hola';
+            ItemsContainer.appendChild(contentParagraph);
+            sectionRow.parentNode.insertBefore(ItemsContainer, sectionRow.nextSibling);
+        } else {
+            ItemsContainer.classList.remove('hidden');
+        }
+    }
 }
 
 //////////////////// SECTION NAME ////////////////////
