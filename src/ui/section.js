@@ -12,6 +12,7 @@ function createSection(menuSection) {
     const sectionRow = document.createElement('tr');
     sectionRow.classList.add('sectionContainer');
     sectionRow.classList.add('draggable');
+    sectionRow.classList.add('folded')
     sectionRow.setAttribute('draggable', true)
     sectionRow.id = menuSection.MenuSectionId;
 
@@ -23,30 +24,92 @@ function createSection(menuSection) {
         sectionRow.classList.remove('dragging')
     })
 
+    //Creates Dropdown Cell
+    const sectionDropdownCell = createSectionDropdown(sectionRow)
+    sectionRow.appendChild(sectionDropdownCell)
+
     //Creates Section Name Cell
     const sectionNameCell = createSectionNameCell(sectionRow, menuSection)
-    sectionRow.append(sectionNameCell)
+    sectionRow.appendChild(sectionNameCell)
 
     //Section Desc Cell
     const sectionDescCell = createSectionDescCell(menuSection, sectionRow);
-    sectionRow.append(sectionDescCell)
+    sectionRow.appendChild(sectionDescCell)
 
     //OS Cell
     const sectionOsCell = document.createElement('td');
     sectionOsCell.classList.add('sectionOsCell');
-    sectionRow.append(sectionOsCell)
+    sectionRow.appendChild(sectionOsCell)
 
     //Price Cell
     const sectionPriceCell = document.createElement('td');
     sectionPriceCell.classList.add('sectionPriceCell');
-    sectionRow.append(sectionPriceCell)
+    sectionRow.appendChild(sectionPriceCell)
 
     //Tax Cell
     const sectionTaxCell = document.createElement('td');
     sectionTaxCell.classList.add('sectionTaxCell');
-    sectionRow.append(sectionTaxCell)
+    sectionRow.appendChild(sectionTaxCell)
 
     return sectionRow
+}
+
+//////////////////// SECTION DROPDOWN ////////////////////
+function createSectionDropdown(sectionRow){
+    const sectionDropdownCell = document.createElement('td')
+    sectionDropdownCell.classList.add('sectionDropdownCell')
+
+    const boxDropdownButton = createSectionDropdownButton(sectionRow)
+    sectionDropdownCell.appendChild(boxDropdownButton)
+
+    return sectionDropdownCell
+}
+
+function createSectionDropdownButton(sectionRow){
+    const boxDropdownButton = document.createElement('div')
+    boxDropdownButton.classList = 'boxDropdownButton'
+    boxDropdownButton.innerHTML = `
+    <div class="sectionDropdownButton"></div>`
+
+    boxDropdownButton.addEventListener('click', event => {
+        toggleSectionState(sectionRow);
+        event.stopPropagation();
+    });
+
+    return boxDropdownButton
+}
+
+// Function to toggle section state and show/hide content
+function toggleSectionState(sectionRow) {
+    const expandedClassName = 'expanded';
+    const foldedClassName = 'folded';
+
+    if (sectionRow.classList.contains(expandedClassName)) {
+        sectionRow.classList.remove(expandedClassName);
+        sectionRow.classList.add(foldedClassName);
+
+        const ItemsContainer = sectionRow.nextElementSibling;
+        if (ItemsContainer && ItemsContainer.classList.contains('ItemsContainer')) {
+            ItemsContainer.classList.add('itemContainer');
+            ItemsContainer.remove(); // Remove the content container
+        }
+    } else {
+        sectionRow.classList.remove(foldedClassName);
+        sectionRow.classList.add(expandedClassName);
+
+        let ItemsContainer = sectionRow.nextElementSibling;
+        if (!ItemsContainer || !ItemsContainer.classList.contains('ItemsContainer')) {
+            // Create a content container and add the content
+            ItemsContainer = document.createElement('div');
+            ItemsContainer.classList.add('ItemsContainer');
+            const contentParagraph = document.createElement('p');
+            contentParagraph.textContent = 'Hola';
+            ItemsContainer.appendChild(contentParagraph);
+            sectionRow.parentNode.insertBefore(ItemsContainer, sectionRow.nextSibling);
+        } else {
+            ItemsContainer.classList.remove('hidden');
+        }
+    }
 }
 
 //////////////////// SECTION NAME ////////////////////
@@ -222,8 +285,10 @@ function deleteSection(sectionToRemove) {
         const sectionIndex = getSectionIndex(sectionId);
         if (sectionIndex !== -1) {
             jsonData.MenuSections.splice(sectionIndex, 1);
+            jsonData.MenuSections.forEach((obj, index) => {
+                obj.DisplayOrder = index;
+            });
             updateSectionLocalStorage();
-            console.log("Section to remove " + sectionToRemove.Name);
             updateCounterLocalStorage(sectionId, false);
         }
     }
@@ -235,7 +300,7 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('duplicateButton')
     duplicateButton.addEventListener('click', () => {
-        duplicateSection(sectionRow.id);
+        duplicateSection(sectionRow);
     });
     sectionNameCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')
@@ -244,8 +309,8 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     duplicateButton.appendChild(duplicateButtonImg)
 }
 
-function duplicateSection(sectionId) {
-    const sectionIndex = getSectionIndex(sectionId);
+function duplicateSection(sectionRow) {
+    const sectionIndex = getSectionIndex(sectionRow.id);
 
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
@@ -258,9 +323,13 @@ function duplicateSection(sectionId) {
         newSection.PublicId = crypto.randomUUID();
 
         const newSectionRow = createSection(newSection);
-        document.getElementById('outputContainer').appendChild(newSectionRow);
 
-        jsonData.MenuSections.push(newSection);
+        document.getElementById('outputContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
+
+        jsonData.MenuSections.splice(sectionIndex+1, 0, newSection);
+        jsonData.MenuSections.forEach((obj, index) => {
+            obj.DisplayOrder = index;
+        });
         updateSectionLocalStorage();
         updateCounterLocalStorage(newSectionId, true);
     }

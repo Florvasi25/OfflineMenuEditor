@@ -15,6 +15,38 @@
     background-color: #add8e6;
     list-style: none;
     margin: 15px 0;
+
+    &.expanded .sectionDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .sectionDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+}
+
+.sectionDropdownCell {
+    width: 25px;
+}
+
+.boxDropdownButton {
+    display: flex;
+    /* justify-content: center; */
+    margin-left: 25%;
+}
+
+.sectionDropdownButton {
+    display: block;
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    border-right: 2px solid #555;
+    border-bottom: 2px solid #555;
+    transition: transform 0.1s linear;
+    cursor: pointer;
+}
+
+.sectionDropdownButton:hover {
+    border-color: #888;
 }
 
 .sectionNameCell {
@@ -146,3 +178,4 @@
 .popup-content button {
     margin: 5px;
 }
+
