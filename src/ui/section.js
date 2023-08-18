@@ -16,13 +16,6 @@ function createSection(menuSection) {
     sectionRow.setAttribute('draggable', true)
     sectionRow.id = menuSection.MenuSectionId;
 
-    sectionRow.addEventListener('click', event => {
-        const dropdownButton = event.currentTarget.querySelector('.boxDropdownButton');
-        if (dropdownButton) {
-            toggleSectionState(sectionRow);
-        }
-    });
-
     sectionRow.addEventListener('dragstart', () => {
         sectionRow.classList.add('dragging')
     })
@@ -32,7 +25,7 @@ function createSection(menuSection) {
     })
 
     //Creates Dropdown Cell
-    const sectionDropdownCell = createSectionDropdown()
+    const sectionDropdownCell = createSectionDropdown(sectionRow)
     sectionRow.appendChild(sectionDropdownCell)
 
     //Creates Section Name Cell
@@ -62,17 +55,17 @@ function createSection(menuSection) {
 }
 
 //////////////////// SECTION DROPDOWN ////////////////////
-function createSectionDropdown(){
+function createSectionDropdown(sectionRow){
     const sectionDropdownCell = document.createElement('td')
     sectionDropdownCell.classList.add('sectionDropdownCell')
 
-    const boxDropdownButton = createSectionDropdownButton()
+    const boxDropdownButton = createSectionDropdownButton(sectionRow)
     sectionDropdownCell.appendChild(boxDropdownButton)
 
     return sectionDropdownCell
 }
 
-function createSectionDropdownButton(sectionId){
+function createSectionDropdownButton(sectionRow){
     const boxDropdownButton = document.createElement('div')
     boxDropdownButton.classList = 'boxDropdownButton'
     boxDropdownButton.innerHTML = `
@@ -292,8 +285,10 @@ function deleteSection(sectionToRemove) {
         const sectionIndex = getSectionIndex(sectionId);
         if (sectionIndex !== -1) {
             jsonData.MenuSections.splice(sectionIndex, 1);
+            jsonData.MenuSections.forEach((obj, index) => {
+                obj.DisplayOrder = index;
+            });
             updateSectionLocalStorage();
-            console.log("Section to remove " + sectionToRemove.Name);
             updateCounterLocalStorage(sectionId, false);
         }
     }
@@ -305,7 +300,7 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('duplicateButton')
     duplicateButton.addEventListener('click', () => {
-        duplicateSection(sectionRow.id);
+        duplicateSection(sectionRow);
     });
     sectionNameCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')
@@ -314,8 +309,8 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     duplicateButton.appendChild(duplicateButtonImg)
 }
 
-function duplicateSection(sectionId) {
-    const sectionIndex = getSectionIndex(sectionId);
+function duplicateSection(sectionRow) {
+    const sectionIndex = getSectionIndex(sectionRow.id);
 
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
@@ -328,9 +323,13 @@ function duplicateSection(sectionId) {
         newSection.PublicId = crypto.randomUUID();
 
         const newSectionRow = createSection(newSection);
-        document.getElementById('outputContainer').appendChild(newSectionRow);
 
-        jsonData.MenuSections.push(newSection);
+        document.getElementById('outputContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
+
+        jsonData.MenuSections.splice(sectionIndex+1, 0, newSection);
+        jsonData.MenuSections.forEach((obj, index) => {
+            obj.DisplayOrder = index;
+        });
         updateSectionLocalStorage();
         updateCounterLocalStorage(newSectionId, true);
     }
