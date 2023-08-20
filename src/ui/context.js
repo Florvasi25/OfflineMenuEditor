@@ -1,7 +1,6 @@
 import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
-//let idCounter = 0;
 
 function setJsonData(data) {
     jsonData = data

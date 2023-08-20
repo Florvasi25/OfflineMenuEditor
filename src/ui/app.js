@@ -20,10 +20,10 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 
     reader.onload = function (e) {
         setJsonData(JSON.parse(e.target.result));
-        updateSectionLocalStorage()
         setSectionId(jsonData);
         setSectionDisplayOrder(jsonData);
         generateHTML(jsonData);
+        updateSectionLocalStorage()
     };
 
     if (!file) return
@@ -34,9 +34,9 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 function generateHTML(data) {
     const outputContainer = document.getElementById('outputContainer');
     outputContainer.innerHTML = '';
-
+    data.MenuSections.sort((a, b) => a.DisplayOrder - b.DisplayOrder); //Sorts the Sections by DisplayOrder
     data.MenuSections.forEach(menuSection => {
-        let sectionRow = createSection(menuSection);
+        const sectionRow = createSection(menuSection);
         outputContainer.appendChild(sectionRow);
     });
 }
@@ -81,7 +81,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
         MenuSectionId: newId,
         Name: "Empty",
         Description: null,
-        DisplayOrder: 0,
+        DisplayOrder: jsonData.MenuSections.length,
         MenuItems: [],
         PublicId: crypto.randomUUID(),
         IsDeleted: false,
@@ -100,7 +100,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
         MenuSectionMetadata: []
     };
 
-    let sectionRow = createSection(emptySectionJson)
+    const sectionRow = createSection(emptySectionJson)
 
     document.getElementById('outputContainer').appendChild(sectionRow);
 
