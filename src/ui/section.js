@@ -301,12 +301,8 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('duplicateButton')
     duplicateButton.addEventListener('click', () => {
-<<<<<<< HEAD
         duplicateSection(sectionRow.id);
         setSectionDisplayOrder(jsonData);
-=======
-        duplicateSection(sectionRow);
->>>>>>> 42b2e130dd26d41d9dc9a18b336ee6f44f9afdd6
     });
     sectionNameCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')
