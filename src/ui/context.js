@@ -23,12 +23,12 @@ function updateSectionLocalStorage() {
 function updateCounterLocalStorage(id, addID) {
     if(addID)
     {
-        let existingIDs = JSON.parse(localStorage.getItem("sectionIDs")); //array
+        let existingIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
         existingIDs.push(id);
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
     }else{
         //console.log("ID a eliminar: " + id + " / " + "Type: " + typeof(id));
-        let existingIDs = JSON.parse(localStorage.getItem("sectionIDs")); //array
+        let existingIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
         //console.log("IDs: " + existingIDs);
         const indexID = existingIDs.indexOf(Number(id));
         //console.log("Index del id: " + indexID);
@@ -64,6 +64,15 @@ function setSectionId(jsonData) {
     }
     updateSectionLocalStorage()
 }
+function setSectionDisplayOrder(jsonData){
+    let i = 0;
+    console.log("Hola entró: " + i);
+    for (const section of jsonData.MenuSections) {
+        console.log("Hola: " + i);
+        section.DisplayOrder = i;
+        i++;
+    }
+}
 
 export {
     jsonData,
@@ -73,4 +82,5 @@ export {
     setJsonData,
     setSectionId,
     getUniqueRandomInt,
+    setSectionDisplayOrder
 }

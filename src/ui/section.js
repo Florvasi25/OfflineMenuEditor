@@ -3,6 +3,7 @@ import {
     getSectionIndex,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
+    setSectionDisplayOrder,
     getUniqueRandomInt,
 } from './context.js';
 
@@ -236,6 +237,7 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     duplicateButton.classList.add('duplicateButton')
     duplicateButton.addEventListener('click', () => {
         duplicateSection(sectionRow.id);
+        setSectionDisplayOrder(jsonData);
     });
     sectionNameCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')

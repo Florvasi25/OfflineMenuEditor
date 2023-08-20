@@ -9,6 +9,7 @@ import {
     updateCounterLocalStorage,
     updateSectionLocalStorage,
     setSectionId,
+    setSectionDisplayOrder,
     getUniqueRandomInt,
 } from './context.js';
 
@@ -21,6 +22,7 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
         setJsonData(JSON.parse(e.target.result));
         updateSectionLocalStorage()
         setSectionId(jsonData);
+        setSectionDisplayOrder(jsonData);
         generateHTML(jsonData);
     };
 
@@ -43,7 +45,7 @@ outputContainer.addEventListener('dragenter', e => {
     e.preventDefault()
     const afterElement = getDragAfterElement(outputContainer, e.clientY)
     const draggable = document.querySelector('.dragging')
-    console.log("hola");
+    //console.log("hola");
     if (afterElement == null) {
         outputContainer.appendChild(draggable)
     } else {
