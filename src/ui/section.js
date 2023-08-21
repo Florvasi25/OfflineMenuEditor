@@ -257,7 +257,7 @@ function confirmDelete(sectionRow, sectionName, sectionNameCell) {
         popup.remove();
     });
 
-    popup.appendChild(popupContent);
+    popup.appendChild(popupContent); 
     sectionNameCell.appendChild(popup);
 
     //Close the delete popup when clicked outside
@@ -282,7 +282,7 @@ function confirmDelete(sectionRow, sectionName, sectionNameCell) {
 function deleteSection(sectionToRemove) {
     const sectionId = sectionToRemove.id;
     if (sectionToRemove) {
-        sectionToRemove.remove();
+        sectionToRemove.remove(); 
         const sectionIndex = getSectionIndex(sectionId);
         if (sectionIndex !== -1) {
             jsonData.MenuSections.splice(sectionIndex, 1);

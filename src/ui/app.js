@@ -20,10 +20,10 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 
     reader.onload = function (e) {
         setJsonData(JSON.parse(e.target.result));
+        updateSectionLocalStorage()
         setSectionId(jsonData);
         setSectionDisplayOrder(jsonData);
         generateHTML(jsonData);
-        updateSectionLocalStorage()
     };
 
     if (!file) return
@@ -31,21 +31,22 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
 });
 
 //Builds HTML
-function generateHTML(data) {
+function generateHTML(jsonData) {
     const outputContainer = document.getElementById('outputContainer');
     outputContainer.innerHTML = '';
-    data.MenuSections.sort((a, b) => a.DisplayOrder - b.DisplayOrder); //Sorts the Sections by DisplayOrder
-    data.MenuSections.forEach(menuSection => {
-        const sectionRow = createSection(menuSection);
+
+    jsonData.MenuSections.forEach(menuSection => {
+        let sectionRow = createSection(menuSection);
         outputContainer.appendChild(sectionRow);
     });
 }
 
+let draggable = null;
+
 outputContainer.addEventListener('dragenter', e => {
     e.preventDefault()
     const afterElement = getDragAfterElement(outputContainer, e.clientY)
-    const draggable = document.querySelector('.dragging')
-    //console.log("hola");
+    draggable = document.querySelector('.dragging')
     if (afterElement == null) {
         outputContainer.appendChild(draggable)
     } else {
@@ -64,8 +65,27 @@ function getDragAfterElement(outputContainer, y) {
         } else {
             return closest
         }
-    }, { offset: Number.NEGATIVE_INFINITY }).element
+    }, { offset: Number.NEGATIVE_INFINITY }).element 
 }
+
+outputContainer.addEventListener("dragend", () => {
+    // obtiene todas las filas
+    const rows = Array.from(outputContainer.querySelectorAll("tr"));
+
+    rows.forEach((row, index) => {
+
+        const sectionID = row.getAttribute("id");
+        setSectionDisplayOrder(jsonData, sectionID, index);
+    }
+    // encuentra el index y el id de la fila que movimos
+    /*if(draggable)
+    {
+        const newPosition = rows.indexOf(draggable);
+        const draggedRowId = draggable.getAttribute("id");
+        console.log("Nuevo index:", newPosition);
+        console.log("ID:", draggedRowId);
+    }*/
+)});
 
 //Saves JSON
 document.getElementById('saveButton').addEventListener('click', function () {
@@ -76,12 +96,13 @@ document.getElementById('saveButton').addEventListener('click', function () {
 //Add Section
 document.getElementById('addSectionButton').addEventListener('click', () => {
     const newId = getUniqueRandomInt()
+    const displayOrder = outputContainer.querySelectorAll("tbody tr"); // gets the number of rows in the table.
 
     const emptySectionJson = {
         MenuSectionId: newId,
         Name: "Empty",
         Description: null,
-        DisplayOrder: jsonData.MenuSections.length,
+        DisplayOrder: displayOrder.length,
         MenuItems: [],
         PublicId: crypto.randomUUID(),
         IsDeleted: false,
@@ -100,7 +121,7 @@ document.getElementById('addSectionButton').addEventListener('click', () => {
         MenuSectionMetadata: []
     };
 
-    const sectionRow = createSection(emptySectionJson)
+    let sectionRow = createSection(emptySectionJson)
 
     document.getElementById('outputContainer').appendChild(sectionRow);
 

@@ -63,13 +63,17 @@ function setSectionId(jsonData) {
     }
     updateSectionLocalStorage()
 }
-function setSectionDisplayOrder(jsonData){
-    let i = 0;
-    console.log("Hola entró: " + i);
+function setSectionDisplayOrder(jsonData, sectionID, index){
+
     for (const section of jsonData.MenuSections) {
-        console.log("Hola: " + i);
-        section.DisplayOrder = i;
-        i++;
+        if(section.MenuSectionId == sectionID)
+        {
+            console.log("Entró?");
+            console.log(index);
+            section.DisplayOrder = index;
+        }
+        
+
     }
 }
 
