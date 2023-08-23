@@ -75,8 +75,6 @@ outputContainer.addEventListener("dragend", () => {
     const index = getSectionIndex(sectionid); 
     const indexNewPosition = rows.indexOf(draggable);
 
-    //console.log("id: ", sectionid);
-    //console.log("index: ", index);
     if(index !== indexNewPosition)
     {
         const sectionToMove = jsonData.MenuSections.splice(index, 1)[0];
@@ -84,15 +82,8 @@ outputContainer.addEventListener("dragend", () => {
         jsonData.MenuSections.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
-        console.log("section to move: ", sectionToMove);
     }
-    
-    //console.log("Nuevo index:", indexNewPosition);
-    /*rows.forEach((row, index) => {
 
-        const sectionID = row.getAttribute("id");
-        setSectionDisplayOrder(jsonData, sectionID, index);
-    }*/
 })
 
 //Saves JSON
@@ -104,13 +95,12 @@ document.getElementById('saveButton').addEventListener('click', function () {
 //Add Section
 document.getElementById('addSectionButton').addEventListener('click', () => {
     const newId = getUniqueRandomInt()
-    const displayOrder = outputContainer.querySelectorAll("tbody tr"); // gets the number of rows in the table.
 
     const emptySectionJson = {
         MenuSectionId: newId,
         Name: "Empty",
         Description: null,
-        DisplayOrder: displayOrder.length,
+        DisplayOrder: jsonData.MenuSections.length,
         MenuItems: [],
         PublicId: crypto.randomUUID(),
         IsDeleted: false,
