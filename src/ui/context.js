@@ -63,18 +63,11 @@ function setSectionId(jsonData) {
     }
     updateSectionLocalStorage()
 }
-function setSectionDisplayOrder(jsonData, sectionID, index){
 
-    for (const section of jsonData.MenuSections) {
-        if(section.MenuSectionId == sectionID)
-        {
-            console.log("Entró?");
-            console.log(index);
-            section.DisplayOrder = index;
-        }
-        
-
-    }
+function setSectionDisplayOrder(jsonData){
+    jsonData.MenuSections.forEach((obj, index) => {
+        obj.DisplayOrder = index;
+    });
 }
 
 export {

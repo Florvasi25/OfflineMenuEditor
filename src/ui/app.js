@@ -9,6 +9,7 @@ import {
     updateCounterLocalStorage,
     updateSectionLocalStorage,
     setSectionId,
+    getSectionIndex,
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from './context.js';
@@ -69,23 +70,30 @@ function getDragAfterElement(outputContainer, y) {
 }
 
 outputContainer.addEventListener("dragend", () => {
-    // obtiene todas las filas
     const rows = Array.from(outputContainer.querySelectorAll("tr"));
+    const sectionid = draggable.getAttribute("id");
+    const index = getSectionIndex(sectionid); 
+    const indexNewPosition = rows.indexOf(draggable);
 
-    rows.forEach((row, index) => {
+    //console.log("id: ", sectionid);
+    //console.log("index: ", index);
+    if(index !== indexNewPosition)
+    {
+        const sectionToMove = jsonData.MenuSections.splice(index, 1)[0];
+        jsonData.MenuSections.splice(indexNewPosition, 0, sectionToMove);
+        jsonData.MenuSections.forEach((obj, index) => {
+            obj.DisplayOrder = index;
+        });
+        console.log("section to move: ", sectionToMove);
+    }
+    
+    //console.log("Nuevo index:", indexNewPosition);
+    /*rows.forEach((row, index) => {
 
         const sectionID = row.getAttribute("id");
         setSectionDisplayOrder(jsonData, sectionID, index);
-    }
-    // encuentra el index y el id de la fila que movimos
-    /*if(draggable)
-    {
-        const newPosition = rows.indexOf(draggable);
-        const draggedRowId = draggable.getAttribute("id");
-        console.log("Nuevo index:", newPosition);
-        console.log("ID:", draggedRowId);
     }*/
-)});
+})
 
 //Saves JSON
 document.getElementById('saveButton').addEventListener('click', function () {

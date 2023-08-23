@@ -118,7 +118,6 @@ function toggleSectionState(sectionRow) {
 //Updates Name
 function updateName(sectionId, sectionName) {
     const sectionIndex = getSectionIndex(sectionId);
-
     jsonData.MenuSections[sectionIndex].Name = sectionName;
 
     updateSectionLocalStorage()
@@ -131,7 +130,7 @@ function createSectionNameCell(sectionRow, menuSection) {
 
     const sectionName = createSectionName(sectionRow, menuSection)
     sectionNameCell.appendChild(sectionName);
-
+    
     //Delete Button
     sectionDeleteButton(sectionNameCell, sectionRow, menuSection.Name)
 
@@ -313,7 +312,6 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
 
 function duplicateSection(sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
-
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));
