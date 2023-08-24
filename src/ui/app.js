@@ -82,6 +82,7 @@ outputContainer.addEventListener("dragend", () => {
         jsonData.MenuSections.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
+        updateSectionLocalStorage();
     }
 })
 

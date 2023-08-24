@@ -51,7 +51,6 @@ function createSection(menuSection) {
     const sectionTaxCell = document.createElement('td');
     sectionTaxCell.classList.add('sectionTaxCell');
     sectionRow.appendChild(sectionTaxCell)
-    console.log("Section row: ", sectionRow);
     return sectionRow
 }
 
