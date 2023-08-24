@@ -51,7 +51,7 @@ function createSection(menuSection) {
     const sectionTaxCell = document.createElement('td');
     sectionTaxCell.classList.add('sectionTaxCell');
     sectionRow.appendChild(sectionTaxCell)
-
+    console.log("Section row: ", sectionRow);
     return sectionRow
 }
 
@@ -300,7 +300,7 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('duplicateButton')
     duplicateButton.addEventListener('click', () => {
-        duplicateSection(sectionRow.id);
+        duplicateSection(sectionRow);
         setSectionDisplayOrder(jsonData);
     });
     sectionNameCell.appendChild(duplicateButton);
@@ -312,6 +312,8 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
 
 function duplicateSection(sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
+    console.log(sectionRow.id);
+    
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));

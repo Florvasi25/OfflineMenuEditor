@@ -83,7 +83,6 @@ outputContainer.addEventListener("dragend", () => {
             obj.DisplayOrder = index;
         });
     }
-
 })
 
 //Saves JSON
