@@ -4,11 +4,15 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
+
 .tablebody {
     width: 100vw;
     max-width: 100%;
     table-layout: fixed;
 }
+
+/* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionContainer {
     height: auto;
@@ -22,7 +26,24 @@
     &.folded .sectionDropdownButton { 
         transform: rotate(-45deg); 
     }
+
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+        transform: translateX(10px);
+    }
+
+    &.clickOnDrag {
+        transform: translateX(10px)
+    }
 }
+
+.sectionClicked {
+    background-color: #ffffff;
+    padding: 2px;
+}
+
+/* DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN */
 
 .sectionDropdownCell {
     width: 25px;
@@ -30,7 +51,6 @@
 
 .boxDropdownButton {
     display: flex;
-    /* justify-content: center; */
     margin-left: 25%;
 }
 
@@ -49,34 +69,32 @@
     border-color: #888;
 }
 
+/* DRAG AND DROP - DRAG AND DROP - DRAG AND DROP - DRAG AND DROP - DRAG AND DROP */
+
+.sectionDragCell {
+    width: 25px;
+    justify-self: center;
+}
+
+.sectionDragImg {
+    width: 22px;
+    cursor: grab;
+    margin: 0
+}
+
+.dragging {
+    transition: transform 0.01 linear;
+}
+
+.clickOnDrag {
+    transition: transform 0.01 linear;
+}
+
+/* NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME */
+
 .sectionNameCell {
     padding: 5px;
-    width: 205px;
-}
-
-.sectionDescCell {
-    padding: 5px;
-    width: auto;
-}
-
-.sectionOsCell {
-    padding: 5px;
-    width: auto;
-}
-
-.sectionPriceCell {
-    padding: 5px;
-    width: 50px;
-}
-
-.sectionTaxCell {
-    padding: 5px;
-    width: 35px;
-}
-
-
-.unavailable {
-    background-color: #bbbbbb;
+    width: 125px;
 }
 
 .sectionName {
@@ -84,18 +102,58 @@
     font-weight: bold;
 }
 
-.sectionDesc {
-    font-size: 12px;
-}
-
 .emptyName {
     color: #cb324c;
 }
 
-.sectionClicked {
-    background-color: #ffffff;
-    padding: 2px;
+/* DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION */
+
+.sectionDescCell {
+    padding: 5px;
+    width: auto;
 }
+
+.sectionDesc {
+    font-size: 12px;
+}
+
+/* OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET */
+
+.sectionOsCell {
+    padding: 5px;
+    width: auto;
+}
+
+/* PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE */
+
+.sectionPriceCell {
+    padding: 5px;
+    width: 50px;
+}
+
+/* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
+
+.sectionTaxCell {
+    padding: 5px;
+    width: 35px;
+}
+
+/* UNAVAILABLE - UNAVAILABLE - UNAVAILABLE - UNAVAILABLE - UNAVAILABLE */
+
+.unavailable {
+    background-color: #bbbbbb;
+}
+
+.hidden {
+    background-color: #5056ee;
+}
+
+.hidden:hover {
+    background-color: #1118f1;
+}
+
+
+/* DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON */
 
 .duplicateButton {
     background-color: #ffed62;
@@ -103,6 +161,7 @@
     border-radius: 3px;
     margin-right: 5px;
     height: 30px;
+    cursor: pointer
 }
 
 .duplicateButton:hover {
@@ -113,12 +172,15 @@
     width: 20px;
 }
 
+/* DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON */
+
 .deleteButton {
     background-color: #f53d3d;
     border: solid 1px #000000;
     border-radius: 3px;
     margin-right: 5px;
     height: 30px;
+    cursor: pointer
 }
 
 .deleteButton:hover {
@@ -129,12 +191,15 @@
     width: 20px;
 }
 
+/* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
+
 .visibilityButton {
     background-color: #cdcdcd;
     border: solid 1px #000000;
     border-radius: 3px;
     margin-right: 5px;
     height: 30px;
+    cursor: pointer
 }
 
 .visibilityButton:hover {
@@ -147,13 +212,7 @@
     align-items: center;
 }
 
-.hidden {
-    background-color: #5056ee;
-}
-
-.hidden:hover {
-    background-color: #1118f1;
-}
+/* POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP */
 
 .popup {
     position: fixed;
@@ -178,4 +237,3 @@
 .popup-content button {
     margin: 5px;
 }
-

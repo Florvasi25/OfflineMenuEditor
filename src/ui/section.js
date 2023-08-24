@@ -14,20 +14,15 @@ function createSection(menuSection) {
     sectionRow.classList.add('sectionContainer');
     sectionRow.classList.add('draggable');
     sectionRow.classList.add('folded')
-    sectionRow.setAttribute('draggable', true)
     sectionRow.id = menuSection.MenuSectionId;
-
-    sectionRow.addEventListener('dragstart', () => {
-        sectionRow.classList.add('dragging')
-    })
-
-    sectionRow.addEventListener('dragend', () => {
-        sectionRow.classList.remove('dragging')
-    })
 
     //Creates Dropdown Cell
     const sectionDropdownCell = createSectionDropdown(sectionRow)
     sectionRow.appendChild(sectionDropdownCell)
+
+    //Creates Drag Cell
+    const sectionDragCell = createSectionDragCell(sectionRow)
+    sectionRow.appendChild(sectionDragCell)
 
     //Creates Section Name Cell
     const sectionNameCell = createSectionNameCell(sectionRow, menuSection)
@@ -110,6 +105,32 @@ function toggleSectionState(sectionRow) {
             ItemsContainer.classList.remove('hidden');
         }
     }
+}
+
+//////////////////// SECTION DRAG AND DROP ////////////////////
+
+function createSectionDragCell(sectionRow) {
+    const sectionDragCell = document.createElement('td')
+    sectionDragCell.className = 'sectionDragCell'
+    const sectionDragImg = document.createElement('img')
+    sectionDragImg.src = '../../assets/dragIcon.svg'
+    sectionDragImg.className = 'sectionDragImg'
+    sectionDragCell.appendChild(sectionDragImg)
+
+    sectionDragCell.addEventListener('dragstart', () => {
+        sectionRow.classList.add('dragging')
+    })
+
+    sectionDragCell.addEventListener('dragend', () => {
+        sectionRow.classList.remove('dragging')
+        sectionRow.classList.remove('clickOnDrag')
+    })
+
+    sectionDragCell.addEventListener('mousedown', () => {
+        sectionRow.classList.add('clickOnDrag')
+    })
+
+    return sectionDragCell
 }
 
 //////////////////// SECTION NAME ////////////////////
@@ -311,7 +332,6 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
 
 function duplicateSection(sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
-    console.log(sectionRow.id);
     
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
