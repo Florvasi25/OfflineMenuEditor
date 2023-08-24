@@ -75,13 +75,13 @@ outputContainer.addEventListener("dragend", () => {
     const index = getSectionIndex(sectionid); 
     const indexNewPosition = rows.indexOf(draggable);
 
-    if(index !== indexNewPosition)
-    {
+    if(index !== indexNewPosition) {
         const sectionToMove = jsonData.MenuSections.splice(index, 1)[0];
         jsonData.MenuSections.splice(indexNewPosition, 0, sectionToMove);
         jsonData.MenuSections.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
+        updateSectionLocalStorage()
     }
 })
 
