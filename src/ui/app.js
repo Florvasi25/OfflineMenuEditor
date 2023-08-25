@@ -1,8 +1,16 @@
-import { saveToFile } from './file.js';
+// import { saveToFile } from './file.js';
 
 import {
     createSection,
 } from "./section.js";
+
+import {
+    createSectionButton,
+} from './addSectionButton.js'
+
+import {
+    createSaveButton,
+} from './file.js'
 
 import {
     jsonData, setJsonData,
@@ -40,6 +48,12 @@ function generateHTML(jsonData) {
         let sectionRow = createSection(menuSection);
         outputContainer.appendChild(sectionRow);
     });
+
+    const body = document.getElementById('body')
+    const newSectionButton = createSectionButton()
+    const saveButton = createSaveButton()
+    body.appendChild(newSectionButton)
+    body.appendChild(saveButton)
 }
 
 let draggable = null;
@@ -86,47 +100,47 @@ outputContainer.addEventListener("dragend", () => {
 })
 
 //Saves JSON
-document.getElementById('saveButton').addEventListener('click', function () {
-    console.log(jsonData);
-    saveToFile(jsonData);
-});
+// document.getElementById('saveButton').addEventListener('click', function () {
+//     console.log(jsonData);
+//     saveToFile(jsonData);
+// });
 
-//Add Section
-document.getElementById('addSectionButton').addEventListener('click', () => {
-    const newId = getUniqueRandomInt()
+// //Add Section
+// document.getElementById('addSectionButton').addEventListener('click', () => {
+//     const newId = getUniqueRandomInt()
 
-    const emptySectionJson = {
-        MenuSectionId: newId,
-        Name: "Empty",
-        Description: null,
-        DisplayOrder: jsonData.MenuSections.length,
-        MenuItems: [],
-        PublicId: crypto.randomUUID(),
-        IsDeleted: false,
-        IsAvailable: true,
-        IsHiddenFromUsers: false,
-        ImageName: null,
-        ImageUrl: null,
-        CellAspectRatio: 0,
-        CellLayoutType: 0,
-        MenuSectionAvailability: {
-            MenuSectionId: newId,
-            AvailableTimes: null,
-            AvailabilityMode: 0
-        },
-        ConcessionStoreId: null,
-        MenuSectionMetadata: []
-    };
+//     const emptySectionJson = {
+//         MenuSectionId: newId,
+//         Name: "Empty",
+//         Description: null,
+//         DisplayOrder: jsonData.MenuSections.length,
+//         MenuItems: [],
+//         PublicId: crypto.randomUUID(),
+//         IsDeleted: false,
+//         IsAvailable: true,
+//         IsHiddenFromUsers: false,
+//         ImageName: null,
+//         ImageUrl: null,
+//         CellAspectRatio: 0,
+//         CellLayoutType: 0,
+//         MenuSectionAvailability: {
+//             MenuSectionId: newId,
+//             AvailableTimes: null,
+//             AvailabilityMode: 0
+//         },
+//         ConcessionStoreId: null,
+//         MenuSectionMetadata: []
+//     };
 
-    let sectionRow = createSection(emptySectionJson)
+//     let sectionRow = createSection(emptySectionJson)
 
-    document.getElementById('outputContainer').appendChild(sectionRow);
+//     document.getElementById('outputContainer').appendChild(sectionRow);
 
-    jsonData.MenuSections.push(emptySectionJson)
-    updateSectionLocalStorage()
-    updateCounterLocalStorage(newId, true);
+//     jsonData.MenuSections.push(emptySectionJson)
+//     updateSectionLocalStorage()
+//     updateCounterLocalStorage(newId, true);
 
-});
+// });
 
 //After loading the Data it generates the HTML
 generateHTML(jsonData);

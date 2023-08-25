@@ -1,3 +1,20 @@
+import {
+    jsonData
+} from './context.js'
+
+function createSaveButton() {
+    const saveButton = document.createElement('button')
+    saveButton.setAttribute('id', 'saveButton')
+    saveButton.textContent = 'Save Changes'
+
+    saveButton.addEventListener('click', function () {
+        console.log(jsonData);
+        saveToFile(jsonData);
+    });
+
+    return saveButton
+}
+
 function saveToFile(data) {
     const updatedJsonData = JSON.stringify(data, null, 2); // Pretty-print JSON
     const blob = new Blob([updatedJsonData], { type: 'application/json' });
@@ -18,4 +35,4 @@ function saveToFile(data) {
     URL.revokeObjectURL(url);
 }
 
-export { saveToFile }
+export { saveToFile, createSaveButton }
