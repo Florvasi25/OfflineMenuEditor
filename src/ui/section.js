@@ -117,17 +117,21 @@ function createSectionDragCell(sectionRow) {
     sectionDragImg.className = 'sectionDragImg'
     sectionDragCell.appendChild(sectionDragImg)
 
-    sectionDragCell.addEventListener('dragstart', () => {
+    sectionDragImg.addEventListener('dragstart', () => {
         sectionRow.classList.add('dragging')
     })
 
-    sectionDragCell.addEventListener('dragend', () => {
+    sectionDragImg.addEventListener('dragend', () => {
         sectionRow.classList.remove('dragging')
         sectionRow.classList.remove('clickOnDrag')
     })
 
-    sectionDragCell.addEventListener('mousedown', () => {
+    sectionDragImg.addEventListener('mousedown', () => {
         sectionRow.classList.add('clickOnDrag')
+    })
+
+    sectionDragImg.addEventListener('mouseup', () => {
+        sectionRow.classList.remove('clickOnDrag')
     })
 
     return sectionDragCell
@@ -372,18 +376,18 @@ function createSectionDescCell(menuSection, sectionRow) {
     const sectionDescCell = document.createElement('td');
     sectionDescCell.classList.add('sectionDescCell');
 
-    sectionDesc(sectionDescCell, menuSection, sectionRow)
+    const sectionDesc = createSectionDesc(menuSection, sectionRow)
+    sectionDescCell.appendChild(sectionDesc);
 
     return sectionDescCell
 }
 
 //Creates the element where the Desc will be 
-function sectionDesc(sectionDescCell, menuSection, sectionRow) {
+function createSectionDesc(menuSection, sectionRow) {
     const sectionDesc = document.createElement('p');
-    sectionDesc.contentEditable = true;
     sectionDesc.classList.add('sectionDesc');
+    sectionDesc.contentEditable = true;
     sectionDesc.textContent = menuSection.Description;
-    sectionDescCell.appendChild(sectionDesc);
 
     let originalDesc = menuSection.Description;
 
@@ -408,6 +412,7 @@ function sectionDesc(sectionDescCell, menuSection, sectionRow) {
         sectionDesc.classList.add('sectionClicked')
     })
 
+    return sectionDesc
 }
 
 
