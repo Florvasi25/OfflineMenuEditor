@@ -4,12 +4,8 @@ import {
 
 import {
     jsonData, 
-    // setJsonData,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
-    // setSectionId,
-    // getSectionIndex,
-    // setSectionDisplayOrder,
     getUniqueRandomInt,
 } from './context.js';
 

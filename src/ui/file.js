@@ -1,6 +1,39 @@
 import {
-    jsonData
-} from './context.js'
+    jsonData, 
+    setJsonData,
+    updateSectionLocalStorage,
+    setSectionId,
+    setSectionDisplayOrder,
+} from './context.js';
+
+import {
+    generateHTML,
+ } from './app.js'
+
+function createLoadJsonButton() {
+    const loadJsonButton = document.createElement('input')
+    loadJsonButton.setAttribute('id', 'jsonFileInput')
+    loadJsonButton.setAttribute('accept', '.json, .txt')
+    loadJsonButton.setAttribute('type', 'file')
+
+    loadJsonButton.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+    
+        reader.onload = function (e) {
+            setJsonData(JSON.parse(e.target.result));
+            updateSectionLocalStorage()
+            setSectionId(jsonData);
+            setSectionDisplayOrder(jsonData);
+            generateHTML(jsonData);
+        };
+    
+        if (!file) return
+        reader.readAsText(file);
+    });
+
+    return loadJsonButton
+}
 
 function createSaveButton() {
     const saveButton = document.createElement('button')
@@ -35,4 +68,4 @@ function saveToFile(data) {
     URL.revokeObjectURL(url);
 }
 
-export { saveToFile, createSaveButton }
+export { saveToFile, createSaveButton, createLoadJsonButton }
