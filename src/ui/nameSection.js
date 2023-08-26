@@ -1,14 +1,20 @@
 import {
-    sectionVisibilityButton, 
-    sectionDeleteButton,
-    sectionDuplicateButton,
-} from './section.js'
-
-import {
     updateSectionLocalStorage,
     getSectionIndex,
     jsonData,
 } from './context.js'
+
+import {
+    sectionVisibilityButton
+} from './visibilitySection.js'
+
+import {
+    sectionDeleteButton
+} from './deleteSection.js'
+
+import {
+    sectionDuplicateButton,
+} from './duplicateSection.js'
 
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell
