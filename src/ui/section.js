@@ -7,6 +7,10 @@ import {
     getUniqueRandomInt,
 } from './context.js';
 
+import {
+    createSectionDragCell,
+} from './dragAndDropSection.js'
+
 //Section components
 function createSection(menuSection) {
     //Section Container
@@ -107,36 +111,6 @@ function toggleSectionState(sectionRow) {
     }
 }
 
-//////////////////// SECTION DRAG AND DROP ////////////////////
-
-function createSectionDragCell(sectionRow) {
-    const sectionDragCell = document.createElement('td')
-    sectionDragCell.className = 'sectionDragCell'
-    const sectionDragImg = document.createElement('img')
-    sectionDragImg.src = '../../assets/dragIcon.svg'
-    sectionDragImg.className = 'sectionDragImg'
-    sectionDragCell.appendChild(sectionDragImg)
-
-    sectionDragImg.addEventListener('dragstart', () => {
-        sectionRow.classList.add('dragging')
-    })
-
-    sectionDragImg.addEventListener('dragend', () => {
-        sectionRow.classList.remove('dragging')
-        sectionRow.classList.remove('clickOnDrag')
-    })
-
-    sectionDragImg.addEventListener('mousedown', () => {
-        sectionRow.classList.add('clickOnDrag')
-    })
-
-    sectionDragImg.addEventListener('mouseup', () => {
-        sectionRow.classList.remove('clickOnDrag')
-    })
-
-    return sectionDragCell
-}
-
 //////////////////// SECTION NAME ////////////////////
 
 //Updates Name
@@ -217,15 +191,15 @@ function sectionVisibilityButton(sectionRow, menuSection, sectionNameCell) {
     //Unavailable Sections - Gray
     if (!menuSection.IsAvailable) {
         sectionRow.classList.add('unavailable');
-        visibilityButton.classList.add('hidden')
+        visibilityButton.classList.add('hiddenSection')
     }
 
     //Changes the color of the Visibility Button according to its availability
     visibilityButton.addEventListener('click', () => {
         if (!menuSection.IsAvailable) {
-            visibilityButton.classList.add('hidden')
+            visibilityButton.classList.add('hiddenSection')
         } else {
-            visibilityButton.classList.remove('hidden')
+            visibilityButton.classList.remove('hiddenSection')
         }
     })
 }
