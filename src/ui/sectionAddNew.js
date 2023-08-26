@@ -1,6 +1,6 @@
 import {
     createSection,
-} from "./section.js";
+} from "./sectionContainer.js";
 
 import {
     jsonData, 
@@ -11,7 +11,7 @@ import {
 
 function createSectionButton() {
     const newSectionButton = document.createElement('button')
-    newSectionButton.setAttribute('id', 'addSectionButton')
+    newSectionButton.setAttribute('id', 'sectionAddNew')
     newSectionButton.textContent = 'New Section'
 
     //Add Section

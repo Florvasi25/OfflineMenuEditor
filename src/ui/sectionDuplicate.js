@@ -9,7 +9,7 @@ import {
 
 import {
     createSection
-} from './section.js'
+} from './sectionContainer.js'
 
 function sectionDuplicateButton(sectionRow, sectionNameCell) {
     const duplicateButton = document.createElement('button');

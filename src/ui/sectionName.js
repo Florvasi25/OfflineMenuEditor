@@ -10,11 +10,11 @@ import {
 
 import {
     sectionDeleteButton
-} from './deleteSection.js'
+} from './sectionDelete.js'
 
 import {
     sectionDuplicateButton,
-} from './duplicateSection.js'
+} from './sectionDuplicate.js'
 
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell
