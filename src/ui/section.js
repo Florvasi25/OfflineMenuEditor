@@ -11,6 +11,14 @@ import {
     createSectionDragCell,
 } from './dragAndDropSection.js'
 
+import {
+    createSectionDropdown,
+} from './dropDownSection.js'
+
+import {
+    createSectionNameCell,
+} from './nameSection.js'
+
 //Section components
 function createSection(menuSection) {
     //Section Container
@@ -50,128 +58,8 @@ function createSection(menuSection) {
     const sectionTaxCell = document.createElement('td');
     sectionTaxCell.classList.add('sectionTaxCell');
     sectionRow.appendChild(sectionTaxCell)
-    return sectionRow
-}
-
-//////////////////// SECTION DROPDOWN ////////////////////
-function createSectionDropdown(sectionRow){
-    const sectionDropdownCell = document.createElement('td')
-    sectionDropdownCell.classList.add('sectionDropdownCell')
-
-    const boxDropdownButton = createSectionDropdownButton(sectionRow)
-    sectionDropdownCell.appendChild(boxDropdownButton)
-
-    return sectionDropdownCell
-}
-
-function createSectionDropdownButton(sectionRow){
-    const boxDropdownButton = document.createElement('div')
-    boxDropdownButton.classList = 'boxDropdownButton'
-    boxDropdownButton.innerHTML = `
-    <div class="sectionDropdownButton"></div>`
-
-    boxDropdownButton.addEventListener('click', event => {
-        toggleSectionState(sectionRow);
-        event.stopPropagation();
-    });
-
-    return boxDropdownButton
-}
-
-// Function to toggle section state and show/hide content
-function toggleSectionState(sectionRow) {
-    const expandedClassName = 'expanded';
-    const foldedClassName = 'folded';
-
-    if (sectionRow.classList.contains(expandedClassName)) {
-        sectionRow.classList.remove(expandedClassName);
-        sectionRow.classList.add(foldedClassName);
-
-        const ItemsContainer = sectionRow.nextElementSibling;
-        if (ItemsContainer && ItemsContainer.classList.contains('ItemsContainer')) {
-            ItemsContainer.classList.add('itemContainer');
-            ItemsContainer.remove(); // Remove the content container
-        }
-    } else {
-        sectionRow.classList.remove(foldedClassName);
-        sectionRow.classList.add(expandedClassName);
-
-        let ItemsContainer = sectionRow.nextElementSibling;
-        if (!ItemsContainer || !ItemsContainer.classList.contains('ItemsContainer')) {
-            // Create a content container and add the content
-            ItemsContainer = document.createElement('div');
-            ItemsContainer.classList.add('ItemsContainer');
-            const contentParagraph = document.createElement('p');
-            contentParagraph.textContent = 'Hola';
-            ItemsContainer.appendChild(contentParagraph);
-            sectionRow.parentNode.insertBefore(ItemsContainer, sectionRow.nextSibling);
-        } else {
-            ItemsContainer.classList.remove('hidden');
-        }
-    }
-}
-
-//////////////////// SECTION NAME ////////////////////
-
-//Updates Name
-function updateName(sectionId, sectionName) {
-    const sectionIndex = getSectionIndex(sectionId);
-    jsonData.MenuSections[sectionIndex].Name = sectionName;
-
-    updateSectionLocalStorage()
-}
-
-function createSectionNameCell(sectionRow, menuSection) {
-    //Name Cell
-    const sectionNameCell = document.createElement('td');
-    sectionNameCell.classList.add('sectionNameCell');
-
-    const sectionName = createSectionName(sectionRow, menuSection)
-    sectionNameCell.appendChild(sectionName);
     
-    //Delete Button
-    sectionDeleteButton(sectionNameCell, sectionRow, menuSection.Name)
-
-    //visibility Button
-    sectionVisibilityButton(sectionRow, menuSection, sectionNameCell)
-
-    //Duplicate Button
-    sectionDuplicateButton(sectionRow, sectionNameCell, menuSection)
-
-    return sectionNameCell
-}
-
-//Handles Name Edits
-function createSectionName(sectionRow, menuSection) {
-    const sectionName = document.createElement('p');
-    sectionName.classList.add('sectionName');
-    sectionName.contentEditable = true;
-    sectionName.textContent = menuSection.Name;
-
-    let originalName = menuSection.Name;
-
-    sectionName.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            updateName(sectionRow.id, sectionName.textContent);
-            originalName = sectionName.textContent;
-            sectionName.blur();
-        } else if (e.key === 'Escape') {
-            sectionName.textContent = originalName;
-            sectionName.blur();
-        }
-    });
-
-    sectionName.addEventListener('blur', () => {
-        sectionName.textContent = originalName;
-        sectionName.classList.remove('sectionClicked')
-    });
-
-    sectionName.addEventListener('click', () => {
-        sectionName.classList.add('sectionClicked')
-    })
-
-    return sectionName
+    return sectionRow
 }
 
 ////////////// VISIBILITY BUTTON ////////////////////
@@ -390,4 +278,9 @@ function createSectionDesc(menuSection, sectionRow) {
 }
 
 
-export { createSection }
+export { 
+    createSection, 
+    sectionVisibilityButton, 
+    sectionDeleteButton,
+    sectionDuplicateButton,
+}
