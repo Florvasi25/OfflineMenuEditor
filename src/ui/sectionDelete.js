@@ -26,7 +26,7 @@ function confirmDelete(sectionRow, sectionName, sectionNameCell) {
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";
     popupContent.innerHTML = `
-        <p>Do you want to delete permanently "${sectionName}"</p>
+        <p>Do you want to delete permanently "${sectionName.textContent}"</p>
         <button class="yesButton">Yes</button>
         <button class="noButton">No</button>
     `;

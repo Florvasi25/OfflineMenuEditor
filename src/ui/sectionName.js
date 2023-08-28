@@ -25,7 +25,7 @@ function createSectionNameCell(sectionRow, menuSection) {
     sectionNameCell.appendChild(sectionName);
     
     //Delete Button
-    sectionDeleteButton(sectionNameCell, sectionRow, menuSection.Name)
+    sectionDeleteButton(sectionNameCell, sectionRow, sectionName)
 
     //visibility Button
     sectionVisibilityButton(sectionRow, menuSection, sectionNameCell)
