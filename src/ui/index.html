@@ -12,16 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@200&family=Fraunces:opsz,wght@9..144,300&family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="body">
-    <div>
-        <input type="file" id="jsonFileInput" accept=".json, .txt">
-        <button id="saveButton">Save Changes</button>
-    </div>
+<body id="body">
+    <div id="fileOptionsContainer"></div>
     <table class="tablebody">
-        <tbody id="outputContainer">
-        </tbody>
+        <tbody id="outputContainer"></tbody>
     </table>
-    <button id="addSectionButton">Add New Section</button>
+    <div id="newSectionBtnContainer"></div>
     <script type="module" src="app.js"></script>
 </body>
 </html>
