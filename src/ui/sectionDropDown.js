@@ -1,3 +1,7 @@
+import {
+    addItems
+} from './itemAddNew.js';
+
 function createSectionDropdown(sectionRow){
     const sectionDropdownCell = document.createElement('td')
     sectionDropdownCell.classList.add('sectionDropdownCell')
@@ -24,6 +28,7 @@ function createSectionDropdownButton(sectionRow){
 
 // Function to toggle section state and show/hide content
 function toggleSectionState(sectionRow) {
+
     const expandedClassName = 'expanded';
     const foldedClassName = 'folded';
 
@@ -33,7 +38,7 @@ function toggleSectionState(sectionRow) {
 
         const ItemsContainer = sectionRow.nextElementSibling;
         if (ItemsContainer && ItemsContainer.classList.contains('ItemsContainer')) {
-            ItemsContainer.classList.add('itemContainer');
+            //ItemsContainer.classList.add('itemContainer'); //??
             ItemsContainer.remove(); // Remove the content container
         }
     } else {
@@ -42,13 +47,7 @@ function toggleSectionState(sectionRow) {
 
         let ItemsContainer = sectionRow.nextElementSibling;
         if (!ItemsContainer || !ItemsContainer.classList.contains('ItemsContainer')) {
-            // Create a content container and add the content
-            ItemsContainer = document.createElement('div');
-            ItemsContainer.classList.add('ItemsContainer');
-            const contentParagraph = document.createElement('p');
-            contentParagraph.textContent = 'Hola';
-            ItemsContainer.appendChild(contentParagraph);
-            sectionRow.parentNode.insertBefore(ItemsContainer, sectionRow.nextSibling);
+            addItems(ItemsContainer, sectionRow);
         } else {
             ItemsContainer.classList.remove('ItemsContainer');
         }

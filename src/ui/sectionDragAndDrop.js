@@ -13,19 +13,23 @@ function createSectionDragCell(sectionRow) {
     sectionDragCell.appendChild(sectionDragImg)
 
     sectionDragImg.addEventListener('dragstart', () => {
+        if (sectionRow.classList.contains('expanded')) return;
         sectionRow.classList.add('dragging')
     })
 
     sectionDragImg.addEventListener('dragend', () => {
+        if (sectionRow.classList.contains('expanded')) return;
         sectionRow.classList.remove('dragging')
         sectionRow.classList.remove('clickOnDrag')
     })
 
     sectionDragImg.addEventListener('mousedown', () => {
+        if (sectionRow.classList.contains('expanded')) return;
         sectionRow.classList.add('clickOnDrag')
     })
 
     sectionDragImg.addEventListener('mouseup', () => {
+        if (sectionRow.classList.contains('expanded')) return;
         sectionRow.classList.remove('clickOnDrag')
     })
 
@@ -49,6 +53,7 @@ function getDragAfterElement(outputContainer, y) {
 let draggable = null;
 
 outputContainer.addEventListener('dragenter', e => {
+    if (document.querySelector('.expanded')) return;
     e.preventDefault()
     const afterElement = getDragAfterElement(outputContainer, e.clientY)
     draggable = document.querySelector('.dragging')
