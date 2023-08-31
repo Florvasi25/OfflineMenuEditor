@@ -6,7 +6,7 @@ import {
 
 import {
     sectionVisibilityButton
-} from './visibilitySection.js'
+} from './sectionVisibility.js'
 
 import {
     sectionDeleteButton
