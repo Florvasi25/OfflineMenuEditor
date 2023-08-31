@@ -150,7 +150,21 @@
 }
 
 .duplicateButtonImg {
+    
     width: 20px;
+}
+
+.tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 100;
+    display: none;
 }
 
 /* DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON */

@@ -4,6 +4,10 @@ import {
     getSectionIndex,
 } from './context.js';
 
+import {
+    showToolTip
+} from './toolTip.js'
+
 function createSectionDragCell(sectionRow) {
     const sectionDragCell = document.createElement('td')
     sectionDragCell.className = 'sectionDragCell'
@@ -13,8 +17,16 @@ function createSectionDragCell(sectionRow) {
     sectionDragCell.appendChild(sectionDragImg)
 
     sectionDragImg.addEventListener('dragstart', () => {
-        if (sectionRow.classList.contains('expanded')) return;
+        if (sectionRow.classList.contains('expanded')) return; // Si hay alguna sección expandida, no hagas nada.
         sectionRow.classList.add('dragging')
+    })
+
+    sectionDragImg.addEventListener('mouseover', () => {
+        
+        if (document.querySelector('.expanded'))
+        {
+            showToolTip(sectionDragCell, "You must close all sections before moving it.");
+        }
     })
 
     sectionDragImg.addEventListener('dragend', () => {
@@ -53,7 +65,7 @@ function getDragAfterElement(outputContainer, y) {
 let draggable = null;
 
 outputContainer.addEventListener('dragenter', e => {
-    if (document.querySelector('.expanded')) return;
+    if (document.querySelector('.expanded')) return; // Si hay alguna sección expandida, no hagas nada.
     e.preventDefault()
     const afterElement = getDragAfterElement(outputContainer, e.clientY)
     draggable = document.querySelector('.dragging')
@@ -66,6 +78,7 @@ outputContainer.addEventListener('dragenter', e => {
 
 
 outputContainer.addEventListener("dragend", () => {
+    if (document.querySelector('.expanded')) return;
     const rows = Array.from(outputContainer.querySelectorAll("tr"));
     const sectionid = draggable.getAttribute("id");
     const index = getSectionIndex(sectionid); 
