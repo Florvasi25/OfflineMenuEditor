@@ -1,6 +1,6 @@
 import {
-    addItems
-} from './itemAddNew.js';
+    createItemContainer
+} from './itemContainer.js';
 
 function createSectionDropdown(sectionRow){
     const sectionDropdownCell = document.createElement('td')
@@ -36,20 +36,20 @@ function toggleSectionState(sectionRow) {
         sectionRow.classList.remove(expandedClassName);
         sectionRow.classList.add(foldedClassName);
 
-        const ItemsContainer = sectionRow.nextElementSibling;
-        if (ItemsContainer && ItemsContainer.classList.contains('ItemsContainer')) {
-            //ItemsContainer.classList.add('itemContainer'); //??
-            ItemsContainer.remove(); // Remove the content container
+        const itemsContainer = sectionRow.nextElementSibling;
+        if (itemsContainer && itemsContainer.classList.contains('itemsContainer')) {
+            //itemsContainer.classList.add('itemContainer'); //??
+            itemsContainer.remove(); // Remove the content container
         }
     } else {
         sectionRow.classList.remove(foldedClassName);
         sectionRow.classList.add(expandedClassName);
 
-        let ItemsContainer = sectionRow.nextElementSibling;
-        if (!ItemsContainer || !ItemsContainer.classList.contains('ItemsContainer')) {
-            addItems(ItemsContainer, sectionRow);
+        let itemsContainer = sectionRow.nextElementSibling;
+        if (!itemsContainer || !itemsContainer.classList.contains('itemsContainer')) {
+            createItemContainer(itemsContainer, sectionRow);
         } else {
-            ItemsContainer.classList.remove('ItemsContainer');
+            itemsContainer.classList.remove('itemsContainer');
         }
     }
 }
