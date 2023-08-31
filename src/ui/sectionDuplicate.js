@@ -11,7 +11,9 @@ import {
     createSection
 } from './sectionContainer.js'
 
-import { showToolTip } from './toolTip.js'
+import { 
+    showToolTip 
+} from './toolTip.js'
 
 function sectionDuplicateButton(sectionRow, sectionNameCell) {
 
@@ -27,9 +29,11 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (sectionRow.classList.contains('expanded')) {
             showToolTip(duplicateButton, "You must close this section before duplicating.");
+        } else {
+            
         }
     });
-
+    
     duplicateButton.addEventListener('click', () => {
         if (sectionRow.classList.contains('expanded')) return;
 

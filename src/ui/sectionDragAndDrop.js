@@ -22,9 +22,7 @@ function createSectionDragCell(sectionRow) {
     })
 
     sectionDragImg.addEventListener('mouseover', () => {
-        
-        if (document.querySelector('.expanded'))
-        {
+        if (document.querySelector('.expanded')) {
             showToolTip(sectionDragCell, "You must close all sections before moving it.");
         }
     })
