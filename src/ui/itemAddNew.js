@@ -1,6 +1,8 @@
-import { jsonData } from './context.js'
-function addItems(ItemsContainer, sectionRow)
-{
+import { 
+    jsonData 
+} from './context.js'
+
+function addItems(ItemsContainer, sectionRow) {
     ItemsContainer = document.createElement('div');
     ItemsContainer.classList.add('ItemsContainer');
     populateItems(ItemsContainer, sectionRow);
