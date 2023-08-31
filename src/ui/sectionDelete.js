@@ -5,21 +5,22 @@ import {
     updateSectionLocalStorage,
 } from './context.js';
 
-function sectionDeleteButton(sectionNameCell, sectionRow, sectionName) {
+function sectionDeleteButton(sectionButtonsCell, sectionRow, sectionName) {
     const deleteButton = document.createElement('button');
+    deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
-    sectionNameCell.appendChild(deleteButton);
+    sectionButtonsCell.appendChild(deleteButton);
     const deleteButtonImg = document.createElement('img')
-    deleteButtonImg.classList.add('deleteButtonImg')
+    deleteButtonImg.classList.add('sectionButtonImg')
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(sectionRow, sectionName, sectionNameCell)
+        confirmDelete(sectionRow, sectionName, sectionButtonsCell)
     });
 }
 
 //Creates a popup to confirm the deletion of the section
-function confirmDelete(sectionRow, sectionName, sectionNameCell) {
+function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
     const popup = document.createElement("div");
     popup.className = "popup";
 
@@ -41,7 +42,7 @@ function confirmDelete(sectionRow, sectionName, sectionNameCell) {
     });
 
     popup.appendChild(popupContent); 
-    sectionNameCell.appendChild(popup);
+    sectionButtonsCell.appendChild(popup);
 
     //Close the delete popup when clicked outside
     window.addEventListener("click", (e) => {

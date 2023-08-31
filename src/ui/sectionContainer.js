@@ -7,6 +7,10 @@ import {
 } from './sectionDropDown.js'
 
 import {
+    createSectionButtonsCell,
+} from './sectionButtonContainer.js'
+
+import {
     createSectionNameCell,
 } from './sectionName.js'
 
@@ -30,6 +34,10 @@ function createSection(menuSection) {
     //Creates Drag Cell
     const sectionDragCell = createSectionDragCell(sectionRow)
     sectionRow.appendChild(sectionDragCell)
+
+    //Creates Buttons Cell
+    const sectionButtonsCell = createSectionButtonsCell(sectionRow, menuSection)
+    sectionRow.appendChild(sectionButtonsCell)
 
     //Creates Section Name Cell
     const sectionNameCell = createSectionNameCell(sectionRow, menuSection)

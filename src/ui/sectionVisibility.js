@@ -6,13 +6,14 @@ import {
 
 function sectionVisibilityButton(sectionRow, menuSection, sectionNameCell) {
     const visibilityButton = document.createElement('button');
+    visibilityButton.classList.add('sectionButton')
     visibilityButton.classList.add('visibilityButton')
     visibilityButton.addEventListener('click', () => {
         SectionAvailability(sectionRow);
     });
     sectionNameCell.appendChild(visibilityButton);
     const visibilityButtonImg = document.createElement('img')
-    visibilityButtonImg.classList.add('visibilityButtonImg')
+    visibilityButtonImg.classList.add('sectionButtonImg')
     visibilityButtonImg.src = '../../assets/visibilityIcon.svg'
     visibilityButton.appendChild(visibilityButtonImg)
 

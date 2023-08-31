@@ -18,10 +18,11 @@ import {
 function sectionDuplicateButton(sectionRow, sectionNameCell) {
 
     const duplicateButton = document.createElement('button');
+    duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
     sectionNameCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')
-    duplicateButtonImg.classList.add('duplicateButtonImg')
+    duplicateButtonImg.classList.add('sectionButtonImg')
     duplicateButtonImg.src = '../../assets/duplicateIcon.svg'
     duplicateButton.appendChild(duplicateButtonImg)
 
@@ -42,29 +43,6 @@ function sectionDuplicateButton(sectionRow, sectionNameCell) {
     });
     
 }
-
-/*function showTooltip(element, message) {
-    let tooltip = element.querySelector('.tooltip');
-    
-    if (!tooltip) {
-        tooltip = document.createElement('span');
-        tooltip.classList.add('tooltip');
-        element.appendChild(tooltip);
-    }
-    
-    tooltip.textContent = message;
-    
-    // Manually set the position based on the button's coordinates
-    const rect = element.getBoundingClientRect();
-    tooltip.style.left = rect.left + 'px';
-    tooltip.style.top = rect.bottom + window.scrollY + 'px';
-    
-    tooltip.style.display = 'block';
-    
-    setTimeout(() => {
-        tooltip.style.display = 'none';
-    }, 2000);
-}*/
 
 function duplicateSection(sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
@@ -93,6 +71,5 @@ function duplicateSection(sectionRow) {
 }
 
 export {
-    sectionDuplicateButton
-    
+    sectionDuplicateButton,
 }

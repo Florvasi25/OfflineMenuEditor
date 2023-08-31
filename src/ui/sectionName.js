@@ -25,13 +25,13 @@ function createSectionNameCell(sectionRow, menuSection) {
     sectionNameCell.appendChild(sectionName);
     
     //Delete Button
-    sectionDeleteButton(sectionNameCell, sectionRow, sectionName)
+    // sectionDeleteButton(sectionNameCell, sectionRow, sectionName)
 
     //visibility Button
-    sectionVisibilityButton(sectionRow, menuSection, sectionNameCell)
+    // sectionVisibilityButton(sectionRow, menuSection, sectionNameCell)
 
     //Duplicate Button
-    sectionDuplicateButton(sectionRow, sectionNameCell, menuSection)
+    // sectionDuplicateButton(sectionRow, sectionNameCell, menuSection)
 
     return sectionNameCell
 }
@@ -79,4 +79,5 @@ function updateName(sectionId, sectionName) {
 
 export {
     createSectionNameCell,
+    createSectionName
 }

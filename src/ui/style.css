@@ -94,7 +94,7 @@
 
 .sectionNameCell {
     padding: 5px;
-    width: 125px;
+    width: 100px;
 }
 
 .sectionName {
@@ -134,24 +134,8 @@
     width: 35px;
 }
 
-/* DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON */
+/* TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP */
 
-.duplicateButton {
-    background-color: #ffed62;
-    border: solid 1px #000000;
-    border-radius: 3px;
-    margin-right: 5px;
-    height: 30px;
-    cursor: pointer
-}
-
-.duplicateButton:hover {
-    background-color: #f6dc18;
-}
-
-.duplicateButtonImg {
-    width: 20px;
-}
 
 .tooltip {
     position: absolute;
@@ -168,44 +152,66 @@
     text-align: center;
 }
 
+/* BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL */
+
+.sectionButtonsCell {
+    width: 25px;
+}
+
+.sectionButton {
+    border: solid 1px #000000;
+    border-radius: 3px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionButtonImg {
+    width: 20px;
+}
+
+/* DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON */
+
+.duplicateButton {
+    background-color: #ffed62;
+}
+
+.duplicateButton:hover {
+    background-color: #f6dc18;
+}
+
 /* DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON */
 
 .deleteButton {
     background-color: #f53d3d;
-    border: solid 1px #000000;
-    border-radius: 3px;
-    margin-right: 5px;
-    height: 30px;
-    cursor: pointer
 }
 
 .deleteButton:hover {
     background-color: #eb1010;
 }
 
-.deleteButtonImg {
-    width: 20px;
-}
-
 /* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
 
 .visibilityButton {
     background-color: #cdcdcd;
-    border: solid 1px #000000;
-    border-radius: 3px;
-    margin-right: 5px;
-    height: 30px;
-    cursor: pointer
 }
 
 .visibilityButton:hover {
     background-color: #b1b1b1;
 }
 
-.visibilityButtonImg {
-    width: 20px;
-    display: flex;
-    align-items: center;
+/* CLOCK BUTTON - CLOCK BUTTON - CLOCK BUTTON - CLOCK BUTTON - CLOCK BUTTON */
+
+.clockButton {
+    background-color: #cdcdcd;
+}
+
+.clockButton:hover {
+    background-color: #b1b1b1;
 }
 
 /* UNAVAILABLE - UNAVAILABLE - UNAVAILABLE - UNAVAILABLE - UNAVAILABLE */
