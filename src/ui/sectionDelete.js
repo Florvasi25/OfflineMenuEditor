@@ -66,6 +66,12 @@ function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
 function deleteSection(sectionToRemove) {
     const sectionId = sectionToRemove.id;
     if (sectionToRemove) {
+        if (sectionToRemove.classList.contains('expanded')) {
+            let items = sectionToRemove.nextElementSibling;
+            if (items && items.tagName === 'TABLE') {
+                items.remove(); // remove items of the section
+            }
+        }
         sectionToRemove.remove(); 
         const sectionIndex = getSectionIndex(sectionId);
         if (sectionIndex !== -1) {
