@@ -4,18 +4,6 @@ import {
     jsonData,
 } from './context.js'
 
-import {
-    sectionVisibilityButton
-} from './sectionVisibility.js'
-
-import {
-    sectionDeleteButton
-} from './sectionDelete.js'
-
-import {
-    sectionDuplicateButton,
-} from './sectionDuplicate.js'
-
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell
     const sectionNameCell = document.createElement('td');
@@ -24,15 +12,6 @@ function createSectionNameCell(sectionRow, menuSection) {
     const sectionName = createSectionName(sectionRow, menuSection)
     sectionNameCell.appendChild(sectionName);
     
-    //Delete Button
-    // sectionDeleteButton(sectionNameCell, sectionRow, sectionName)
-
-    //visibility Button
-    // sectionVisibilityButton(sectionRow, menuSection, sectionNameCell)
-
-    //Duplicate Button
-    // sectionDuplicateButton(sectionRow, sectionNameCell, menuSection)
-
     return sectionNameCell
 }
 

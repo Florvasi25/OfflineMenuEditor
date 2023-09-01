@@ -13,6 +13,15 @@ function getSectionIndex(sectionId) {
     return sectionIndex
 }
 
+function getItemIndex(sectionId, itemId) {
+    const sectionIndex = getSectionIndex(sectionId);
+    const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
+
+    const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
+
+    return {itemIndex, sectionIndex}
+}
+
 //Updates JSON LocalStorage
 function updateSectionLocalStorage() {
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
@@ -20,18 +29,16 @@ function updateSectionLocalStorage() {
 
 //Updates id LocalStorage
 function updateCounterLocalStorage(id, addID) {
-    if(addID)
-    {
+    if(addID) {
         let existingIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
         existingIDs.push(id);
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
-    }else{
+    } else {
         let existingIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
         const indexID = existingIDs.indexOf(Number(id));
         existingIDs.splice(indexID, 1);
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
     }
-    
 }
 
 function getRandomInt() {
@@ -74,5 +81,6 @@ export {
     setJsonData,
     setSectionId,
     getUniqueRandomInt,
-    setSectionDisplayOrder
+    setSectionDisplayOrder,
+    getItemIndex,
 }

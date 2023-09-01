@@ -38,6 +38,30 @@
     }
 }
 
+.itemContainer {
+    height: auto;
+    background-color: #d0ade6;
+    list-style: none;
+    margin: 15px 0;
+
+    &.expanded .sectionDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .sectionDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+        transform: translateX(10px);
+    }
+
+    &.clickOnDrag {
+        transform: translateX(10px)
+    }
+}
+
 .sectionClicked {
     background-color: #ffffff;
     padding: 2px;
