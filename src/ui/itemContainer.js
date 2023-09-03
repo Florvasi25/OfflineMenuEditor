@@ -12,22 +12,22 @@ import {
 } from './itemDropDown.js'
 
 function createItemContainer(sectionRow) {
-    const sectionTable = document.createElement('table');
-    sectionTable.classList.add('sectionTable');
-    createItemRows(sectionTable, sectionRow);
-    sectionRow.parentNode.insertBefore(sectionTable, sectionRow.nextSibling);
-    const itemBody = document.createElement('tbody')
-    itemBody.className = 'itemBody'
-    sectionTable.appendChild(itemBody)
+    const itemTable = document.createElement('table');
+    itemTable.classList.add('itemTable');
+    createItemRows(itemTable, sectionRow);
+    sectionRow.parentNode.insertBefore(itemTable, sectionRow.nextSibling);
+    const itemContainer = document.createElement('tbody')
+    itemContainer.className = 'itemContainer'
+    itemTable.appendChild(itemContainer)
 }
 
-function createItemRows(itemBody, sectionRow) {
+function createItemRows(itemContainer, sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
     const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
     
     menuItems.forEach(menuItem => {
         const itemRow = createItem(menuItem, sectionRow.id)
-        itemBody.appendChild(itemRow);
+        itemContainer.appendChild(itemRow);
     });
 }
 
