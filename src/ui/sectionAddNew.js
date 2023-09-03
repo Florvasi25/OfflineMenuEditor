@@ -43,7 +43,7 @@ function createSectionButton() {
     
         let sectionRow = createSection(emptySectionJson)
     
-        document.getElementById('outputContainer').appendChild(sectionRow);
+        document.getElementById('sectionContainer').appendChild(sectionRow);
     
         jsonData.MenuSections.push(emptySectionJson)
         updateSectionLocalStorage()

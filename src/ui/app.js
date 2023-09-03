@@ -20,12 +20,12 @@ import {
 
 //Builds HTML
 function generateHTML(jsonData) {
-    const outputContainer = document.getElementById('outputContainer');
-    outputContainer.innerHTML = '';
+    const sectionContainer = document.getElementById('sectionContainer');
+    sectionContainer.innerHTML = '';
     
     jsonData.MenuSections.forEach(menuSection => {
         let sectionRow = createSection(menuSection);
-        outputContainer.appendChild(sectionRow);
+        sectionContainer.appendChild(sectionRow);
     });
 }
 

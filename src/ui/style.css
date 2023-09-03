@@ -2,11 +2,18 @@
     /* font-family: 'Commissioner', sans-serif;
     font-family: 'Fraunces', serif; */
     font-family: 'Roboto', sans-serif;
+    border-spacing: 0;
 }
 
 /* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
 
-.tablebody {
+.sectionTable {
+    width: 100vw;
+    max-width: 100%;
+    table-layout: fixed;
+}
+
+.itemTable {
     width: 100vw;
     max-width: 100%;
     table-layout: fixed;
@@ -14,7 +21,7 @@
 
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
-.sectionContainer {
+.sectionRow {
     height: auto;
     background-color: #add8e6;
     list-style: none;
@@ -38,7 +45,7 @@
     }
 }
 
-.itemContainer {
+.itemRow {
     height: auto;
     background-color: #d0ade6;
     list-style: none;
@@ -71,6 +78,13 @@
 
 .sectionDropdownCell {
     width: 25px;
+    border: solid 1px #ffffff;
+}
+
+.itemDropdownCell {
+    width: 25px;
+    border: solid 1px #ffffff;
+
 }
 
 .boxDropdownButton {
@@ -98,6 +112,7 @@
 .sectionDragCell {
     width: 25px;
     justify-self: center;
+    border: solid 1px #ffffff;
 }
 
 .sectionDragImg {
@@ -119,6 +134,13 @@
 .sectionNameCell {
     padding: 5px;
     width: 100px;
+    border: solid 1px #ffffff;
+}
+
+.itemNameCell {
+    padding: 5px;
+    width: 100px;
+    border: solid 1px #ffffff;
 }
 
 .sectionName {
@@ -131,6 +153,12 @@
 .sectionDescCell {
     padding: 5px;
     width: auto;
+    border: solid 1px #ffffff;
+}
+
+.itemDescCell {
+    padding: 5px;
+    width: 250px;
 }
 
 .sectionDesc {

@@ -22,7 +22,7 @@ import {
 function createSection(menuSection) {
     //Section Container
     const sectionRow = document.createElement('tr');
-    sectionRow.classList.add('sectionContainer');
+    sectionRow.classList.add('sectionRow');
     sectionRow.classList.add('draggable');
     sectionRow.classList.add('folded')
     sectionRow.id = menuSection.MenuSectionId;

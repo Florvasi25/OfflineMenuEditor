@@ -59,7 +59,7 @@ function duplicateSection(sectionRow) {
 
         const newSectionRow = createSection(newSection);
 
-        document.getElementById('outputContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
+        document.getElementById('sectionContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
 
         jsonData.MenuSections.splice(sectionIndex+1, 0, newSection);
         jsonData.MenuSections.forEach((obj, index) => {

@@ -7,33 +7,39 @@ import {
     createItemNameCell
 } from './itemName.js'
 
-function createItemContainer(ItemsContainer, sectionRow) {
-    const itemsContainer = document.createElement('table');
-    itemsContainer.classList.add('itemsContainer');
-    createItemRows(itemsContainer, sectionRow);
-    sectionRow.parentNode.insertBefore(itemsContainer, sectionRow.nextSibling);
+import {
+    createItemDropdown
+} from './itemDropDown.js'
+
+function createItemContainer(sectionRow) {
+    const sectionTable = document.createElement('table');
+    sectionTable.classList.add('sectionTable');
+    createItemRows(sectionTable, sectionRow);
+    sectionRow.parentNode.insertBefore(sectionTable, sectionRow.nextSibling);
+    const itemBody = document.createElement('tbody')
+    itemBody.className = 'itemBody'
+    sectionTable.appendChild(itemBody)
 }
 
-function createItemRows(itemsContainer, sectionRow) {
+function createItemRows(itemBody, sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
     const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
     
     menuItems.forEach(menuItem => {
         const itemRow = createItem(menuItem, sectionRow.id)
-        itemsContainer.appendChild(itemRow);
+        itemBody.appendChild(itemRow);
     });
 }
 
 function createItem(menuItem, sectionId) {
     const itemRow = document.createElement('tr');
-    itemRow.classList.add('itemContainer');
+    itemRow.classList.add('itemRow');
     itemRow.classList.add('draggable');
     itemRow.classList.add('folded')
     itemRow.id = menuItem.MenuItemId
 
     //Creates Dropdown Cell
-    const itemDropDownCell = document.createElement('td');
-    itemDropDownCell.classList.add('itemDropDownCell');
+    const itemDropDownCell = createItemDropdown(itemRow)
     itemRow.appendChild(itemDropDownCell)
 
     //Creates Drag Cell

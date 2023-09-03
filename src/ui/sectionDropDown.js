@@ -36,20 +36,19 @@ function toggleSectionState(sectionRow) {
         sectionRow.classList.remove(expandedClassName);
         sectionRow.classList.add(foldedClassName);
 
-        const itemsContainer = sectionRow.nextElementSibling;
-        if (itemsContainer && itemsContainer.classList.contains('itemsContainer')) {
-            //itemsContainer.classList.add('itemContainer'); //??
-            itemsContainer.remove(); // Remove the content container
+        const sectionTable = sectionRow.nextElementSibling;
+        if (sectionTable && sectionTable.classList.contains('sectionTable')) {
+            sectionTable.remove(); 
         }
     } else {
         sectionRow.classList.remove(foldedClassName);
         sectionRow.classList.add(expandedClassName);
 
-        let itemsContainer = sectionRow.nextElementSibling;
-        if (!itemsContainer || !itemsContainer.classList.contains('itemsContainer')) {
-            createItemContainer(itemsContainer, sectionRow);
+        let sectionTable = sectionRow.nextElementSibling;
+        if (!sectionTable || !sectionTable.classList.contains('sectionTable')) {
+            createItemContainer(sectionRow);
         } else {
-            itemsContainer.classList.remove('itemsContainer');
+            sectionTable.classList.remove('sectionTable');
         }
     }
 }

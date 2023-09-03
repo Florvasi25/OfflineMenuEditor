@@ -46,8 +46,8 @@ function createSectionDragCell(sectionRow) {
     return sectionDragCell
 }
 
-function getDragAfterElement(outputContainer, y) {
-    const draggableElements = [...outputContainer.querySelectorAll('.draggable:not(.dragging)')]
+function getDragAfterElement(sectionContainer, y) {
+    const draggableElements = [...sectionContainer.querySelectorAll('.draggable:not(.dragging)')]
 
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect()
@@ -62,22 +62,22 @@ function getDragAfterElement(outputContainer, y) {
 
 let draggable = null;
 
-outputContainer.addEventListener('dragenter', e => {
+sectionContainer.addEventListener('dragenter', e => {
     if (document.querySelector('.expanded')) return; // Si hay alguna sección expandida, no hagas nada.
     e.preventDefault()
-    const afterElement = getDragAfterElement(outputContainer, e.clientY)
+    const afterElement = getDragAfterElement(sectionContainer, e.clientY)
     draggable = document.querySelector('.dragging')
     if (afterElement == null) {
-        outputContainer.appendChild(draggable)
+        sectionContainer.appendChild(draggable)
     } else {
-        outputContainer.insertBefore(draggable, afterElement)
+        sectionContainer.insertBefore(draggable, afterElement)
     }
 })
 
 
-outputContainer.addEventListener("dragend", () => {
+sectionContainer.addEventListener("dragend", () => {
     if (document.querySelector('.expanded')) return;
-    const rows = Array.from(outputContainer.querySelectorAll("tr"));
+    const rows = Array.from(sectionContainer.querySelectorAll("tr"));
     const sectionid = draggable.getAttribute("id");
     const index = getSectionIndex(sectionid); 
     const indexNewPosition = rows.indexOf(draggable);
