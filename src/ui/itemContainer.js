@@ -26,16 +26,16 @@ function createItemContainer(sectionRow) {
     const itemContainer = document.createElement('tbody')
     itemContainer.className = 'itemContainer'
     itemTable.appendChild(itemContainer)
-    createItemRows(itemTable, sectionRow, itemContainer);
+    createItemRows(sectionRow, itemContainer);
 }
 
-function createItemRows(itemTable, sectionRow, itemContainer) {
+function createItemRows(sectionRow, itemContainer) {
     const sectionIndex = getSectionIndex(sectionRow.id);
     const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
     
     menuItems.forEach(menuItem => {
         const itemRow = createItem(menuItem, sectionRow.id, itemContainer)
-        itemTable.appendChild(itemRow);
+        itemContainer.appendChild(itemRow);
     });
 }
 

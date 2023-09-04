@@ -58,7 +58,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         
         const newItemRow = createItem(newItem, sectionId, itemContainer);
         
-        itemContainer.parentNode.insertBefore(newItemRow, itemRow.nextSibling);
+        itemContainer.insertBefore(newItemRow, itemRow.nextSibling);
         
         jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex+1, 0, newItem);
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {

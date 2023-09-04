@@ -42,7 +42,7 @@ function toggleItemState(itemRow) {
         let OsContainer = itemRow.nextElementSibling;
         if (!OsContainer || !OsContainer.classList.contains('OsContainer')) {
             // Create a content container and add the content
-            OsContainer = document.createElement('div');
+            OsContainer = document.createElement('table');
             OsContainer.classList.add('OsContainer');
             const contentParagraph = document.createElement('p');
             contentParagraph.textContent = 'Hola';

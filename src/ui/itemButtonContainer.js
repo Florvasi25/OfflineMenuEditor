@@ -1,14 +1,14 @@
-// import {
-//     sectionClockButton,
-// } from './sectionClock.js'
+import {
+    itemClockButton,
+} from './itemClock.js'
 
 import {
     itemVisibilityButton
 } from './itemVisibility.js'
 
-// import {
-//     sectionDeleteButton
-// } from './sectionDelete.js'
+import {
+    itemDeleteButton
+} from './itemDelete.js'
 
 import {
     itemDuplicateButton,
@@ -22,11 +22,11 @@ function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('td');
     itemButtonsCell.classList = "sectionButtonsCell"
 
-    // const sectionName = createSectionName(sectionRow, menuSection)
+    const itemName = createItemName(itemRow, menuItem, sectionId)
 
-    // sectionClockButton(itemButtonsCell)
-
-    // sectionDeleteButton(itemButtonsCell, sectionRow, sectionName)
+    itemClockButton(itemButtonsCell)
+    
+    itemDeleteButton(itemButtonsCell, itemRow, itemName, sectionId)
 
     itemVisibilityButton(itemRow, menuItem, itemButtonsCell, sectionId);
 

@@ -1,39 +1,40 @@
 import {
     jsonData,
-    getSectionIndex,
+    getItemIndex,
     updateCounterLocalStorage,
     updateSectionLocalStorage,
 } from './context.js';
 
-function sectionDeleteButton(sectionButtonsCell, sectionRow, sectionName) {
+function itemDeleteButton(itemButtonsCell, itemRow, itemName, sectionId) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
-    sectionButtonsCell.appendChild(deleteButton);
+    itemButtonsCell.appendChild(deleteButton);
     const deleteButtonImg = document.createElement('img')
     deleteButtonImg.classList.add('sectionButtonImg')
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(sectionRow, sectionName, sectionButtonsCell)
+        confirmDelete(itemRow, itemName, itemButtonsCell, sectionId)
     });
 }
 
+
 //Creates a popup to confirm the deletion of the section
-function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
+function confirmDelete(itemRow, itemName, itemButtonsCell, sectionId) {
     const popup = document.createElement("div");
     popup.className = "popup";
 
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";
     popupContent.innerHTML = `
-        <p>Do you want to delete permanently "${sectionName.textContent}"</p>
+        <p>Do you want to delete permanently "${itemName.textContent}"</p>
         <button class="yesButton">Yes</button>
         <button class="noButton">No</button>
     `;
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
-        deleteSection(sectionRow);
+        deleteItem(itemRow, sectionId);
         popup.remove();
     });
 
@@ -42,7 +43,7 @@ function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
     });
 
     popup.appendChild(popupContent); 
-    sectionButtonsCell.appendChild(popup);
+    itemButtonsCell.appendChild(popup);
 
     //Close the delete popup when clicked outside
     window.addEventListener("click", (e) => {
@@ -63,28 +64,28 @@ function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
 }
 
 //Deletes Section from UI and LS
-function deleteSection(sectionRow) {
-    const sectionId = sectionRow.id;
-    if (sectionRow) {
-        if (sectionRow.classList.contains('expanded')) {
-            let items = sectionRow.nextElementSibling;
-            if (items && items.tagName === 'TABLE') {
-                items.remove(); 
+function deleteItem(itemRow, sectionId) {
+    const itemId = itemRow.id;
+    if (itemRow) {
+        if (itemRow.classList.contains('expanded')) {
+            let Os = itemRow.nextElementSibling;
+            if (Os && Os.tagName === 'TABLE') {
+                Os.remove();
             }
         }
-        sectionRow.remove(); 
-        const sectionIndex = getSectionIndex(sectionId);
-        if (sectionIndex !== -1) {
-            jsonData.MenuSections.splice(sectionIndex, 1);
-            jsonData.MenuSections.forEach((obj, index) => {
+        itemRow.remove(); 
+        const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
+        if (itemIndex !== -1) {
+            jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1);
+            jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
             updateSectionLocalStorage();
-            updateCounterLocalStorage(sectionId, false);
+            updateCounterLocalStorage(itemId, false);
         }
     }
 }
 
 export {
-    sectionDeleteButton,
+    itemDeleteButton,
 }

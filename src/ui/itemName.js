@@ -52,7 +52,6 @@ function createItemName(itemRow, menuItem, sectionId) {
 function updateName(itemId, itemName, sectionId) {
 
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
-    console.log(itemIndex);
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Name = itemName;
 
     updateSectionLocalStorage()
