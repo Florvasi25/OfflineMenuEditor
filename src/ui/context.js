@@ -19,7 +19,7 @@ function getItemIndex(sectionId, itemId) {
 
     const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
 
-    return {itemIndex, sectionIndex}
+    return {sectionIndex, itemIndex}
 }
 
 //Updates JSON LocalStorage

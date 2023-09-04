@@ -84,7 +84,6 @@
 .itemDropdownCell {
     width: 25px;
     border: solid 1px #ffffff;
-
 }
 
 .boxDropdownButton {
@@ -208,6 +207,7 @@
 
 .sectionButtonsCell {
     width: 25px;
+    border: solid 1px #ffffff;
 }
 
 .sectionButton {

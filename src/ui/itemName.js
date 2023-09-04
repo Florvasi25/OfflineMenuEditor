@@ -1,6 +1,5 @@
 import {
     updateSectionLocalStorage,
-    getSectionIndex,
     jsonData,
     getItemIndex,
 } from './context.js'

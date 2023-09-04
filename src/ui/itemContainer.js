@@ -11,6 +11,14 @@ import {
     createItemDropdown
 } from './itemDropDown.js'
 
+import {
+    createItemDragCell
+} from './itemDragAndDrop.js'
+
+import {
+    createItemButtonsCell
+} from './itemButtonContainer.js'
+
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('table');
     itemTable.classList.add('itemTable');
@@ -43,13 +51,11 @@ function createItem(menuItem, sectionId) {
     itemRow.appendChild(itemDropDownCell)
 
     //Creates Drag Cell
-    const itemDragCell = document.createElement('td');
-    itemDragCell.classList.add('itemDragCell');
+    const itemDragCell = createItemDragCell(itemRow);
     itemRow.appendChild(itemDragCell)
 
     //Creates Buttons Cell
-    const itemButtonsCell = document.createElement('td');
-    itemButtonsCell.classList.add('itemButtonsCell');
+    const itemButtonsCell = createItemButtonsCell(itemRow, menuItem, sectionId);
     itemRow.appendChild(itemButtonsCell)
 
     //Creates Section Name Cell

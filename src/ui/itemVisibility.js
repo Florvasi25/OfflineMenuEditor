@@ -1,31 +1,31 @@
 import {
     updateSectionLocalStorage,
-    getSectionIndex,
+    getItemIndex,
     jsonData,
 } from './context.js'
 
-function sectionVisibilityButton(sectionRow, menuSection, sectionButtonsCell) {
+function itemVisibilityButton(itemRow, menuItem, itemNameCell, sectionId) {
     const visibilityButton = document.createElement('button');
     visibilityButton.classList.add('sectionButton')
     visibilityButton.classList.add('visibilityButton')
     visibilityButton.addEventListener('click', () => {
-        SectionAvailability(sectionRow);
+        SectionAvailability(itemRow, sectionId, itemRow.id);
     });
-    sectionButtonsCell.appendChild(visibilityButton);
+    itemNameCell.appendChild(visibilityButton);
     const visibilityButtonImg = document.createElement('img')
     visibilityButtonImg.classList.add('sectionButtonImg')
     visibilityButtonImg.src = '../../assets/visibilityIcon.svg'
     visibilityButton.appendChild(visibilityButtonImg)
 
     //Unavailable Sections - Gray
-    if (!menuSection.IsAvailable) {
-        sectionRow.classList.add('unavailable');
+    if (!menuItem.IsAvailable) {
+        itemRow.classList.add('unavailable');
         visibilityButton.classList.add('hiddenSection')
     }
 
     //Changes the color of the Visibility Button according to its availability
     visibilityButton.addEventListener('click', () => {
-        if (!menuSection.IsAvailable) {
+        if (!menuItem.IsAvailable) {
             visibilityButton.classList.add('hiddenSection')
         } else {
             visibilityButton.classList.remove('hiddenSection')
@@ -34,18 +34,19 @@ function sectionVisibilityButton(sectionRow, menuSection, sectionButtonsCell) {
 }
 
 //Section Availability
-function SectionAvailability(sectionRow) {
-    const sectionIndex = getSectionIndex(sectionRow.id);
-    if (sectionIndex !== -1) {
-        const isAvailableNew = !jsonData.MenuSections[sectionIndex].IsAvailable
-        jsonData.MenuSections[sectionIndex].IsAvailable = isAvailableNew
+function SectionAvailability(itemRow, sectionId, itemId) {
 
-        sectionRow.classList.toggle('unavailable', !isAvailableNew);
+    const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
+    if (itemIndex !== -1) {
+        const isAvailableNew = !jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].IsAvailable
+        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].IsAvailable = isAvailableNew
+
+        itemRow.classList.toggle('unavailable', !isAvailableNew);
 
         updateSectionLocalStorage()
     }
 }
 
 export {
-    sectionVisibilityButton,
+    itemVisibilityButton,
 }
