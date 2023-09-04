@@ -10,15 +10,15 @@ import {
 //     sectionDeleteButton
 // } from './sectionDelete.js'
 
-// import {
-//     sectionDuplicateButton,
-// } from './sectionDuplicate.js'
+import {
+    itemDuplicateButton,
+} from './itemDuplicate.js'
 
 import {
     createItemName
 } from './itemName.js'
 
-function createItemButtonsCell(itemRow, menuItem, sectionId) {
+function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('td');
     itemButtonsCell.classList = "sectionButtonsCell"
 
@@ -30,8 +30,7 @@ function createItemButtonsCell(itemRow, menuItem, sectionId) {
 
     itemVisibilityButton(itemRow, menuItem, itemButtonsCell, sectionId);
 
-    // sectionDuplicateButton(sectionRow, itemButtonsCell, menuSection)
-
+    itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem)
 
     return itemButtonsCell
 }

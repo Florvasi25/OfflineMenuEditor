@@ -22,24 +22,24 @@ import {
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('table');
     itemTable.classList.add('itemTable');
-    createItemRows(itemTable, sectionRow);
     sectionRow.parentNode.insertBefore(itemTable, sectionRow.nextSibling);
     const itemContainer = document.createElement('tbody')
     itemContainer.className = 'itemContainer'
     itemTable.appendChild(itemContainer)
+    createItemRows(itemTable, sectionRow, itemContainer);
 }
 
-function createItemRows(itemContainer, sectionRow) {
+function createItemRows(itemTable, sectionRow, itemContainer) {
     const sectionIndex = getSectionIndex(sectionRow.id);
     const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
     
     menuItems.forEach(menuItem => {
-        const itemRow = createItem(menuItem, sectionRow.id)
-        itemContainer.appendChild(itemRow);
+        const itemRow = createItem(menuItem, sectionRow.id, itemContainer)
+        itemTable.appendChild(itemRow);
     });
 }
 
-function createItem(menuItem, sectionId) {
+function createItem(menuItem, sectionId, itemContainer) {
     const itemRow = document.createElement('tr');
     itemRow.classList.add('itemRow');
     itemRow.classList.add('draggable');
@@ -55,7 +55,7 @@ function createItem(menuItem, sectionId) {
     itemRow.appendChild(itemDragCell)
 
     //Creates Buttons Cell
-    const itemButtonsCell = createItemButtonsCell(itemRow, menuItem, sectionId);
+    const itemButtonsCell = createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer);
     itemRow.appendChild(itemButtonsCell)
 
     //Creates Section Name Cell
@@ -86,5 +86,6 @@ function createItem(menuItem, sectionId) {
 }
 
 export {
-    createItemContainer
+    createItemContainer,
+    createItem,
 }

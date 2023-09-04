@@ -15,12 +15,12 @@ import {
     showToolTip 
 } from './toolTip.js'
 
-function sectionDuplicateButton(sectionRow, sectionNameCell) {
+function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
 
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
-    sectionNameCell.appendChild(duplicateButton);
+    sectionButtonsCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')
     duplicateButtonImg.classList.add('sectionButtonImg')
     duplicateButtonImg.src = '../../assets/duplicateIcon.svg'
