@@ -19,6 +19,10 @@ import {
     createItemButtonsCell
 } from './itemButtonContainer.js'
 
+import {
+    createItemButton
+} from './itemAddNew.js'
+
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('table');
     itemTable.classList.add('itemTable');
@@ -27,6 +31,12 @@ function createItemContainer(sectionRow) {
     itemContainer.className = 'itemContainer'
     itemTable.appendChild(itemContainer)
     createItemRows(sectionRow, itemContainer);
+    createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)
+}
+
+function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
+    const newItemBtnContainer = createItemButton(itemContainer, sectionId)
+    itemTable.appendChild(newItemBtnContainer)
 }
 
 function createItemRows(sectionRow, itemContainer) {
