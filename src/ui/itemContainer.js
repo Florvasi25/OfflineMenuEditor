@@ -41,8 +41,10 @@ function createItemContainer(sectionRow) {
 }
 
 function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
-    const newItemBtnContainer = createItemButton(itemContainer, sectionId)
+    const newItemBtnContainer = document.createElement('div')
     itemTable.appendChild(newItemBtnContainer)
+    const newItemButton = createItemButton(itemContainer, sectionId)
+    newItemBtnContainer.appendChild(newItemButton)
 }
 
 function createItemRows(sectionRow, itemContainer) {
