@@ -12,7 +12,8 @@ import {
 } from './itemDropDown.js'
 
 import {
-    createItemDragCell
+    createItemDragCell,
+    setDragListeners,
 } from './itemDragAndDrop.js'
 
 import {
@@ -36,6 +37,7 @@ function createItemContainer(sectionRow) {
     itemTable.appendChild(itemContainer)
     createItemRows(sectionRow, itemContainer);
     createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)
+    setDragListeners(itemContainer, sectionRow.id)
 }
 
 function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
@@ -79,11 +81,6 @@ function createItem(menuItem, sectionId, itemContainer) {
     //Desc Cell
     const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemDescCell)
-
-    // //OS Cell
-    // const itemOsCell = document.createElement('td');
-    // itemOsCell.classList.add('itemOsCell');
-    // itemRow.appendChild(itemOsCell)
 
     //Price Cell
     const itemPriceCell = document.createElement('td');

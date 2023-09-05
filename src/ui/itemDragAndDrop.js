@@ -2,6 +2,7 @@ import {
     jsonData,
     updateSectionLocalStorage,
     getItemIndex,
+    getSectionIndex
 } from './context.js';
 
 import {
@@ -17,7 +18,7 @@ function createItemDragCell(itemRow) {
     itemDragCell.appendChild(itemDragImg)
 
     itemDragImg.addEventListener('dragstart', () => {
-        if (itemRow.classList.contains('expanded')) return; // Si hay alguna sección expandida, no hagas nada.
+        // if (itemRow.classList.contains('expanded')) return; // Si hay alguna sección expandida, no hagas nada.
         itemRow.classList.add('dragging')
     })
 
@@ -28,24 +29,75 @@ function createItemDragCell(itemRow) {
     })
 
     itemDragImg.addEventListener('dragend', () => {
-        if (itemRow.classList.contains('expanded')) return;
+        // if (itemRow.classList.contains('expanded')) return;
         itemRow.classList.remove('dragging')
         itemRow.classList.remove('clickOnDrag')
     })
 
     itemDragImg.addEventListener('mousedown', () => {
-        if (itemRow.classList.contains('expanded')) return;
+        // if (itemRow.classList.contains('expanded')) return;
         itemRow.classList.add('clickOnDrag')
     })
 
     itemDragImg.addEventListener('mouseup', () => {
-        if (itemRow.classList.contains('expanded')) return;
+        // if (itemRow.classList.contains('expanded')) return;
         itemRow.classList.remove('clickOnDrag')
     })
 
     return itemDragCell
 }
 
-export { 
-    createItemDragCell
+function getDragAfterElement(itemContainer, y) {
+    const draggableElements = [...itemContainer.querySelectorAll('.draggable:not(.dragging)')]
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+        } else {
+            return closest
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element
+}
+
+let draggable = null;
+
+function setDragListeners(itemContainer, sectionId) {
+    itemContainer.addEventListener('dragenter', e => {
+        // if (document.querySelector('.expanded')) return; // Si hay alguna sección expandida, no hagas nada.
+        e.preventDefault()
+        const afterElement = getDragAfterElement(itemContainer, e.clientY)
+        draggable = document.querySelector('.dragging')
+        if (afterElement == null) {
+            itemContainer.appendChild(draggable)
+        } else {
+            itemContainer.insertBefore(draggable, afterElement)
+        }
+        console.log('drag enter');
+    })
+    
+    
+    itemContainer.addEventListener("dragend", () => {
+        // if (document.querySelector('.expanded')) return;
+        const rows = Array.from(itemContainer.querySelectorAll(".itemRow"));
+        const draggedIdItem = draggable.getAttribute("id");
+        const {itemIndex, sectionIndex} = getItemIndex(sectionId, draggedIdItem)
+        const indexNewPosition = rows.indexOf(draggable);
+    
+        if(itemIndex !== indexNewPosition) {
+            const sectionToMove = jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1)[0];
+            jsonData.MenuSections[sectionIndex].MenuItems.splice(indexNewPosition, 0, sectionToMove);
+            jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, itemIndex) => {
+                obj.DisplayOrder = itemIndex;
+            });
+            updateSectionLocalStorage()
+        }
+    })
+}
+
+
+export {
+    createItemDragCell,
+    setDragListeners
  }
