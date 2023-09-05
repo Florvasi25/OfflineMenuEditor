@@ -23,6 +23,10 @@ import {
     createItemButton
 } from './itemAddNew.js'
 
+import {
+    createItemDescCell
+} from './itemDescription.js'
+
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('table');
     itemTable.classList.add('itemTable');
@@ -73,8 +77,7 @@ function createItem(menuItem, sectionId, itemContainer) {
     itemRow.appendChild(itemNameCell)
 
     //Desc Cell
-    const itemDescCell = document.createElement('td');
-    itemDescCell.classList.add('itemDescCell');
+    const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemDescCell)
 
     // //OS Cell

@@ -27,7 +27,7 @@ function createSectionDesc(menuSection, sectionRow) {
     sectionDesc.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            updateDesc(sectionRow.id, sectionDesc.textContent);
+            updateSectionDesc(sectionRow.id, sectionDesc.textContent);
             originalDesc = sectionDesc.textContent;
             sectionDesc.blur();
         } else if (e.key === 'Escape') {
@@ -49,7 +49,7 @@ function createSectionDesc(menuSection, sectionRow) {
 }
 
 //Updates descriptions when the JSON loads
-function updateDesc(sectionId, sectionDesc) {
+function updateSectionDesc(sectionId, sectionDesc) {
     const sectionIndex = getSectionIndex(sectionId);
 
     jsonData.MenuSections[sectionIndex].Description = sectionDesc;

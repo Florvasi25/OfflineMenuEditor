@@ -50,7 +50,6 @@ function createItemName(itemRow, menuItem, sectionId) {
 
 //Updates Name
 function updateName(itemId, itemName, sectionId) {
-
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Name = itemName;
 

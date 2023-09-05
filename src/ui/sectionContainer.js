@@ -46,21 +46,6 @@ function createSection(menuSection) {
     //Section Desc Cell
     const sectionDescCell = createSectionDescCell(menuSection, sectionRow);
     sectionRow.appendChild(sectionDescCell)
-
-    // //OS Cell
-    // const sectionOsCell = document.createElement('td');
-    // sectionOsCell.classList.add('sectionOsCell');
-    // sectionRow.appendChild(sectionOsCell)
-
-    // //Price Cell
-    // const sectionPriceCell = document.createElement('td');
-    // sectionPriceCell.classList.add('sectionPriceCell');
-    // sectionRow.appendChild(sectionPriceCell)
-
-    // //Tax Cell
-    // const sectionTaxCell = document.createElement('td');
-    // sectionTaxCell.classList.add('sectionTaxCell');
-    // sectionRow.appendChild(sectionTaxCell)
     
     return sectionRow
 }

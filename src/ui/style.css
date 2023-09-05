@@ -157,7 +157,8 @@
 
 .itemDescCell {
     padding: 5px;
-    width: 250px;
+    width: 300px;
+    border: solid 1px #ffffff;
 }
 
 .sectionDesc {
@@ -173,16 +174,18 @@
 
 /* PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE */
 
-.sectionPriceCell {
+.itemPriceCell {
     padding: 5px;
     width: 50px;
+    border: solid 1px #ffffff;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
 
-.sectionTaxCell {
+.itemTaxCell {
     padding: 5px;
     width: 35px;
+    border: solid 1px #ffffff;
 }
 
 /* TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP */
