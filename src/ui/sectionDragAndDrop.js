@@ -2,6 +2,7 @@ import {
     jsonData,
     updateSectionLocalStorage,
     getSectionIndex,
+    getDragAfterElement,
 } from './context.js';
 
 import {
@@ -46,20 +47,6 @@ function createSectionDragCell(sectionRow) {
     return sectionDragCell
 }
 
-function getDragAfterElement(sectionContainer, y) {
-    const draggableElements = [...sectionContainer.querySelectorAll('.draggable:not(.dragging)')]
-
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if (offset < 0 && offset > closest.offset) {
-            return { offset: offset, element: child }
-        } else {
-            return closest
-        }
-    }, { offset: Number.NEGATIVE_INFINITY }).element 
-}
-
 let draggable = null;
 
 sectionContainer.addEventListener('dragenter', e => {
@@ -77,16 +64,16 @@ sectionContainer.addEventListener('dragenter', e => {
 
 sectionContainer.addEventListener("dragend", () => {
     if (document.querySelector('.expanded')) return;
-    const rows = Array.from(sectionContainer.querySelectorAll("tr"));
-    const sectionid = draggable.getAttribute("id");
-    const index = getSectionIndex(sectionid); 
+    const rows = Array.from(sectionContainer.querySelectorAll(".sectionRow"));
+    const draggedIdSection = draggable.getAttribute("id");
+    const indexSection = getSectionIndex(draggedIdSection); 
     const indexNewPosition = rows.indexOf(draggable);
 
-    if(index !== indexNewPosition) {
-        const sectionToMove = jsonData.MenuSections.splice(index, 1)[0];
+    if(indexSection !== indexNewPosition) {
+        const sectionToMove = jsonData.MenuSections.splice(indexSection, 1)[0];
         jsonData.MenuSections.splice(indexNewPosition, 0, sectionToMove);
-        jsonData.MenuSections.forEach((obj, index) => {
-            obj.DisplayOrder = index;
+        jsonData.MenuSections.forEach((obj, indexSection) => {
+            obj.DisplayOrder = indexSection;
         });
         updateSectionLocalStorage()
     }

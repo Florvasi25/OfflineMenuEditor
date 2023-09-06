@@ -12,7 +12,8 @@ import {
 } from './itemDropDown.js'
 
 import {
-    createItemDragCell
+    createItemDragCell,
+    setDragListeners,
 } from './itemDragAndDrop.js'
 
 import {
@@ -23,6 +24,10 @@ import {
     createItemButton
 } from './itemAddNew.js'
 
+import {
+    createItemDescCell
+} from './itemDescription.js'
+
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('table');
     itemTable.classList.add('itemTable');
@@ -32,11 +37,14 @@ function createItemContainer(sectionRow) {
     itemTable.appendChild(itemContainer)
     createItemRows(sectionRow, itemContainer);
     createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)
+    setDragListeners(itemContainer, sectionRow.id)
 }
 
 function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
-    const newItemBtnContainer = createItemButton(itemContainer, sectionId)
+    const newItemBtnContainer = document.createElement('div')
     itemTable.appendChild(newItemBtnContainer)
+    const newItemButton = createItemButton(itemContainer, sectionId)
+    newItemBtnContainer.appendChild(newItemButton)
 }
 
 function createItemRows(sectionRow, itemContainer) {
@@ -73,14 +81,8 @@ function createItem(menuItem, sectionId, itemContainer) {
     itemRow.appendChild(itemNameCell)
 
     //Desc Cell
-    const itemDescCell = document.createElement('td');
-    itemDescCell.classList.add('itemDescCell');
+    const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemDescCell)
-
-    // //OS Cell
-    // const itemOsCell = document.createElement('td');
-    // itemOsCell.classList.add('itemOsCell');
-    // itemRow.appendChild(itemOsCell)
 
     //Price Cell
     const itemPriceCell = document.createElement('td');

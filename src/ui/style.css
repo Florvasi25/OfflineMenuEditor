@@ -3,6 +3,8 @@
     font-family: 'Fraunces', serif; */
     font-family: 'Roboto', sans-serif;
     border-spacing: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
@@ -11,6 +13,7 @@
     width: 100vw;
     max-width: 100%;
     table-layout: fixed;
+    padding: 10px;
 }
 
 .itemTable {
@@ -25,7 +28,6 @@
     height: auto;
     background-color: #add8e6;
     list-style: none;
-    margin: 15px 0;
 
     &.expanded .sectionDropdownButton { 
         transform: rotate(45deg); 
@@ -49,7 +51,6 @@
     height: auto;
     background-color: #d0ade6;
     list-style: none;
-    margin: 15px 0;
 
     &.expanded .sectionDropdownButton { 
         transform: rotate(45deg); 
@@ -145,6 +146,7 @@
 .sectionName {
     font-size: 14px;
     font-weight: bold;
+    height: 100%;
 }
 
 /* DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION */
@@ -157,7 +159,8 @@
 
 .itemDescCell {
     padding: 5px;
-    width: 250px;
+    width: 350px;
+    border: solid 1px #ffffff;
 }
 
 .sectionDesc {
@@ -166,23 +169,21 @@
 
 /* OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET */
 
-.sectionOsCell {
-    padding: 5px;
-    width: auto;
-}
 
 /* PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE */
 
-.sectionPriceCell {
+.itemPriceCell {
     padding: 5px;
     width: 50px;
+    border: solid 1px #ffffff;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
 
-.sectionTaxCell {
+.itemTaxCell {
     padding: 5px;
     width: 35px;
+    border: solid 1px #ffffff;
 }
 
 /* TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP */
