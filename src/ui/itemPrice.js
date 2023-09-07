@@ -20,9 +20,11 @@ function createItemPrice(itemRow, menuItem, sectionId) {
     const itemPrice = document.createElement('p');
     itemPrice.classList.add('itemPrice');
     itemPrice.contentEditable = true;
-    itemPrice.textContent = menuItem.Price;
+    
+    const priceAsNumber = parseFloat(menuItem.Price);
+    itemPrice.textContent = isNaN(priceAsNumber) ? '' : priceAsNumber.toFixed(2);
 
-    let originalPrice = menuItem.Price;
+    let originalPrice = priceAsNumber;
 
     itemPrice.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -33,20 +35,20 @@ function createItemPrice(itemRow, menuItem, sectionId) {
                     itemPrice.textContent = newPrice + '.00';
                 }
                 updatePrice(itemRow.id, itemPrice.textContent, sectionId);
-                originalPrice = itemPrice.textContent;
+                originalPrice = parseFloat(itemPrice.textContent);
                 itemPrice.blur();
             } else {
-                itemPrice.textContent = originalPrice;
+                itemPrice.textContent = originalPrice.toFixed(2);
                 itemPrice.blur();
             }
         } else if (e.key === 'Escape') {
-            itemPrice.textContent = originalPrice;
+            itemPrice.textContent = originalPrice.toFixed(2);
             itemPrice.blur();
         }
     });
 
     itemPrice.addEventListener('blur', () => {
-        itemPrice.textContent = originalPrice;
+        itemPrice.textContent = originalPrice.toFixed(2);
         itemPrice.classList.remove('sectionClicked');
     });
 
@@ -74,7 +76,6 @@ function updatePrice(itemId, itemPrice, sectionId) {
         updateSectionLocalStorage();
     }
 }
-
 
 export {
     createItemPriceCell,
