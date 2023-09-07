@@ -16,127 +16,121 @@ function sectionClockButton(sectionButtonsCell) {
     clockButton.appendChild(clockButtonImg)
 
     clockButton.addEventListener('click', () => {
-        const modalBody = createClockWindow();
-        createTable(modalBody);
+        const clockBodyDiv = createClockModal();
+        createClockTable(clockBodyDiv);
     });
 }
-    function createClockWindow()
-    {
-        // Create the main modal div
-        const modalDiv = document.createElement('div');
-        modalDiv.className = 'modal';
-        modalDiv.id = 'exampleModal';
 
-        // Create modal dialog div
-        const modalDialog = document.createElement('div');
-        modalDialog.className = 'modal-dialog';
+function createClockModal() {
+  // Create the main modal div
+  const clockModalDiv = document.createElement('div');
+  clockModalDiv.classList.add('clockModal');
+  clockModalDiv.id = 'clockModalID';
 
-        // Create modal content div
-        const modalContent = document.createElement('div');
-        modalContent.className = 'modal-content';
+  // Create modal dialog div
+  const clockDialogDiv = document.createElement('div');
+  clockDialogDiv.classList.add('clock-dialog');
 
-        // Create header
-        const modalHeader = document.createElement('div');
-        modalHeader.className = 'modal-header';
-        const title = document.createElement('h5');
-        title.className = 'modal-title';
-        title.id = 'exampleModalLabel';
-        title.textContent = 'Menu Section Hours';
-        const btnClose = document.createElement('span');
-        btnClose.className = 'btn-close';
-        btnClose.innerHTML = '&times;';
-        btnClose.addEventListener('click', () => {
-          modalDiv.style.display = 'none';
-        });
-        modalHeader.appendChild(title);
-        modalHeader.appendChild(btnClose);
-    
-        // Create body
-        const modalBody = document.createElement('div');
-        modalBody.className = 'modal-body';
-    
-        // Create footer
-        const modalFooter = document.createElement('div');
-        modalFooter.className = 'modal-footer';
-        const btnCloseFooter = document.createElement('button');
-        btnCloseFooter.className = 'btn btn-secondary';
-        btnCloseFooter.textContent = 'Close';
-        btnCloseFooter.addEventListener('click', () => {
-          modalDiv.style.display = 'none';
-        });
-        const btnSave = document.createElement('button');
-        btnSave.className = 'btn btn-primary';
-        btnSave.textContent = 'Save Changes';
-        modalFooter.appendChild(btnCloseFooter);
-        modalFooter.appendChild(btnSave);
-    
-        modalContent.appendChild(modalHeader);
-        modalContent.appendChild(modalBody);
-        modalContent.appendChild(modalFooter);
-        modalDialog.appendChild(modalContent);
-        modalDiv.appendChild(modalDialog);
-    
-        document.body.appendChild(modalDiv);
-    
-        // Show modal
-        modalDiv.style.display = 'block';
+  // Create modal content div
+  const clockContentDiv = document.createElement('div');
+  clockContentDiv.classList.add('clock-content');
 
-        return modalBody;
-    }
+  // Create header
+  const clockHeaderDiv = document.createElement('div');
+  clockHeaderDiv.classList.add('clock-header');
+  const clockTitle = document.createElement('h5');
+  clockTitle.classList.add('clock-title');
+  clockTitle.id = 'clockModalTitle';
+  clockTitle.textContent = 'Menu Section Hours';
+  const clockCloseIcon = document.createElement('span');
+  clockCloseIcon.classList.add('clockBtn-close');
+  clockCloseIcon.innerHTML = '&times;';
+  clockCloseIcon.addEventListener('click', () => {
+      clockModalDiv.style.display = 'none';
+  });
+  clockHeaderDiv.appendChild(clockTitle);
+  clockHeaderDiv.appendChild(clockCloseIcon);
 
-    function createTable(modalBody)
-    {
-        // Create table
-        const table = document.createElement('table');
-        const thead = document.createElement('thead');
-        const tbody = document.createElement('tbody');
+  // Create body
+  const clockBodyDiv = document.createElement('div');
+  clockBodyDiv.classList.add('clock-body');
 
-        // Create table header
-        const headers = ['Day', 'Open', 'Close'];
-        const headerRow = document.createElement('tr');
-        headers.forEach(text => {
-          const th = document.createElement('th');
-          th.textContent = text;
-          headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-    
-        // Create table body
-        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        days.forEach(day => {
-          const tr = document.createElement('tr');
-          [day, '01:00', '00:00'].forEach((text, index) => {
-            const td = document.createElement('td');
-            td.textContent = text;
-            if(index != 0)
-            {
-                td.contentEditable = true;
-            }
-            // Limit text to 5 characters
-            td.addEventListener('input', function(event) {
-                if (td.textContent.length > 5) {
-                  td.textContent = td.textContent.substring(0, 5);
-                }
-              });
-        
-            // Optional: Prevent Enter key from adding a new line
-            td.addEventListener('keydown', function(event) {
-              if (event.key === 'Enter') {
-                event.preventDefault();
+  // Create footer
+  const clockFooterDiv = document.createElement('div');
+  clockFooterDiv.classList.add('clock-footer');
+
+  const clockSaveBtn = document.createElement('button');
+  clockSaveBtn.classList.add('clockBtn', 'clockBtn-save');
+  clockSaveBtn.textContent = 'Save Changes';
+  clockFooterDiv.appendChild(clockSaveBtn);
+
+  clockContentDiv.appendChild(clockHeaderDiv);
+  clockContentDiv.appendChild(clockBodyDiv);
+  clockContentDiv.appendChild(clockFooterDiv);
+  clockDialogDiv.appendChild(clockContentDiv);
+  clockModalDiv.appendChild(clockDialogDiv);
+
+  document.body.appendChild(clockModalDiv);
+
+  // Show modal
+  clockModalDiv.style.display = 'block';
+
+  return clockBodyDiv;
+}
+
+function createClockTable(clockBodyDiv) {
+  // Create table
+  const clockTable = document.createElement('table');
+  clockTable.classList.add('clockTable');
+  const clockThead = document.createElement('thead');
+  const clockTbody = document.createElement('tbody');
+
+  // Create table header
+  const clockHeaders = ['Day', 'Open', 'Close'];
+  const clockHeaderRow = document.createElement('tr');
+  clockHeaders.forEach(text => {
+      const clockTh = document.createElement('th');
+      clockTh.classList.add('clockTableHeader');
+      clockTh.textContent = text;
+      clockHeaderRow.appendChild(clockTh);
+  });
+  clockThead.appendChild(clockHeaderRow);
+
+  // Create table body
+  const clockDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  clockDays.forEach(day => {
+      const clockRow = document.createElement('tr');
+      [day, '01:00', '00:00'].forEach((text, index) => {
+          const clockTd = document.createElement('td');
+          clockTd.textContent = text;
+          if (index != 0) {
+              clockTd.contentEditable = true;
+          }
+          // Limit text to 5 characters
+          clockTd.addEventListener('input', function(event) {
+              if (clockTd.textContent.length > 5) {
+                  clockTd.textContent = clockTd.textContent.substring(0, 5);
               }
-            });
-            tr.appendChild(td);
           });
-          tbody.appendChild(tr);
-        });
-    
-        // Append table components
-        table.appendChild(thead);
-        table.appendChild(tbody);
-    
-        // Add table to modal body
-        modalBody.appendChild(table);
-    }
+          // Optional: Prevent Enter key from adding a new line
+          clockTd.addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+                  event.preventDefault();
+              }
+          });
+          clockRow.appendChild(clockTd);
+      });
+      clockTbody.appendChild(clockRow);
+  });
+
+  // Append table components
+  clockTable.appendChild(clockThead);
+  clockTable.appendChild(clockTbody);
+
+  // Add table to modal body
+  clockBodyDiv.appendChild(clockTable);
+}
+
 export {
     sectionClockButton,
-}
+} 
