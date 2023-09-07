@@ -1,67 +1,3 @@
-// import {
-//     updateSectionLocalStorage,
-//     jsonData,
-//     getItemIndex,
-// } from './context.js'
-
-// function createItemPriceCell(itemRow, menuItem, sectionId) {
-//     //Price Cell
-//     const itemPriceCell = document.createElement('td');
-//     itemPriceCell.classList.add('itemPriceCell');
-
-//     const itemPrice = createItemPrice(itemRow, menuItem, sectionId)
-//     itemPriceCell.appendChild(itemPrice);
-    
-//     return itemPriceCell
-// }
-
-// //Handles Price Edits
-// function createItemPrice(itemRow, menuItem, sectionId) {
-//     const itemPrice = document.createElement('p');
-//     itemPrice.classList.add('itemPrice');
-//     itemPrice.contentEditable = true;
-//     itemPrice.textContent = menuItem.Price;
-
-//     let originalPrice = menuItem.Price;
-
-//     itemPrice.addEventListener('keydown', (e) => {
-//         if (e.key === 'Enter') {
-//             e.preventDefault();
-//             updatePrice(itemRow.id, itemPrice.textContent, sectionId);
-//             originalPrice = itemPrice.textContent;
-//             itemPrice.blur();
-//         } else if (e.key === 'Escape') {
-//             itemPrice.textContent = originalPrice;
-//             itemPrice.blur();
-//         }
-//     });
-
-//     itemPrice.addEventListener('blur', () => {
-//         itemPrice.textContent = originalPrice;
-//         itemPrice.classList.remove('sectionClicked')
-//     });
-
-//     itemPrice.addEventListener('click', () => {
-//         itemPrice.classList.add('sectionClicked')
-//     })
-
-//     return itemPrice
-// }
-
-// //Updates Price
-// function updatePrice(itemId, itemPrice, sectionId) {
-//     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
-//     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Price = itemPrice;
-
-//     updateSectionLocalStorage()
-// }
-
-// export {
-//     createItemPriceCell,
-//     createItemPrice
-// }
-
-
 import {
     updateSectionLocalStorage,
     jsonData,
@@ -91,18 +27,15 @@ function createItemPrice(itemRow, menuItem, sectionId) {
     itemPrice.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            const enteredText = itemPrice.textContent.trim();
-            if (/^[0-9]+(\.[0-9]*)?$/.test(enteredText)) {
-                // Ensure the entered text is a valid number or a decimal
-                if (!enteredText.includes('.')) {
-                    // If it's an integer, add ".00"
-                    itemPrice.textContent = enteredText + '.00';
+            const newPrice = itemPrice.textContent.trim();
+            if (/^[0-9]+(\.[0-9]*)?$/.test(newPrice)) {
+                if (!newPrice.includes('.')) {
+                    itemPrice.textContent = newPrice + '.00';
                 }
                 updatePrice(itemRow.id, itemPrice.textContent, sectionId);
                 originalPrice = itemPrice.textContent;
                 itemPrice.blur();
             } else {
-                // Not a valid number, revert to original price
                 itemPrice.textContent = originalPrice;
                 itemPrice.blur();
             }
@@ -121,11 +54,10 @@ function createItemPrice(itemRow, menuItem, sectionId) {
         itemPrice.classList.add('sectionClicked');
     });
 
-    // Use the input event to prevent non-numeric characters
     itemPrice.addEventListener('input', () => {
-        const enteredText = itemPrice.textContent;
-        const sanitizedText = enteredText.replace(/[^\d.]/g, '');
-        itemPrice.textContent = sanitizedText;
+        const newPrice = itemPrice.textContent;
+        const removeCharacters = newPrice.replace(/[^\d.]/g, '');
+        itemPrice.textContent = removeCharacters;
     });
 
     return itemPrice;
@@ -133,14 +65,18 @@ function createItemPrice(itemRow, menuItem, sectionId) {
 
 //Updates Price
 function updatePrice(itemId, itemPrice, sectionId) {
-    const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Price = itemPrice;
+    const { itemIndex, sectionIndex } = getItemIndex(sectionId, itemId);
+    const priceAsNumber = parseFloat(itemPrice);
 
-    updateSectionLocalStorage()
+    if (!isNaN(priceAsNumber)) {
+        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Price = priceAsNumber;
+
+        updateSectionLocalStorage();
+    }
 }
+
 
 export {
     createItemPriceCell,
     createItemPrice
 }
-
