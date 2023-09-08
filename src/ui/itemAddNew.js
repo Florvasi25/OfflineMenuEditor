@@ -18,6 +18,7 @@ function createItemButton(itemContainer, sectionId) {
     //Add Section
     newItemButton.addEventListener('click', () => {
         const newId = getUniqueRandomInt()
+        const sectionIndex = getSectionIndex(sectionId);
     
         const emptyItemJson = {
             MenuId: jsonData.MenuId,
@@ -26,7 +27,7 @@ function createItemButton(itemContainer, sectionId) {
             Description: null,
             SpicinessRating: 0,
             Price: 0,
-            DisplayOrder: 0,
+            DisplayOrder: jsonData.MenuSections[sectionIndex].MenuItems.length,
             IsDeleted: false,
             Alcohol: false,
             CatalogItemId: null,
@@ -56,7 +57,6 @@ function createItemButton(itemContainer, sectionId) {
     
         itemContainer.appendChild(itemRow);
 
-        const sectionIndex = getSectionIndex(sectionId);
         jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
     
         updateSectionLocalStorage()
