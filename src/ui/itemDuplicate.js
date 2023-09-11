@@ -1,8 +1,9 @@
 import {
     jsonData,
     getItemIndex,
-    updateCounterLocalStorage,
+    updateItemCounterLocalStorage,
     updateSectionLocalStorage,
+    getLocalStorageItemIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from './context.js';
@@ -29,9 +30,7 @@ function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer,
     //show tooltip on mouseover
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (itemRow.classList.contains('expanded')) {
-            showToolTip(duplicateButton, "You must close this section before duplicating.");
-        } else {
-            
+            showToolTip(duplicateButton, "You must close this item before duplicating.");
         }
     });
     
@@ -51,7 +50,8 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
         const newItem = JSON.parse(JSON.stringify(originalItem));
         
-        const newItemId = getUniqueRandomInt();
+        const itemIDs = getLocalStorageItemIDs();
+        const newItemId = getUniqueRandomInt(itemIDs);
 
         newItem.MenuItemId = newItemId;
         newItem.PublicId = crypto.randomUUID();
@@ -65,7 +65,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
             obj.DisplayOrder = index;
         });
         updateSectionLocalStorage();
-        updateCounterLocalStorage(newItemId, true);
+        updateItemCounterLocalStorage(newItemId, true);
 
     }
 }

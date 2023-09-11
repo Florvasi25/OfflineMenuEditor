@@ -4,8 +4,9 @@ import {
 
 import {
     jsonData, 
-    updateCounterLocalStorage,
+    updateItemCounterLocalStorage,
     updateSectionLocalStorage,
+    getLocalStorageItemIDs,
     getUniqueRandomInt,
     getSectionIndex,
 } from './context.js';
@@ -14,10 +15,12 @@ function createItemButton(itemContainer, sectionId) {
     const newItemButton = document.createElement('button')
     newItemButton.setAttribute('id', 'itemAddNew')
     newItemButton.textContent = 'New Item'
-
+    
     //Add Section
     newItemButton.addEventListener('click', () => {
-        const newId = getUniqueRandomInt()
+
+        const itemIDs = getLocalStorageItemIDs();
+        const newId = getUniqueRandomInt(itemIDs);
         const sectionIndex = getSectionIndex(sectionId);
     
         const emptyItemJson = {
@@ -39,7 +42,7 @@ function createItemButton(itemContainer, sectionId) {
             TaxRateId: null,
             TaxValue: 0,
             TaxRateName: null,
-            MenuSectionId: sectionId,
+            MenuSectionId: jsonData.MenuSections[sectionIndex].MenuSectionId,
             ImageName: null,
             ImageUrl: null,
             CellAspectRatio: 4,
@@ -60,7 +63,7 @@ function createItemButton(itemContainer, sectionId) {
         jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
     
         updateSectionLocalStorage()
-        updateCounterLocalStorage(newId, true);
+        updateItemCounterLocalStorage(newId, true);
     });
 
     return newItemButton

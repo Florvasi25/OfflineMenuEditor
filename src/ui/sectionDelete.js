@@ -2,6 +2,7 @@ import {
     jsonData,
     getSectionIndex,
     updateCounterLocalStorage,
+    updateItemCounterLocalStorage,
     updateSectionLocalStorage,
 } from './context.js';
 
@@ -66,6 +67,10 @@ function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
 function deleteSection(sectionRow) {
     const sectionId = sectionRow.id;
     if (sectionRow) {
+
+        // Encuentra la sección en jsonData basada en el ID
+        const section = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
+        deleteItemLocalStorage(section); // delete item ID inside local storage
         if (sectionRow.classList.contains('expanded')) {
             let items = sectionRow.nextElementSibling;
             if (items && items.tagName === 'TABLE') {
@@ -81,9 +86,22 @@ function deleteSection(sectionRow) {
             });
             updateSectionLocalStorage();
             updateCounterLocalStorage(sectionId, false);
+
         }
     }
 }
+
+// delete item ID inside local storage
+function deleteItemLocalStorage(section)
+{
+    if (section && section.MenuItems) {
+        for (const item of section.MenuItems) {
+            // Calls updateItemCounterLocalStorage for each item
+            updateItemCounterLocalStorage(item.MenuItemId, false);
+        }
+    }
+}
+   
 
 export {
     sectionDeleteButton,

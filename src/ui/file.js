@@ -3,6 +3,7 @@ import {
     setJsonData,
     updateSectionLocalStorage,
     setSectionId,
+    setItemId,
     setSectionDisplayOrder,
 } from './context.js';
 
@@ -25,6 +26,7 @@ function createLoadJsonButton() {
             updateSectionLocalStorage()
             setSectionId(jsonData);
             setSectionDisplayOrder(jsonData);
+            setItemId(jsonData);
             generateHTML(jsonData);
         };
     

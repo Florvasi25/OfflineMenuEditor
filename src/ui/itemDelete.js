@@ -1,7 +1,7 @@
 import {
     jsonData,
     getItemIndex,
-    updateCounterLocalStorage,
+    updateItemCounterLocalStorage,
     updateSectionLocalStorage,
 } from './context.js';
 
@@ -63,7 +63,7 @@ function confirmDelete(itemRow, itemName, itemButtonsCell, sectionId) {
     });
 }
 
-//Deletes Section from UI and LS
+//Deletes item from UI and LS
 function deleteItem(itemRow, sectionId) {
     const itemId = itemRow.id;
     if (itemRow) {
@@ -81,7 +81,7 @@ function deleteItem(itemRow, sectionId) {
                 obj.DisplayOrder = index;
             });
             updateSectionLocalStorage();
-            updateCounterLocalStorage(itemId, false);
+            updateItemCounterLocalStorage(itemId, false);
         }
     }
 }

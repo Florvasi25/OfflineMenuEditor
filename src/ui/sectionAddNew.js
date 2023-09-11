@@ -6,6 +6,7 @@ import {
     jsonData, 
     updateCounterLocalStorage,
     updateSectionLocalStorage,
+    getLocalStorageSectionIDs,
     getUniqueRandomInt,
 } from './context.js';
 
@@ -16,7 +17,9 @@ function createSectionButton() {
 
     //Add Section
     newSectionButton.addEventListener('click', () => {
-        const newId = getUniqueRandomInt()
+
+        const sectionIDs = getLocalStorageSectionIDs();
+        const newId = getUniqueRandomInt(sectionIDs);
     
         const emptySectionJson = {
             MenuSectionId: newId,

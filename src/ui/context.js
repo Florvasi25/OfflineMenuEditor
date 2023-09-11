@@ -35,38 +35,15 @@ function getDragAfterElement(container, y) {
         }
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
-
-//Updates JSON LocalStorage
-function updateSectionLocalStorage() {
-    localStorage.setItem("jsonData", JSON.stringify(jsonData));
+function getLocalStorageSectionIDs()
+{
+    const existingSectionIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
+    return existingSectionIDs;
 }
-
-//Updates id LocalStorage
-function updateCounterLocalStorage(id, addID) {
-    if(addID) {
-        let existingIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
-        existingIDs.push(id);
-        localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
-    } else {
-        let existingIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
-        const indexID = existingIDs.indexOf(Number(id));
-        existingIDs.splice(indexID, 1);
-        localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
-    }
-}
-
-function getRandomInt() {
-    return Math.floor(Math.random() * 9999999) + 1;
-}
-
-function getUniqueRandomInt() {
-    const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
-    let randomNum = getRandomInt();
-
-    while (storedNumbers.includes(randomNum)) {
-        randomNum = getRandomInt();
-    }
-    return randomNum;
+function getLocalStorageItemIDs()
+{
+    const existingItemIDs = JSON.parse(localStorage.getItem("itemIDs") || "[]");
+    return existingItemIDs;
 }
 
 //set sectionID for entire json file
@@ -81,21 +58,88 @@ function setSectionId(jsonData) {
     updateSectionLocalStorage()
 }
 
+//set itemID for entire json file
+function setItemId(jsonData) {
+    localStorage.setItem("itemIDs", "[]");
+    for (const section of jsonData.MenuSections) {
+        for(const item of section.MenuItems)
+        {
+            let id = getRandomInt()
+            item.MenuItemId = id;
+            updateItemCounterLocalStorage(id, true)
+        }
+    }
+    updateSectionLocalStorage()
+}
+
 function setSectionDisplayOrder(jsonData){
     jsonData.MenuSections.forEach((obj, index) => {
         obj.DisplayOrder = index;
     });
 }
 
+//Updates JSON LocalStorage
+function updateSectionLocalStorage() {
+    localStorage.setItem("jsonData", JSON.stringify(jsonData));
+}
+
+//Updates sections id LocalStorage. 
+//If 'addID' is true, will be added to localStorage. else, will be removed.
+function updateCounterLocalStorage(id, addID) {
+    if(addID) {
+        let existingIDs =  getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
+        existingIDs.push(id);
+        localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
+    } else {
+        let existingIDs = getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]"); 
+        const indexID = existingIDs.indexOf(Number(id));
+        existingIDs.splice(indexID, 1);
+        localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
+    }
+}
+//Updates items id LocalStorage.
+function updateItemCounterLocalStorage(id, addID) {
+    if(addID) {
+        let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]"); //array
+        existingIDs.push(id);
+        localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
+    } else {
+        let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]"); 
+        const indexID = existingIDs.indexOf(Number(id));
+        existingIDs.splice(indexID, 1);
+        localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
+    }
+}
+
+function getRandomInt() {
+    return Math.floor(Math.random() * 9999999) + 1;
+}
+
+function getUniqueRandomInt(localStorageIDs) {
+    //const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
+    let randomNum = getRandomInt();
+
+    while (localStorageIDs.includes(randomNum)) {
+        randomNum = getRandomInt();
+    }
+    return randomNum;
+}
+
+
+
 export {
     jsonData,
     getSectionIndex,
     updateCounterLocalStorage,
+    updateItemCounterLocalStorage,
     updateSectionLocalStorage,
+    getLocalStorageItemIDs,
+    getLocalStorageSectionIDs,
     setJsonData,
     setSectionId,
     getUniqueRandomInt,
     setSectionDisplayOrder,
     getItemIndex,
     getDragAfterElement,
+    setItemId
 }

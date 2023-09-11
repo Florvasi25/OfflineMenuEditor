@@ -4,7 +4,10 @@ import {
     updateCounterLocalStorage,
     updateSectionLocalStorage,
     setSectionDisplayOrder,
-    getUniqueRandomInt,
+    updateItemCounterLocalStorage,
+    getLocalStorageItemIDs,
+    getLocalStorageSectionIDs,
+    getUniqueRandomInt
 } from './context.js';
 
 import {
@@ -30,8 +33,6 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (sectionRow.classList.contains('expanded')) {
             showToolTip(duplicateButton, "You must close this section before duplicating.");
-        } else {
-            
         }
     });
     
@@ -46,16 +47,18 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
 
 function duplicateSection(sectionRow) {
     const sectionIndex = getSectionIndex(sectionRow.id);
-    
     if (sectionIndex !== -1) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));
 
-        const newSectionId = getUniqueRandomInt();
+        const sectionIDs = getLocalStorageSectionIDs();
+        const newSectionId = getUniqueRandomInt(sectionIDs);
 
         newSection.MenuSectionId = newSectionId;
         newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
         newSection.PublicId = crypto.randomUUID();
+
+        setItemsID(newSection);
 
         const newSectionRow = createSection(newSection);
 
@@ -67,6 +70,21 @@ function duplicateSection(sectionRow) {
         });
         updateSectionLocalStorage();
         updateCounterLocalStorage(newSectionId, true);
+    }
+}
+
+// sets the items id of the duplicated section
+function setItemsID(newSection)
+{
+    if (newSection.MenuItems) {
+        for (const item of newSection.MenuItems) {
+            const itemsID = getLocalStorageItemIDs();
+            const newItemId = getUniqueRandomInt(itemsID);
+            item.MenuItemId = newItemId;
+            item.MenuSectionId = newSection.MenuSectionId;
+            // Calls updateItemCounterLocalStorage for each item
+            updateItemCounterLocalStorage(newItemId, true);
+        }
     }
 }
 

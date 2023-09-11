@@ -1,7 +1,7 @@
 // import {
 //     jsonData,
 //     getSectionIndex,
-//     updateCounterLocalStorage,
+//     updateItemCounterLocalStorage,
 //     updateSectionLocalStorage,
 // } from './context.js';
 
