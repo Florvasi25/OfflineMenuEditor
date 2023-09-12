@@ -29,18 +29,6 @@ function createItemPrice(itemRow, menuItem, sectionId) {
     itemPrice.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            // const newPrice = itemPrice.textContent.trim();
-            // if (/^[0-9]+(\.[0-9]*)?$/.test(newPrice)) {
-            //     if (!newPrice.includes('.')) {
-            //         itemPrice.textContent = newPrice + '.00';
-            //     }
-            //     updatePrice(itemRow.id, itemPrice.textContent, sectionId);
-            //     originalPrice = parseFloat(itemPrice.textContent);
-            //     itemPrice.blur();
-            // } else {
-            //     itemPrice.textContent = originalPrice.toFixed(2);
-            //     itemPrice.blur();
-            // }
             updatePrice(itemRow.id, itemPrice.textContent, sectionId);
             originalPrice = parseFloat(itemPrice.textContent);
             itemPrice.blur();

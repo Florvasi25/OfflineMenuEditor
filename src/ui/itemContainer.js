@@ -32,6 +32,10 @@ import {
     createItemPriceCell,
 } from './itemPrice.js'
 
+import {
+    createItemTaxCell
+} from './itemTax.js'
+
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('table');
     itemTable.classList.add('itemTable');
@@ -93,8 +97,7 @@ function createItem(menuItem, sectionId, itemContainer) {
     itemRow.appendChild(itemPriceCell)
 
     //Tax Cell
-    const itemTaxCell = document.createElement('td');
-    itemTaxCell.classList.add('itemTaxCell');
+    const itemTaxCell = createItemTaxCell(menuItem, jsonData)
     itemRow.appendChild(itemTaxCell)
 
     return itemRow

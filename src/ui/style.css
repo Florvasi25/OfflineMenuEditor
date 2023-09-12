@@ -1,6 +1,4 @@
 * {
-    /* font-family: 'Commissioner', sans-serif;
-    font-family: 'Fraunces', serif; */
     font-family: 'Roboto', sans-serif;
     border-spacing: 0;
     margin: 0;
@@ -10,14 +8,14 @@
 /* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
 
 .sectionTable {
-    width: 100vw;
+    width: 100%;
     max-width: 100%;
     table-layout: fixed;
     padding: 10px;
 }
 
 .itemTable {
-    width: 100vw;
+    width: 100%;
     max-width: 100%;
     table-layout: fixed;
 }
@@ -26,7 +24,7 @@
 
 .sectionRow {
     height: auto;
-    background-color: #e2d3ff;
+    background-color: #c6abfc;
     list-style: none;
 
     &.expanded .sectionDropdownButton { 
@@ -189,6 +187,11 @@
     padding: 5px;
     width: 35px;
     border: solid 1px #ffffff;
+}
+
+.itemTax {
+    font-size: 12px;
+    cursor: default
 }
 
 /* TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP */
