@@ -6,7 +6,7 @@ import {
     updateSectionLocalStorage,
 } from './context.js';
 
-function sectionDeleteButton(sectionButtonsCell, sectionRow, sectionName) {
+function sectionDeleteButton(sectionButtonsCell, sectionRow) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
@@ -16,19 +16,21 @@ function sectionDeleteButton(sectionButtonsCell, sectionRow, sectionName) {
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(sectionRow, sectionName, sectionButtonsCell)
+        confirmDelete(sectionRow, sectionButtonsCell)
     });
 }
 
 //Creates a popup to confirm the deletion of the section
-function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
+function confirmDelete(sectionRow, sectionButtonsCell) {
     const popup = document.createElement("div");
     popup.className = "popup";
+    const sectionId = sectionRow.id;
+    const sectionObject = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
 
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";
     popupContent.innerHTML = `
-        <p>Do you want to delete permanently "${sectionName.textContent}"</p>
+        <p>Do you want to delete permanently "${sectionObject.Name}"</p>
         <button class="yesButton">Yes</button>
         <button class="noButton">No</button>
     `;
@@ -67,7 +69,6 @@ function confirmDelete(sectionRow, sectionName, sectionButtonsCell) {
 function deleteSection(sectionRow) {
     const sectionId = sectionRow.id;
     if (sectionRow) {
-
         // Encuentra la sección en jsonData basada en el ID
         const section = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
         deleteItemLocalStorage(section); // delete item ID inside local storage
@@ -92,8 +93,7 @@ function deleteSection(sectionRow) {
 }
 
 // delete item ID inside local storage
-function deleteItemLocalStorage(section)
-{
+function deleteItemLocalStorage(section) {
     if (section && section.MenuItems) {
         for (const item of section.MenuItems) {
             // Calls updateItemCounterLocalStorage for each item

@@ -5,7 +5,7 @@ import {
     updateSectionLocalStorage,
 } from './context.js';
 
-function itemDeleteButton(itemButtonsCell, itemRow, itemName, sectionId) {
+function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
@@ -15,20 +15,23 @@ function itemDeleteButton(itemButtonsCell, itemRow, itemName, sectionId) {
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(itemRow, itemName, itemButtonsCell, sectionId)
+        confirmDelete(itemRow, itemButtonsCell, sectionId)
     });
 }
 
 
 //Creates a popup to confirm the deletion of the section
-function confirmDelete(itemRow, itemName, itemButtonsCell, sectionId) {
+function confirmDelete(itemRow, itemButtonsCell, sectionId) {
     const popup = document.createElement("div");
     popup.className = "popup";
+    const itemId = itemRow.id;
+    const sectionObject = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
+    const itemObject = sectionObject.MenuItems.find(s => s.MenuItemId == itemId);
 
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";
     popupContent.innerHTML = `
-        <p>Do you want to delete permanently "${itemName.textContent}"</p>
+        <p>Do you want to delete permanently "${itemObject.Name}"</p>
         <button class="yesButton">Yes</button>
         <button class="noButton">No</button>
     `;

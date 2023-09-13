@@ -58,5 +58,4 @@ function updateName(sectionId, sectionName) {
 
 export {
     createSectionNameCell,
-    createSectionName
 }

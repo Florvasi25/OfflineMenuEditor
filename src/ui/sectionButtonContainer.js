@@ -14,19 +14,13 @@ import {
     sectionDuplicateButton,
 } from './sectionDuplicate.js'
 
-import {
-    createSectionName
-} from './sectionName.js'
-
 function createSectionButtonsCell(sectionRow, menuSection) {
     const sectionButtonsCell = document.createElement('td');
     sectionButtonsCell.classList = "sectionButtonsCell"
 
-    const sectionName = createSectionName(sectionRow, menuSection)
-
     sectionClockButton(sectionButtonsCell)
 
-    sectionDeleteButton(sectionButtonsCell, sectionRow, sectionName)
+    sectionDeleteButton(sectionButtonsCell, sectionRow)
 
     sectionVisibilityButton(sectionRow, menuSection, sectionButtonsCell)
 

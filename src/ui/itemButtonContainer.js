@@ -14,19 +14,13 @@ import {
     itemDuplicateButton,
 } from './itemDuplicate.js'
 
-import {
-    createItemName
-} from './itemName.js'
-
 function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('td');
     itemButtonsCell.classList = "sectionButtonsCell"
 
-    const itemName = createItemName(itemRow, menuItem, sectionId)
-
     itemClockButton(itemButtonsCell)
     
-    itemDeleteButton(itemButtonsCell, itemRow, itemName, sectionId)
+    itemDeleteButton(itemButtonsCell, itemRow, sectionId)
 
     itemVisibilityButton(itemRow, menuItem, itemButtonsCell, sectionId);
 

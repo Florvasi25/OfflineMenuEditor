@@ -35,13 +35,13 @@ function getDragAfterElement(container, y) {
         }
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
-function getLocalStorageSectionIDs()
-{
+
+function getLocalStorageSectionIDs() {
     const existingSectionIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
     return existingSectionIDs;
 }
-function getLocalStorageItemIDs()
-{
+
+function getLocalStorageItemIDs() {
     const existingItemIDs = JSON.parse(localStorage.getItem("itemIDs") || "[]");
     return existingItemIDs;
 }
@@ -62,8 +62,7 @@ function setSectionId(jsonData) {
 function setItemId(jsonData) {
     localStorage.setItem("itemIDs", "[]");
     for (const section of jsonData.MenuSections) {
-        for(const item of section.MenuItems)
-        {
+        for(const item of section.MenuItems) {
             let id = getRandomInt()
             item.MenuItemId = id;
             updateItemCounterLocalStorage(id, true)

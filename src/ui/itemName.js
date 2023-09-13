@@ -58,5 +58,4 @@ function updateName(itemId, itemName, sectionId) {
 
 export {
     createItemNameCell,
-    createItemName
 }
