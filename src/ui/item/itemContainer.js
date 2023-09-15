@@ -1,11 +1,11 @@
 import { 
     jsonData,
     getSectionIndex, 
-} from './context.js'
+} from '../context.js'
 
 import {
     createItemNameCell
-} from './itemName.js'
+} from '../itemName.js'
 
 import {
     createItemDropdown
@@ -30,7 +30,7 @@ import {
 
 import {
     createItemPriceCell,
-} from './itemPrice.js'
+} from '../itemPrice.js'
 
 import {
     createItemTaxCell

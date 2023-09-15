@@ -3,7 +3,7 @@ import {
     getItemIndex,
     updateItemCounterLocalStorage,
     updateSectionLocalStorage,
-} from './context.js';
+} from '../context.js';
 
 function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
     const deleteButton = document.createElement('button');

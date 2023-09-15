@@ -10,7 +10,7 @@ import {
 
 import {
     createItem
-} from './itemContainer.js'
+} from './item/itemContainer.js'
 
 import { 
     showToolTip 

@@ -2,7 +2,7 @@ import {
     updateSectionLocalStorage,
     jsonData,
     getItemIndex,
-} from './context.js'
+} from '../context.js'
 
 function createItemDescCell(itemRow, menuItem, sectionId) {
     //Desc Cell

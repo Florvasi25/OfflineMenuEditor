@@ -8,7 +8,7 @@ import {
     updateSectionLocalStorage,
     getLocalStorageSectionIDs,
     getUniqueRandomInt,
-} from './context.js';
+} from '../context.js';
 
 function createSectionButton() {
     const newSectionButton = document.createElement('button')

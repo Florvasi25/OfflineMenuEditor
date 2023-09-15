@@ -9,7 +9,7 @@ import {
     getLocalStorageItemIDs,
     getUniqueRandomInt,
     getSectionIndex,
-} from './context.js';
+} from '../context.js';
 
 function createItemButton(itemContainer, sectionId) {
     const newItemButton = document.createElement('button')
