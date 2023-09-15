@@ -115,7 +115,6 @@ function getRandomInt() {
 }
 
 function getUniqueRandomInt(localStorageIDs) {
-    //const storedNumbers = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
     let randomNum = getRandomInt();
 
     while (localStorageIDs.includes(randomNum)) {
@@ -137,6 +136,7 @@ export {
     setJsonData,
     setSectionId,
     getUniqueRandomInt,
+    getRandomInt,
     setSectionDisplayOrder,
     getItemIndex,
     getDragAfterElement,

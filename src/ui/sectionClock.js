@@ -1,9 +1,17 @@
-// import {
-//     jsonData,
-//     getSectionIndex,
-//     updateCounterLocalStorage,
-//     updateSectionLocalStorage,
-// } from './context.js';
+import {jsonData, 
+        getRandomInt, 
+        updateSectionLocalStorage
+        } from './context.js'
+
+const dayMapping = {
+    'Monday': 1,
+    'Tuesday': 2,
+    'Wednesday': 3,
+    'Thursday': 4,
+    'Friday': 5,
+    'Saturday': 6,
+    'Sunday': 0
+};
 
 function createElementWithClasses(tagName, ...classes) {
     const element = document.createElement(tagName);
@@ -22,7 +30,7 @@ function addTextContent(element, text) {
 }
 
 
-function sectionClockButton(sectionButtonsCell) {
+function sectionClockButton(sectionButtonsCell, sectionId) {
     const clockButton = createAndAppend(sectionButtonsCell, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
@@ -30,7 +38,7 @@ function sectionClockButton(sectionButtonsCell) {
     clockButton.addEventListener('click', () => {
         const clockBodyDiv = createClockBody();
         const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');
-        createClockTable(clockBodyDiv, clockSaveBtn);
+        createClockTable(clockBodyDiv, clockSaveBtn, sectionId);
     });
 }
 
@@ -58,10 +66,13 @@ function createClockBody() {
     addTextContent(clockSaveBtn, 'Save Changes');
 
     clockModalDiv.style.display = 'block';
+
+    clockSaveBtn.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
+
     return clockBodyDiv;
 }
 
-function createClockTable(clockBodyDiv, clockSaveBtn) {
+function createClockTable(clockBodyDiv, clockSaveBtn, sectionId) {
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
@@ -74,85 +85,111 @@ function createClockTable(clockBodyDiv, clockSaveBtn) {
         addTextContent(clockTh, text);
     });
 
-    const clockDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    clockDays.forEach(day => {
+    Object.keys(dayMapping).forEach(day => {
         const clockRow = createAndAppend(clockTbody, 'tr');
         
         [day, '01:00', '00:00'].forEach((text, index) => {
             const clockTd = createAndAppend(clockRow, 'td');
-            addTextContent(clockTd, text);
+            
+            if (index === 0) {
+                addTextContent(clockTd, text);
+            } else {
+                const timeInput = createAndAppend(clockTd, 'input');
+                timeInput.type = 'time';
+                timeInput.value = text;
 
-            if (index != 0) {
-                clockTd.contentEditable = true;
-
-                // Ensure the content does not exceed 5 characters
-                clockTd.addEventListener('input', function(evt) {
-                    if (clockTd.textContent.length > 5) {
-                        clockTd.textContent = clockTd.textContent.substring(0, 5);
-                    }
-                });
-
-                // Function to validate the time
-                function validateTime() {
-                    const parts = clockTd.textContent.split(':');
-                    if (
-                        parts.length !== 2 || // Ensure there's only one colon
-                        parts[0].length !== 2 || // Ensure hours have two digits
-                        parts[1].length !== 2 || // Ensure minutes have two digits
-                        isNaN(parts[0]) || // Ensure hours are a number
-                        isNaN(parts[1]) || // Ensure minutes are a number
-                        parseInt(parts[0]) < 0 || // Ensure hours are not negative
-                        parseInt(parts[1]) < 0 || // Ensure minutes are not negative
-                        parseInt(parts[0]) > 23 || // Ensure hours are 0-23
-                        parseInt(parts[1]) > 59 // Ensure minutes are 0-59
-                    ) {
-                        clockTd.textContent = '00:00';
-                    }
-                }
-
-                // Validate the time when focus is lost
-                clockTd.addEventListener('blur', validateTime);
-
-                // Validate the time when "Enter" is pressed
-                clockTd.addEventListener('keydown', function(evt) {
-                    if (evt.key === 'Enter') {
-                        evt.preventDefault(); // prevent new line when pressing enter
-                        validateTime();
-                    }
-                });
             }
         });
     });
 
     clockSaveBtn.addEventListener('click', () => {
 
-        const timeTable = [];
-    
         // Loop through the rows of the table body
         const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
         for (const row of tableRows) {
             const cells = row.cells;
     
-            const day = cells[0].innerText;
-            const openTime = cells[1].innerText;
-            const closeTime = cells[2].innerText;
-    
-            // Store the data in an object and push it to the timeTable array
-            timeTable.push({
-                day,
-                openTime,
-                closeTime,
-            });
-        }
-    
-        // Store the updated timetable in localStorage
-        localStorage.setItem('timeTable', JSON.stringify(timeTable));
-    });
+            const dayName = cells[0].innerText;
+            const dayOfWeek = dayMapping[dayName]; // get the corresponding number for the day
+            const StartTime = cells[1].querySelector('input').value;
+            const closeTime = cells[2].querySelector('input').value;
 
+            let Period = calculatePeriod(StartTime, closeTime)
+            
+            storeTimeTableinJson(dayOfWeek, StartTime, closeTime, Period, sectionId);
+        }
+    });
+}
+
+// Store the data in an object and push it to the jsonData local storage
+function storeTimeTableinJson(dayOfWeek, StartTime, closeTime, Period, sectionId) {
+
+    jsonData.MenuSections.forEach(MenuSection => {
+        if (sectionId == MenuSection.MenuSectionId) {
+
+            MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
+            MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
+
+            // Check if AvailableTimes already has values; if not, initialize it as an empty array
+            if (!MenuSection.MenuSectionAvailability.AvailableTimes) {
+                MenuSection.MenuSectionAvailability.AvailableTimes = [];
+            } else {
+                // Remove any object from AvailableTimes that has the same dayOfWeek as newTime, to avoid duplicated objects.
+                MenuSection.MenuSectionAvailability.AvailableTimes = MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.dayOfWeek !== dayOfWeek);
+            }
+
+            // If it's the first object, get a random ID,
+            // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in AvailableTimes, 
+            // determines the highest value using Math.max, and adds +1. 
+            let Id = (MenuSection.MenuSectionAvailability.AvailableTimes.length === 0) ? 
+                getRandomInt() : 
+                Math.max(...MenuSection.MenuSectionAvailability.AvailableTimes.map(item => item.BusinessHoursPeriodId)) + 1;
+            
+            // Create the new time object
+            const newTime = {
+                BusinessHoursPeriodId: Id,
+                dayOfWeek,
+                StartTime,
+                closeTime,
+                Period,
+                StartTimeEarly: StartTime,
+                PeriodEarly: "00:00"
+            };    
+            
+            // Push the new time to the array
+            MenuSection.MenuSectionAvailability.AvailableTimes.push(newTime);
+
+            updateSectionLocalStorage();
+        }
+    });
 }
 
 
 
+function calculatePeriod(StartTime, closeTime) {
+    const [startHours, startMinutes] = StartTime.split(':').map(Number);
+    const [endHours, endMinutes] = closeTime.split(':').map(Number);
+
+    // Construct start and end dates - we only use them for time, so the day doesn't matter.
+    const startDate = new Date(2020, 0, 1, startHours, startMinutes);
+    const endDate = new Date(2020, 0, 1, endHours, endMinutes);
+
+    if (StartTime == closeTime) {
+        return "00:00"
+    }
+
+    // Check if end time is on the next day
+    if (endDate <= startDate) {
+        endDate.setDate(endDate.getDate() + 1);
+    }
+
+    // Calculate the difference
+    const diffInMs = endDate - startDate;
+    const hours = Math.floor(diffInMs / 3600000); // divide by number of milliseconds in an hour
+    const minutes = Math.floor((diffInMs % 3600000) / 60000); // divide by number of milliseconds in a minute
+
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
 
 export {
     sectionClockButton,
