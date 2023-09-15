@@ -10,7 +10,6 @@
 .sectionTable {
     width: 100%;
     max-width: 100%;
-    table-layout: fixed;
     padding: 10px;
 }
 
@@ -47,7 +46,7 @@
 
 .itemRow {
     height: auto;
-    background-color: #ffffcf;
+    background-color: #f0fc96;
     list-style: none;
 
     &.expanded .sectionDropdownButton { 
@@ -157,7 +156,7 @@
 
 .itemDescCell {
     padding: 5px;
-    width: 350px;
+    width: auto;
     border: solid 1px #ffffff;
 }
 
