@@ -18,7 +18,7 @@ function createSectionButtonsCell(sectionRow, menuSection) {
     const sectionButtonsCell = document.createElement('td');
     sectionButtonsCell.classList = "sectionButtonsCell"
 
-    sectionClockButton(sectionButtonsCell)
+    sectionClockButton(sectionButtonsCell, menuSection.MenuSectionId)
 
     sectionDeleteButton(sectionButtonsCell, sectionRow)
 
