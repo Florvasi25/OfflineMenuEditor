@@ -38,6 +38,7 @@ import {
 
 function createItemContainer(sectionRow) {
     const itemTr = document.createElement('tr')
+    itemTr.className ='itemTr'
     const itemTd = document.createElement('td')
     itemTd.setAttribute('colspan', 7)
     const itemTable = document.createElement('table');
@@ -78,7 +79,7 @@ function createItem(menuItem, sectionId, itemContainer) {
     itemRow.id = menuItem.MenuItemId
 
     //Creates Dropdown Cell
-    const itemDropDownCell = createItemDropdown(itemRow)
+    const itemDropDownCell = createItemDropdown(itemRow, sectionId)
     itemRow.appendChild(itemDropDownCell)
 
     //Creates Drag Cell

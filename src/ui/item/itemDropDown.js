@@ -1,28 +1,32 @@
-function createItemDropdown(itemRow){
+import {
+    createOsContainer
+} from '../optionSet/osContainer.js'
+
+function createItemDropdown(itemRow, sectionId){
     const itemDropdownCell = document.createElement('td')
     itemDropdownCell.classList.add('itemDropdownCell')
 
-    const boxDropdownButton = createItemDropdownButton(itemRow)
+    const boxDropdownButton = createItemDropdownButton(itemRow, sectionId)
     itemDropdownCell.appendChild(boxDropdownButton)
 
     return itemDropdownCell
 }
 
-function createItemDropdownButton(itemRow){
+function createItemDropdownButton(itemRow, sectionId){
     const boxDropdownButton = document.createElement('div')
     boxDropdownButton.classList = 'boxDropdownButton'
     boxDropdownButton.innerHTML = `
     <div class="sectionDropdownButton"></div>`
 
     boxDropdownButton.addEventListener('click', event => {
-        toggleItemState(itemRow);
+        toggleItemState(itemRow, sectionId);
         event.stopPropagation();
     });
 
     return boxDropdownButton
 }
 
-function toggleItemState(itemRow) {
+function toggleItemState(itemRow, sectionId) {
     const expandedClassName = 'expanded';
     const foldedClassName = 'folded';
 
@@ -30,26 +34,20 @@ function toggleItemState(itemRow) {
         itemRow.classList.remove(expandedClassName);
         itemRow.classList.add(foldedClassName);
 
-        const OsContainer = itemRow.nextElementSibling;
-        if (OsContainer && OsContainer.classList.contains('OsContainer')) {
-            OsContainer.classList.add('itemRow');
-            OsContainer.remove(); // Remove the content container
+        const osContainer = itemRow.nextElementSibling;
+        if (osContainer && osContainer.classList.contains('osContainer')) {
+            osContainer.classList.add('itemRow');
+            osContainer.remove(); // Remove the content container
         }
     } else {
         itemRow.classList.remove(foldedClassName);
         itemRow.classList.add(expandedClassName);
 
-        let OsContainer = itemRow.nextElementSibling;
-        if (!OsContainer || !OsContainer.classList.contains('OsContainer')) {
-            // Create a content container and add the content
-            OsContainer = document.createElement('table');
-            OsContainer.classList.add('OsContainer');
-            const contentParagraph = document.createElement('p');
-            contentParagraph.textContent = 'Hola';
-            OsContainer.appendChild(contentParagraph);
-            itemRow.parentNode.insertBefore(OsContainer, itemRow.nextSibling);
+        let osContainer = itemRow.nextElementSibling;
+        if (!osContainer || !osContainer.classList.contains('osContainer')) {
+            createOsContainer(itemRow, sectionId, itemRow.id);
         } else {
-            OsContainer.classList.remove('OsContainer');
+            osContainer.classList.remove('osContainer');
         }
     }
 }
