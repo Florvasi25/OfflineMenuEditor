@@ -1,7 +1,8 @@
-import {jsonData, 
-        getRandomInt, 
-        updateSectionLocalStorage
-        } from './context.js'
+import {
+    jsonData, 
+    getRandomInt, 
+    updateSectionLocalStorage
+} from '../context.js'
 
 const dayMapping = {
     'Monday': 1,

@@ -1,10 +1,3 @@
-// import {
-//     jsonData,
-//     getSectionIndex,
-//     updateItemCounterLocalStorage,
-//     updateSectionLocalStorage,
-// } from './context.js';
-
 function itemClockButton(itemButtonsCell) {
     const clockButton = document.createElement('button');
     clockButton.classList.add('sectionButton')

@@ -3,11 +3,11 @@ import {
     updateSectionLocalStorage,
     getSectionIndex,
     getDragAfterElement,
-} from './context.js';
+} from '../context.js';
 
 import {
     showToolTip
-} from './toolTip.js'
+} from '../toolTip.js'
 
 function createSectionDragCell(sectionRow) {
     const sectionDragCell = document.createElement('td')

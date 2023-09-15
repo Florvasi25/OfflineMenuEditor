@@ -2,7 +2,7 @@ import {
     updateSectionLocalStorage,
     getSectionIndex,
     jsonData,
-} from './context.js'
+} from '../context.js'
 
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell

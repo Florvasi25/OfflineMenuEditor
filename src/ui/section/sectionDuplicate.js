@@ -8,7 +8,7 @@ import {
     getLocalStorageItemIDs,
     getLocalStorageSectionIDs,
     getUniqueRandomInt
-} from './context.js';
+} from '../context.js';
 
 import {
     createSection
@@ -16,7 +16,7 @@ import {
 
 import { 
     showToolTip 
-} from './toolTip.js'
+} from '../toolTip.js'
 
 function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
 

@@ -1,6 +1,6 @@
 import {
     createItemContainer
-} from './item/itemContainer.js';
+} from '../item/itemContainer.js';
 
 function createSectionDropdown(sectionRow){
     const sectionDropdownCell = document.createElement('td')

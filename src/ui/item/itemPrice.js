@@ -2,7 +2,7 @@ import {
     updateSectionLocalStorage,
     jsonData,
     getItemIndex,
-} from './context.js'
+} from '../context.js'
 
 function createItemPriceCell(itemRow, menuItem, sectionId) {
     //Price Cell

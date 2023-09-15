@@ -4,7 +4,7 @@ import {
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
     updateSectionLocalStorage,
-} from './context.js';
+} from '../context.js';
 
 function sectionDeleteButton(sectionButtonsCell, sectionRow) {
     const deleteButton = document.createElement('button');

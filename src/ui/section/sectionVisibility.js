@@ -2,7 +2,7 @@ import {
     updateSectionLocalStorage,
     getSectionIndex,
     jsonData,
-} from './context.js'
+} from '../context.js'
 
 function sectionVisibilityButton(sectionRow, menuSection, sectionButtonsCell) {
     const visibilityButton = document.createElement('button');

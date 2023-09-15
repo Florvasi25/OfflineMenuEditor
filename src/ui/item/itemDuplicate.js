@@ -6,15 +6,15 @@ import {
     getLocalStorageItemIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
-} from './context.js';
+} from '../context.js';
 
 import {
     createItem
-} from './item/itemContainer.js'
+} from './itemContainer.js'
 
 import { 
     showToolTip 
-} from './toolTip.js'
+} from '../toolTip.js'
 
 function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem) {
 

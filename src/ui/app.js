@@ -1,10 +1,10 @@
 import {
     createSection,
-} from "./sectionContainer.js";
+} from "./section/sectionContainer.js";
 
 import {
     createSectionButton,
-} from './sectionAddNew.js'
+} from './section/sectionAddNew.js'
 
 import {
     createLoadJsonButton,

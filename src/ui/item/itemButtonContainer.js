@@ -4,7 +4,7 @@ import {
 
 import {
     itemVisibilityButton
-} from '../itemVisibility.js'
+} from './itemVisibility.js'
 
 import {
     itemDeleteButton
@@ -12,7 +12,7 @@ import {
 
 import {
     itemDuplicateButton,
-} from '../itemDuplicate.js'
+} from './itemDuplicate.js'
 
 function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('td');

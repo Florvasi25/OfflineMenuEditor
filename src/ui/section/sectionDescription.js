@@ -2,7 +2,7 @@ import {
     jsonData,
     getSectionIndex,
     updateSectionLocalStorage,
-} from './context.js';
+} from '../context.js';
 
 //Creates the Cell where all the Desc components should be
 function createSectionDescCell(menuSection, sectionRow) {
