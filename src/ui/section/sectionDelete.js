@@ -74,7 +74,7 @@ function deleteSection(sectionRow) {
         deleteItemLocalStorage(section); // delete item ID inside local storage
         if (sectionRow.classList.contains('expanded')) {
             let items = sectionRow.nextElementSibling;
-            if (items && items.tagName === 'TABLE') {
+            if (items && items.tagName === 'TR') {
                 items.remove(); 
             }
         }
