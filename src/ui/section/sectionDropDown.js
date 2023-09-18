@@ -3,7 +3,7 @@ import {
 } from '../item/itemContainer.js';
 
 function createSectionDropdown(sectionRow){
-    const sectionDropdownCell = document.createElement('td')
+    const sectionDropdownCell = document.createElement('div')
     sectionDropdownCell.classList.add('sectionDropdownCell')
 
     const boxDropdownButton = createSectionDropdownButton(sectionRow)
@@ -36,19 +36,19 @@ function toggleSectionState(sectionRow) {
         sectionRow.classList.remove(expandedClassName);
         sectionRow.classList.add(foldedClassName);
 
-        const itemTr = sectionRow.nextElementSibling;
-        if (itemTr && itemTr.classList.contains('itemTr')) {
-            itemTr.remove(); 
+        const itemTable = sectionRow.nextElementSibling;
+        if (itemTable && itemTable.classList.contains('itemTable')) {
+            itemTable.remove(); 
         }
     } else {
         sectionRow.classList.remove(foldedClassName);
         sectionRow.classList.add(expandedClassName);
 
-        let itemTr = sectionRow.nextElementSibling;
-        if (!itemTr || !itemTr.classList.contains('itemTr')) {
+        let itemTable = sectionRow.nextElementSibling;
+        if (!itemTable || !itemTable.classList.contains('itemTable')) {
             createItemContainer(sectionRow);
         } else {
-            itemTr.classList.remove('itemTr');
+            itemTable.classList.remove('itemTable');
         }
     }
 }

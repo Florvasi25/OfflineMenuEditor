@@ -37,18 +37,18 @@ import {
 } from './itemTax.js'
 
 function createItemContainer(sectionRow) {
-    const itemTr = document.createElement('tr')
-    itemTr.className ='itemTr'
-    const itemTd = document.createElement('td')
-    itemTd.setAttribute('colspan', 7)
-    const itemTable = document.createElement('table');
+    // const itemTr = document.createElement('div')
+    // itemTr.className ='itemTr'
+    // const itemTd = document.createElement('div')
+    // itemTd.setAttribute('colspan', 7)
+    const itemTable = document.createElement('div');
     itemTable.classList.add('itemTable');
-    const itemContainer = document.createElement('tbody')
+    const itemContainer = document.createElement('div')
     itemContainer.className = 'itemContainer'
     itemTable.appendChild(itemContainer)
-    itemTd.appendChild(itemTable)
-    itemTr.appendChild(itemTd)
-    sectionRow.parentNode.insertBefore(itemTr, sectionRow.nextSibling);
+    // itemTd.appendChild(itemTable)
+    // itemTr.appendChild(itemTd)
+    sectionRow.parentNode.insertBefore(itemTable, sectionRow.nextSibling);
     createItemRows(sectionRow, itemContainer);
     createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)
     setDragListeners(itemContainer, sectionRow.id)
@@ -56,6 +56,7 @@ function createItemContainer(sectionRow) {
 
 function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
     const newItemBtnContainer = document.createElement('div')
+    newItemBtnContainer.className = 'newItemBtnContainer'
     itemTable.appendChild(newItemBtnContainer)
     const newItemButton = createItemButton(itemContainer, sectionId)
     newItemBtnContainer.appendChild(newItemButton)
@@ -72,7 +73,7 @@ function createItemRows(sectionRow, itemContainer) {
 }
 
 function createItem(menuItem, sectionId, itemContainer) {
-    const itemRow = document.createElement('tr');
+    const itemRow = document.createElement('div');
     itemRow.classList.add('itemRow');
     itemRow.classList.add('draggable');
     itemRow.classList.add('folded')

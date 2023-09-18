@@ -6,7 +6,7 @@ import {
 
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell
-    const sectionNameCell = document.createElement('td');
+    const sectionNameCell = document.createElement('div');
     sectionNameCell.classList.add('sectionNameCell');
 
     const sectionName = createSectionName(sectionRow, menuSection)

@@ -6,7 +6,7 @@ import {
 
 function createItemPriceCell(itemRow, menuItem, sectionId) {
     //Price Cell
-    const itemPriceCell = document.createElement('td');
+    const itemPriceCell = document.createElement('div');
     itemPriceCell.classList.add('itemPriceCell');
 
     const itemPrice = createItemPrice(itemRow, menuItem, sectionId)

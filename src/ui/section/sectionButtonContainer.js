@@ -15,7 +15,7 @@ import {
 } from './sectionDuplicate.js'
 
 function createSectionButtonsCell(sectionRow, menuSection) {
-    const sectionButtonsCell = document.createElement('td');
+    const sectionButtonsCell = document.createElement('div');
     sectionButtonsCell.classList = "sectionButtonsCell"
 
     sectionClockButton(sectionButtonsCell, menuSection.MenuSectionId)

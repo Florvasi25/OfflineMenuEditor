@@ -1,6 +1,6 @@
 function createItemTaxCell(menuItem, jsonData) {
     //Tax Cell
-    const itemTaxCell = document.createElement('td');
+    const itemTaxCell = document.createElement('div');
     itemTaxCell.classList.add('itemTaxCell');
 
     const itemTax = createItemTax(menuItem, jsonData)

@@ -6,7 +6,7 @@ import {
 
 function createItemDescCell(itemRow, menuItem, sectionId) {
     //Desc Cell
-    const itemDescCell = document.createElement('td');
+    const itemDescCell = document.createElement('div');
     itemDescCell.classList.add('itemDescCell');
 
     const itemDesc = createItemDesc(itemRow, menuItem, sectionId)

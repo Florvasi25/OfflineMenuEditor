@@ -5,18 +5,54 @@
     padding: 0;
 }
 
-/* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
+/* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */   
 
 .sectionTable {
     width: 100%;
-    max-width: 100%;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 .itemTable {
     width: 100%;
-    max-width: 100%;
-    table-layout: fixed;
+    margin: 5px 0px;
+}
+
+.osContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    border-radius: 5px;
+    margin: 5px 0px;
+}
+
+.osRowHeader {
+    display: flex;
+    width: 300px;
+    justify-content: space-around;
+    padding: 5px 0px;
+    background-color: rgb(58, 11, 128)
+}
+
+.osRowHeader:nth-child(even) {
+    background-color: #a3931e;
+}
+
+.osRowHeader:first-child {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.osRowHeader:last-of-type {
+    border-radius: 0px 0px 5px 5px;
+}
+
+.osNameHeader {
+    width: 150px;
+    color: #ffffff;
+}
+
+.osSelectOptionContainer {
+    color: #ffffff;
 }
 
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
@@ -25,6 +61,7 @@
     height: auto;
     background-color: #c6abfc;
     list-style: none;
+    display: flex;
 
     &.expanded .sectionDropdownButton { 
         transform: rotate(45deg); 
@@ -45,6 +82,7 @@
 }
 
 .itemRow {
+    display: flex;
     height: auto;
     background-color: #f0fc96;
     list-style: none;
@@ -77,12 +115,17 @@
 .sectionDropdownCell {
     width: 25px;
     border: solid 1px #ffffff;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .itemDropdownCell {
+    display: flex;
+    align-items: center;
     width: 25px;
     border: solid 1px #ffffff;
-}
+    flex-shrink: 0;}
 
 .boxDropdownButton {
     display: flex;
@@ -107,9 +150,12 @@
 /* DRAG AND DROP - DRAG AND DROP - DRAG AND DROP - DRAG AND DROP - DRAG AND DROP */
 
 .sectionDragCell {
+    display: flex;
+    align-items: center;
     width: 25px;
     justify-self: center;
     border: solid 1px #ffffff;
+    flex-shrink: 0;
 }
 
 .sectionDragImg {
@@ -129,34 +175,45 @@
 /* NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME */
 
 .sectionNameCell {
+    display: flex;
+    align-items: center;
     padding: 5px;
     width: 100px;
     border: solid 1px #ffffff;
+    flex-shrink: 0;
 }
 
 .itemNameCell {
+    display: flex;
+    align-items: center;
     padding: 5px;
     width: 100px;
     border: solid 1px #ffffff;
+    flex-shrink: 0;
+    cursor: text;
 }
 
 .sectionName {
     font-size: 14px;
     font-weight: bold;
-    height: 100%;
+    /* height: 100%; */
 }
 
 /* DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION */
 
 .sectionDescCell {
     padding: 5px;
-    width: auto;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;    
     border: solid 1px #ffffff;
 }
 
 .itemDescCell {
     padding: 5px;
-    width: auto;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;    
     border: solid 1px #ffffff;
 }
 
@@ -170,22 +227,29 @@
 /* PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE */
 
 .itemPriceCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px;
     width: 50px;
     border: solid 1px #ffffff;
+    flex-shrink: 0;
 }
 
 .itemPrice {
-    width: 35px;
     font-size: 12px;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
 
 .itemTaxCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px;
     width: 35px;
     border: solid 1px #ffffff;
+    flex-shrink: 0;
 }
 
 .itemTax {
@@ -286,6 +350,36 @@
 
 .hiddenSection:hover {
     background-color: #1118f1;
+}
+
+/* NEW BUTTON - NEW BUTTON - NEW BUTTON - NEW BUTTON*/
+
+.newItemBtnContainer {
+    display: flex;
+    justify-content: end;
+}
+
+#itemAddNew {
+    text-wrap: nowrap;
+    padding: 5px;
+    margin: 10px;
+}
+
+#newSectionBtnContainer {
+    display: flex;
+    justify-content: end;
+}
+
+#sectionAddNew {
+    text-wrap: nowrap;
+    padding: 5px;
+    margin: 0px 10px 10px 10px;
+}
+
+.osAddNew {
+    padding: 2.5px 6px;
+    margin-top: 10px;
+    font-size: 15px;
 }
 
 /* POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP */

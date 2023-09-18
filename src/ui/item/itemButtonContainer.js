@@ -15,7 +15,7 @@ import {
 } from './itemDuplicate.js'
 
 function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
-    const itemButtonsCell = document.createElement('td');
+    const itemButtonsCell = document.createElement('div');
     itemButtonsCell.classList = "sectionButtonsCell"
 
     itemClockButton(itemButtonsCell)

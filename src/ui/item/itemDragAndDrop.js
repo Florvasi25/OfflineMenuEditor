@@ -10,7 +10,7 @@ import {
 } from '../toolTip.js'
 
 function createItemDragCell(itemRow) {
-    const itemDragCell = document.createElement('td')
+    const itemDragCell = document.createElement('div')
     itemDragCell.className = 'sectionDragCell'
     const itemDragImg = document.createElement('img')
     itemDragImg.src = '../../assets/dragIcon.svg'

@@ -3,7 +3,7 @@ import {
 } from '../optionSet/osContainer.js'
 
 function createItemDropdown(itemRow, sectionId){
-    const itemDropdownCell = document.createElement('td')
+    const itemDropdownCell = document.createElement('div')
     itemDropdownCell.classList.add('itemDropdownCell')
 
     const boxDropdownButton = createItemDropdownButton(itemRow, sectionId)

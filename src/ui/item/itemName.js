@@ -6,7 +6,7 @@ import {
 
 function createItemNameCell(itemRow, menuItem, sectionId) {
     //Name Cell
-    const itemNameCell = document.createElement('td');
+    const itemNameCell = document.createElement('div');
     itemNameCell.classList.add('itemNameCell');
 
     const itemName = createItemName(itemRow, menuItem, sectionId)

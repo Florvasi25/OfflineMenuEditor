@@ -21,7 +21,7 @@ import {
 //Section components
 function createSection(menuSection) {
     //Section Container
-    const sectionRow = document.createElement('tr');
+    const sectionRow = document.createElement('div');
     sectionRow.classList.add('sectionRow');
     sectionRow.classList.add('draggable');
     sectionRow.classList.add('folded')

@@ -6,7 +6,7 @@ import {
 
 //Creates the Cell where all the Desc components should be
 function createSectionDescCell(menuSection, sectionRow) {
-    const sectionDescCell = document.createElement('td');
+    const sectionDescCell = document.createElement('div');
     sectionDescCell.classList.add('sectionDescCell');
 
     const sectionDesc = createSectionDesc(menuSection, sectionRow)
