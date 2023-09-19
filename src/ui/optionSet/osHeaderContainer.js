@@ -3,11 +3,15 @@ import {
     getItemIndex, 
 } from '../context.js'
 
-function createOsContainer(itemRow, sectionRow, itemId) {
+import {
+    createOsDropdown,
+} from './osDropDown.js'
+
+function createOsContainer(itemRow, sectionId, itemId) {
     const osContainer = document.createElement('tr');
     osContainer.classList.add('osContainer');
     itemRow.parentNode.insertBefore(osContainer, itemRow.nextSibling);
-    createOsRows(osContainer, sectionRow, itemId);
+    createOsRows(osContainer, sectionId, itemId);
 
     const osAddNew = addNewOs()
     osContainer.appendChild(osAddNew)
@@ -31,8 +35,17 @@ function createOsHeader(menuOs) {
     osRowHeader.classList.add('draggable');
     osRowHeader.classList.add('folded')
     osRowHeader.id = menuOs.MenuItemOptionSetId
+
+    const dropAndName = document.createElement('div')
+    dropAndName.className = 'dropAndName'
+    osRowHeader.appendChild(dropAndName)
+
+    const osDropDown = createOsDropdown(osRowHeader)
+    dropAndName.appendChild(osDropDown)
+
     const osNameHeader = createOsNameHeader(menuOs)
-    osRowHeader.appendChild(osNameHeader)
+    dropAndName.appendChild(osNameHeader)
+
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     osRowHeader.appendChild(osSelectOptionContainer)
 

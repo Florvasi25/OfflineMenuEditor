@@ -22,6 +22,15 @@ function getItemIndex(sectionId, itemId) {
     return {sectionIndex, itemIndex}
 }
 
+function getOsIndex(sectionId, itemId, osHeaderId) {
+    const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
+    const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
+
+    const osIndex = menuItems.findIndex(osElement => osElement.MenuItemOptionSetId == osHeaderId)
+
+    return {sectionIndex, itemIndex, osIndex}
+}
+
 function getDragAfterElement(container, y) {
     const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
 
@@ -140,5 +149,6 @@ export {
     setSectionDisplayOrder,
     getItemIndex,
     getDragAfterElement,
-    setItemId
+    setItemId,
+    getOsIndex
 }

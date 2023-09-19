@@ -1,6 +1,6 @@
 import {
     createOsContainer
-} from '../optionSet/osContainer.js'
+} from '../optionSet/osHeaderContainer.js'
 
 function createItemDropdown(itemRow, sectionId){
     const itemDropdownCell = document.createElement('div')
