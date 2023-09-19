@@ -39,7 +39,8 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
     clockButton.addEventListener('click', () => {
         const clockBodyDiv = createClockBody();
         const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');
-        createClockTable(clockBodyDiv, clockSaveBtn, sectionId);
+        const availableTimes = getAvailableTimes(jsonData, sectionId);       
+        createClockTable(clockBodyDiv, clockSaveBtn, availableTimes, sectionId);
     });
 }
 
@@ -56,12 +57,12 @@ function createClockBody() {
 
     const clockCloseIcon = createAndAppend(clockHeaderDiv, 'span', 'clockBtn-close');
     clockCloseIcon.innerHTML = '&times;';
+
     clockCloseIcon.addEventListener('click', () => {
         clockModalDiv.style.display = 'none';
     });
 
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
-
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
     const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
     addTextContent(clockSaveBtn, 'Save Changes');
@@ -73,70 +74,120 @@ function createClockBody() {
     return clockBodyDiv;
 }
 
-function createClockTable(clockBodyDiv, clockSaveBtn, sectionId) {
+function createClockTable(clockBodyDiv, clockSaveBtn, availableTimes, sectionId) {
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
 
-    const clockHeaders = ['Day', 'Open', 'Close'];
-    const clockHeaderRow = createAndAppend(clockThead, 'tr');
-
-    clockHeaders.forEach(text => {
-        const clockTh = createAndAppend(clockHeaderRow, 'th', 'clockTableHeader');
-        addTextContent(clockTh, text);
-    });
-
-    Object.keys(dayMapping).forEach(day => {
-        const clockRow = createAndAppend(clockTbody, 'tr');
-        
-        [day, '01:00', '00:00'].forEach((text, index) => {
-            const clockTd = createAndAppend(clockRow, 'td');
-            
-            if (index === 0) {
-                addTextContent(clockTd, text);
-            } else {
-                const timeInput = createAndAppend(clockTd, 'input');
-                timeInput.type = 'time';
-                timeInput.value = text;
-
-            }
-        });
-    });
+    createTableHeaders(clockThead, ['Day', 'Open', 'Close']);
+    createTableRows(clockTbody, availableTimes);
 
     clockSaveBtn.addEventListener('click', () => {
-
-        // Loop through the rows of the table body
-        const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
-        for (const row of tableRows) {
-            const cells = row.cells;
-    
-            const dayName = cells[0].innerText;
-            const dayOfWeek = dayMapping[dayName]; // get the corresponding number for the day
-            const StartTime = cells[1].querySelector('input').value;
-            const closeTime = cells[2].querySelector('input').value;
-
-            let Period = calculatePeriod(StartTime, closeTime)
-            
-            storeTimeTableinJson(dayOfWeek, StartTime, closeTime, Period, sectionId);
-        }
+        setupSaveChanges(clockBodyDiv, sectionId);
     });
 }
 
+function createTableHeaders(parentElement, headers) {
+    const headerRow = createAndAppend(parentElement, 'tr');
+
+    headers.forEach(text => {
+        const headerCell = createAndAppend(headerRow, 'th', 'clockTableHeader');
+        addTextContent(headerCell, text);
+    });
+}
+
+function createTableRows(parentElement, availabilityData) {
+
+    const dayMappingToName = {
+        0: 'Sunday',
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday',
+        6: 'Saturday'
+    };
+    const dayOrder = [1, 2, 3, 4, 5, 6, 0];
+    const timesMapping = {};
+
+    // If availabilityData is not null, map each data entry to timesMapping
+    if (availabilityData && availabilityData.length > 0) {
+        availabilityData.forEach(time => {
+            timesMapping[time.dayOfWeek] = {
+                start: time.StartTime,
+                close: time.CloseTime
+            };
+        });
+    }
+
+    // Go through each day and create a row for it
+    dayOrder.forEach(dayKey => {
+        const row = createAndAppend(parentElement, 'tr');
+        const dayName = dayMappingToName[dayKey];
+
+        // Default values
+        let times = ['01:00', '00:00'];
+
+        // If times for this day exists in timesMapping, overwrite the defaults
+        if (timesMapping[dayKey]) {
+            times = [timesMapping[dayKey].start, timesMapping[dayKey].close];
+        }
+
+        // Populate the row
+        [dayName, ...times].forEach((text, index) => {
+            if (index === 0) {
+                const cell = createAndAppend(row, 'td');
+                addTextContent(cell, text);
+            } else {
+                createInputCell(row, text);
+            }
+        });
+    });
+}
+
+
+function createInputCell(parentRow, text) {
+    const cell = createAndAppend(parentRow, 'td');
+    const timeInput = createAndAppend(cell, 'input');
+    timeInput.type = 'time';
+    timeInput.value = text;
+}
+
+//loops through the table and gets the time table data.
+function setupSaveChanges(clockBodyDiv, sectionId)
+{
+    // Loop through the rows of the table body
+    const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
+    for (const row of tableRows) {
+        const cells = row.cells;
+
+        const dayName = cells[0].innerText;
+        const dayOfWeek = dayMapping[dayName]; // get the corresponding number for the day
+        const StartTime = cells[1].querySelector('input').value;
+        const CloseTime = cells[2].querySelector('input').value;    
+        let Period = calculatePeriod(StartTime, CloseTime)
+ 
+        storeTimeTableinJson(dayOfWeek, StartTime, CloseTime, Period, sectionId);
+    }
+
+}
 // Store the data in an object and push it to the jsonData local storage
-function storeTimeTableinJson(dayOfWeek, StartTime, closeTime, Period, sectionId) {
-
+function storeTimeTableinJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
     jsonData.MenuSections.forEach(MenuSection => {
-        if (sectionId == MenuSection.MenuSectionId) {
-
+        if (sectionId == MenuSection.MenuSectionId) 
+        {
             MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
             MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
 
-            // Check if AvailableTimes already has values; if not, initialize it as an empty array
-            if (!MenuSection.MenuSectionAvailability.AvailableTimes) {
+            if(!!MenuSection.MenuSectionAvailability.AvailableTimes) //if it contain values, return true
+            {
+                //Remove any object from AvailableTimes that has the same dayOfWeek as the object we are pushing, to avoid duplicated objects.
+                MenuSection.MenuSectionAvailability.AvailableTimes = 
+                    MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.dayOfWeek !== dayOfWeek);
+            }
+            else
+            {
                 MenuSection.MenuSectionAvailability.AvailableTimes = [];
-            } else {
-                // Remove any object from AvailableTimes that has the same dayOfWeek as newTime, to avoid duplicated objects.
-                MenuSection.MenuSectionAvailability.AvailableTimes = MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.dayOfWeek !== dayOfWeek);
             }
 
             // If it's the first object, get a random ID,
@@ -151,7 +202,7 @@ function storeTimeTableinJson(dayOfWeek, StartTime, closeTime, Period, sectionId
                 BusinessHoursPeriodId: Id,
                 dayOfWeek,
                 StartTime,
-                closeTime,
+                CloseTime,
                 Period,
                 StartTimeEarly: StartTime,
                 PeriodEarly: "00:00"
@@ -162,20 +213,20 @@ function storeTimeTableinJson(dayOfWeek, StartTime, closeTime, Period, sectionId
 
             updateSectionLocalStorage();
         }
-    });
+    })
 }
 
 
 
-function calculatePeriod(StartTime, closeTime) {
+function calculatePeriod(StartTime, CloseTime) {
     const [startHours, startMinutes] = StartTime.split(':').map(Number);
-    const [endHours, endMinutes] = closeTime.split(':').map(Number);
+    const [endHours, endMinutes] = CloseTime.split(':').map(Number);
 
     // Construct start and end dates - we only use them for time, so the day doesn't matter.
     const startDate = new Date(2020, 0, 1, startHours, startMinutes);
     const endDate = new Date(2020, 0, 1, endHours, endMinutes);
 
-    if (StartTime == closeTime) {
+    if (StartTime == CloseTime) {
         return "00:00"
     }
 
@@ -191,6 +242,15 @@ function calculatePeriod(StartTime, closeTime) {
 
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
+
+function getAvailableTimes(jsonData, sectionId) {
+    const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
+    if (foundSection) {
+        return foundSection.MenuSectionAvailability.AvailableTimes;
+    }
+    return null;
+}
+
 
 export {
     sectionClockButton,
