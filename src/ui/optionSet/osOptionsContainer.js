@@ -7,59 +7,60 @@ function createOptionsContainer(osRowOption, sectionId, itemId, osId) {
     const optionContainer = document.createElement('div');
     optionContainer.classList.add('optionContainer');
     osRowOption.parentNode.insertBefore(optionContainer, osRowOption.nextSibling);
-    createOptionRows(optionContainer, sectionId, itemId, osId);    
+    createOptions(optionContainer, sectionId, itemId, osId);    
 }
 
-function createOptionRows(optionContainer, sectionId, itemId, osId) {
+function createOptions(optionContainer, sectionId, itemId, osId) {
     const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
     const menuOptions = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems;
     
     menuOptions.forEach(menuOption => {
-        const osRowOption = createOsHeader(menuOption)
+        const osRowOption = createOptionRow(menuOption)
         optionContainer.appendChild(osRowOption);
     });
 }
 
-
-function createOsHeader(menuOption) {
+function createOptionRow(menuOption) {
     const osRowOption = document.createElement('div');
     osRowOption.classList.add('osRowOption');
     osRowOption.classList.add('draggable');
     osRowOption.classList.add('folded')
     osRowOption.id = menuOption.MenuItemOptionSetId
-    osRowOption.textContent = menuOption.Name
 
-    // const dropAndName = document.createElement('div')
-    // dropAndName.className = 'dropAndName'
-    // osRowOption.appendChild(dropAndName)
+    const nameAndMoM = createNameAndMoM(menuOption)
+    osRowOption.appendChild(nameAndMoM)
 
-    // const osDropDown = createOsDropdown(osRowOption)
-    // dropAndName.appendChild(osDropDown)
-
-    // const osNameHeader = createOsNameHeader(menuOption)
-    // dropAndName.appendChild(osNameHeader)
-
-    // const osSelectOptionContainer = createOsSelectOption(menuOption)
-    // osRowOption.appendChild(osSelectOptionContainer)
-
+    const priceAndTax = createPriceAndTax(menuOption)
+    osRowOption.appendChild(priceAndTax)
+    
     return osRowOption
 }
 
-// function createOsNameHeader(menuOption) {
-//     const osNameHeader = document.createElement('p')
-//     osNameHeader.className = 'osNameHeader'
-//     osNameHeader.textContent = menuOption.Name    
+function createNameAndMoM(menuOption) {
+    const nameAndMoM = document.createElement('div')
+    nameAndMoM.className = 'optionText'
+    nameAndMoM.innerHTML = `${menuOption.Name} - ${menuOption.NextMenuItemOptionSetId}`
 
-//     return osNameHeader
-// }
+    return nameAndMoM
+}
 
-// function createOsSelectOption(menuOption) {
-//     const osSelectOptionContainer = document.createElement('div')
-//     osSelectOptionContainer.className = 'osSelectOptionContainer'
-//     osSelectOptionContainer.innerHTML = `${menuOption.MinSelectCount} - ${menuOption.MaxSelectCount}`
+function createPriceAndTax(menuOption) {
+    const osTax = document.createElement('p');
+    osTax.classList.add('osTax');
+    const osTaxId = menuOption.TaxRateId
+    if(osTaxId == null) {
+        osTax.textContent = '0%'
+    } else {
+        const taxRate = jsonData.TaxRates.find(taxRate => taxRate.TaxRateId == osTaxId);
+        osTax.textContent = taxRate.Rate + '%'
+    }
+    
+    const priceAndTax = document.createElement('div')
+    priceAndTax.className = 'optionText'
+    priceAndTax.innerHTML = `${menuOption.Price} - ${osTax.textContent}`
 
-//     return osSelectOptionContainer
-// }
+    return priceAndTax
+}
 
 export {
     createOptionsContainer,
