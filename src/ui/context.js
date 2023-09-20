@@ -26,7 +26,7 @@ function getOsIndex(sectionId, itemId, osHeaderId) {
     const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
     const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
 
-    const osIndex = menuItems.findIndex(osElement => osElement.MenuItemOptionSetId == osHeaderId)
+    const osIndex = menuOs.findIndex(osElement => osElement.MenuItemOptionSetId == osHeaderId)
 
     return {sectionIndex, itemIndex, osIndex}
 }

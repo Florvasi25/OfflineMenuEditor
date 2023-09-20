@@ -26,6 +26,10 @@
     margin: 5px 0px;
 }
 
+.dropAndName {
+    display: flex;
+}
+
 .osNameHeader {
     width: 150px;
     color: #ffffff;
@@ -35,15 +39,28 @@
     color: #ffffff;
 }
 
-.dropAndName {
+.optionContainer {
+    height: auto;
+    width: 50%;
+    padding: 7.5px 0px;
+}
+
+.osRowOption {
     display: flex;
+    padding: 7.5px 15px;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+}
+
+.optionText {
+    font-size: 13px;
 }
 
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionRow {
     height: auto;
-    background-color: #F2EDD6;
+    background-color: #fff6cf;
     list-style: none;
     display: flex;
 
@@ -68,7 +85,7 @@
 .itemRow {
     display: flex;
     height: auto;
-    background-color: #F9F8FF;
+    background-color: #e2def9;
     list-style: none;
 
     &.expanded .sectionDropdownButton { 
@@ -95,7 +112,6 @@
     width: 50%;
     justify-content: space-around;
     padding: 7.5px 0px;
-    background-color:#342F58;
 
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
@@ -115,7 +131,11 @@
     }
 }
 
-.osRowHeader:nth-child(even) {
+.osRowHeader.odd {
+    background-color: #342F58;
+}
+
+.osRowHeader.even {
     background-color: #B29346;
 }
 
