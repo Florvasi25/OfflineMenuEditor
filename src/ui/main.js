@@ -13,8 +13,6 @@ import {
 
 import {
     jsonData,
-    updateSectionLocalStorage,
-    getSectionIndex,
 } from './context.js';
 
 
