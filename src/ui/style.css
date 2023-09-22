@@ -4,7 +4,10 @@
     padding: 0;
 }
 
-/* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */   
+/* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
+main {
+    width: 100%;
+}
 
 .sectionTable {
     width: 100%;
@@ -32,6 +35,11 @@
 .osNameHeader {
     width: 150px;
     color: #ffffff;
+    cursor: pointer;
+}
+
+.osNameHeader:hover {
+    color: #d7d7d7;
 }
 
 .osSelectOptionContainer {
@@ -381,6 +389,7 @@
 .deleteButton:hover {
     background-color: #eb1010;
 }
+
 
 /* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
 
