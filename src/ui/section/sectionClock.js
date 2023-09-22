@@ -38,9 +38,9 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
 
     clockButton.addEventListener('click', () => {
         const clockBodyDiv = createClockBody();
-        const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');
-        const availableTimes = getAvailableTimes(jsonData, sectionId);       
-        createClockTable(clockBodyDiv, clockSaveBtn, availableTimes, sectionId);
+        const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
+        const seccion = getSection(jsonData, sectionId);    
+        createClockTable(clockBodyDiv, clockSaveBtn, seccion, sectionId);
     });
 }
 
@@ -74,13 +74,13 @@ function createClockBody() {
     return clockBodyDiv;
 }
 
-function createClockTable(clockBodyDiv, clockSaveBtn, availableTimes, sectionId) {
+function createClockTable(clockBodyDiv, clockSaveBtn, seccion, sectionId) {
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
 
     createTableHeaders(clockThead, ['Day', 'Open', 'Close']);
-    createTableRows(clockTbody, availableTimes);
+    createTableRows(clockTbody, seccion);
 
     clockSaveBtn.addEventListener('click', () => {
         setupSaveChanges(clockBodyDiv, sectionId);
@@ -96,8 +96,7 @@ function createTableHeaders(parentElement, headers) {
     });
 }
 
-function createTableRows(parentElement, availabilityData) {
-
+function createTableRows(parentElement, menuSection) {
     const dayMappingToName = {
         0: 'Sunday',
         1: 'Monday',
@@ -108,11 +107,14 @@ function createTableRows(parentElement, availabilityData) {
         6: 'Saturday'
     };
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
+
+    const areDailySpecialHoursSame = compareDailySpecialHours(menuSection);
+    console.log("Comparación: ", areDailySpecialHoursSame);
     const timesMapping = {};
 
-    // If availabilityData is not null, map each data entry to timesMapping
-    if (availabilityData && availabilityData.length > 0) {
-        availabilityData.forEach(time => {
+    // If all DailySpecialHours are the same for all MenuItems, then take the DailySpecialHours data 
+    if (areDailySpecialHoursSame && menuSection.MenuItems[0].DailySpecialHours) {
+        menuSection.MenuItems[0].DailySpecialHours.forEach(time => {
             timesMapping[time.dayOfWeek] = {
                 start: time.StartTime,
                 close: time.CloseTime
@@ -167,55 +169,53 @@ function setupSaveChanges(clockBodyDiv, sectionId)
         const CloseTime = cells[2].querySelector('input').value;    
         let Period = calculatePeriod(StartTime, CloseTime)
  
-        storeTimeTableinJson(dayOfWeek, StartTime, CloseTime, Period, sectionId);
+        storeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId);
     }
 
 }
 // Store the data in an object and push it to the jsonData local storage
-function storeTimeTableinJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
+function storeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
     jsonData.MenuSections.forEach(MenuSection => {
-        if (sectionId == MenuSection.MenuSectionId) 
-        {
-            MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
-            MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
+        if (sectionId == MenuSection.MenuSectionId) {
 
-            if(!!MenuSection.MenuSectionAvailability.AvailableTimes) //if it contain values, return true
-            {
-                //Remove any object from AvailableTimes that has the same dayOfWeek as the object we are pushing, to avoid duplicated objects.
-                MenuSection.MenuSectionAvailability.AvailableTimes = 
-                    MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.dayOfWeek !== dayOfWeek);
-            }
-            else
-            {
-                MenuSection.MenuSectionAvailability.AvailableTimes = [];
-            }
+            MenuSection.MenuItems.forEach(MenuItem => {
 
-            // If it's the first object, get a random ID,
-            // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in AvailableTimes, 
-            // determines the highest value using Math.max, and adds +1. 
-            let Id = (MenuSection.MenuSectionAvailability.AvailableTimes.length === 0) ? 
-                getRandomInt() : 
-                Math.max(...MenuSection.MenuSectionAvailability.AvailableTimes.map(item => item.BusinessHoursPeriodId)) + 1;
-            
-            // Create the new time object
-            const newTime = {
-                BusinessHoursPeriodId: Id,
-                dayOfWeek,
-                StartTime,
-                CloseTime,
-                Period,
-                StartTimeEarly: StartTime,
-                PeriodEarly: "00:00"
-            };    
-            
-            // Push the new time to the array
-            MenuSection.MenuSectionAvailability.AvailableTimes.push(newTime);
+                if(!MenuItem.DailySpecialHours) {
+                    MenuItem.DailySpecialHours = [];
+                }
+
+                // Remove any object from DailySpecialHours that has the same dayOfWeek 
+                // as the object we are pushing, to avoid duplicated objects.
+                MenuItem.DailySpecialHours = 
+                    MenuItem.DailySpecialHours.filter(time => time.dayOfWeek !== dayOfWeek);
+
+                // If it's the first object, get a random ID,
+                // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in DailySpecialHours, 
+                // determines the highest value using Math.max, and adds +1. 
+                let Id = (MenuItem.DailySpecialHours.length === 0) ? 
+                    getRandomInt() : 
+                    Math.max(...MenuItem.DailySpecialHours.map(item => item.BusinessHoursPeriodId)) + 1;
+
+                // Create the new time object
+                const newTime = {
+                    BusinessHoursPeriodId: Id,
+                    dayOfWeek,
+                    StartTime,
+                    CloseTime,
+                    Period,
+                    StartTimeEarly: StartTime,
+                    PeriodEarly: "00:00"
+                };    
+
+                // Push the new time to the array
+                MenuItem.DailySpecialHours.push(newTime);
+
+            });
 
             updateSectionLocalStorage();
         }
-    })
+    });
 }
-
 
 
 function calculatePeriod(StartTime, CloseTime) {
@@ -249,6 +249,41 @@ function getAvailableTimes(jsonData, sectionId) {
         return foundSection.MenuSectionAvailability.AvailableTimes;
     }
     return null;
+}
+
+function getSection(jsonData, sectionId) {
+    const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
+    if (foundSection) {
+        return foundSection;
+    }
+    return null;
+}
+function compareDailySpecialHours(menuSection) {
+    if (!menuSection.MenuItems || menuSection.MenuItems.length <= 1) {
+        return true; // if there's only one or no items, then they are inherently the same
+    }
+
+    const baseHours = menuSection.MenuItems[0].DailySpecialHours;
+
+    for (let i = 1; i < menuSection.MenuItems.length; i++) {
+        const currentHours = menuSection.MenuItems[i].DailySpecialHours;
+
+        if (baseHours.length !== currentHours.length) {
+            return false; // if the lengths are different, then they're not the same
+        }
+
+        for (let j = 0; j < baseHours.length; j++) {
+            if (baseHours[j].DayOfWeek !== currentHours[j].DayOfWeek ||
+                baseHours[j].StartTime !== currentHours[j].StartTime ||
+                baseHours[j].Period !== currentHours[j].Period ||
+                baseHours[j].StartTimeEarly !== currentHours[j].StartTimeEarly ||
+                baseHours[j].PeriodEarly !== currentHours[j].PeriodEarly) {
+                return false; // if any of the properties don't match, then they're not the same
+            }
+        }
+    }
+
+    return true; // if we made it here, then all DailySpecialHours are the same for all MenuItems
 }
 
 
