@@ -9,7 +9,7 @@ import {
 
 import {
     generateHTML,
- } from './main.js'
+ } from './mainContainer.js'
 
 function createLoadJsonButton() {
     const loadJsonButton = document.createElement('input')

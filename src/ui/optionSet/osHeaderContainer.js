@@ -7,6 +7,10 @@ import {
     createOsDropdown,
 } from './osDropDown.js'
 
+import {
+    createOsModalContainer
+} from '../sidebar/sidebarContainer.js'
+
 function createOsContainer(itemRow, sectionId, itemId) {
     const osContainer = document.createElement('div');
     osContainer.classList.add('osContainer');
@@ -62,10 +66,20 @@ function createOsRow(menuOs, sectionId, itemId) {
 function createOsNameHeader(menuOs) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
-    osNameHeader.textContent = menuOs.Name    
+    osNameHeader.textContent = menuOs.Name
+
+    const osModalContainer = createOsModalContainer()
+
+    osNameHeader.addEventListener('click', () => {
+        osModalContainer.style.display = 'block';
+        setTimeout(() => {
+            osModalContainer.classList.add('show');
+        }, 10);
+    });
 
     return osNameHeader
 }
+
 
 function createOsSelectOption(menuOs) {
     const osSelectOptionContainer = document.createElement('div')

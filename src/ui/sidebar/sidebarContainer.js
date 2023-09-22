@@ -1,19 +1,44 @@
-const openOsModalBtn = document.getElementById('openOsModalBtn');
-const closeOsModalBtn = document.getElementById('closeOsModalBtn');
-const osModalContainer = document.getElementById('myModal');
+function createOsModalContainer() {
+    const leftContainer = document.getElementById('leftContainer')
+    
+    const osModalContainer = document.createElement('div')
+    osModalContainer.id = 'myModal'
+    osModalContainer.classList = 'osModalContainer'
+    
+    const {osModalNav, closeOsModalBtn } = createOsModalNav()
+    osModalContainer.appendChild(osModalNav)
 
-openOsModalBtn.addEventListener('click', () => {
-    osModalContainer.style.display = 'block';
-    setTimeout(() => {
-        osModalContainer.classList.add('show');
-    }, 10);
-});
+    closeOsModalBtn.addEventListener('click', () => {
+        osModalContainer.classList.remove('show');
+        osModalContainer.classList.add('hide'); 
+        setTimeout(() => {
+            osModalContainer.style.display = 'none'; 
+            osModalContainer.classList.remove('hide'); 
+        }, 300);
+    });
+    
+    leftContainer.appendChild(osModalContainer)
 
-closeOsModalBtn.addEventListener('click', () => {
-    osModalContainer.classList.remove('show');
-    osModalContainer.classList.add('hide'); 
-    setTimeout(() => {
-        osModalContainer.style.display = 'none'; 
-        osModalContainer.classList.remove('hide'); 
-    }, 300);
-});
+    return osModalContainer
+}
+
+function createOsModalNav() {
+    const osModalNav = document.createElement('div')
+    osModalNav.className = 'osModalNav'
+
+    const closeOsModalBtn = createCloseOsModalBtn()
+    osModalNav.appendChild(closeOsModalBtn)
+
+    return { osModalNav, closeOsModalBtn }
+}
+
+function createCloseOsModalBtn() {
+    const closeOsModalBtn = document.createElement('button')
+    closeOsModalBtn.className = 'closeOsModalBtn'
+    closeOsModalBtn.id = 'closeOsModalBtn'
+    closeOsModalBtn.textContent = 'X'
+
+    return closeOsModalBtn
+}
+
+export { createOsModalContainer }
