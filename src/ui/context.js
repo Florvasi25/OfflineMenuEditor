@@ -18,6 +18,7 @@ function getItemIndex(sectionId, itemId) {
     const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
 
     const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
+    console.log((itemIndex));
 
     return {sectionIndex, itemIndex}
 }

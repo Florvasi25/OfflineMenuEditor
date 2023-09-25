@@ -54,7 +54,7 @@ function createOsRow(menuOs, sectionId, itemId) {
     const osDropDown = createOsDropdown(osRowHeader, sectionId, itemId)
     dropAndName.appendChild(osDropDown)
 
-    const osNameHeader = createOsNameHeader(menuOs)
+    const osNameHeader = createOsNameHeader(menuOs, itemId, sectionId)
     dropAndName.appendChild(osNameHeader)
 
     const osSelectOptionContainer = createOsSelectOption(menuOs)
@@ -63,12 +63,12 @@ function createOsRow(menuOs, sectionId, itemId) {
     return osRowHeader
 }
 
-function createOsNameHeader(menuOs) {
+function createOsNameHeader(menuOs, itemId, sectionId) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
     osNameHeader.textContent = menuOs.Name
 
-    const osModalContainer = createOsModalContainer()
+    const osModalContainer = createOsModalContainer(menuOs, itemId, sectionId)
 
     osNameHeader.addEventListener('click', () => {
         osModalContainer.style.display = 'block';
@@ -79,7 +79,6 @@ function createOsNameHeader(menuOs) {
 
     return osNameHeader
 }
-
 
 function createOsSelectOption(menuOs) {
     const osSelectOptionContainer = document.createElement('div')
@@ -99,4 +98,5 @@ function addNewOs() {
 
 export {
     createOsContainer,
+    createOsNameHeader,
 }

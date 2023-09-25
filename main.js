@@ -5,7 +5,6 @@ function createWindow()
     const mainWindow = new BrowserWindow({
         width: 1024,
         height: 768
-
     })
     mainWindow.loadFile('src/ui/index.html')
     mainWindow.webContents.openDevTools()
@@ -28,9 +27,6 @@ function createWindow()
     ])
     Menu.setApplicationMenu(menu)
 }
-
-
-
 
 app.whenReady().then(() =>{
     createWindow()
