@@ -355,7 +355,7 @@ main {
 }
 
 .sectionButton {
-    border: solid 1px #000000;
+    border: none;
     border-radius: 3px;
     height: 25px;
     width: 25px;
@@ -366,6 +366,20 @@ main {
     align-items: center;
 }
 
+.confirmDeleteBtn {
+    border: none;
+    border-radius: 3px;
+    height: 30px;
+    width: 35px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+
+.confirmDeleteBtn:hover {
+    background-color: #b1b1b1;
+}
+
 .sectionButtonImg {
     width: 20px;
 }
@@ -373,21 +387,21 @@ main {
 /* DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON */
 
 .duplicateButton {
-    background-color: #ffed62;
+    background-color: #cec58a;
 }
 
 .duplicateButton:hover {
-    background-color: #f6dc18;
+    background-color: #ffe100;
 }
 
 /* DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON - DELETE BUTTON */
 
 .deleteButton {
-    background-color: #f53d3d;
+    background-color: #d18d8d;
 }
 
 .deleteButton:hover {
-    background-color: #eb1010;
+    background-color: #ff0000;
 }
 
 
@@ -418,7 +432,7 @@ main {
 }
 
 .hiddenSection {
-    background-color: #5056ee;
+    background-color: #7289c1;
 }
 
 .hiddenSection:hover {
@@ -455,6 +469,16 @@ main {
     font-size: 15px;
 }
 
+/* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
+
+.newOsButton {
+    background-color: #cdcdcd;
+}
+
+.newOsButton:hover {
+    background-color: #b1b1b1;
+}
+
 /* POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP - POPUP */
 
 .popup {
@@ -471,14 +495,14 @@ main {
 
 .popup-content {
     background-color: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
 .popup-content button {
-    margin: 5px;
+    margin: 15px 5px 5px 5px;
 }
 
 
@@ -642,15 +666,23 @@ button#openOsModalBtn:hover {
 
 .osOptionsRow {
     display: flex;
+    padding: 10px 0;
+    align-items: center;
 }
 
 .osNameCell {
-    width: 50%;
+    width: 65%;
+    padding-right: 10px;
+}
+
+.osName {
+    border: #000000 solid 1px;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .osBtnsCell {
-    width: 50%;
-    background-color: #1118f1;
+    width: 35%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }

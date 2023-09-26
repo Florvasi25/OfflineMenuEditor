@@ -80,6 +80,10 @@ function createOsBtnsCell() {
     const osBtnsCell = document.createElement('div')
     osBtnsCell.className = 'osBtnsCell'
 
+    osNewButton(osBtnsCell)
+
+    osCaseButton(osBtnsCell)
+
     osDeleteButton(osBtnsCell)
 
     osDuplicateButton(osBtnsCell)
@@ -110,6 +114,28 @@ function osDuplicateButton(osBtnsCell) {
     duplicateButtonImg.classList.add('sectionButtonImg')
     duplicateButtonImg.src = '../../assets/duplicateIcon.svg'
     duplicateButton.appendChild(duplicateButtonImg)
+}
+
+function osNewButton(osBtnsCell) {
+    const newOsButton = document.createElement('button');
+    newOsButton.classList.add('sectionButton')
+    newOsButton.classList.add('newOsButton')
+    osBtnsCell.appendChild(newOsButton);
+    const newOsButtonImg = document.createElement('img')
+    newOsButtonImg.classList.add('sectionButtonImg')
+    newOsButtonImg.src = '../../assets/plusIcon.svg'
+    newOsButton.appendChild(newOsButtonImg)
+}
+
+function osCaseButton(osBtnsCell) {
+    const caseButton = document.createElement('button');
+    caseButton.classList.add('sectionButton')
+    caseButton.classList.add('newOsButton')
+    osBtnsCell.appendChild(caseButton);
+    const caseButtonImg = document.createElement('img')
+    caseButtonImg.classList.add('sectionButtonImg')
+    caseButtonImg.src = '../../assets/caseIcon.svg'
+    caseButton.appendChild(caseButtonImg)
 }
 
 export { createOsModalContainer }

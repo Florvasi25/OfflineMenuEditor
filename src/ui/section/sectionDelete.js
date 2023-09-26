@@ -31,8 +31,8 @@ function confirmDelete(sectionRow, sectionButtonsCell) {
     popupContent.className = "popup-content";
     popupContent.innerHTML = `
         <p>Do you want to delete permanently "${sectionObject.Name}"</p>
-        <button class="yesButton">Yes</button>
-        <button class="noButton">No</button>
+        <button class="yesButton confirmDeleteBtn">Yes</button>
+        <button class="noButton confirmDeleteBtn">No</button>
     `;
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
