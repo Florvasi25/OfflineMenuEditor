@@ -243,13 +243,13 @@ function calculatePeriod(StartTime, CloseTime) {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
-function getAvailableTimes(jsonData, sectionId) {
+/*function getAvailableTimes(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
     if (foundSection) {
         return foundSection.MenuSectionAvailability.AvailableTimes;
     }
     return null;
-}
+}*/
 
 function getSection(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
@@ -273,16 +273,14 @@ function compareDailySpecialHours(menuSection) {
         }
 
         for (let j = 0; j < baseHours.length; j++) {
-            if (baseHours[j].DayOfWeek !== currentHours[j].DayOfWeek ||
-                baseHours[j].StartTime !== currentHours[j].StartTime ||
+            if (baseHours[j].StartTime !== currentHours[j].StartTime ||
                 baseHours[j].Period !== currentHours[j].Period ||
-                baseHours[j].StartTimeEarly !== currentHours[j].StartTimeEarly ||
-                baseHours[j].PeriodEarly !== currentHours[j].PeriodEarly) {
+                baseHours[j].StartTimeEarly !== currentHours[j].StartTimeEarly /*||
+                baseHours[j].PeriodEarly !== currentHours[j].PeriodEarly*/) {
                 return false; // if any of the properties don't match, then they're not the same
             }
         }
     }
-
     return true; // if we made it here, then all DailySpecialHours are the same for all MenuItems
 }
 
