@@ -1,6 +1,8 @@
 import { 
     jsonData,
-    getItemIndex, 
+    getItemIndex,
+    getOsIndex,
+    updateSectionLocalStorage 
 } from '../context.js'
 
 import {
@@ -19,7 +21,6 @@ function createOsContainer(itemRow, sectionId, itemId) {
 
     const osAddNew = addNewOs()
     osContainer.appendChild(osAddNew)
-    
 }
 
 function createOs(osContainer, sectionId, itemId) {
@@ -54,7 +55,7 @@ function createOsRow(menuOs, sectionId, itemId) {
     const osDropDown = createOsDropdown(osRowHeader, sectionId, itemId)
     dropAndName.appendChild(osDropDown)
 
-    const osNameHeader = createOsNameHeader(menuOs, itemId, sectionId)
+    const osNameHeader = createOsNameHeader(menuOs, itemId, sectionId, osRowHeader)
     dropAndName.appendChild(osNameHeader)
 
     const osSelectOptionContainer = createOsSelectOption(menuOs)
@@ -63,12 +64,15 @@ function createOsRow(menuOs, sectionId, itemId) {
     return osRowHeader
 }
 
-function createOsNameHeader(menuOs, itemId, sectionId) {
+//////////////////////
+
+function createOsNameHeader(menuOs, itemId, sectionId, osRowHeader) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
     osNameHeader.textContent = menuOs.Name
+    osNameHeader.id = menuOs.MenuItemOptionSetId
 
-    const osModalContainer = createOsModalContainer(menuOs, itemId, sectionId)
+    const osModalContainer = createOsModalContainer(menuOs, itemId, sectionId, osRowHeader)
 
     osNameHeader.addEventListener('click', () => {
         osModalContainer.style.display = 'block';
@@ -79,6 +83,66 @@ function createOsNameHeader(menuOs, itemId, sectionId) {
 
     return osNameHeader
 }
+
+//////////////////////
+
+function createOsNameCell(menuOs, itemId, sectionId) {
+    //Name Cell
+    const osNameCell = document.createElement('div');
+    osNameCell.classList.add('osNameCell');
+
+    const osNameHeader = createOsName(menuOs, itemId, sectionId)
+    osNameCell.appendChild(osNameHeader);
+    
+    return osNameCell
+}
+
+//Handles Name Edits
+function createOsName(menuOs, itemId, sectionId) {
+    const osName = document.createElement('p');
+    osName.classList.add('osName');
+    osName.contentEditable = true;
+    osName.textContent = menuOs.Name;
+
+    let originalName = menuOs.Name;
+
+    osName.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const newOsName = osName.textContent;
+            updateName(menuOs.MenuItemOptionSetId, itemId, sectionId, newOsName);
+            originalName = newOsName;
+            osName.blur();
+            const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
+            const osNameHeader = osNameHeaderArray.find((p) => p.id == menuOs.MenuItemOptionSetId)
+            osNameHeader.textContent = newOsName;
+        } else if (e.key === 'Escape') {
+            osName.textContent = originalName;
+            osName.blur();
+        }
+    });
+
+    osName.addEventListener('blur', () => {
+        osName.textContent = originalName;
+        osName.classList.remove('sectionClicked')
+    });
+
+    osName.addEventListener('click', () => {
+        osName.classList.add('sectionClicked')
+    })
+
+    return osName
+}
+
+//Updates Name
+function updateName(osHeaderId, itemId, sectionId, osName) {
+    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osHeaderId)
+    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].Name = osName;
+
+    updateSectionLocalStorage()
+}
+
+////////////////////////////
 
 function createOsSelectOption(menuOs) {
     const osSelectOptionContainer = document.createElement('div')
@@ -98,5 +162,5 @@ function addNewOs() {
 
 export {
     createOsContainer,
-    createOsNameHeader,
+    createOsNameCell
 }

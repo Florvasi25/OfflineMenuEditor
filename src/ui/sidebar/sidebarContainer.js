@@ -1,10 +1,8 @@
-import { 
-    jsonData,
-    getOsIndex,
-    updateSectionLocalStorage
-} from '../context.js'
+import {
+    createOsNameCell
+} from '../optionSet/osHeaderContainer.js'
 
-function createOsModalContainer(menuOs, itemId, sectionId) {
+function createOsModalContainer(menuOs, itemId, sectionId, osRowHeader) {
     const leftContainer = document.getElementById('leftContainer')
     
     const osModalContainer = document.createElement('div')
@@ -69,61 +67,49 @@ function createOsOptionsRow(menuOs, itemId, sectionId) {
     const osNameCell = createOsNameCell(menuOs, itemId, sectionId)
     osOptionsRow.appendChild(osNameCell)
 
+    const osBtnsCell = createOsBtnsCell()
+    osOptionsRow.appendChild(osBtnsCell)
+
     return osOptionsRow
 }
 
-function createOsNameCell(menuOs, itemId, sectionId) {
-    //Name Cell
-    const osHeaderCell = document.createElement('div');
-    osHeaderCell.classList.add('osHeaderCell');
-
-    const osNameHeader = createOsNameHeader(menuOs, itemId, sectionId)
-    osHeaderCell.appendChild(osNameHeader);
-    
-    return osHeaderCell
-}
-
-//Handles Name Edits
-function createOsNameHeader(menuOs, itemId, sectionId) {
-    const osName = document.createElement('p');
-    osName.classList.add('osName');
-    osName.contentEditable = true;
-    osName.textContent = menuOs.Name;
-
-    let originalName = menuOs.Name;
-
-    osName.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            updateName(menuOs.MenuItemOptionSetId, itemId, sectionId, osName.textContent);
-            originalName = osName.textContent;
-            osName.blur();
-        } else if (e.key === 'Escape') {
-            osName.textContent = originalName;
-            osName.blur();
-        }
-    });
-
-    osName.addEventListener('blur', () => {
-        osName.textContent = originalName;
-        osName.classList.remove('sectionClicked')
-    });
-
-    osName.addEventListener('click', () => {
-        osName.classList.add('sectionClicked')
-    })
-
-    return osName
-}
-
-//Updates Name
-function updateName(osHeaderId, itemId, sectionId, osName) {
-    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osHeaderId)
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].Name = osName;
-
-    updateSectionLocalStorage()
-}
 
 /////////////////////
+
+function createOsBtnsCell() {
+    const osBtnsCell = document.createElement('div')
+    osBtnsCell.className = 'osBtnsCell'
+
+    osDeleteButton(osBtnsCell)
+
+    osDuplicateButton(osBtnsCell)
+
+    return osBtnsCell
+}
+
+function osDeleteButton(osBtnsCell) {
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('sectionButton')
+    deleteButton.classList.add('deleteButton')
+    osBtnsCell.appendChild(deleteButton);
+    const deleteButtonImg = document.createElement('img')
+    deleteButtonImg.classList.add('sectionButtonImg')
+    deleteButtonImg.src = '../../assets/deleteIcon.svg'
+    deleteButton.appendChild(deleteButtonImg)
+    // deleteButton.addEventListener('click', () => {
+    //     confirmDelete(itemRow, itemButtonsCell, sectionId)
+    // });
+}
+
+function osDuplicateButton(osBtnsCell) {
+    const duplicateButton = document.createElement('button');
+    duplicateButton.classList.add('sectionButton')
+    duplicateButton.classList.add('duplicateButton')
+    osBtnsCell.appendChild(duplicateButton);
+    const duplicateButtonImg = document.createElement('img')
+    duplicateButtonImg.classList.add('sectionButtonImg')
+    duplicateButtonImg.src = '../../assets/duplicateIcon.svg'
+    duplicateButton.appendChild(duplicateButtonImg)
+}
 
 export { createOsModalContainer }

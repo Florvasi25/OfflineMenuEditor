@@ -639,3 +639,18 @@ button#openOsModalBtn:hover {
 .closeOsModalBtn:hover {
     color: red;
 }
+
+.osOptionsRow {
+    display: flex;
+}
+
+.osNameCell {
+    width: 50%;
+}
+
+.osBtnsCell {
+    width: 50%;
+    background-color: #1118f1;
+    display: flex;
+    justify-content: center;
+}
