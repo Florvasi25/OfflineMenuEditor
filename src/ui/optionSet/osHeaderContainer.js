@@ -90,7 +90,11 @@ function createOsNameHeader(menuOs, itemId, sectionId, osRowHeader) {
 function createOsSelectOption(menuOs) {
     const osSelectOptionContainer = document.createElement('div')
     osSelectOptionContainer.className = 'osSelectOptionContainer'
-    osSelectOptionContainer.innerHTML = `${menuOs.MinSelectCount} - ${menuOs.MaxSelectCount}`
+    osSelectOptionContainer.innerHTML = `
+    <p class='minSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MinSelectCount}</p>
+    <p class='dashCountCell'> - </p>
+    <p class='maxSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MaxSelectCount}</p>
+    `
 
     return osSelectOptionContainer
 }

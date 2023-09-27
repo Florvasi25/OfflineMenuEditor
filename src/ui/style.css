@@ -377,7 +377,6 @@ main {
     margin-top: 10px;
 }
 
-
 .confirmDeleteBtn:hover {
     background-color: #b1b1b1;
 }
@@ -471,13 +470,23 @@ main {
     font-size: 15px;
 }
 
-/* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
+/* NEW OS BUTTON - NEW OS BUTTON - NEW OS BUTTON - NEW OS BUTTON */
 
 .newOsButton {
     background-color: #cdcdcd;
 }
 
 .newOsButton:hover {
+    background-color: #b1b1b1;
+}
+
+/* MAX LENGTH BUTTON - MAX LENGTH BUTTON - MAX LENGTH BUTTON - MAX LENGTH BUTTON */
+
+.maxLengthButton {
+    background-color: #cdcdcd;
+}
+
+.maxLengthButton:hover {
     background-color: #b1b1b1;
 }
 
@@ -508,7 +517,7 @@ main {
 }
 
 
-/* style.css */
+/* CLOCK - CLOCK - CLOCK - CLOCK - CLOCK */
 
 .clockModal {
     display: none;
@@ -673,7 +682,7 @@ button#openOsModalBtn:hover {
 }
 
 .osNameCell {
-    width: 65%;
+    flex-grow: 1;
     padding-right: 10px;
 }
 
@@ -684,7 +693,35 @@ button#openOsModalBtn:hover {
 }
 
 .osBtnsCell {
-    width: 35%;
+    width: 130px;
     display: flex;
     justify-content: space-between;
+}
+
+.selectOptionContainer {
+    height: 50px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    width: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.selectOption {
+    display: flex;
+}
+
+.dashCountCell {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.maxCount {
+    padding: 5px 7.5px;
+}
+
+.minCount {
+    padding: 5px 7.5px;
 }

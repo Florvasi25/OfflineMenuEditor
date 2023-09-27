@@ -6,6 +6,10 @@ import {
     createOsBtnsCell 
 } from './modalNav/osButtonContainer.js'
 
+import {
+    createSelectOptionContainer
+} from './modalNav/osSelectOption.js'
+
 function createOsModalContainer(menuOs, itemId, sectionId, osRowHeader) {
     const leftContainer = document.getElementById('leftContainer')
     
@@ -40,6 +44,9 @@ function createOsModalNav(menuOs, itemId, sectionId) {
 
     const osOptionsRow = createOsOptionsRow(menuOs, itemId, sectionId)
     osModalNav.appendChild(osOptionsRow)
+
+    const selectOptionContainer = createSelectOptionContainer(menuOs, itemId, sectionId)
+    osModalNav.appendChild(selectOptionContainer)
 
     return { osModalNav, closeOsModalBtn }
 }
