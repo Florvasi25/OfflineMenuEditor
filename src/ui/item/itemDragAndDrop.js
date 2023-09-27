@@ -60,7 +60,6 @@ function setDragListeners(itemContainer, sectionId) {
         } else {
             itemContainer.insertBefore(draggable, afterElement)
         }
-        console.log('drag enter');
     })
     
     

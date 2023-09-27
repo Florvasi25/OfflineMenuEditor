@@ -44,6 +44,8 @@ main {
 
 .osSelectOptionContainer {
     color: #ffffff;
+    display: flex;
+    align-items: center;
 }
 
 .optionContainer {
