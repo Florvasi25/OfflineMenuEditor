@@ -1,6 +1,6 @@
 import {
     sectionClockButton,
-} from './sectionClock.js'
+} from '../clock/sectionClock.js'
 
 import {
     sectionVisibilityButton

@@ -1,6 +1,6 @@
-import {
+/*import {
     itemClockButton,
-} from './itemClock.js'
+} from './itemClock.js'*/
 
 import {
     itemVisibilityButton
@@ -14,11 +14,15 @@ import {
     itemDuplicateButton,
 } from './itemDuplicate.js'
 
+import {
+    itemClockButton,
+} from '../clock/itemClock.js'
+
 function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('div');
     itemButtonsCell.classList = "sectionButtonsCell"
 
-    itemClockButton(itemButtonsCell)
+    itemClockButton(itemButtonsCell, itemRow.id)
     
     itemDeleteButton(itemButtonsCell, itemRow, sectionId)
 
