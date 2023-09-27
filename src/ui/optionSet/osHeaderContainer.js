@@ -72,9 +72,12 @@ function createOsNameHeader(menuOs, itemId, sectionId, osRowHeader) {
     osNameHeader.textContent = menuOs.Name
     osNameHeader.id = menuOs.MenuItemOptionSetId
 
-    const osModalContainer = createOsModalContainer(menuOs, itemId, sectionId, osRowHeader)
-
     osNameHeader.addEventListener('click', () => {
+        const existingOsModal = document.querySelector('.osModalContainer')
+        if (existingOsModal) {
+            existingOsModal.remove()
+        }
+        const osModalContainer = createOsModalContainer(menuOs, itemId, sectionId, osRowHeader)
         osModalContainer.style.display = 'block';
         setTimeout(() => {
             osModalContainer.classList.add('show');

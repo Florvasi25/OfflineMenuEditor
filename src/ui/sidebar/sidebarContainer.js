@@ -14,10 +14,11 @@ function createOsModalContainer(menuOs, itemId, sectionId, osRowHeader) {
 
     closeOsModalBtn.addEventListener('click', () => {
         osModalContainer.classList.remove('show');
-        osModalContainer.classList.add('hide'); 
+        osModalContainer.classList.add('hide');
         setTimeout(() => {
             osModalContainer.style.display = 'none'; 
             osModalContainer.classList.remove('hide'); 
+            osModalContainer.remove()
         }, 300);
     });
     
