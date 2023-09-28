@@ -14,8 +14,8 @@ import
 } from './clockUtils.js'
 
 function itemClockButton(itemButtonsCell, itemId) {
-    const clockButton = createAndAppend(itemButtonsCell, 'button', 'itemButton', 'clockButton');
-    const clockButtonImg = createAndAppend(clockButton, 'img', 'itemButtonImg');
+    const clockButton = createAndAppend(itemButtonsCell, 'button', 'sectionButton', 'clockButton');
+    const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
     clockButton.addEventListener('click', () => {
         const clockElements = createClockBody();
