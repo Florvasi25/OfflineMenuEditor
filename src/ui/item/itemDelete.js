@@ -20,7 +20,7 @@ function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
 }
 
 
-//Creates a popup to confirm the deletion of the section
+//Creates a popup to confirm the deletion of the item
 function confirmDelete(itemRow, itemButtonsCell, sectionId) {
     const popup = document.createElement("div");
     popup.className = "popup";
@@ -71,9 +71,9 @@ function deleteItem(itemRow, sectionId) {
     const itemId = itemRow.id;
     if (itemRow) {
         if (itemRow.classList.contains('expanded')) {
-            let Os = itemRow.nextElementSibling;
-            if (Os && Os.tagName === 'TABLE') {
-                Os.remove();
+            let optionSet = itemRow.nextElementSibling;
+            if (optionSet && optionSet.tagName === 'DIV' && optionSet.classList.contains('osContainer')) {
+                optionSet.remove();
             }
         }
         itemRow.remove(); 

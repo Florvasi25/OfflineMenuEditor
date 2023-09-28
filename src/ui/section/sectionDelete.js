@@ -71,11 +71,11 @@ function deleteSection(sectionRow) {
     if (sectionRow) {
         // Encuentra la sección en jsonData basada en el ID
         const section = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
-        deleteItemLocalStorage(section); // delete item ID inside local storage
+        deleteItemLocalStorage(section); 
         if (sectionRow.classList.contains('expanded')) {
             let items = sectionRow.nextElementSibling;
-            if (items && items.tagName === 'TR') {
-                items.remove(); 
+            if (items.tagName === 'DIV' && items.classList.contains('itemTable')) {
+                items.remove();
             }
         }
         sectionRow.remove(); 
