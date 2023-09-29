@@ -140,6 +140,32 @@ main {
         transform: translateX(10px)
     }
 }
+.optionRow {
+    display: flex;
+    border-radius: 7.5px;
+}
+
+.optionRow {
+    display: flex;
+    border-radius: 7.5px;
+
+    &.expanded .osDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .osDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+        transform: translateX(10px);
+    }
+
+    &.clickOnDrag {
+        transform: translateX(10px)
+    }
+}
 
 .osRowHeader.odd {
     background-color: #342F58;
@@ -147,6 +173,14 @@ main {
 
 .osRowHeader.even {
     background-color: #B29346;
+}
+
+.optionRow.odd {
+    background-color: #dbdbdb;
+}
+
+.optionRow.even {
+    background-color: #f4f4f4;
 }
 
 .osRowHeader:first-of-type {
@@ -654,7 +688,7 @@ button#openOsModalBtn:hover {
 }
 
 .osModalNav {
-    padding: 15px;
+    padding: 15px 15px 0 15px;
 }
 
 .osModalBody {
@@ -743,6 +777,8 @@ button#openOsModalBtn:hover {
     padding: 5px 7.5px;
 }
 
-.optionRow {
-    display: flex;
+.optionNameCell {
+    border: solid 1px #ffffff;
+    flex-grow: 1;
+    padding: 5px;
 }

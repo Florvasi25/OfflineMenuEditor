@@ -10,7 +10,6 @@ function setJsonData(data) {
 function getSectionIndex(sectionId) {
     const sectionIndex = jsonData.MenuSections.findIndex(sectionElement => sectionElement.MenuSectionId == sectionId)
 
-    console.log(sectionIndex);
     return sectionIndex
 }
 
@@ -20,7 +19,6 @@ function getItemIndex(sectionId, itemId) {
 
     const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
 
-    console.log(itemIndex);
     return {sectionIndex, itemIndex}
 }
 
@@ -30,7 +28,6 @@ function getOsIndex(sectionId, itemId, osId) {
 
     const osIndex = menuOs.findIndex(osElement => osElement.MenuItemOptionSetId == osId)
 
-    console.log(osIndex);
     return {sectionIndex, itemIndex, osIndex}
 }
 
@@ -40,7 +37,6 @@ function getOptionIndex(sectionId, itemId, osId, optionId) {
 
     const optionIndex = menuOption.findIndex(optionElement => optionElement.MenuItemOptionSetItemId == optionId)
 
-    console.log(optionIndex);
     return {sectionIndex, itemIndex, osIndex, optionIndex}
 }
 
