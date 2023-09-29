@@ -62,6 +62,7 @@ main {
 }
 
 .optionText {
+    display: flex;
     font-size: 13px;
 }
 

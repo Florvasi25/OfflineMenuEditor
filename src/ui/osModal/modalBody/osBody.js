@@ -1,9 +1,11 @@
 import { 
     jsonData,
-    getOsIndex, 
-    getOptionIndex,
-    updateSectionLocalStorage
+    getOsIndex
 } from '../../context.js'
+
+import { 
+    createOptionNameCell
+} from './optionName.js'
 
 function createOsModalBody(sectionId, itemId, osId) {
     const optionsContainer = document.createElement('div')
@@ -28,7 +30,6 @@ function createOptions(optionsContainer, sectionId, itemId, osId) {
     console.log(menuOptions);
 }
 
-
 function createTopButtonsCell() {
     const topButtonsCell = document.createElement('div')
     topButtonsCell.className = 'topButtonsCell'
@@ -52,63 +53,6 @@ function createOptionRow(menuOption, sectionId, itemId, osId) {
 
     return optionRow
 }
-
-function createOptionNameCell(menuOption, sectionId, itemId, osId) {
-    //Name Cell
-    const optionNameCell = document.createElement('div');
-    optionNameCell.classList.add('optionNameCell');
-
-    const optionName = createOptionName(menuOption, itemId, osId, sectionId)
-    optionNameCell.appendChild(optionName);
-    
-    return optionNameCell
-}
-
-//Handles Name Edits
-function createOptionName(menuOption, itemId, osId, sectionId) {
-    const optionName = document.createElement('p');
-    optionName.classList.add('optionName');
-    optionName.contentEditable = true;
-    optionName.textContent = menuOption.Name;
-
-    let originalName = menuOption.Name;
-
-    optionName.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const newOptionName = optionName.textContent;
-            updateOptionName(menuOption.MenuItemOptionSetItemId, itemId, sectionId, osId, newOptionName);
-            originalName = newOptionName;
-            optionName.blur();
-            // const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
-            // const osNameHeader = osNameHeaderArray.find((p) => p.id == menuOs.MenuItemOptionSetId)
-            // osNameHeader.textContent = newOptionName;
-        } else if (e.key === 'Escape') {
-            optionName.textContent = originalName;
-            optionName.blur();
-        }
-    });
-
-    optionName.addEventListener('blur', () => {
-        optionName.textContent = originalName;
-        optionName.classList.remove('sectionClicked')
-    });
-
-    optionName.addEventListener('click', () => {
-        optionName.classList.add('sectionClicked')
-    })
-
-    return optionName
-}
-
-//Updates Name
-function updateOptionName(optionId, itemId, sectionId, osId, newOptionName) {
-    const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].Name = newOptionName;
-
-    updateSectionLocalStorage()
-}
-
 
 function createOptionDragCell() {
     const optionDragCell = document.createElement('div')

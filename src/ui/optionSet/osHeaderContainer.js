@@ -43,7 +43,7 @@ function createOs(osContainer, sectionId, itemId) {
 }
 
 function createOsRow(menuOs, sectionId, itemId) {
-    const osRowHeader = document.createElement('section');
+    const osRowHeader = document.createElement('div');
     osRowHeader.classList.add('osRowHeader');
     osRowHeader.classList.add('defaultColor');
     osRowHeader.classList.add('draggable');

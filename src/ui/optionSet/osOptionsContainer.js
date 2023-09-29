@@ -39,7 +39,10 @@ function createOptionRow(menuOption) {
 function createNameAndMoM(menuOption) {
     const nameAndMoM = document.createElement('div')
     nameAndMoM.className = 'optionText'
-    nameAndMoM.innerHTML = `${menuOption.Name} - ${menuOption.NextMenuItemOptionSetId}`
+    nameAndMoM.innerHTML = `
+    <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>
+    <p class='dashCountCell'> - </p>
+    <p>${menuOption.NextMenuItemOptionSetId}</p>`
 
     return nameAndMoM
 }
