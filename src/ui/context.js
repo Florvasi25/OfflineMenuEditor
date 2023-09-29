@@ -6,10 +6,11 @@ function setJsonData(data) {
     jsonData = data
 }
 
-//Gets Section Index
+//Gets Index
 function getSectionIndex(sectionId) {
     const sectionIndex = jsonData.MenuSections.findIndex(sectionElement => sectionElement.MenuSectionId == sectionId)
 
+    console.log(sectionIndex);
     return sectionIndex
 }
 
@@ -19,16 +20,28 @@ function getItemIndex(sectionId, itemId) {
 
     const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
 
+    console.log(itemIndex);
     return {sectionIndex, itemIndex}
 }
 
-function getOsIndex(sectionId, itemId, osHeaderId) {
+function getOsIndex(sectionId, itemId, osId) {
     const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
     const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
 
-    const osIndex = menuOs.findIndex(osElement => osElement.MenuItemOptionSetId == osHeaderId)
+    const osIndex = menuOs.findIndex(osElement => osElement.MenuItemOptionSetId == osId)
 
+    console.log(osIndex);
     return {sectionIndex, itemIndex, osIndex}
+}
+
+function getOptionIndex(sectionId, itemId, osId, optionId) {
+    const {sectionIndex, itemIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
+    const menuOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems;
+
+    const optionIndex = menuOption.findIndex(optionElement => optionElement.MenuItemOptionSetItemId == optionId)
+
+    console.log(optionIndex);
+    return {sectionIndex, itemIndex, osIndex, optionIndex}
 }
 
 function getDragAfterElement(container, y) {
@@ -105,6 +118,7 @@ function updateCounterLocalStorage(id, addID) {
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
     }
 }
+
 //Updates items id LocalStorage.
 function updateItemCounterLocalStorage(id, addID) {
     if(addID) {
@@ -132,8 +146,6 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
-
-
 export {
     jsonData,
     getSectionIndex,
@@ -150,5 +162,6 @@ export {
     getItemIndex,
     getDragAfterElement,
     setItemId,
-    getOsIndex
+    getOsIndex,
+    getOptionIndex
 }
