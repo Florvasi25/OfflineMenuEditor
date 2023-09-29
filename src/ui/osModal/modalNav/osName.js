@@ -53,8 +53,8 @@ function createOsName(menuOs, itemId, sectionId) {
 }
 
 //Updates Name
-function updateName(osHeaderId, itemId, sectionId, osName) {
-    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osHeaderId)
+function updateName(osId, itemId, sectionId, osName) {
+    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].Name = osName;
 
     updateSectionLocalStorage()

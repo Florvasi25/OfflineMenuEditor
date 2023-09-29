@@ -1,16 +1,12 @@
 import {
-    createOsNameCell
-} from '../optionSet/osHeaderContainer.js'
-
-import { 
-    createOsBtnsCell 
-} from './modalNav/osButtonContainer.js'
+    createOsModalNav
+} from './modalNav/osNav.js'
 
 import {
-    createSelectOptionContainer
-} from './modalNav/osSelectOption.js'
+    createOsModalBody
+} from './modalBody/osBody.js'
 
-function createOsModalContainer(menuOs, itemId, sectionId, osRowHeader) {
+function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     const leftContainer = document.getElementById('leftContainer')
     
     const osModalContainer = document.createElement('div')
@@ -19,6 +15,10 @@ function createOsModalContainer(menuOs, itemId, sectionId, osRowHeader) {
     
     const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs, itemId, sectionId)
     osModalContainer.appendChild(osModalNav)
+
+    const osModalBody = createOsModalBody(sectionId, itemId, osId)
+    osModalContainer.appendChild(osModalBody)
+    
 
     closeOsModalBtn.addEventListener('click', () => {
         osModalContainer.classList.remove('show');
@@ -33,54 +33,6 @@ function createOsModalContainer(menuOs, itemId, sectionId, osRowHeader) {
     leftContainer.appendChild(osModalContainer)
 
     return osModalContainer
-}
-
-function createOsModalNav(menuOs, itemId, sectionId) {
-    const osModalNav = document.createElement('div')
-    osModalNav.className = 'osModalNav'
-
-    const { closeBtnRow, closeOsModalBtn } = createCloseBtnRow()
-    osModalNav.appendChild(closeBtnRow)
-
-    const osOptionsRow = createOsOptionsRow(menuOs, itemId, sectionId)
-    osModalNav.appendChild(osOptionsRow)
-
-    const selectOptionContainer = createSelectOptionContainer(menuOs, itemId, sectionId)
-    osModalNav.appendChild(selectOptionContainer)
-
-    return { osModalNav, closeOsModalBtn }
-}
-
-function createCloseBtnRow() {
-    const closeBtnRow = document.createElement('div')
-    closeBtnRow.className = 'closeBtnRow'
-
-    const closeOsModalBtn = createCloseOsModalBtn()
-    closeBtnRow.appendChild(closeOsModalBtn)
-
-    return { closeBtnRow, closeOsModalBtn }
-}
-
-function createCloseOsModalBtn() {
-    const closeOsModalBtn = document.createElement('button')
-    closeOsModalBtn.className = 'closeOsModalBtn'
-    closeOsModalBtn.id = 'closeOsModalBtn'
-    closeOsModalBtn.textContent = 'X'
-
-    return closeOsModalBtn
-}
-
-function createOsOptionsRow(menuOs, itemId, sectionId) {
-    const osOptionsRow = document.createElement('div')
-    osOptionsRow.className = 'osOptionsRow'
-
-    const osNameCell = createOsNameCell(menuOs, itemId, sectionId)
-    osOptionsRow.appendChild(osNameCell)
-
-    const osBtnsCell = createOsBtnsCell()
-    osOptionsRow.appendChild(osBtnsCell)
-
-    return osOptionsRow
 }
 
 export { createOsModalContainer }

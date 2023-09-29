@@ -9,6 +9,10 @@ function createMaxCountCell(menuOs, itemId, sectionId) {
     const maxCountCell = document.createElement('div');
     maxCountCell.classList.add('maxCountCell');
 
+    const maxText = document.createElement('p')
+    maxText.textContent = 'Max'
+    maxCountCell.appendChild(maxText)
+
     const maxCount = createMaxCount(menuOs, itemId, sectionId)
     maxCountCell.appendChild(maxCount);
     

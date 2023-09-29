@@ -37,17 +37,11 @@ import {
 } from './itemTax.js'
 
 function createItemContainer(sectionRow) {
-    // const itemTr = document.createElement('div')
-    // itemTr.className ='itemTr'
-    // const itemTd = document.createElement('div')
-    // itemTd.setAttribute('colspan', 7)
     const itemTable = document.createElement('div');
     itemTable.classList.add('itemTable');
     const itemContainer = document.createElement('div')
     itemContainer.className = 'itemContainer'
     itemTable.appendChild(itemContainer)
-    // itemTd.appendChild(itemTable)
-    // itemTr.appendChild(itemTd)
     sectionRow.parentNode.insertBefore(itemTable, sectionRow.nextSibling);
     createItemRows(sectionRow, itemContainer);
     createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)

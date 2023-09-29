@@ -9,6 +9,10 @@ function createMinCountCell(menuOs, itemId, sectionId) {
     const minCountCell = document.createElement('div');
     minCountCell.classList.add('minCountCell');
 
+    const minText = document.createElement('p')
+    minText.textContent = 'Min'
+    minCountCell.appendChild(minText)
+
     const minCount = createMinCount(menuOs, itemId, sectionId)
     minCountCell.appendChild(minCount);
     
