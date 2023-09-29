@@ -42,7 +42,7 @@ function createNameAndMoM(menuOption) {
     nameAndMoM.innerHTML = `
     <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>
     <p class='dashCountCell'> - </p>
-    <p>${menuOption.NextMenuItemOptionSetId}</p>`
+    <p class='optionMoMPreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.NextMenuItemOptionSetId}</p>`
 
     return nameAndMoM
 }

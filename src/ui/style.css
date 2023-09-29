@@ -302,10 +302,25 @@ main {
     cursor: text;
 }
 
+.itemName {
+    font-size: 14px;
+    word-break: break-word;
+    padding: 5px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+}
+
 .sectionName {
     font-size: 13px;
     font-weight: bold;
     word-break: break-word;
+    padding: 5px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
 }
 
 /* DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION */
@@ -328,6 +343,11 @@ main {
 
 .sectionDesc {
     font-size: 12px;
+    padding: 5px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
 }
 
 /* OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET */
@@ -347,6 +367,11 @@ main {
 
 .itemPrice {
     font-size: 12px;
+    padding: 5px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
@@ -777,8 +802,19 @@ button#openOsModalBtn:hover {
     padding: 5px 7.5px;
 }
 
-.optionNameCell {
+.nameAndMoM {
     border: solid 1px #ffffff;
     flex-grow: 1;
+}
+
+.optionNameCell {
+    padding: 5px;
+}
+
+.optionName {
+    padding: 5px;
+}
+
+.optionMoM {
     padding: 5px;
 }

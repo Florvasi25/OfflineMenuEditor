@@ -12,6 +12,10 @@ import {
     setDragListeners
 } from './optionDragAndDrop.js'
 
+import {
+    createOptionMoMCell
+} from './optionMoM.js'
+
 function createOsModalBody(sectionId, itemId, osId) {
     const optionsContainer = document.createElement('div')
     optionsContainer.className = 'osModalBody'
@@ -59,8 +63,14 @@ function createOptionRow(optionsContainer, menuOption, sectionId, itemId, osId) 
     const dragOptionCell = createOptionDragCell(optionsContainer, optionRow)
     optionRow.appendChild(dragOptionCell)
 
-    const optionName = createOptionNameCell(menuOption, sectionId, itemId, osId)
-    optionRow.appendChild(optionName)
+    const nameAndMoM = document.createElement('div')
+    nameAndMoM.className = 'nameAndMoM'
+    const optionNameCell = createOptionNameCell(menuOption, sectionId, itemId, osId)
+    const optionMoMCell = createOptionMoMCell(menuOption, sectionId, itemId, osId)
+    nameAndMoM.appendChild(optionNameCell)
+    nameAndMoM.appendChild(optionMoMCell)
+
+    optionRow.appendChild(nameAndMoM)
 
     return optionRow
 }
