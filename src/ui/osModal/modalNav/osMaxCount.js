@@ -64,5 +64,4 @@ function updateMaxCount(osHeaderId, itemId, sectionId, osMaxCount) {
     updateSectionLocalStorage()
 }
 
-export { createMaxCountCell 
-}
+export { createMaxCountCell, updateMaxCount }

@@ -17,7 +17,7 @@ function createSelectOptionContainer(menuOs, itemId, sectionId) {
     const selectOptionCell = createSelectOptionCell(menuOs, itemId, sectionId)
     selectOptionContainer.appendChild(selectOptionCell)
 
-    createMaxLenghtButton(selectOptionContainer)
+    createMaxLenghtButton(selectOptionContainer, menuOs, itemId, sectionId)
 
     return selectOptionContainer
 }

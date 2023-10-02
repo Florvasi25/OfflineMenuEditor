@@ -823,9 +823,13 @@ button#openOsModalBtn:hover {
 }
 
 .optionName {
+    padding: 0 5px;
+}
+
+.optionMoMCell {
     padding: 5px;
 }
 
 .optionMoM {
-    padding: 5px;
+    padding: 0 5px;
 }
