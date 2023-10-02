@@ -625,7 +625,8 @@ main {
 .clock-footer {
     padding: 15px;
     border-bottom: none;
-    text-align: center;
+    text-align: center; 
+    position: relative;
 }
   
 .clock-body {
@@ -651,7 +652,17 @@ main {
     background: #36c6d3;
     color: white;
 }
-
+.clockBtn-availability-enabled{
+    background: #36c6d3;
+    color: white;
+}
+.clockBtn-availability-disabled{
+    background: #d4d4d4;
+    color: #a8a8a8;
+    font-weight: 500;
+    border: 1px solid #b0b0b0;
+    cursor: not-allowed;
+}
 .clockTable {
     width: 100%;
     border-collapse: collapse;

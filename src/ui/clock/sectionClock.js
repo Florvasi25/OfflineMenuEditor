@@ -3,7 +3,6 @@ import {
     getRandomInt, 
     updateSectionLocalStorage
 } from '../context.js'
-
 import {
     createAndAppend,
     addTextContent,
@@ -12,6 +11,7 @@ import {
     createInputCell,
     dayMappingToName
 } from './clockUtils.js'
+import { addSectionAvailabilityButton } from "./sectionAvailability.js";
 
 function sectionClockButton(sectionButtonsCell, sectionId) {
     const clockButton = createAndAppend(sectionButtonsCell, 'button', 'sectionButton', 'clockButton');
@@ -21,9 +21,12 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
     clockButton.addEventListener('click', () => {
         const clockElements = createClockBody();
         const clockBodyDiv = clockElements.clockBodyDiv;
+        const clockFooterDiv = clockElements.clockFooterDiv;
         const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
-        const seccion = getSection(jsonData, sectionId);    
-        createClockTable(clockBodyDiv, clockSaveBtn, seccion, sectionId);
+        const section = getSection(jsonData, sectionId);    
+
+        addSectionAvailabilityButton(clockFooterDiv, section);
+        createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
     });
 }
 
@@ -137,5 +140,6 @@ function compareDailySpecialHours(menuSection) {
 export {
     sectionClockButton,
     createSectionTableRows,
-    storeSectionTimeTableInJson
+    storeSectionTimeTableInJson,
+    compareDailySpecialHours
 } 

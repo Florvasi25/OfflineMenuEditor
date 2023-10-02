@@ -17,8 +17,12 @@ function createSectionDragCell(sectionRow) {
     sectionDragImg.className = 'sectionDragImg'
     sectionDragCell.appendChild(sectionDragImg)
 
-    sectionDragImg.addEventListener('dragstart', () => {
-        if (sectionRow.classList.contains('expanded')) return; // Si hay alguna sección expandida, no hagas nada.
+    sectionDragImg.addEventListener('dragstart', (e) => {
+        if (sectionRow.classList.contains('expanded'))
+        {
+            e.preventDefault();
+            return; // Si hay alguna sección expandida, no hagas nada.
+        } 
         sectionRow.classList.add('dragging')
     })
 
