@@ -50,7 +50,7 @@ main {
 
 .optionContainer {
     height: auto;
-    width: 50%;
+    width: 40%;
     padding: 7.5px 0px;
 }
 
@@ -119,7 +119,7 @@ main {
 .osRowHeader {
     display: flex;
     height: auto;
-    width: 50%;
+    width: 40%;
     justify-content: space-around;
     padding: 7.5px 0px;
 
@@ -415,6 +415,14 @@ main {
     border: solid 1px #ffffff;
 }
 
+.optionButtonsCell {
+    width: fit-content;
+    padding: 0 5px;
+    border: solid 1px #ffffff;
+    display: flex;
+    align-items: center;
+}
+
 .sectionButton {
     border: none;
     border-radius: 3px;
@@ -705,9 +713,9 @@ button#openOsModalBtn:hover {
     display: none;
     position: fixed;
     top: 0;
-    left: -50%;
+    left: -60%;
     height: 100vh;
-    width: 50%;
+    width: 60%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: left 0.3s ease-in-out; 
@@ -719,7 +727,7 @@ button#openOsModalBtn:hover {
 }
 
 .osModalContainer.hide {
-    left: -50%; 
+    left: -60%; 
 }
 
 .osModalNav {
