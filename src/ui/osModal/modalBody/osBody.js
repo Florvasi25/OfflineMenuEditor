@@ -16,6 +16,10 @@ import {
     createOptionMoMCell
 } from './optionMoM.js'
 
+import {
+    createOptionPriceCell
+} from './optionPrice.js'
+
 function createOsModalBody(sectionId, itemId, osId) {
     const optionsContainer = document.createElement('div')
     optionsContainer.className = 'osModalBody'
@@ -65,13 +69,18 @@ function createOptionRow(optionsContainer, menuOption, sectionId, itemId, osId) 
 
     const nameAndMoM = document.createElement('div')
     nameAndMoM.className = 'nameAndMoM'
+
     const optionNameCell = createOptionNameCell(menuOption, sectionId, itemId, osId)
-    const optionMoMCell = createOptionMoMCell(menuOption, sectionId, itemId, osId)
     nameAndMoM.appendChild(optionNameCell)
+
+    const optionMoMCell = createOptionMoMCell(menuOption, sectionId, itemId, osId)
     nameAndMoM.appendChild(optionMoMCell)
 
     optionRow.appendChild(nameAndMoM)
-
+    
+    const optionPrice = createOptionPriceCell(menuOption, sectionId, itemId, osId)
+    optionRow.appendChild(optionPrice)
+    
     return optionRow
 }
 

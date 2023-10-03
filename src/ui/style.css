@@ -262,7 +262,7 @@ main {
     display: flex;
     align-items: center;
     width: 25px;
-    justify-self: center;
+    justify-content: center;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -357,8 +357,6 @@ main {
 
 .itemPriceCell {
     display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 5px;
     width: 50px;
     border: solid 1px #ffffff;
@@ -372,6 +370,7 @@ main {
     width: -webkit-fill-available;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
@@ -820,6 +819,7 @@ button#openOsModalBtn:hover {
 
 .optionNameCell {
     padding: 5px;
+    font-size: 14px;
 }
 
 .optionName {
@@ -828,8 +828,23 @@ button#openOsModalBtn:hover {
 
 .optionMoMCell {
     padding: 5px;
+    font-size: 14px;
 }
 
 .optionMoM {
+    padding: 0 5px;
+}
+
+.optionPriceCell {
+    border: solid 1px #ffffff;
+    flex-grow: 0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.optionPrice {
+    font-size: 14px;
     padding: 0 5px;
 }
