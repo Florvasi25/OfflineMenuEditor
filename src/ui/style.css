@@ -819,7 +819,7 @@ button#openOsModalBtn:hover {
 
 .optionNameCell {
     padding: 5px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .optionName {
@@ -828,7 +828,7 @@ button#openOsModalBtn:hover {
 
 .optionMoMCell {
     padding: 5px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .optionMoM {
@@ -845,6 +845,20 @@ button#openOsModalBtn:hover {
 }
 
 .optionPrice {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 0 5px;
+}
+
+.optionTaxCell {
+    border: solid 1px #ffffff;
+    flex-grow: 0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.optionTax {
+    font-size: 12px;
     padding: 0 5px;
 }

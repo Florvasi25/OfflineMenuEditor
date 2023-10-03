@@ -57,11 +57,13 @@ function createPriceAndTax(menuOption) {
         const taxRate = jsonData.TaxRates.find(taxRate => taxRate.TaxRateId == osTaxId);
         osTax.textContent = taxRate.Rate + '%'
     }
+
+    const priceAsNumber = parseFloat(menuOption.Price);
     
     const priceAndTax = document.createElement('div')
     priceAndTax.className = 'optionText'
     priceAndTax.innerHTML = `
-    <p class='optionPricePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Price}</p>
+    <p class='optionPricePreview' id='${menuOption.MenuItemOptionSetItemId}'>${priceAsNumber.toFixed(2)}</p>
     <p class='dashCountCell'> - </p>
     <p class='optionTaxPreview' id='${menuOption.MenuItemOptionSetItemId}'>${osTax.textContent}</p>`
 

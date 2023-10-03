@@ -20,6 +20,10 @@ import {
     createOptionPriceCell
 } from './optionPrice.js'
 
+import {
+    createOptionTaxCell
+} from './optionTax.js'
+
 function createOsModalBody(sectionId, itemId, osId) {
     const optionsContainer = document.createElement('div')
     optionsContainer.className = 'osModalBody'
@@ -80,6 +84,9 @@ function createOptionRow(optionsContainer, menuOption, sectionId, itemId, osId) 
     
     const optionPrice = createOptionPriceCell(menuOption, sectionId, itemId, osId)
     optionRow.appendChild(optionPrice)
+
+    const optionTax = createOptionTaxCell(menuOption, jsonData)
+    optionRow.appendChild(optionTax)
     
     return optionRow
 }
