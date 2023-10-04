@@ -13,7 +13,7 @@ import {
 } from './osBody.js'
 
 
-function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsContainer, optionButtonsCell, menuOption) {
+function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, optionButtonsCell, menuOption) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -24,17 +24,19 @@ function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, opt
     duplicateButton.appendChild(duplicateButtonImg)
 
     duplicateButton.addEventListener('click', () => {
-        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsContainer, menuOption);
+        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption);
         setSectionDisplayOrder(jsonData);
     });
 }
 
-function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsContainer, menuOption) {
+function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption) {
     const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
     
     if (optionIndex !== -1) {
         const originalOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex];
         const newOption = JSON.parse(JSON.stringify(originalOption));
+        console.log('original option:', originalOption);
+        console.log('duplicate option:', newOption);
         
         const optionIds = getLocalStorageOptionSetIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
@@ -43,7 +45,8 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsCo
         newOption.PublicId = crypto.randomUUID();
         
         const newOptionRow = createOption(newOption, menuOption, sectionId, itemId, osId);
-
+        console.log('newOptionRow:', newOptionRow);
+        
         optionsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
         
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption);
@@ -51,7 +54,7 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsCo
             obj.DisplayOrder = index;
         });
 
-        const rows = Array.from(optionsContainer.querySelectorAll(".optionRow"));
+        const rows = Array.from(optionsBodyContainer.querySelectorAll(".optionRow"));
     
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
@@ -62,6 +65,12 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsCo
                 row.classList.add('even');
             }
         });
+
+        
+        // const optionContainer = Array.from(document.getElementsByClassName('optionContainer')); 
+        // if (optionContainer) {
+        //     const optionContainerPreview = optionContainer.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
+        // }
 
         updateSectionLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
