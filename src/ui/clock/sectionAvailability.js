@@ -21,13 +21,9 @@ function addSectionAvailabilityButton(clockFooterDiv, section) {
             // Find clockModalDiv and hide it
             let parentElement = clockFooterDiv;
             while(parentElement && !parentElement.classList.contains('clockModal')) {
-                console.log("1");
                 parentElement = parentElement.parentNode;
             }
-            if(parentElement) {
-                console.log("Entró");
-                parentElement.style.display = 'none';
-            }
+            if(parentElement) {parentElement.style.display = 'none';}
         });
     } else{
         clockSectionAvailabilityBtn.disabled = true;

@@ -5,6 +5,7 @@ import {
     setSectionId,
     setItemId,
     setSectionDisplayOrder,
+    setOptionSetId
 } from './context.js';
 
 import {
@@ -27,6 +28,7 @@ function createLoadJsonButton() {
             setSectionId(jsonData);
             setSectionDisplayOrder(jsonData);
             setItemId(jsonData);
+            setOptionSetId(jsonData);
             generateHTML(jsonData);
         };
     

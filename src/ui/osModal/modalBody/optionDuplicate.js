@@ -3,7 +3,7 @@ import {
     getOptionIndex,
     updateItemCounterLocalStorage,
     updateSectionLocalStorage,
-    getLocalStorageItemIDs,
+    getLocalStorageOptionSetIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from '../../context.js';
@@ -22,7 +22,7 @@ function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, opt
     duplicateButtonImg.classList.add('sectionButtonImg')
     duplicateButtonImg.src = '../../assets/duplicateIcon.svg'
     duplicateButton.appendChild(duplicateButtonImg)
-    
+
     duplicateButton.addEventListener('click', () => {
         duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsContainer, menuOption);
         setSectionDisplayOrder(jsonData);
@@ -36,14 +36,14 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsCo
         const originalOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex];
         const newOption = JSON.parse(JSON.stringify(originalOption));
         
-        const optionIds = getLocalStorageItemIDs();
+        const optionIds = getLocalStorageOptionSetIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
 
         newOption.MenuItemOptionSetItemId = newOptionId;
         newOption.PublicId = crypto.randomUUID();
         
         const newOptionRow = createOption(newOption, menuOption, sectionId, itemId, osId);
-        
+
         optionsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
         
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption);
