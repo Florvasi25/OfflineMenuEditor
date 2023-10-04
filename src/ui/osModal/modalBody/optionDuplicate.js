@@ -6,14 +6,23 @@ import {
     getLocalStorageOptionSetIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
+    getOptionObject,
+    getOsObject,
 } from '../../context.js';
 
 import {
     createOption
 } from './osBody.js'
 
-
-function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, optionButtonsCell, menuOption) {
+function optionDuplicateButton(
+    optionRow,
+    optionId,
+    sectionId,
+    itemId,
+    osId,
+    optionsBodyContainer,
+    optionButtonsCell
+) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -24,38 +33,51 @@ function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, opt
     duplicateButton.appendChild(duplicateButtonImg)
 
     duplicateButton.addEventListener('click', () => {
-        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption);
+        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer);
         setSectionDisplayOrder(jsonData);
     });
 }
 
-function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption) {
-    const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
-    
-    if (optionIndex !== -1) {
-        const originalOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex];
+function duplicateOption(
+    optionRow,
+    optionId,
+    sectionId,
+    itemId,
+    osId,
+    optionsBodyContainer
+) {
+    const optionIndex = getOptionObject(sectionId, itemId, osId, optionId);
+    const originalOs = getOsObject(sectionId, itemId, osId);
+    const originalOption = originalOs.MenuItemOptionSetItems[optionIndex]
+
+    if (originalOption) {
         const newOption = JSON.parse(JSON.stringify(originalOption));
         console.log('original option:', originalOption);
         console.log('duplicate option:', newOption);
-        
+
         const optionIds = getLocalStorageOptionSetIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
 
         newOption.MenuItemOptionSetItemId = newOptionId;
         newOption.PublicId = crypto.randomUUID();
-        
-        const newOptionRow = createOption(newOption, menuOption, sectionId, itemId, osId);
+
+        const newOptionRow = createOption(optionsBodyContainer, newOption, sectionId, itemId, osId);
         console.log('newOptionRow:', newOptionRow);
-        
-        optionsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
-        
-        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption);
-        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.forEach((obj, index) => {
+
+        optionsBodyContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+
+        const MenuItemOptionSetItems = (
+            originalOs
+            .MenuItemOptionSetItems
+        )
+
+        MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption);
+        MenuItemOptionSetItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
 
         const rows = Array.from(optionsBodyContainer.querySelectorAll(".optionRow"));
-    
+
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -66,11 +88,11 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBo
             }
         });
 
-        
-        // const optionContainer = Array.from(document.getElementsByClassName('optionContainer')); 
+        // const optionContainer = Array.from(document.getElementsByClassName('optionContainer'));
         // if (optionContainer) {
         //     const optionContainerPreview = optionContainer.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
         // }
+
 
         updateSectionLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);

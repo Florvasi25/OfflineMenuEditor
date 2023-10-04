@@ -31,6 +31,15 @@ function getOsIndex(sectionId, itemId, osId) {
     return {sectionIndex, itemIndex, osIndex}
 }
 
+function getOsObject(sectionId, itemId, osId) {
+    const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
+    const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
+
+    const osObject = menuOs.find(osElement => osElement.MenuItemOptionSetId == osId);
+
+    return osObject
+}
+
 function getOptionIndex(sectionId, itemId, osId, optionId) {
     const {sectionIndex, itemIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
     const menuOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems;
@@ -38,6 +47,17 @@ function getOptionIndex(sectionId, itemId, osId, optionId) {
     const optionIndex = menuOption.findIndex(optionElement => optionElement.MenuItemOptionSetItemId == optionId)
 
     return {sectionIndex, itemIndex, osIndex, optionIndex}
+}
+
+function getOptionObject(sectionId, itemId, osId, optionId) {
+    const menuOptions = getOsObject(sectionId, itemId, osId).MenuItemOptionSetItems;
+
+    const optionIndex = menuOptions.findIndex(
+        optionElement => optionElement.MenuItemOptionSetItemId == optionId
+    )
+    // const optionObject = menuOptions.find(option => option.MenuItemOptionSetItemId == optionId);
+
+    return optionIndex
 }
 
 function getDragAfterElement(container, y) {
@@ -65,7 +85,7 @@ function getLocalStorageItemIDs() {
 }
 
 function getLocalStorageOptionSetIDs() {
-    const existingoptionSetIDs = JSON.parse(localStorage.getItem("optionSetIDs") || "[]");
+    const existingoptionSetIDs = JSON.parse(localStorage.getItem("optionIDs") || "[]");
     return existingoptionSetIDs;
 }
 
@@ -94,7 +114,7 @@ function setItemId(jsonData) {
     updateSectionLocalStorage()
 }
 
-function setOptionSetId(jsonData) {
+function setOptionId(jsonData) {
     localStorage.setItem("optionSetIDs", "[]");
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
@@ -189,7 +209,7 @@ export {
     getLocalStorageOptionSetIDs,
     setJsonData,
     setSectionId,
-    setOptionSetId,
+    setOptionId,
     getUniqueRandomInt,
     getRandomInt,
     setSectionDisplayOrder,
@@ -197,5 +217,7 @@ export {
     getDragAfterElement,
     setItemId,
     getOsIndex,
-    getOptionIndex
+    getOptionIndex,
+    getOptionObject,
+    getOsObject,
 }
