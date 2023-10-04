@@ -10,7 +10,7 @@ function createOptionButtonsCell(optionRow, optionId, sectionId, itemId, osId, o
     const optionButtonsCell = document.createElement('div');
     optionButtonsCell.classList = "optionButtonsCell"
 
-    optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId)
+    optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId, optionsBodyContainer)
 
     optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, optionButtonsCell, menuOption)
 

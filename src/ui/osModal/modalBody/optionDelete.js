@@ -5,7 +5,7 @@ import {
     updateSectionLocalStorage,
 } from '../../context.js';
 
-function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId) {
+function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId, optionsBodyContainer) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
@@ -15,12 +15,12 @@ function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osI
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId)
+        confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionsBodyContainer)
     });
 }
 
 //Creates a popup to confirm the deletion of the item
-function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId) {
+function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionsBodyContainer) {
     const popup = document.createElement("div");
     popup.className = "popup";
     const optionId = optionRow.id;
@@ -38,7 +38,7 @@ function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId) {
     `;
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
-        deleteItem(optionRow, sectionId, itemId, osId);
+        deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer);
         popup.remove();
     });
 
@@ -68,15 +68,9 @@ function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId) {
 }
 
 //Deletes item from UI and LS
-function deleteItem(optionRow, sectionId, itemId, osId) {
+function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
     const optionId = optionRow.id;
     if (optionRow) {
-        // if (optionRow.classList.contains('expanded')) {
-        //     let optionSet = optionRow.nextElementSibling;
-        //     if (optionSet && optionSet.tagName === 'DIV' && optionSet.classList.contains('osContainer')) {
-        //         optionSet.remove();
-        //     }
-        // }
         optionRow.remove(); 
         const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
         if (optionIndex !== -1) {
@@ -84,6 +78,19 @@ function deleteItem(optionRow, sectionId, itemId, osId) {
             jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
+
+            const rows = Array.from(optionsBodyContainer.querySelectorAll(".optionRow"));
+    
+            rows.forEach((row, index) => {
+                if (index % 2 === 0) {
+                    row.classList.remove('even');
+                    row.classList.add('odd');
+                } else {
+                    row.classList.remove('odd');
+                    row.classList.add('even');
+                }
+            });
+
             updateSectionLocalStorage();
             updateItemCounterLocalStorage(optionId, false);
         }
