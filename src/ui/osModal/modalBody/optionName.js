@@ -32,6 +32,7 @@ function createOptionName(menuOption, itemId, osId, sectionId) {
             originalName = newOptionName;
             optionName.blur();
             const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview')); 
+            console.log(optionNamePreviewArray);
             const optionNamePreview = optionNamePreviewArray.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
             if (optionNamePreview) {
                 optionNamePreview.textContent = newOptionName;

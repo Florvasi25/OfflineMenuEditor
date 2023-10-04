@@ -52,8 +52,6 @@ function duplicateOption(
 
     if (originalOption) {
         const newOption = JSON.parse(JSON.stringify(originalOption));
-        console.log('original option:', originalOption);
-        console.log('duplicate option:', newOption);
 
         const optionIds = getLocalStorageOptionSetIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
@@ -62,7 +60,6 @@ function duplicateOption(
         newOption.PublicId = crypto.randomUUID();
 
         const newOptionRow = createOption(optionsBodyContainer, newOption, sectionId, itemId, osId);
-        console.log('newOptionRow:', newOptionRow);
 
         optionsBodyContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
@@ -87,12 +84,6 @@ function duplicateOption(
                 row.classList.add('even');
             }
         });
-
-        // const optionContainer = Array.from(document.getElementsByClassName('optionContainer'));
-        // if (optionContainer) {
-        //     const optionContainerPreview = optionContainer.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
-        // }
-
 
         updateSectionLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
