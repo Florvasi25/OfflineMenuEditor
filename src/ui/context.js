@@ -64,6 +64,11 @@ function getLocalStorageItemIDs() {
     return existingItemIDs;
 }
 
+function getLocalStorageOptionSetIDs() {
+    const existingoptionSetIDs = JSON.parse(localStorage.getItem("optionSetIDs") || "[]");
+    return existingoptionSetIDs;
+}
+
 //set sectionID for entire json file
 function setSectionId(jsonData) {
     localStorage.setItem("sectionIDs", "[]");
@@ -89,7 +94,24 @@ function setItemId(jsonData) {
     updateSectionLocalStorage()
 }
 
-function setSectionDisplayOrder(jsonData){
+function setOptionSetId(jsonData) {
+    localStorage.setItem("optionSetIDs", "[]");
+    for (const section of jsonData.MenuSections) {
+        for (const item of section.MenuItems) {
+            for (const optionSet of item.MenuItemOptionSets) {
+                for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
+                    optionSetItem.MenuItemOptionSetItemId = getRandomInt();                  
+                    updateOptionSetCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true)
+                }
+            }
+        }
+    }
+    updateSectionLocalStorage()
+}
+
+
+
+function setSectionDisplayOrder(jsonData) {
     jsonData.MenuSections.forEach((obj, index) => {
         obj.DisplayOrder = index;
     });
@@ -129,6 +151,20 @@ function updateItemCounterLocalStorage(id, addID) {
     }
 }
 
+//Updates OS id LocalStorage. 
+function updateOptionSetCounterLocalStorage(id, addID) {
+    if(addID) {
+        let existingIDs =  getLocalStorageOptionSetIDs();
+        existingIDs.push(id);
+        localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
+    } else {
+        let existingIDs = getLocalStorageOptionSetIDs(); 
+        const indexID = existingIDs.indexOf(Number(id));
+        existingIDs.splice(indexID, 1);
+        localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
+    }
+}
+
 function getRandomInt() {
     return Math.floor(Math.random() * 9999999) + 1;
 }
@@ -150,8 +186,10 @@ export {
     updateSectionLocalStorage,
     getLocalStorageItemIDs,
     getLocalStorageSectionIDs,
+    getLocalStorageOptionSetIDs,
     setJsonData,
     setSectionId,
+    setOptionSetId,
     getUniqueRandomInt,
     getRandomInt,
     setSectionDisplayOrder,
