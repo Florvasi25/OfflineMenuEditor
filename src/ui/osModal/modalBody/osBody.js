@@ -29,24 +29,24 @@ import {
 } from './optionButtonContainer.js'
 
 function createOsModalBody(sectionId, itemId, osId) {
-    const optionsContainer = document.createElement('div')
-    optionsContainer.className = 'osModalBody'
+    const optionsBodyContainer = document.createElement('div')
+    optionsBodyContainer.className = 'optionsBodyContainer'
 
     const topButtonsCell = createTopButtonsCell()
-    optionsContainer.appendChild(topButtonsCell)
+    optionsBodyContainer.appendChild(topButtonsCell)
 
-    createOptionRow(optionsContainer, sectionId, itemId, osId)
-    setDragListeners(optionsContainer, sectionId, itemId, osId)
+    createOptionRow(optionsBodyContainer, sectionId, itemId, osId)
+    setDragListeners(optionsBodyContainer, sectionId, itemId, osId)
     
-    return optionsContainer
+    return optionsBodyContainer
 }
 
-function createOptionRow(optionsContainer, sectionId, itemId, osId) {
+function createOptionRow(optionsBodyContainer, sectionId, itemId, osId) {
     const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
     const menuOptions = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems;
 
     menuOptions.forEach((menuOption, index) => {
-        const optionRow = createOption(optionsContainer, menuOption, sectionId, itemId, osId)
+        const optionRow = createOption(optionsBodyContainer, menuOption, sectionId, itemId, osId)
 
         if (index % 2 === 0) {
             optionRow.classList.add('odd');
@@ -54,7 +54,7 @@ function createOptionRow(optionsContainer, sectionId, itemId, osId) {
             optionRow.classList.add('even');
         }
 
-        optionsContainer.appendChild(optionRow);
+        optionsBodyContainer.appendChild(optionRow);
     });
 
 }
@@ -66,13 +66,13 @@ function createTopButtonsCell() {
     return topButtonsCell
 }
 
-function createOption(optionsContainer, menuOption, sectionId, itemId, osId) {
+function createOption(optionsBodyContainer, menuOption, sectionId, itemId, osId) {
     const optionRow = document.createElement('div')
     optionRow.classList.add('optionRow');
     optionRow.classList.add('draggable');
     optionRow.id = menuOption.MenuItemOptionSetItemId
 
-    const dragOptionCell = createOptionDragCell(optionsContainer, optionRow)
+    const dragOptionCell = createOptionDragCell(optionsBodyContainer, optionRow)
     optionRow.appendChild(dragOptionCell)
 
     const nameAndMoM = document.createElement('div')
@@ -92,7 +92,7 @@ function createOption(optionsContainer, menuOption, sectionId, itemId, osId) {
     const optionTax = createOptionTaxCell(menuOption, jsonData)
     optionRow.appendChild(optionTax)
 
-    const optionButtonsCell = createOptionButtonsCell(optionRow, menuOption.MenuItemOptionSetItemId, sectionId, itemId, osId, optionsContainer, menuOption)
+    const optionButtonsCell = createOptionButtonsCell(optionRow, menuOption.MenuItemOptionSetItemId, sectionId, itemId, osId, optionsBodyContainer, menuOption)
     optionRow.appendChild(optionButtonsCell)
     
     return optionRow

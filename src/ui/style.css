@@ -5,9 +5,48 @@
 }
 
 /* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
+
 main {
     width: 100%;
 }
+
+/* MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL */
+
+.leftSidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #342F58;
+}
+
+.osModalContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: -60%;
+    height: 100vh;
+    width: 60%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out; 
+    z-index: 10;
+}
+
+.osModalContainer.show {
+    left: 0; 
+    overflow-y: auto;
+}
+
+.osModalContainer.hide {
+    left: -60%; 
+}
+
+.osModalBody {
+    padding: 15px;
+}
+
+/* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionTable {
     width: 100%;
@@ -15,9 +54,115 @@ main {
     box-sizing: border-box;
 }
 
+.sectionRow {
+    height: auto;
+    background-color: #fff6cf;
+    list-style: none;
+    display: flex;
+
+    &.expanded .sectionDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .sectionDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+        transform: translateX(10px);
+    }
+
+    &.clickOnDrag {
+        transform: translateX(10px)
+    }
+}
+
+.sectionClicked {
+    background-color: #ffffff;
+    padding: 2px;
+}
+
+.sectionDropdownCell {
+    width: 25px;
+    border: solid 1px #ffffff;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* ITEM - ITEM - ITEM - ITEM - ITEM - ITEM - ITEM - ITEM - ITEM - ITEM */
+
 .itemTable {
     width: 100%;
     margin: 5px 0px;
+}
+
+.itemRow {
+    display: flex;
+    height: auto;
+    background-color: #e2def9;
+    list-style: none;
+
+    &.expanded .sectionDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .sectionDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+        transform: translateX(10px);
+    }
+
+    &.clickOnDrag {
+        transform: translateX(10px)
+    }
+}
+
+/* OS - OS - OS - OS - OS - OS - OS - OS - OS - OS - OS - OS - OS - OS - OS */
+
+.osRowHeader {
+    display: flex;
+    height: auto;
+    width: 40%;
+    justify-content: space-around;
+    padding: 7.5px 0px;
+
+    &.expanded .osDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .osDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+        transform: translateX(10px);
+    }
+
+    &.clickOnDrag {
+        transform: translateX(10px)
+    }
+}
+
+.osRowHeader.odd {
+    background-color: #342F58;
+}
+
+.osRowHeader.even {
+    background-color: #B29346;
+}
+
+.osRowHeader:first-of-type {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.osRowHeader:last-of-type {
+    border-radius: 0px 0px 5px 5px;
 }
 
 .osContainer {
@@ -48,12 +193,6 @@ main {
     align-items: center;
 }
 
-.optionContainer {
-    height: auto;
-    width: 40%;
-    padding: 7.5px 0px;
-}
-
 .osRowOption {
     display: flex;
     padding: 7.5px 15px;
@@ -61,67 +200,66 @@ main {
     background-color: #f5f5f5;
 }
 
-.optionText {
-    display: flex;
-    font-size: 13px;
+/*  OPTION NAV -  OPTION NAV -  OPTION NAV -  OPTION NAV -  OPTION NAV -  OPTION NAV */
+
+.osModalNav {
+    padding: 15px 15px 0 15px;
 }
 
-/* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
-
-.sectionRow {
-    height: auto;
-    background-color: #fff6cf;
-    list-style: none;
+.osOptionsRow {
     display: flex;
-
-    &.expanded .sectionDropdownButton { 
-        transform: rotate(45deg); 
-    }
-    &.folded .sectionDropdownButton { 
-        transform: rotate(-45deg); 
-    }
-
-    &.dragging {
-        border: 1px solid black;
-        opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
-    }
+    padding: 10px 0;
+    align-items: center;
 }
 
-.itemRow {
+.selectOptionContainer {
+    height: 50px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    width: 150px;
     display: flex;
-    height: auto;
-    background-color: #e2def9;
-    list-style: none;
-
-    &.expanded .sectionDropdownButton { 
-        transform: rotate(45deg); 
-    }
-    &.folded .sectionDropdownButton { 
-        transform: rotate(-45deg); 
-    }
-
-    &.dragging {
-        border: 1px solid black;
-        opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
-    }
-}
-
-.osRowHeader {
-    display: flex;
-    height: auto;
-    width: 40%;
     justify-content: space-around;
-    padding: 7.5px 0px;
+    align-items: center;
+}
+
+.selectOption {
+    display: flex;
+}
+
+.dashCountCell {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.maxCountCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.maxCount {
+    padding: 5px 7.5px;
+}
+
+.minCountCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.minCount {
+    padding: 5px 7.5px;
+}
+
+.nameAndMoM {
+    border: solid 1px #ffffff;
+    flex-grow: 1;
+}
+
+.optionRow {
+    display: flex;
+    border-radius: 7.5px;
 
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
@@ -139,40 +277,6 @@ main {
     &.clickOnDrag {
         transform: translateX(10px)
     }
-}
-.optionRow {
-    display: flex;
-    border-radius: 7.5px;
-}
-
-.optionRow {
-    display: flex;
-    border-radius: 7.5px;
-
-    &.expanded .osDropdownButton { 
-        transform: rotate(45deg); 
-    }
-    &.folded .osDropdownButton { 
-        transform: rotate(-45deg); 
-    }
-
-    &.dragging {
-        border: 1px solid black;
-        opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
-    }
-}
-
-.osRowHeader.odd {
-    background-color: #342F58;
-}
-
-.osRowHeader.even {
-    background-color: #B29346;
 }
 
 .optionRow.odd {
@@ -183,43 +287,18 @@ main {
     background-color: #f4f4f4;
 }
 
-.osRowHeader:first-of-type {
-    border-radius: 5px 5px 0px 0px;
+.optionContainer {
+    height: auto;
+    width: 40%;
+    padding: 7.5px 0px;
 }
 
-.osRowHeader:last-of-type {
-    border-radius: 0px 0px 5px 5px;
-}
-
-.sectionClicked {
-    background-color: #ffffff;
-    padding: 2px;
+.optionText {
+    display: flex;
+    font-size: 13px;
 }
 
 /* DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN */
-
-.sectionDropdownCell {
-    width: 25px;
-    border: solid 1px #ffffff;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.itemDropdownCell {
-    display: flex;
-    align-items: center;
-    width: 25px;
-    border: solid 1px #ffffff;
-    flex-shrink: 0;
-}
-
-.osDropdownCell {
-    display: flex;
-    align-items: center;
-    width: 25px;
-    flex-shrink: 0;
-}
 
 .boxDropdownButton {
     display: flex;
@@ -239,6 +318,21 @@ main {
 
 .sectionDropdownButton:hover {
     border-color: #afafaf;
+}
+
+.itemDropdownCell {
+    display: flex;
+    align-items: center;
+    width: 25px;
+    border: solid 1px #ffffff;
+    flex-shrink: 0;
+}
+
+.osDropdownCell {
+    display: flex;
+    align-items: center;
+    width: 25px;
+    flex-shrink: 0;
 }
 
 .osDropdownButton {
@@ -281,6 +375,43 @@ main {
     transition: transform 0.01 linear;
 }
 
+/* BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL */
+
+.sectionButtonsCell {
+    width: 25px;
+    border: solid 1px #ffffff;
+}
+
+.sectionButton {
+    border: none;
+    border-radius: 3px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionButtonImg {
+    width: 20px;
+}
+
+.osBtnsCell {
+    width: 130px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.optionButtonsCell {
+    width: fit-content;
+    padding: 0 5px;
+    border: solid 1px #ffffff;
+    display: flex;
+    align-items: center;
+}
+
 /* NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME */
 
 .sectionNameCell {
@@ -290,6 +421,17 @@ main {
     width: 100px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
+}
+
+.sectionName {
+    font-size: 13px;
+    font-weight: bold;
+    word-break: break-word;
+    padding: 5px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
 }
 
 .itemNameCell {
@@ -312,28 +454,40 @@ main {
     align-items: center;
 }
 
-.sectionName {
-    font-size: 13px;
-    font-weight: bold;
-    word-break: break-word;
+.osNameCell {
+    flex-grow: 1;
+    padding-right: 10px;
+}
+
+.osName {
+    border: #000000 solid 1px;
+    border-radius: 5px;
     padding: 5px;
-    height: -webkit-fill-available;
-    width: -webkit-fill-available;
-    display: flex;
-    align-items: center;
+}
+
+.optionNameCell {
+    padding: 5px;
+    font-size: 13px;
+}
+
+.optionName {
+    padding: 0 5px;
+}
+
+/* MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM */
+
+.optionMoMCell {
+    padding: 5px;
+    font-size: 12px;
+}
+
+.optionMoM {
+    padding: 0 5px;
 }
 
 /* DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION */
 
 .sectionDescCell {
-    padding: 5px;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;    
-    border: solid 1px #ffffff;
-}
-
-.itemDescCell {
     padding: 5px;
     flex-grow: 1;
     display: flex;
@@ -350,8 +504,13 @@ main {
     align-items: center;
 }
 
-/* OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET - OPTION SET */
-
+.itemDescCell {
+    padding: 5px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;    
+    border: solid 1px #ffffff;
+}
 
 /* PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE - PRICE */
 
@@ -373,6 +532,20 @@ main {
     justify-content: center;
 }
 
+.optionPriceCell {
+    border: solid 1px #ffffff;
+    flex-grow: 0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.optionPrice {
+    font-size: 12px;
+    padding: 0 5px;
+}
+
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
 
 .itemTaxCell {
@@ -390,66 +563,18 @@ main {
     cursor: default
 }
 
-/* TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP */
-
-
-.tooltip {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    background-color: #333;
-    color: #fff;
+.optionTaxCell {
+    border: solid 1px #ffffff;
+    flex-grow: 0;
     padding: 5px;
-    border-radius: 5px;
-    z-index: 100;
-    display: none;
-    font-size: 15px;
-    width: 200px;
-    text-align: center;
-}
-
-/* BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL */
-
-.sectionButtonsCell {
-    width: 25px;
-    border: solid 1px #ffffff;
-}
-
-.optionButtonsCell {
-    width: fit-content;
-    padding: 0 5px;
-    border: solid 1px #ffffff;
     display: flex;
     align-items: center;
-}
-
-.sectionButton {
-    border: none;
-    border-radius: 3px;
-    height: 25px;
-    width: 25px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
-.confirmDeleteBtn {
-    border: none;
-    border-radius: 3px;
-    height: 30px;
-    width: 35px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.confirmDeleteBtn:hover {
-    background-color: #b1b1b1;
-}
-
-.sectionButtonImg {
-    width: 20px;
+.optionTax {
+    font-size: 12px;
+    padding: 0 5px;
 }
 
 /* DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON - DUPLICATE BUTTON */
@@ -472,6 +597,20 @@ main {
     background-color: #ff0000;
 }
 
+/* CONFIRM DELETE BTN - CONFIRM DELETE BTN - CONFIRM DELETE BTN  - CONFIRM DELETE BTN */
+
+.confirmDeleteBtn {
+    border: none;
+    border-radius: 3px;
+    height: 30px;
+    width: 35px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.confirmDeleteBtn:hover {
+    background-color: #b1b1b1;
+}
 
 /* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
 
@@ -507,18 +646,28 @@ main {
     background-color: #1118f1;
 }
 
-/* NEW BUTTON - NEW BUTTON - NEW BUTTON - NEW BUTTON*/
+/* CLOSE MODAL BTN - CLOSE MODAL BTN - CLOSE MODAL BTN - CLOSE MODAL BTN */
 
-.newItemBtnContainer {
+.closeOsModalBtn {
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 2.5px 5px;
+    border: none;
+    background-color: #ffffff;
+}
+
+.closeBtnRow {
     display: flex;
     justify-content: end;
 }
 
-#itemAddNew {
-    text-wrap: nowrap;
-    padding: 5px;
-    margin: 10px;
+.closeOsModalBtn:hover {
+    color: red;
 }
+
+/* NEW BUTTON - NEW BUTTON - NEW BUTTON - NEW BUTTON - NEW BUTTON */
 
 #newSectionBtnContainer {
     display: flex;
@@ -529,6 +678,17 @@ main {
     text-wrap: nowrap;
     padding: 5px;
     margin: 0px 10px 10px 10px;
+}
+
+.newItemBtnContainer {
+    display: flex;
+    justify-content: end;
+}
+
+#itemAddNew {
+    text-wrap: nowrap;
+    padding: 5px;
+    margin: 10px;
 }
 
 .osAddNew {
@@ -583,8 +743,24 @@ main {
     margin: 15px 5px 5px 5px;
 }
 
+/* TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP - TOOLTIP */
 
-/* CLOCK - CLOCK - CLOCK - CLOCK - CLOCK */
+.tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 100;
+    display: none;
+    font-size: 15px;
+    width: 200px;
+    text-align: center;
+}
+
+/* CLOCK - CLOCK - CLOCK - CLOCK - CLOCK - CLOCK - CLOCK - CLOCK - CLOCK */
 
 .clockModal {
     display: none;
@@ -684,189 +860,4 @@ main {
   
 .clockTableHeader {
     background-color: #f2f2f2;
-}
-
-/* OS SIDE MODAL - OS SIDE MODAL - OS SIDE MODAL - OS SIDE MODAL - OS SIDE MODAL */
-
-.leftSidebar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #342F58;
-}
-
-button#openOsModalBtn {
-    padding: 5px 10px;
-    background-color: #f8f8f8;
-    border: none;
-    cursor: pointer;
-    margin: 0 15px;
-    border-radius: 2px;
-}
-
-button#openOsModalBtn:hover {
-    background-color: #c9c9c9;
-}
-
-.osModalContainer {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: -60%;
-    height: 100vh;
-    width: 60%;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: left 0.3s ease-in-out; 
-    z-index: 10;
-}
-
-.osModalContainer.show {
-    left: 0; 
-}
-
-.osModalContainer.hide {
-    left: -60%; 
-}
-
-.osModalNav {
-    padding: 15px 15px 0 15px;
-}
-
-.osModalBody {
-    padding: 15px;
-}
-
-.closeOsModalBtn {
-    top: 10px;
-    right: 10px;
-    font-size: 15px;
-    cursor: pointer;
-    padding: 2.5px 5px;
-    border: none;
-    background-color: #ffffff;
-}
-
-.closeBtnRow {
-    display: flex;
-    justify-content: end;
-}
-
-.closeOsModalBtn:hover {
-    color: red;
-}
-
-.osOptionsRow {
-    display: flex;
-    padding: 10px 0;
-    align-items: center;
-}
-
-.osNameCell {
-    flex-grow: 1;
-    padding-right: 10px;
-}
-
-.osName {
-    border: #000000 solid 1px;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.osBtnsCell {
-    width: 130px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.selectOptionContainer {
-    height: 50px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    width: 150px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.selectOption {
-    display: flex;
-}
-
-.dashCountCell {
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-}
-
-.maxCountCell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.maxCount {
-    padding: 5px 7.5px;
-}
-
-.minCountCell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.minCount {
-    padding: 5px 7.5px;
-}
-
-.nameAndMoM {
-    border: solid 1px #ffffff;
-    flex-grow: 1;
-}
-
-.optionNameCell {
-    padding: 5px;
-    font-size: 13px;
-}
-
-.optionName {
-    padding: 0 5px;
-}
-
-.optionMoMCell {
-    padding: 5px;
-    font-size: 12px;
-}
-
-.optionMoM {
-    padding: 0 5px;
-}
-
-.optionPriceCell {
-    border: solid 1px #ffffff;
-    flex-grow: 0;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.optionPrice {
-    font-size: 12px;
-    padding: 0 5px;
-}
-
-.optionTaxCell {
-    border: solid 1px #ffffff;
-    flex-grow: 0;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.optionTax {
-    font-size: 12px;
-    padding: 0 5px;
 }

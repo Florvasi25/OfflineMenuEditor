@@ -2,11 +2,17 @@ import {
     optionDuplicateButton
 } from './optionDuplicate.js'
 
-function createOptionButtonsCell(optionRow, optionId, sectionId, itemId, osId, optionsContainer, menuOption) {
+import {
+    optionDeleteButton
+} from './optionDelete.js'
+
+function createOptionButtonsCell(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption) {
     const optionButtonsCell = document.createElement('div');
     optionButtonsCell.classList = "optionButtonsCell"
 
-    optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsContainer, optionButtonsCell, menuOption)
+    optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId)
+
+    optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, optionButtonsCell, menuOption)
 
     return optionButtonsCell
 }
