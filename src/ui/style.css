@@ -280,11 +280,15 @@ main {
 }
 
 .optionRow.odd {
-    background-color: #dbdbdb;
+    background-color: #eceaff;
 }
 
 .optionRow.even {
-    background-color: #f4f4f4;
+    background-color: #d7d3ed;
+}
+
+.optionRow.unavailable {
+    background-color: #bcbbbb;
 }
 
 .optionContainer {
