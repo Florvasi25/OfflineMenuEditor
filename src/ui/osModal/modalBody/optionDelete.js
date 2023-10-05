@@ -96,9 +96,7 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
         }
 
         const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-        console.log(osRowOptionPreviewArray);
         const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
-        console.log(osRowOptionPreview);
         if (osRowOptionPreview) {
             osRowOptionPreview.remove()
         }

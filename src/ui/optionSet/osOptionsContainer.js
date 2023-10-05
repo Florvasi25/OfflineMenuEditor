@@ -72,4 +72,5 @@ function createPriceAndTax(menuOption) {
 
 export {
     createOptionsContainer,
+    createOptionRow
 }

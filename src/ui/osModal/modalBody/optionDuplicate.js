@@ -1,6 +1,5 @@
 import {
     jsonData,
-    getOptionIndex,
     updateItemCounterLocalStorage,
     updateSectionLocalStorage,
     getLocalStorageOptionSetIDs,
@@ -14,15 +13,11 @@ import {
     createOption
 } from './osBody.js'
 
-function optionDuplicateButton(
-    optionRow,
-    optionId,
-    sectionId,
-    itemId,
-    osId,
-    optionsBodyContainer,
-    optionButtonsCell
-) {
+import {
+    createOptionRow
+} from '../../optionSet/osOptionsContainer.js'
+
+function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, optionButtonsCell, menuOption) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -33,25 +28,20 @@ function optionDuplicateButton(
     duplicateButton.appendChild(duplicateButtonImg)
 
     duplicateButton.addEventListener('click', () => {
-        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer);
+        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption);
         setSectionDisplayOrder(jsonData);
     });
 }
 
-function duplicateOption(
-    optionRow,
-    optionId,
-    sectionId,
-    itemId,
-    osId,
-    optionsBodyContainer
-) {
+function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption) {
     const optionIndex = getOptionObject(sectionId, itemId, osId, optionId);
     const originalOs = getOsObject(sectionId, itemId, osId);
     const originalOption = originalOs.MenuItemOptionSetItems[optionIndex]
+    console.log('original option', originalOption);
 
     if (originalOption) {
         const newOption = JSON.parse(JSON.stringify(originalOption));
+        console.log('new Option:', newOption);
 
         const optionIds = getLocalStorageOptionSetIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
@@ -84,7 +74,15 @@ function duplicateOption(
                 row.classList.add('even');
             }
         });
-
+        
+        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == originalOption.MenuItemOptionSetItemId)
+        if (osRowOptionPreview) {
+            const newOptionRow = createOptionRow(newOption)
+            const optionContainerPreview = document.querySelector('.optionContainer')
+            optionContainerPreview.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
+        }
+        
         updateSectionLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
     }
