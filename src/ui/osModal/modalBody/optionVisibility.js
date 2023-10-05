@@ -43,6 +43,12 @@ function SectionAvailability(optionRow, sectionId, itemId, osId, optionId) {
 
         optionRow.classList.toggle('unavailable', !isAvailableNew);
 
+        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
+        if (osRowOptionPreview) {
+            osRowOptionPreview.classList.toggle('unavailable', !isAvailableNew)
+        }
+
         updateSectionLocalStorage()
     }
 }

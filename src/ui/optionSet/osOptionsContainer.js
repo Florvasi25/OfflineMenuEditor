@@ -32,7 +32,12 @@ function createOptionRow(menuOption) {
 
     const priceAndTax = createPriceAndTax(menuOption)
     osRowOption.appendChild(priceAndTax)
-    
+
+    //Unavailable Sections - Gray
+    if (!menuOption.IsAvailable) {
+        osRowOption.classList.add('unavailable');
+    }
+
     return osRowOption
 }
 
