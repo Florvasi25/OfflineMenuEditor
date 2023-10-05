@@ -1,7 +1,7 @@
 import {
     jsonData,
     getOptionIndex,
-    updateItemCounterLocalStorage,
+    updateOptionSetCounterLocalStorage,
     updateSectionLocalStorage,
 } from '../../context.js';
 
@@ -93,12 +93,12 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
 
             const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
             const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
-            if (osRowOptionPreview) {
+            if ( osRowOptionPreview ) {
                 osRowOptionPreview.remove()
             }
 
             updateSectionLocalStorage();
-            updateItemCounterLocalStorage(optionId, false);
+            updateOptionSetCounterLocalStorage(optionId, false);
         }
     }
 }

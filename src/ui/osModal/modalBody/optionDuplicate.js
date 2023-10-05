@@ -2,11 +2,12 @@ import {
     jsonData,
     updateItemCounterLocalStorage,
     updateSectionLocalStorage,
+    updateOptionSetCounterLocalStorage,
     getLocalStorageOptionSetIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
     getOptionObject,
-    getOsObject,
+    getOsObject
 } from '../../context.js';
 
 import {
@@ -37,11 +38,9 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBo
     const optionIndex = getOptionObject(sectionId, itemId, osId, optionId);
     const originalOs = getOsObject(sectionId, itemId, osId);
     const originalOption = originalOs.MenuItemOptionSetItems[optionIndex]
-    console.log('original option', originalOption);
 
     if (originalOption) {
         const newOption = JSON.parse(JSON.stringify(originalOption));
-        console.log('new Option:', newOption);
 
         const optionIds = getLocalStorageOptionSetIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
@@ -85,6 +84,7 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBo
         
         updateSectionLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
+        updateOptionSetCounterLocalStorage(newOptionId, true)
     }
 }
 

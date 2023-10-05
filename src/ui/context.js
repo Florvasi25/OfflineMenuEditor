@@ -85,7 +85,7 @@ function getLocalStorageItemIDs() {
 }
 
 function getLocalStorageOptionSetIDs() {
-    const existingoptionSetIDs = JSON.parse(localStorage.getItem("optionIDs") || "[]");
+    const existingoptionSetIDs = JSON.parse(localStorage.getItem("optionSetIDs") || "[]");
     return existingoptionSetIDs;
 }
 
@@ -204,6 +204,7 @@ export {
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
     updateSectionLocalStorage,
+    updateOptionSetCounterLocalStorage,
     getLocalStorageItemIDs,
     getLocalStorageSectionIDs,
     getLocalStorageOptionSetIDs,
