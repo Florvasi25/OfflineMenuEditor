@@ -74,7 +74,7 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
         optionRow.remove(); 
         const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
         if (optionIndex !== -1) {
-            jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(itemIndex, 1);
+            jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(optionIndex, 1);
             jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
@@ -91,14 +91,14 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
                 }
             });
 
+            const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+            const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
+            if (osRowOptionPreview) {
+                osRowOptionPreview.remove()
+            }
+
             updateSectionLocalStorage();
             updateItemCounterLocalStorage(optionId, false);
-        }
-
-        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
-        if (osRowOptionPreview) {
-            osRowOptionPreview.remove()
         }
     }
 }
