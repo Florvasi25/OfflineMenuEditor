@@ -129,8 +129,6 @@ function setOptionId(jsonData) {
     updateSectionLocalStorage()
 }
 
-
-
 function setSectionDisplayOrder(jsonData) {
     jsonData.MenuSections.forEach((obj, index) => {
         obj.DisplayOrder = index;

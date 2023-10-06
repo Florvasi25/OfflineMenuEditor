@@ -181,6 +181,7 @@ main {
     width: 150px;
     color: #ffffff;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .osNameHeader:hover {
@@ -678,7 +679,7 @@ main {
     justify-content: end;
 }
 
-#sectionAddNew {
+.sectionAddNew {
     text-wrap: nowrap;
     padding: 5px;
     margin: 0px 10px 10px 10px;
@@ -689,7 +690,7 @@ main {
     justify-content: end;
 }
 
-#itemAddNew {
+.itemAddNew {
     text-wrap: nowrap;
     padding: 5px;
     margin: 10px;

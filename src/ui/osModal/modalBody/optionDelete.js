@@ -5,7 +5,7 @@ import {
     updateSectionLocalStorage,
 } from '../../context.js';
 
-function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId, optionsBodyContainer) {
+function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId, optionRowsContainer) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
@@ -15,12 +15,12 @@ function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osI
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionsBodyContainer)
+        confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionRowsContainer)
     });
 }
 
 //Creates a popup to confirm the deletion of the item
-function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionsBodyContainer) {
+function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionRowsContainer) {
     const popup = document.createElement("div");
     popup.className = "popup";
     const optionId = optionRow.id;
@@ -38,7 +38,7 @@ function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, op
     `;
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
-        deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer);
+        deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer);
         popup.remove();
     });
 
@@ -68,7 +68,7 @@ function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, op
 }
 
 //Deletes item from UI and LS
-function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
+function deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer) {
     const optionId = optionRow.id;
     if (optionRow) {
         optionRow.remove(); 
@@ -79,7 +79,7 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionsBodyContainer) {
                 obj.DisplayOrder = index;
             });
 
-            const rows = Array.from(optionsBodyContainer.querySelectorAll(".optionRow"));
+            const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
     
             rows.forEach((row, index) => {
                 if (index % 2 === 0) {

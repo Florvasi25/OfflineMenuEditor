@@ -13,7 +13,7 @@ import {
 
 function createItemButton(itemContainer, sectionId) {
     const newItemButton = document.createElement('button')
-    newItemButton.setAttribute('id', 'itemAddNew')
+    newItemButton.className = 'itemAddNew'
     newItemButton.textContent = 'New Item'
     
     //Add Section

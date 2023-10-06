@@ -6,6 +6,7 @@ import {
 function createOptionsContainer(osRowOption, sectionId, itemId, osId) {
     const optionContainer = document.createElement('div');
     optionContainer.classList.add('optionContainer');
+    optionContainer.id = osId
     osRowOption.parentNode.insertBefore(optionContainer, osRowOption.nextSibling);
     createOptions(optionContainer, sectionId, itemId, osId);    
 }

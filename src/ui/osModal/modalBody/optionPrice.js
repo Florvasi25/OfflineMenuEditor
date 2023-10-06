@@ -66,10 +66,8 @@ function createOptionPrice(menuOption, sectionId, itemId, osId) {
 function updatePrice(optionId, sectionId, itemId, osId, optionPrice) {
     const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
     const priceAsNumber = parseFloat(parseFloat(optionPrice).toFixed(2));
-    console.log(optionPrice);
     
     if (!isNaN(priceAsNumber)) {
-        console.log(priceAsNumber);
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].Price = priceAsNumber;
 
         updateSectionLocalStorage();

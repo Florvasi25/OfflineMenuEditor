@@ -18,7 +18,7 @@ import {
     createOptionRow
 } from '../../optionSet/osOptionsContainer.js'
 
-function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, optionButtonsCell, menuOption) {
+function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionRowsContainer, optionButtonsCell, menuOption) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -29,12 +29,12 @@ function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, opt
     duplicateButton.appendChild(duplicateButtonImg)
 
     duplicateButton.addEventListener('click', () => {
-        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption);
+        duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRowsContainer, menuOption);
         setSectionDisplayOrder(jsonData);
     });
 }
 
-function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBodyContainer, menuOption) {
+function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRowsContainer, menuOption) {
     const optionIndex = getOptionObject(sectionId, itemId, osId, optionId);
     const originalOs = getOsObject(sectionId, itemId, osId);
     const originalOption = originalOs.MenuItemOptionSetItems[optionIndex]
@@ -48,9 +48,9 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBo
         newOption.MenuItemOptionSetItemId = newOptionId;
         newOption.PublicId = crypto.randomUUID();
 
-        const newOptionRow = createOption(optionsBodyContainer, newOption, sectionId, itemId, osId);
+        const newOptionRow = createOption(optionRowsContainer, newOption, sectionId, itemId, osId);
 
-        optionsBodyContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+        optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
         const MenuItemOptionSetItems = (
             originalOs
@@ -62,7 +62,7 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionsBo
             obj.DisplayOrder = index;
         });
 
-        const rows = Array.from(optionsBodyContainer.querySelectorAll(".optionRow"));
+        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
 
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
