@@ -42,10 +42,20 @@ main {
     left: -60%; 
 }
 
-.optionsBodyContainer {
+.optionRowsContainer {
     padding: 15px;
 }
 
+.newOptionBtnContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.optionAddNew {
+    text-wrap: nowrap;
+    padding: 5px;
+    margin: 0 15px 0 0;
+}
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionTable {
@@ -471,22 +481,28 @@ main {
 }
 
 .optionNameCell {
-    padding: 5px;
+    /* padding: 5px; */
     font-size: 13px;
 }
 
 .optionName {
+    display: flex;
+    align-items: center;
+    height: 25px;
     padding: 0 5px;
 }
 
 /* MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM */
 
 .optionMoMCell {
-    padding: 5px;
+    /* padding: 5px; */
     font-size: 12px;
 }
 
 .optionMoM {
+    display: flex;
+    align-items: center;
+    height: 25px;
     padding: 0 5px;
 }
 

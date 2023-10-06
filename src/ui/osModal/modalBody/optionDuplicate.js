@@ -74,11 +74,12 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRow
             }
         });
         
-        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == originalOption.MenuItemOptionSetItemId)
-        if (osRowOptionPreview) {
+        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+        const optionContainerPreview = optionContainerPreviewArray.find((p) => p.id == osId)
+        if (optionContainerPreview) {
+            const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+            const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
             const newOptionRow = createOptionRow(newOption)
-            const optionContainerPreview = document.querySelector('.optionContainer')
             optionContainerPreview.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
         }
         

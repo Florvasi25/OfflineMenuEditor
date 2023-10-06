@@ -17,7 +17,7 @@ import {
 
 function createOptionButton(optionRowsContainer, sectionId, itemId, osId) {
     const newOptionButton = document.createElement('button')
-    newOptionButton.setAttribute('id', 'optionAddNew')
+    newOptionButton.className = 'optionAddNew'
     newOptionButton.textContent = 'New Option'
 
     //Add Section
@@ -71,7 +71,6 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId) {
 
         const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
         const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == osId)
-        console.log(osRowOptionPreview);
         if (osRowOptionPreview) {
             const newOptionRow = createOptionRow(emptyOptionJson)
             osRowOptionPreview.appendChild(newOptionRow);
