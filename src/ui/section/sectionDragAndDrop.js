@@ -25,10 +25,11 @@ function createSectionDragCell(sectionRow) {
         sectionRow.classList.add('dragging')
     })
 
-    sectionDragImg.addEventListener('mouseover', () => {
+    sectionDragImg.addEventListener('mouseover', (e) => {
         if (sectionRow.classList.contains('expanded')) {
             showToolTip(sectionDragCell, "You must close all sections before moving it.");
         }
+        e.stopPropagation();
     })
 
     sectionDragImg.addEventListener('dragend', () => {
