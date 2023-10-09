@@ -218,5 +218,5 @@ export {
     getOsIndex,
     getOptionIndex,
     getOptionObject,
-    getOsObject,
+    getOsObject
 }

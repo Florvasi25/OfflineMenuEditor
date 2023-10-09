@@ -840,6 +840,17 @@ main {
     background: #36c6d3;
     color: white;
 }
+
+.clockBtn-green {
+    background: green;
+    color: white;
+}
+
+.clockBtn-red {
+    background: red;
+    color: white;
+}
+
 .clockBtn-availability-enabled{
     background: #36c6d3;
     color: white;
@@ -851,6 +862,7 @@ main {
     border: 1px solid #b0b0b0;
     cursor: not-allowed;
 }
+
 .clockTable {
     width: 100%;
     border-collapse: collapse;
@@ -865,4 +877,17 @@ main {
   
 .clockTableHeader {
     background-color: #f2f2f2;
+}
+
+.clockBtn-unsetButton {
+    background: #F1C40F; 
+    border-color: #dab10d;
+    color: #fff;       
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #b0b0b0;
+    border-radius: 4px;
+    margin-top: 15px;
+    padding: 15px 25px;  
+    width: auto;
 }

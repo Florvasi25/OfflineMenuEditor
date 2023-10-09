@@ -7,6 +7,10 @@ import{
     storeItemTimeTableInJson
 }from './itemClock.js'
 
+import{
+    compareDailySpecialHours
+}from './sectionClock.js'
+
 const dayMappingToName = {
     0: 'Sunday',
     1: 'Monday',
@@ -51,12 +55,13 @@ function createClockBody() {
     clockCloseIcon.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
-    const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
-    addTextContent(clockSaveBtn, 'Save Changes');
+    //const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
+    //addTextContent(clockSaveBtn, 'Save Changes');
     clockModalDiv.style.display = 'block';
-    clockSaveBtn.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
+    
 
     return {
+        clockModalDiv : clockModalDiv,
         clockBodyDiv: clockBodyDiv,
         clockTitle: clockTitle,
         clockFooterDiv : clockFooterDiv
@@ -68,8 +73,12 @@ function createClockTable(clockBodyDiv, clockSaveBtn, data, id) {
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
     createTableHeaders(clockThead, ['Day', 'Open', 'Close']);
+
     if (data.MenuItems) { // checks if 'data' is section or item
         createSectionTableRows(clockTbody, data);
+            //showErrorMessage(clockBodyDiv);
+           //appendUnsetButton(clockBodyDiv);
+
     } else {
         createItemTableRows(clockTbody, data);
     }
@@ -130,7 +139,6 @@ function calculatePeriod(StartTime, CloseTime) {
 
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
-
 export{
     createAndAppend,
     addTextContent,

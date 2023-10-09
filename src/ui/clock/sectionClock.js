@@ -1,7 +1,7 @@
 import {
     jsonData, 
     getRandomInt, 
-    updateSectionLocalStorage
+    updateSectionLocalStorage,
 } from '../context.js'
 import {
     createAndAppend,
@@ -9,7 +9,8 @@ import {
     createClockBody,
     createClockTable,
     createInputCell,
-    dayMappingToName
+    dayMappingToName,
+    setupSaveChanges
 } from './clockUtils.js'
 import { addSectionAvailabilityButton } from "./sectionAvailability.js";
 
@@ -20,16 +21,32 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
 
     clockButton.addEventListener('click', () => {
         const clockElements = createClockBody();
+        const clockModalDiv = clockElements.clockModalDiv;
         const clockBodyDiv = clockElements.clockBodyDiv;
         const clockFooterDiv = clockElements.clockFooterDiv;
-        const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
+
+        //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const section = getSection(jsonData, sectionId);    
 
-        addSectionAvailabilityButton(clockFooterDiv, section);
-        createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
+        if(compareDailySpecialHours(section))
+        {
+            const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv);
+            addSectionAvailabilityButton(clockFooterDiv, section);
+            createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
+        }else{
+            showErrorMessage(clockBodyDiv);
+            appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
+        }
+
     });
 }
+function addSaveChangesButton(parentElement, closeElement){
+    const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'clockBtn-save');
+    addTextContent(clockSaveBtn, 'Save Changes');
+    clockSaveBtn.addEventListener('click', () => {closeElement.style.display = 'none';});
 
+    return clockSaveBtn;
+ }
 function createSectionTableRows(parentElement, menuSection) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
     const areDailySpecialHoursSame = compareDailySpecialHours(menuSection);
@@ -136,6 +153,28 @@ function compareDailySpecialHours(menuSection) {
         }
     }
     return true; // if we made it here, then all DailySpecialHours are the same for all MenuItems
+}
+function showErrorMessage(parentElement) {
+    const errorMessage = "Menu items don't have the same schedule table, it's not possible to place a schedule in the section";
+    const errorMsgElement = createAndAppend(parentElement, 'p', 'error-message-class'); 
+    errorMsgElement.textContent = errorMessage;
+}
+
+function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId) {
+    const unsetButton = createAndAppend(clockFooterDiv, 'button');
+    unsetButton.textContent = "Unset - Click to reset";
+    unsetButton.classList.add('clockBtn-unsetButton');
+
+    unsetButton.addEventListener('click', function() {
+        unsetButton.remove();
+        const errorMsgElement = document.querySelector('.error-message-class');
+        if (errorMsgElement) errorMsgElement.remove();
+        const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv);
+        addSectionAvailabilityButton(clockFooterDiv, section);
+        createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
+        setupSaveChanges(clockBodyDiv, sectionId, section);
+
+    });
 }
 export {
     sectionClockButton,
