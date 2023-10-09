@@ -1,7 +1,4 @@
 import {
-    compareDailySpecialHours
-} from "./sectionClock.js";
-import {
     jsonData,
     updateSectionLocalStorage
 } from '../context.js'
@@ -12,24 +9,35 @@ import {
 
 function addSectionAvailabilityButton(clockFooterDiv, section) {
     const clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-availability');
-    addTextContent(clockSectionAvailabilityBtn, 'Section Availability');
     
-    if(compareDailySpecialHours(section) && section.MenuItems[0] && section.MenuItems[0].DailySpecialHours[0]){
-        clockSectionAvailabilityBtn.classList.add('clockBtn-availability-enabled')
+    if(section.MenuSectionAvailability.AvailabilityMode = 1){
+        addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
+        clockSectionAvailabilityBtn.classList.add('clockBtn-green'); 
+    }else{
+        addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');
+        clockSectionAvailabilityBtn.classList.add('clockBtn-red'); 
+    }
+    // Set initial button state
+    if (section.MenuItems[0] && section.MenuItems[0].DailySpecialHours[0]) {
         clockSectionAvailabilityBtn.addEventListener('click', () => {
-            storeAvailabilityTimes(section.MenuSectionId);
-            // Find clockModalDiv and hide it
-            let parentElement = clockFooterDiv;
-            while(parentElement && !parentElement.classList.contains('clockModal')) {
-                parentElement = parentElement.parentNode;
+            if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
+                clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
+                clockSectionAvailabilityBtn.classList.add('clockBtn-red');
+                deleteAvailiabilityTimes(section.MenuSectionId);
+            } else {
+                clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
+                clockSectionAvailabilityBtn.classList.add('clockBtn-green');
+                addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
+                storeAvailabilityTimes(section.MenuSectionId);
             }
-            if(parentElement) {parentElement.style.display = 'none';}
         });
-    } else{
+    } else {
+        addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');
         clockSectionAvailabilityBtn.disabled = true;
-        clockSectionAvailabilityBtn.classList.add('clockBtn-availability-disabled')
+        clockSectionAvailabilityBtn.classList.add('clockBtn-availability-disabled');
     }
 }
+
 
 function storeAvailabilityTimes(sectionId)
 {
@@ -39,6 +47,19 @@ function storeAvailabilityTimes(sectionId)
             MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
             const dailySpecialHours = MenuSection.MenuItems[0].DailySpecialHours;
             MenuSection.MenuSectionAvailability.AvailableTimes = dailySpecialHours;
+            updateSectionLocalStorage();
+        }})
+}
+
+function deleteAvailiabilityTimes(sectionId)
+{
+    jsonData.MenuSections.forEach(MenuSection => {
+        if (sectionId == MenuSection.MenuSectionId){
+            MenuSection.MenuSectionAvailability.AvailabilityMode = 0;
+            MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
+            if (MenuSection.MenuSectionAvailability.AvailableTimes) {
+                MenuSection.MenuSectionAvailability.AvailableTimes = [];
+            }
             updateSectionLocalStorage();
         }})
 }

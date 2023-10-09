@@ -19,10 +19,15 @@ function itemClockButton(itemButtonsCell, itemId) {
     clockButtonImg.src = '../../assets/clockIcon.svg';
     clockButton.addEventListener('click', () => {
         const clockElements = createClockBody();
+        const clockModalDiv = clockElements.clockModalDiv;
+        const clockFooterDiv = clockElements.clockFooterDiv;
         const clockBodyDiv = clockElements.clockBodyDiv;
         const clockTitle = clockElements.clockTitle;
+        const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
+        addTextContent(clockSaveBtn, 'Save Changes');
+        clockSaveBtn.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
         addTextContent(clockTitle, 'Menu Item Hours');
-        const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
+        //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const item = getItem(jsonData, itemId); 
         createClockTable(clockBodyDiv, clockSaveBtn, item, itemId);
     });
