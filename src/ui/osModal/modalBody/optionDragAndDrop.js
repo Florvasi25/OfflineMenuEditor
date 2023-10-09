@@ -6,7 +6,11 @@ import {
     getItemIndex
 } from '../../context.js';
 
-function createOptionDragCell(optionsContainer, optionRow) {
+import {
+    createOptionsContainer
+} from '../../optionSet/osOptionsContainer.js'
+
+function createOptionDragCell(optionRowsContainer, optionRow) {
     const optionDragCell = document.createElement('div')
     optionDragCell.className = 'sectionDragCell'
     const optionDragImg = document.createElement('img')
@@ -20,9 +24,8 @@ function createOptionDragCell(optionsContainer, optionRow) {
 
     optionDragImg.addEventListener('dragend', () => {
         optionRow.classList.remove('dragging');
-        optionRow.classList.remove('clickOnDrag');
         
-        const rows = Array.from(optionsContainer.querySelectorAll(".optionRow"));
+        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
     
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
@@ -34,36 +37,41 @@ function createOptionDragCell(optionsContainer, optionRow) {
             }
         });
     });
-    
-    
-    optionDragImg.addEventListener('mousedown', () => {
-        optionRow.classList.add('clickOnDrag')
-    })
-
-    optionDragImg.addEventListener('mouseup', () => {
-        optionRow.classList.remove('clickOnDrag')
-    })
 
     return optionDragCell
 }
 
 let draggable = null;
 
-function setDragListeners(optionsContainer, sectionId, itemId, osId) {
-    optionsContainer.addEventListener('dragenter', e => {
+function setDragListeners(optionRowsContainer, sectionId, itemId, osId) {
+    optionRowsContainer.addEventListener('dragenter', e => {
         e.preventDefault()
-        const afterElement = getDragAfterElement(optionsContainer, e.clientY)
+        const afterElement = getDragAfterElement(optionRowsContainer, e.clientY)
         draggable = document.querySelector('.dragging')
+
         if (afterElement == null) {
-            optionsContainer.appendChild(draggable)
+            optionRowsContainer.appendChild(draggable)
         } else {
-            optionsContainer.insertBefore(draggable, afterElement)
+            optionRowsContainer.insertBefore(draggable, afterElement)
+        }
+
+        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+        const optionContainerPreview = optionContainerPreviewArray.find((p) => p.id == osId)
+        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
+        if (optionContainerPreview) {
+            if (afterElement == null) {
+                optionContainerPreview.appendChild(osRowOptionPreview)
+            } else {
+                const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
+                optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
+            }
         }
     })
     
     
-    optionsContainer.addEventListener("dragend", () => {
-        const rows = Array.from(optionsContainer.querySelectorAll(".optionRow"));
+    optionRowsContainer.addEventListener("dragend", () => {
+        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
         const draggedIdOption = draggable.getAttribute("id");
         const {itemIndex, sectionIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, draggedIdOption)
         const indexNewPosition = rows.indexOf(draggable);

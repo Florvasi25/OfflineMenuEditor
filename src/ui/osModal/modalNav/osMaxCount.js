@@ -11,6 +11,7 @@ function createMaxCountCell(menuOs, itemId, sectionId) {
 
     const maxText = document.createElement('p')
     maxText.textContent = 'Max'
+    maxText.className = 'countText'
     maxCountCell.appendChild(maxText)
 
     const maxCount = createMaxCount(menuOs, itemId, sectionId)

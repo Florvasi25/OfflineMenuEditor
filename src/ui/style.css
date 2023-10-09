@@ -79,12 +79,7 @@ main {
 
     &.dragging {
         border: 1px solid black;
-        opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
+        opacity: .50;
     }
 }
 
@@ -123,12 +118,7 @@ main {
 
     &.dragging {
         border: 1px solid black;
-        opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
+        opacity: .50;
     }
 }
 
@@ -151,11 +141,6 @@ main {
     &.dragging {
         border: 1px solid black;
         opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
     }
 }
 
@@ -224,7 +209,6 @@ main {
 }
 
 .selectOptionContainer {
-    height: 50px;
     background-color: #f0f0f0;
     border-radius: 5px;
     width: 150px;
@@ -263,6 +247,10 @@ main {
     padding: 5px 7.5px;
 }
 
+.countText {
+    padding-top: 5px;
+}
+
 .nameAndMoM {
     border: solid 1px #ffffff;
     flex-grow: 1;
@@ -282,11 +270,6 @@ main {
     &.dragging {
         border: 1px solid black;
         opacity: .75;
-        transform: translateX(10px);
-    }
-
-    &.clickOnDrag {
-        transform: translateX(10px)
     }
 }
 
@@ -488,8 +471,8 @@ main {
 .optionName {
     display: flex;
     align-items: center;
-    height: 25px;
-    padding: 0 5px;
+    height: auto;
+    padding: 5px;
 }
 
 /* MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM */

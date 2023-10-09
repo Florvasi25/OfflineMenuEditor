@@ -31,17 +31,6 @@ function createItemDragCell(itemRow) {
     itemDragImg.addEventListener('dragend', () => {
         // if (itemRow.classList.contains('expanded')) return;
         itemRow.classList.remove('dragging')
-        itemRow.classList.remove('clickOnDrag')
-    })
-
-    itemDragImg.addEventListener('mousedown', () => {
-        // if (itemRow.classList.contains('expanded')) return;
-        itemRow.classList.add('clickOnDrag')
-    })
-
-    itemDragImg.addEventListener('mouseup', () => {
-        // if (itemRow.classList.contains('expanded')) return;
-        itemRow.classList.remove('clickOnDrag')
     })
 
     return itemDragCell
