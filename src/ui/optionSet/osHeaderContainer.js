@@ -57,8 +57,15 @@ function createOsRow(menuOs, sectionId, itemId) {
     const osDropDown = createOsDropdown(osRowHeader, sectionId, itemId)
     dropAndName.appendChild(osDropDown)
 
+    const nameAndOsId = document.createElement('div')
+    nameAndOsId.className = 'nameAndOsId'
+    dropAndName.appendChild(nameAndOsId)
+
     const osNameHeader = createOsNameHeader(menuOs, itemId, sectionId, osRowHeader.id)
-    dropAndName.appendChild(osNameHeader)
+    nameAndOsId.appendChild(osNameHeader)
+
+    const optionSetIdPreview = createOptionSetIdPreview(menuOs)
+    nameAndOsId.appendChild(optionSetIdPreview)
 
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     osRowHeader.appendChild(osSelectOptionContainer)
@@ -84,6 +91,14 @@ function createOsNameHeader(menuOs, itemId, sectionId, osId) {
     });
 
     return osNameHeader
+}
+
+function createOptionSetIdPreview(menuOs) {
+    const optionSetIdPreview = document.createElement('p')
+    optionSetIdPreview.textContent = menuOs.MenuItemOptionSetId
+    optionSetIdPreview.className = 'optionSetIdPreview'
+
+    return optionSetIdPreview
 }
 
 function createOsSelectOption(menuOs) {

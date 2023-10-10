@@ -23,6 +23,11 @@ function createOsModalNav(menuOs, itemId, sectionId) {
     const selectOptionContainer = createSelectOptionContainer(menuOs, itemId, sectionId)
     osModalNav.appendChild(selectOptionContainer)
 
+    const optionSetId = document.createElement('p')
+    optionSetId.textContent = menuOs.MenuItemOptionSetId
+    optionSetId.className = 'optionSetId'
+    osModalNav.appendChild(optionSetId)
+    
     return { osModalNav, closeOsModalBtn }
 }
 
