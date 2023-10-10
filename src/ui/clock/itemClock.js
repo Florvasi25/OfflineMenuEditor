@@ -13,6 +13,7 @@ import
     dayMappingToName
 } from './clockUtils.js'
 
+
 function itemClockButton(itemButtonsCell, itemId) {
     const clockButton = createAndAppend(itemButtonsCell, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');

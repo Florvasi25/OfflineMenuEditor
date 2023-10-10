@@ -1,54 +1,49 @@
 import {
     jsonData,
-    updateSectionLocalStorage
+    updateSectionLocalStorage,
+    getRandomInt
 } from '../context.js'
 import {
     createAndAppend,
-    addTextContent
+    addTextContent,
+    calculatePeriod,
+    invertedDayMapping
 } from "./clockUtils.js";
 
 function addSectionAvailabilityButton(clockFooterDiv, section) {
     const clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-availability');
     
-    if(section.MenuSectionAvailability.AvailabilityMode = 1){
+    if(section.MenuSectionAvailability.AvailabilityMode == 1){
         addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
         clockSectionAvailabilityBtn.classList.add('clockBtn-green'); 
     }else{
         addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');
         clockSectionAvailabilityBtn.classList.add('clockBtn-red'); 
     }
-    // Set initial button state
-    if (section.MenuItems[0] && section.MenuItems[0].DailySpecialHours[0]) {
-        clockSectionAvailabilityBtn.addEventListener('click', () => {
-            if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
-                clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
-                clockSectionAvailabilityBtn.classList.add('clockBtn-red');
-                deleteAvailiabilityTimes(section.MenuSectionId);
-            } else {
-                clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
-                clockSectionAvailabilityBtn.classList.add('clockBtn-green');
-                addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
-                storeAvailabilityTimes(section.MenuSectionId);
-            }
-        });
-    } else {
-        addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');
-        clockSectionAvailabilityBtn.disabled = true;
-        clockSectionAvailabilityBtn.classList.add('clockBtn-availability-disabled');
-    }
+
+    clockSectionAvailabilityBtn.addEventListener('click', () => {
+        if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
+            clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
+            clockSectionAvailabilityBtn.classList.add('clockBtn-red');
+            deleteAvailiabilityTimes(section.MenuSectionId);
+        } else {
+            clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
+            clockSectionAvailabilityBtn.classList.add('clockBtn-green');
+            addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
+            storeAvailabilityTimes(section.MenuSectionId, clockFooterDiv);
+        }
+    });
 }
 
 
-function storeAvailabilityTimes(sectionId)
+function storeAvailabilityTimes(sectionId, clockFooterDiv)
 {
-    jsonData.MenuSections.forEach(MenuSection => {
-        if (sectionId == MenuSection.MenuSectionId){
-            MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
-            MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
-            const dailySpecialHours = MenuSection.MenuItems[0].DailySpecialHours;
-            MenuSection.MenuSectionAvailability.AvailableTimes = dailySpecialHours;
-            updateSectionLocalStorage();
-        }})
+ jsonData.MenuSections.forEach(MenuSection => {
+    if (sectionId == MenuSection.MenuSectionId){
+        MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
+        MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
+        getTableSchedule(clockFooterDiv, sectionId);
+    }})
 }
 
 function deleteAvailiabilityTimes(sectionId)
@@ -59,10 +54,60 @@ function deleteAvailiabilityTimes(sectionId)
             MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
             if (MenuSection.MenuSectionAvailability.AvailableTimes) {
                 MenuSection.MenuSectionAvailability.AvailableTimes = [];
+                updateSectionLocalStorage();
             }
-            updateSectionLocalStorage();
         }})
 }
+
+function getTableSchedule(clockFooterDiv, id){
+    const clockContentDiv = clockFooterDiv.parentElement;
+    const clockBodyDiv = clockContentDiv.querySelector('.clock-body');
+    const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
+    for (const row of tableRows) {
+        const cells = row.cells;
+        const dayName = cells[0].innerText;
+        const dayOfWeek = invertedDayMapping[dayName]; // get the corresponding number for the day
+        const StartTime = cells[1].querySelector('input').value;
+        const CloseTime = cells[2].querySelector('input').value;    
+        let Period = calculatePeriod(StartTime, CloseTime)
+
+        storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
+    }
+}
+
+function storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
+    jsonData.MenuSections.forEach(MenuSection => {
+        if (sectionId == MenuSection.MenuSectionId) {
+            if(!MenuSection.MenuSectionAvailability.AvailableTimes) {
+                MenuSection.MenuSectionAvailability.AvailableTimes = [];
+            }
+            // Remove any object from AvailableTimes that has the same dayOfWeek 
+            // as the object we are pushing, to avoid duplicated objects.
+            MenuSection.MenuSectionAvailability.AvailableTimes = 
+                MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.dayOfWeek !== dayOfWeek);            
+            // If it's the first object, get a random ID,
+            // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in AvailableTimes, 
+            // determines the highest value using Math.max, and adds +1. 
+            let Id = (MenuSection.MenuSectionAvailability.AvailableTimes.length === 0) ? 
+                getRandomInt() : 
+                Math.max(...MenuSection.MenuSectionAvailability.AvailableTimes.map(item => item.BusinessHoursPeriodId)) + 1;
+            // Create the new time object
+            const newTime = {
+                BusinessHoursPeriodId: Id,
+                dayOfWeek,
+                StartTime,
+                CloseTime,
+                Period,
+                StartTimeEarly: StartTime,
+                PeriodEarly: "00:00"
+            };    
+            // Push the new time to the array
+            MenuSection.MenuSectionAvailability.AvailableTimes.push(newTime);
+            updateSectionLocalStorage();
+        }
+    });
+}
+
 export{
     addSectionAvailabilityButton,
 }

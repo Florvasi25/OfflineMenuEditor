@@ -30,7 +30,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
 
         if(compareDailySpecialHours(section))
         {
-            const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv);
+            const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
             addSectionAvailabilityButton(clockFooterDiv, section);
             createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
         }else{
@@ -40,11 +40,15 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
 
     });
 }
-function addSaveChangesButton(parentElement, closeElement){
-    const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'clockBtn-save');
+function addSaveChangesButton(parentElement, closeElement, section){
+    const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn');
     addTextContent(clockSaveBtn, 'Save Changes');
-    clockSaveBtn.addEventListener('click', () => {closeElement.style.display = 'none';});
-
+    if (section.MenuItems[0]) {
+        clockSaveBtn.classList.add('clockBtn-save');
+        clockSaveBtn.addEventListener('click', () => { closeElement.style.display = 'none'; });
+    } else {
+        clockSaveBtn.classList.add('clockBtn-save-disabled');
+    }
     return clockSaveBtn;
  }
 function createSectionTableRows(parentElement, menuSection) {
@@ -169,7 +173,7 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section,
         unsetButton.remove();
         const errorMsgElement = document.querySelector('.error-message-class');
         if (errorMsgElement) errorMsgElement.remove();
-        const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv);
+        const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
         addSectionAvailabilityButton(clockFooterDiv, section);
         createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
         setupSaveChanges(clockBodyDiv, sectionId, section);

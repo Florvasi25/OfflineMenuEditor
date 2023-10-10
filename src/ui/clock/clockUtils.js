@@ -55,8 +55,6 @@ function createClockBody() {
     clockCloseIcon.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
-    //const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
-    //addTextContent(clockSaveBtn, 'Save Changes');
     clockModalDiv.style.display = 'block';
     
 
@@ -76,8 +74,6 @@ function createClockTable(clockBodyDiv, clockSaveBtn, data, id) {
 
     if (data.MenuItems) { // checks if 'data' is section or item
         createSectionTableRows(clockTbody, data);
-            //showErrorMessage(clockBodyDiv);
-           //appendUnsetButton(clockBodyDiv);
 
     } else {
         createItemTableRows(clockTbody, data);
@@ -147,5 +143,6 @@ export{
     createInputCell,
     setupSaveChanges,
     calculatePeriod,
-    dayMappingToName
+    dayMappingToName,
+    invertedDayMapping
 }

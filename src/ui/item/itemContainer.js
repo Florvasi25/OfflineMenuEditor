@@ -45,7 +45,6 @@ function createItemContainer(sectionRow) {
     sectionRow.parentNode.insertBefore(itemTable, sectionRow.nextSibling);
     createItemRows(sectionRow, itemContainer);
     createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)
-    //setDragListeners(itemContainer, sectionRow.id)
 }
 
 function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
