@@ -57,9 +57,6 @@ function createOptionMoM(menuOption, itemId, osId, sectionId) {
         optionMoM.textContent = removeCharacters;
     });
     
-    
-    
-    
     return optionMoM
 }
 
