@@ -1,18 +1,10 @@
-import {
-    osDeleteButton
-} from './osDelete.js'
+import { osDeleteButton } from './osDelete.js'
 
-import {
-    osDuplicateButton
-} from './osDuplicate.js'
+import { osDuplicateButton } from './osDuplicate.js'
 
-import {
-    osNewButton
-} from './osAddNew.js'
+import { osNewButton } from './osAddNew.js'
 
-import {
-    osCaseButton
-} from './osCase.js'
+import { osCaseButton } from './osCase.js'
 
 function createOsBtnsCell() {
     const osBtnsCell = document.createElement('div')

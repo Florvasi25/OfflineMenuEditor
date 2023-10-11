@@ -26,6 +26,4 @@ function showToolTip(element, message) {
     });
 }
 
-export {
-    showToolTip,
-}
+export { showToolTip }

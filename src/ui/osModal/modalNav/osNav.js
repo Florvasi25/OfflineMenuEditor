@@ -1,14 +1,8 @@
-import {
-    createOsNameCell
-} from './osName.js'
+import { createOsNameCell } from './osName.js'
 
-import { 
-    createOsBtnsCell 
-} from './osButtonContainer.js'
+import {  createOsBtnsCell  } from './osButtonContainer.js'
 
-import {
-    createSelectOptionContainer
-} from './osSelectOption.js'
+import { createSelectOptionContainer } from './osSelectOption.js'
 
 function createOsModalNav(menuOs, itemId, sectionId) {
     const osModalNav = document.createElement('div')

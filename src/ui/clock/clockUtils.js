@@ -1,15 +1,16 @@
-import{
+import {
     createSectionTableRows,
     storeSectionTimeTableInJson
-}from './sectionClock.js'
-import{
+} from './sectionClock.js'
+
+import {
     createItemTableRows,
     storeItemTimeTableInJson
-}from './itemClock.js'
+} from './itemClock.js'
 
-import{
+import {
     compareDailySpecialHours
-}from './sectionClock.js'
+} from './sectionClock.js'
 
 const dayMappingToName = {
     0: 'Sunday',
@@ -20,6 +21,7 @@ const dayMappingToName = {
     5: 'Friday',
     6: 'Saturday'
 };
+
 const invertedDayMapping = {
     'Sunday': 0,
     'Monday': 1,
@@ -29,19 +31,23 @@ const invertedDayMapping = {
     'Friday': 5,
     'Saturday': 6
 };
+
 function createElementWithClasses(tagName, ...classes) {
     const element = document.createElement(tagName);
     element.classList.add(...classes);
     return element;
 }
+
 function createAndAppend(parent, tagName, ...classes) {
     const element = createElementWithClasses(tagName, ...classes);
     parent.appendChild(element);
     return element;
 }
+
 function addTextContent(element, text) {
     element.textContent = text;
 }
+
 function createClockBody() {
     const clockModalDiv = createAndAppend(document.body, 'div', 'clockModal');
     clockModalDiv.id = 'clockModalID';
@@ -57,7 +63,6 @@ function createClockBody() {
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
     clockModalDiv.style.display = 'block';
     
-
     return {
         clockModalDiv : clockModalDiv,
         clockBodyDiv: clockBodyDiv,
@@ -74,7 +79,6 @@ function createClockTable(clockBodyDiv, clockSaveBtn, data, id) {
 
     if (data.MenuItems) { // checks if 'data' is section or item
         createSectionTableRows(clockTbody, data);
-
     } else {
         createItemTableRows(clockTbody, data);
     }
@@ -82,6 +86,7 @@ function createClockTable(clockBodyDiv, clockSaveBtn, data, id) {
         setupSaveChanges(clockBodyDiv, id, data);
     });
 }
+
 function createTableHeaders(parentElement, headers) {
     const headerRow = createAndAppend(parentElement, 'tr');
     headers.forEach(text => {
@@ -89,15 +94,16 @@ function createTableHeaders(parentElement, headers) {
         addTextContent(headerCell, text);
     });
 }
+
 function createInputCell(parentRow, text) {
     const cell = createAndAppend(parentRow, 'td');
     const timeInput = createAndAppend(cell, 'input');
     timeInput.type = 'time';
     timeInput.value = text;
 }
+
 //loops through the table and gets the time table data.
-function setupSaveChanges(clockBodyDiv, id, data)
-{
+function setupSaveChanges(clockBodyDiv, id, data) {
     // Loop through the rows of the table body
     const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
     for (const row of tableRows) {
@@ -135,7 +141,8 @@ function calculatePeriod(StartTime, CloseTime) {
 
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
-export{
+
+export {
     createAndAppend,
     addTextContent,
     createClockBody,

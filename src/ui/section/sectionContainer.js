@@ -1,22 +1,12 @@
-import {
-    createSectionDragCell,
-} from './sectionDragAndDrop.js'
+import { createSectionDragCell } from './sectionDragAndDrop.js'
 
-import {
-    createSectionDropdown,
-} from './sectionDropDown.js'
+import { createSectionDropdown } from './sectionDropDown.js'
 
-import {
-    createSectionButtonsCell,
-} from './sectionButtonContainer.js'
+import { createSectionButtonsCell } from './sectionButtonContainer.js'
 
-import {
-    createSectionNameCell,
-} from './sectionName.js'
+import { createSectionNameCell } from './sectionName.js'
 
-import {
-    createSectionDescCell,
-} from './sectionDescription.js'
+import { createSectionDescCell } from './sectionDescription.js'
 
 //Section components
 function createSection(menuSection) {
@@ -51,6 +41,4 @@ function createSection(menuSection) {
     return sectionRow
 }
 
-export { 
-    createSection, 
-}
+export { createSection }

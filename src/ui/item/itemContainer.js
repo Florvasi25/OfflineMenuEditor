@@ -3,38 +3,21 @@ import {
     getSectionIndex, 
 } from '../context.js'
 
-import {
-    createItemNameCell
-} from './itemName.js'
+import { createItemNameCell } from './itemName.js'
 
-import {
-    createItemDropdown
-} from './itemDropDown.js'
+import { createItemDropdown } from './itemDropDown.js'
 
-import {
-    createItemDragCell,
-    //setDragListeners,
-} from './itemDragAndDrop.js'
+import { createItemDragCell } from './itemDragAndDrop.js'
 
-import {
-    createItemButtonsCell
-} from './itemButtonContainer.js'
+import { createItemButtonsCell } from './itemButtonContainer.js'
 
-import {
-    createItemButton
-} from './itemAddNew.js'
+import { createItemButton } from './itemAddNew.js'
 
-import {
-    createItemDescCell
-} from './itemDescription.js'
+import { createItemDescCell } from './itemDescription.js'
 
-import {
-    createItemPriceCell,
-} from './itemPrice.js'
+import { createItemPriceCell, } from './itemPrice.js'
 
-import {
-    createItemTaxCell
-} from './itemTax.js'
+import { createItemTaxCell } from './itemTax.js'
 
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('div');

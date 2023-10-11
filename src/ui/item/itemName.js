@@ -1,5 +1,5 @@
 import {
-    updateSectionLocalStorage,
+    updateLocalStorage,
     jsonData,
     getItemIndex,
 } from '../context.js'
@@ -53,9 +53,7 @@ function updateName(itemId, itemName, sectionId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Name = itemName;
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
-export {
-    createItemNameCell,
-}
+export { createItemNameCell }

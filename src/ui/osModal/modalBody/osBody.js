@@ -3,34 +3,22 @@ import {
     getOsIndex
 } from '../../context.js'
 
-import { 
-    createOptionNameCell
-} from './optionName.js'
-
 import {
     createOptionDragCell,
     setDragListeners
 } from './optionDragAndDrop.js'
 
-import {
-    createOptionMoMCell
-} from './optionMoM.js'
+import { createOptionNameCell } from './optionName.js'
 
-import {
-    createOptionPriceCell
-} from './optionPrice.js'
+import { createOptionMoMCell } from './optionMoM.js'
 
-import {
-    createOptionTaxCell
-} from './optionTax.js'
+import { createOptionPriceCell } from './optionPrice.js'
 
-import {
-    createOptionButtonsCell
-} from './optionButtonContainer.js'
+import { createOptionTaxCell } from './optionTax.js'
 
-import {
-    createOptionButton
-} from './optionAddNew.js'
+import { createOptionButtonsCell } from './optionButtonContainer.js'
+
+import { createOptionButton } from './optionAddNew.js'
 
 function createOsModalBody(sectionId, itemId, osId) {
     const optionsBodyContainer = document.createElement('div')
@@ -77,7 +65,6 @@ function createOptionRow(optionRowsContainer, sectionId, itemId, osId) {
 
         optionRowsContainer.appendChild(optionRow);
     });
-
 }
 
 function createTopButtonsCell() {

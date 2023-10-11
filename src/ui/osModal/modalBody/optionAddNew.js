@@ -1,19 +1,15 @@
-import {
-    createOption,
-} from "./osBody.js";
+import { createOption } from "./osBody.js";
 
 import {
     jsonData,
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getLocalStorageOptionSetIDs,
     getUniqueRandomInt,
     getOsIndex,
 } from '../../context.js';
 
-import {
-    createOptionRow
-} from '../../optionSet/osOptionsContainer.js'
+import { createOptionRow } from '../../optionSet/osOptionsContainer.js'
 
 function createOptionButton(optionRowsContainer, sectionId, itemId, osId) {
     const newOptionButton = document.createElement('button')
@@ -75,8 +71,8 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId) {
             const newOptionRow = createOptionRow(emptyOptionJson)
             osRowOptionPreview.appendChild(newOptionRow);
         }
-
-        updateSectionLocalStorage();
+        
+        updateLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
     });
 

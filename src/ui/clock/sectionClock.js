@@ -1,8 +1,9 @@
 import {
     jsonData, 
     getRandomInt, 
-    updateSectionLocalStorage,
+    updateLocalStorage,
 } from '../context.js'
+
 import {
     createAndAppend,
     addTextContent,
@@ -12,6 +13,7 @@ import {
     dayMappingToName,
     setupSaveChanges
 } from './clockUtils.js'
+
 import { addSectionAvailabilityButton } from "./sectionAvailability.js";
 
 function sectionClockButton(sectionButtonsCell, sectionId) {
@@ -28,19 +30,17 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const section = getSection(jsonData, sectionId);    
 
-        if(compareDailySpecialHours(section))
-        {
+        if(compareDailySpecialHours(section)) {
             const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
             addSectionAvailabilityButton(clockFooterDiv, section);
             createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
-        }else{
+        } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
         }
-
     });
 }
-function addSaveChangesButton(parentElement, closeElement, section){
+function addSaveChangesButton(parentElement, closeElement, section) {
     const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn');
     addTextContent(clockSaveBtn, 'Save Changes');
     if (section.MenuItems[0]) {
@@ -51,11 +51,13 @@ function addSaveChangesButton(parentElement, closeElement, section){
     }
     return clockSaveBtn;
  }
+
 function createSectionTableRows(parentElement, menuSection) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
     const areDailySpecialHoursSame = compareDailySpecialHours(menuSection);
     console.log("Comparación: ", areDailySpecialHoursSame);
     const timesMapping = {};
+
     // If all DailySpecialHours are the same for all MenuItems, then take the DailySpecialHours data 
     if (areDailySpecialHoursSame && 
         menuSection.MenuItems.length > 0 && 
@@ -67,6 +69,7 @@ function createSectionTableRows(parentElement, menuSection) {
             };
         });
     }
+
     // Go through each day and create a row for it
     dayOrder.forEach(dayKey => {
         const row = createAndAppend(parentElement, 'tr');
@@ -88,6 +91,7 @@ function createSectionTableRows(parentElement, menuSection) {
         });
     });
 }
+
 // Store the data in an object and push it to the jsonData local storage
 function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
     jsonData.MenuSections.forEach(MenuSection => {
@@ -116,14 +120,15 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
                     Period,
                     StartTimeEarly: StartTime,
                     PeriodEarly: "00:00"
-                };    
+                };
                 // Push the new time to the array
                 MenuItem.DailySpecialHours.push(newTime);
             });
-            updateSectionLocalStorage();
+            updateLocalStorage();
         }
     });
 }
+
 /*function getAvailableTimes(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
     if (foundSection) {
@@ -131,6 +136,7 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
     }
     return null;
 }*/
+
 function getSection(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
     if (foundSection) {
@@ -138,6 +144,7 @@ function getSection(jsonData, sectionId) {
     }
     return null;
 }
+
 function compareDailySpecialHours(menuSection) {
     if (!menuSection.MenuItems || menuSection.MenuItems.length <= 1) {
         return true; // if there's only one or no items, then they are inherently the same
@@ -158,6 +165,7 @@ function compareDailySpecialHours(menuSection) {
     }
     return true; // if we made it here, then all DailySpecialHours are the same for all MenuItems
 }
+
 function showErrorMessage(parentElement) {
     const errorMessage = "Menu items don't have the same schedule table, it's not possible to place a schedule in the section";
     const errorMsgElement = createAndAppend(parentElement, 'p', 'error-message-class'); 
@@ -180,6 +188,7 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section,
 
     });
 }
+
 export {
     sectionClockButton,
     createSectionTableRows,

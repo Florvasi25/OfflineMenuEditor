@@ -1,6 +1,4 @@
-import {
-    createOptionsContainer
-} from './osOptionsContainer.js'
+import { createOptionsContainer } from './osOptionsContainer.js'
 
 function createOsDropdown(osRowHeader, sectionId, itemId){
     const osDropdownCell = document.createElement('div')
@@ -52,6 +50,4 @@ function toggleItemState(osRowHeader, sectionId, itemId) {
     }
 }
 
-export {
-    createOsDropdown,
-}
+export { createOsDropdown }

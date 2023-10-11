@@ -1,7 +1,7 @@
 import { 
     jsonData,
     getOsIndex,
-    updateSectionLocalStorage 
+    updateLocalStorage 
 } from '../../context.js'
 
 function createMaxCountCell(menuOs, itemId, sectionId) {
@@ -62,7 +62,10 @@ function updateMaxCount(osHeaderId, itemId, sectionId, osMaxCount) {
     const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osHeaderId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MaxSelectCount = Number(osMaxCount);
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
-export { createMaxCountCell, updateMaxCount }
+export { 
+    createMaxCountCell, 
+    updateMaxCount 
+}

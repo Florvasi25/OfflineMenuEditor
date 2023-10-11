@@ -1,5 +1,5 @@
 import {
-    updateSectionLocalStorage,
+    updateLocalStorage,
     jsonData,
     getItemIndex,
 } from '../context.js'
@@ -53,7 +53,7 @@ function updateDesc(itemId, itemDesc, sectionId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Description = itemDesc;
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 export {

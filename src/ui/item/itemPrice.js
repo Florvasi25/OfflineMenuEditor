@@ -1,5 +1,5 @@
 import {
-    updateSectionLocalStorage,
+    updateLocalStorage,
     jsonData,
     getItemIndex,
 } from '../context.js'
@@ -65,7 +65,7 @@ function updatePrice(itemId, itemPrice, sectionId) {
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Price = priceAsNumber;
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].ActualPrice = priceAsNumber;
 
-        updateSectionLocalStorage();
+        updateLocalStorage();
     }
 }
 

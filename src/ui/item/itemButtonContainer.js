@@ -1,18 +1,10 @@
-import {
-    itemVisibilityButton
-} from './itemVisibility.js'
+import { itemVisibilityButton } from './itemVisibility.js'
 
-import {
-    itemDeleteButton
-} from './itemDelete.js'
+import { itemDeleteButton } from './itemDelete.js'
 
-import {
-    itemDuplicateButton,
-} from './itemDuplicate.js'
+import { itemDuplicateButton } from './itemDuplicate.js'
 
-import {
-    itemClockButton,
-} from '../clock/itemClock.js'
+import { itemClockButton } from '../clock/itemClock.js'
 
 function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('div');
@@ -29,6 +21,4 @@ function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     return itemButtonsCell
 }
 
-export {
-    createItemButtonsCell
-}
+export { createItemButtonsCell }

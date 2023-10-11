@@ -1,6 +1,4 @@
-import {
-    updateMaxCount
-} from './osMaxCount.js'
+import { updateMaxCount } from './osMaxCount.js'
 
 function createMaxLenghtButton(selectOptionContainer, menuOs, itemId, sectionId) {
     const maxLengthButton = document.createElement('button');

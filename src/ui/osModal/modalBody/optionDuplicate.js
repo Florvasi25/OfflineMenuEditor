@@ -1,7 +1,7 @@
 import {
     jsonData,
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     updateOptionSetCounterLocalStorage,
     getLocalStorageOptionSetIDs,
     setSectionDisplayOrder,
@@ -10,13 +10,9 @@ import {
     getOsObject
 } from '../../context.js';
 
-import {
-    createOption
-} from './osBody.js'
+import { createOption } from './osBody.js'
 
-import {
-    createOptionRow
-} from '../../optionSet/osOptionsContainer.js'
+import { createOptionRow } from '../../optionSet/osOptionsContainer.js'
 
 function optionDuplicateButton(optionRow, optionId, sectionId, itemId, osId, optionRowsContainer, optionButtonsCell, menuOption) {
     const duplicateButton = document.createElement('button');
@@ -83,12 +79,10 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRow
             optionContainerPreview.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
         }
         
-        updateSectionLocalStorage();
+        updateLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
         updateOptionSetCounterLocalStorage(newOptionId, true)
     }
 }
 
-export {
-    optionDuplicateButton,
-}
+export { optionDuplicateButton }

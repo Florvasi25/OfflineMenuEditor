@@ -3,17 +3,11 @@ import {
     getItemIndex,
 } from '../context.js'
 
-import {
-    createOsDropdown,
-} from './osDropDown.js'
+import { createOsDropdown } from './osDropDown.js'
 
-import {
-    createOsModalContainer
-} from '../osModal/modalContainer.js'
+import { createOsModalContainer } from '../osModal/modalContainer.js'
 
-import {
-    createOsNameCell
-} from '../osModal/modalNav/osName.js'
+import { createOsNameCell } from '../osModal/modalNav/osName.js'
 
 function createOsContainer(itemRow, sectionId, itemId) {
     const osContainer = document.createElement('div');
@@ -37,7 +31,6 @@ function createOs(osContainer, sectionId, itemId) {
         } else {
             osRowHeader.classList.add('even');
         }
-
         osContainer.appendChild(osRowHeader);
     });
 }
@@ -107,9 +100,8 @@ function createOsSelectOption(menuOs) {
     osSelectOptionContainer.innerHTML = `
     <p class='minSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MinSelectCount}</p>
     <p class='dashCountCell'> - </p>
-    <p class='maxSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MaxSelectCount}</p>
-    `
-
+    <p class='maxSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MaxSelectCount}</p>`
+    
     return osSelectOptionContainer
 }
 

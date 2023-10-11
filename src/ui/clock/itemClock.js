@@ -1,10 +1,10 @@
 import { 
     jsonData, 
     getRandomInt,
-    updateSectionLocalStorage
+    updateLocalStorage
 } from '../context.js'
-import
-{
+
+import {
     createAndAppend,
     addTextContent,
     createClockBody,
@@ -33,8 +33,8 @@ function itemClockButton(itemButtonsCell, itemId) {
         createClockTable(clockBodyDiv, clockSaveBtn, item, itemId);
     });
 }
-function createItemTableRows(parentElement, item)
-{
+
+function createItemTableRows(parentElement, item) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
     const timesMapping = {};
     item.DailySpecialHours.forEach(time => {
@@ -43,6 +43,7 @@ function createItemTableRows(parentElement, item)
             close: time.CloseTime
         };
     });
+
     // Go through each day and create a row for it
     dayOrder.forEach(dayKey => {
         const row = createAndAppend(parentElement, 'tr');
@@ -72,8 +73,7 @@ function createItemTableRows(parentElement, item)
 function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
     jsonData.MenuSections.forEach(section => {
         section.MenuItems.forEach(item => {
-            if(item.MenuItemId == id)
-            {
+            if(item.MenuItemId == id) {
                 if(!item.DailySpecialHours) {
                     item.DailySpecialHours = [];
                 }   
@@ -96,12 +96,12 @@ function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
                     Period,
                     StartTimeEarly: StartTime,
                     PeriodEarly: "00:00"
-                };      
+                };
                 // Push the new time to the array
                 item.DailySpecialHours.push(newTime);
             }
     })})
-    updateSectionLocalStorage();
+    updateLocalStorage();
 }
 function getItem(jsonData, itemId) {
     if (!jsonData || !jsonData.MenuSections) return null;
@@ -113,6 +113,7 @@ function getItem(jsonData, itemId) {
     }
     return null;
 }
+
 export {
     itemClockButton,
     createItemTableRows,

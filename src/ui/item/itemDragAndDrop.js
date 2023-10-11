@@ -1,13 +1,11 @@
 import {
     jsonData,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getItemIndex,
     getDragAfterElement,
 } from '../context.js';
 
-import {
-    showToolTip
-} from '../toolTip.js'
+import { showToolTip } from '../toolTip.js'
 
 function createItemDragCell(itemRow) {
     const itemDragCell = document.createElement('div')
@@ -69,7 +67,7 @@ function createItemDragCell(itemRow) {
                 jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, itemIndex) => {
                     obj.DisplayOrder = itemIndex;
                 });
-                updateSectionLocalStorage();
+                updateLocalStorage();
             }
             e.stopPropagation();
         });
@@ -83,7 +81,4 @@ function createItemDragCell(itemRow) {
     return itemDragCell
 }
 
-export {
-    createItemDragCell,
-    //setDragListeners
-}
+export { createItemDragCell }

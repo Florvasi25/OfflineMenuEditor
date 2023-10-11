@@ -1,5 +1,5 @@
 import {
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getOptionIndex,
     jsonData,
 } from '../../context.js'
@@ -49,10 +49,8 @@ function SectionAvailability(optionRow, sectionId, itemId, osId, optionId) {
             osRowOptionPreview.classList.toggle('unavailable', !isAvailableNew)
         }
 
-        updateSectionLocalStorage()
+        updateLocalStorage()
     }
 }
 
-export {
-    optionVisibilityButton,
-}
+export { optionVisibilityButton }

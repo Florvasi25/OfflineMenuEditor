@@ -1,7 +1,7 @@
 import { 
     jsonData,
     getOsIndex,
-    updateSectionLocalStorage 
+    updateLocalStorage 
 } from '../../context.js'
 
 function createOsNameCell(menuOs, itemId, sectionId) {
@@ -57,7 +57,7 @@ function updateName(osId, itemId, sectionId, osName) {
     const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].Name = osName;
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 export { createOsNameCell }

@@ -1,20 +1,13 @@
 import {
-    createSection,
-} from "./section/sectionContainer.js";
-
-import {
-    createSectionButton,
-} from './section/sectionAddNew.js'
-
-import {
     createLoadJsonButton,
     createSaveButton,
 } from './file.js'
 
-import {
-    jsonData,
-} from './context.js';
+import { createSection } from "./section/sectionContainer.js";
 
+import { createSectionButton } from './section/sectionAddNew.js'
+
+import { jsonData } from './context.js';
 
 //Builds HTML
 function generateHTML(jsonData) {

@@ -98,7 +98,7 @@ function setSectionId(jsonData) {
         section.MenuSectionAvailability.MenuSectionId = id;
         updateCounterLocalStorage(id, true)
     }
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 //set itemID for entire json file
@@ -111,7 +111,7 @@ function setItemId(jsonData) {
             updateItemCounterLocalStorage(id, true)
         }
     }
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 function setOptionId(jsonData) {
@@ -126,7 +126,7 @@ function setOptionId(jsonData) {
             }
         }
     }
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 function setSectionDisplayOrder(jsonData) {
@@ -136,7 +136,7 @@ function setSectionDisplayOrder(jsonData) {
 }
 
 //Updates JSON LocalStorage
-function updateSectionLocalStorage() {
+function updateLocalStorage() {
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
 }
 
@@ -201,7 +201,7 @@ export {
     getSectionIndex,
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     updateOptionSetCounterLocalStorage,
     getLocalStorageItemIDs,
     getLocalStorageSectionIDs,

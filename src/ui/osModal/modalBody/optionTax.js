@@ -24,6 +24,4 @@ function createItemTax(menuOption, jsonData) {
     return optionTax
 }
 
-export {
-    createOptionTaxCell,
-}
+export { createOptionTaxCell }

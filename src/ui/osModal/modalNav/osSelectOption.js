@@ -1,14 +1,8 @@
-import {
-    createMinCountCell
-} from './osMinCount.js'
+import { createMinCountCell } from './osMinCount.js'
 
-import {
-    createMaxCountCell
-} from './osMaxCount.js'
+import { createMaxCountCell } from './osMaxCount.js'
 
-import {
-    createMaxLenghtButton
-} from './osMaxLength.js'
+import { createMaxLenghtButton } from './osMaxLength.js'
 
 function createSelectOptionContainer(menuOs, itemId, sectionId) {
     const selectOptionContainer = document.createElement('div')

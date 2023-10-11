@@ -1,14 +1,9 @@
 import {
     jsonData,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getDragAfterElement,
     getOptionIndex,
-    getItemIndex
 } from '../../context.js';
-
-import {
-    createOptionsContainer
-} from '../../optionSet/osOptionsContainer.js'
 
 function createOptionDragCell(optionRowsContainer, optionRow) {
     const optionDragCell = document.createElement('div')
@@ -83,7 +78,7 @@ function setDragListeners(optionRowsContainer, sectionId, itemId, osId) {
                 obj.DisplayOrder = optionIndex;
             });
 
-            updateSectionLocalStorage()
+            updateLocalStorage()
         }
     })
 }
@@ -91,4 +86,4 @@ function setDragListeners(optionRowsContainer, sectionId, itemId, osId) {
 export {
     createOptionDragCell,
     setDragListeners
- }
+}

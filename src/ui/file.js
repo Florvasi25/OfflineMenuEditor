@@ -1,16 +1,14 @@
 import {
     jsonData, 
     setJsonData,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     setSectionId,
     setItemId,
     setSectionDisplayOrder,
     setOptionId
 } from './context.js';
 
-import {
-    generateHTML,
- } from './mainContainer.js'
+import { generateHTML } from './mainContainer.js'
 
 function createLoadJsonButton() {
     const loadJsonButton = document.createElement('input')
@@ -24,7 +22,7 @@ function createLoadJsonButton() {
     
         reader.onload = function (e) {
             setJsonData(JSON.parse(e.target.result));
-            updateSectionLocalStorage()
+            updateLocalStorage()
             setSectionId(jsonData);
             setSectionDisplayOrder(jsonData);
             setItemId(jsonData);
@@ -72,4 +70,8 @@ function saveToFile(data) {
     URL.revokeObjectURL(url);
 }
 
-export { saveToFile, createSaveButton, createLoadJsonButton }
+export { 
+    saveToFile, 
+    createSaveButton, 
+    createLoadJsonButton 
+}

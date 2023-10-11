@@ -1,7 +1,7 @@
 import { 
     jsonData,
     getOptionIndex,
-    updateSectionLocalStorage
+    updateLocalStorage
 } from '../../context.js'
 
 function createOptionNameCell(menuOption, sectionId, itemId, osId) {
@@ -59,7 +59,7 @@ function updateOptionName(optionId, itemId, sectionId, osId, newOptionName) {
     const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].Name = newOptionName;
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 export { createOptionNameCell }

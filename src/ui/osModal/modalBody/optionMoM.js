@@ -1,7 +1,7 @@
 import { 
     jsonData,
     getOptionIndex,
-    updateSectionLocalStorage
+    updateLocalStorage
 } from '../../context.js'
 
 function createOptionMoMCell(menuOption, sectionId, itemId, osId) {
@@ -65,7 +65,7 @@ function updateOptionMoM(optionId, itemId, sectionId, osId, newOptionMoM) {
     const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 export { createOptionMoMCell }
