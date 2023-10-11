@@ -53,10 +53,13 @@ function createOptionMoM(menuOption, itemId, osId, sectionId) {
 
     optionMoM.addEventListener('input', () => {
         const newMoM = optionMoM.textContent;
-        const removeCharacters = newMoM.replace(/[^\d.]/g, '');
+        const removeCharacters = newMoM.replace(/[^-1\d.]/g, ''); // Allow positive numbers and "-1" only
         optionMoM.textContent = removeCharacters;
     });
-
+    
+    
+    
+    
     return optionMoM
 }
 

@@ -7,6 +7,8 @@ function osNewButton(osBtnsCell) {
     newOsButtonImg.classList.add('sectionButtonImg')
     newOsButtonImg.src = '../../assets/plusIcon.svg'
     newOsButton.appendChild(newOsButtonImg)
+
+    return newOsButton
 }
 
 export { osNewButton }

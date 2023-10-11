@@ -57,6 +57,7 @@ main {
     padding: 5px;
     margin: 0 15px 0 0;
 }
+
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionTable {
@@ -77,7 +78,6 @@ main {
     &.folded .sectionDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .50;
@@ -116,7 +116,6 @@ main {
     &.folded .sectionDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .50;
@@ -131,14 +130,13 @@ main {
     width: 40%;
     justify-content: space-around;
     padding: 7.5px 0px;
-
+    
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
     }
     &.folded .osDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .75;
@@ -282,7 +280,6 @@ main {
     &.folded .osDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .75;
