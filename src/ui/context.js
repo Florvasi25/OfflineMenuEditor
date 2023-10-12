@@ -2,6 +2,11 @@ import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
+const groupedOs = {};
+
+groupOptionSets()
+
+
 function setJsonData(data) {
     jsonData = data
 }
@@ -196,6 +201,30 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
+function groupOptionSets() {
+
+    jsonData.MenuSections.forEach(sections => {
+        sections.MenuItems.forEach(items => {
+            items.MenuItemOptionSets.forEach((menuItemOptionSet) => {
+                const { Name, MaxSelectCount, MinSelectCount, MenuItemOptionSetItems } = menuItemOptionSet;
+                const itemCount = MenuItemOptionSetItems.length;
+                const itemKey = MenuItemOptionSetItems.map((item) => `${item.Name}_${item.Price}`).join('|');
+                const groupKey = `${Name}_${MaxSelectCount}_${MinSelectCount}_${itemCount}_${itemKey}`;
+                menuItemOptionSet.groupOsId = groupKey
+                
+                if (!groupedOs[groupKey]) {
+                    groupedOs[groupKey] = [menuItemOptionSet];
+                } else {
+                    groupedOs[groupKey].push(menuItemOptionSet);
+                }
+            });
+        })
+    })
+    updateLocalStorage()
+    
+    console.log(groupedOs);
+}
+
 export {
     jsonData,
     getSectionIndex,
@@ -218,5 +247,7 @@ export {
     getOsIndex,
     getOptionIndex,
     getOptionObject,
-    getOsObject
+    getOsObject,
+    groupOptionSets,
+    groupedOs
 }
