@@ -1,6 +1,4 @@
 import { 
-    jsonData,
-    getOsIndex,
     updateLocalStorage,
     groupedOs 
 } from '../../context.js'
