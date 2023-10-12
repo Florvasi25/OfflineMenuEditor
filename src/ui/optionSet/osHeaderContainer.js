@@ -100,7 +100,7 @@ function createOsSelectOption(menuOs) {
     osSelectOptionContainer.innerHTML = `
     <p class='minSelectCount' id='${menuOs.groupOsId}'>${menuOs.MinSelectCount}</p>
     <p class='dashCountCell'> - </p>
-    <p class='maxSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MaxSelectCount}</p>`
+    <p class='maxSelectCount' id='${menuOs.groupOsId}'>${menuOs.MaxSelectCount}</p>`
     
     return osSelectOptionContainer
 }
