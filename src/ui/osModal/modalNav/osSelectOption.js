@@ -4,33 +4,33 @@ import { createMaxCountCell } from './osMaxCount.js'
 
 import { createMaxLenghtButton } from './osMaxLength.js'
 
-function createSelectOptionContainer(menuOs, itemId, sectionId) {
+function createSelectOptionContainer(menuOs) {
     const selectOptionContainer = document.createElement('div')
     selectOptionContainer.className = 'selectOptionContainer'
 
-    const selectOptionCell = createSelectOptionCell(menuOs, itemId, sectionId)
+    const selectOptionCell = createSelectOptionCell(menuOs)
     selectOptionContainer.appendChild(selectOptionCell)
 
-    createMaxLenghtButton(selectOptionContainer, menuOs, itemId, sectionId)
+    createMaxLenghtButton(selectOptionContainer, menuOs)
 
     return selectOptionContainer
 }
 
-function createSelectOptionCell(menuOs, itemId, sectionId) {
+function createSelectOptionCell(menuOs) {
     const selectOptionCell = document.createElement('div')
     selectOptionCell.className = 'selectOptionCell'
 
-    const selectOption = createSelectOption(menuOs, itemId, sectionId)
+    const selectOption = createSelectOption(menuOs)
     selectOptionCell.appendChild(selectOption)
 
     return selectOptionCell
 }
 
-function createSelectOption(menuOs, itemId, sectionId) {
+function createSelectOption(menuOs) {
     const selectOption = document.createElement('div')
     selectOption.className = 'selectOption'
 
-    const minCountCell = createMinCountCell(menuOs, itemId, sectionId)
+    const minCountCell = createMinCountCell(menuOs)
     selectOption.appendChild(minCountCell)
 
     const dashCountCell = document.createElement('p')
@@ -38,7 +38,7 @@ function createSelectOption(menuOs, itemId, sectionId) {
     dashCountCell.textContent= '-'
     selectOption.appendChild(dashCountCell)
     
-    const maxCountCell = createMaxCountCell(menuOs, itemId, sectionId)
+    const maxCountCell = createMaxCountCell(menuOs)
     selectOption.appendChild(maxCountCell)
 
     return selectOption

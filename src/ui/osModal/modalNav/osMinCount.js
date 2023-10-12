@@ -3,7 +3,7 @@ import {
     groupedOs 
 } from '../../context.js'
 
-function createMinCountCell(menuOs, itemId, sectionId) {
+function createMinCountCell(menuOs) {
     //Name Cell
     const minCountCell = document.createElement('div');
     minCountCell.classList.add('minCountCell');
@@ -13,14 +13,14 @@ function createMinCountCell(menuOs, itemId, sectionId) {
     minText.className = 'countText'
     minCountCell.appendChild(minText)
 
-    const minCount = createMinCount(menuOs, itemId, sectionId)
+    const minCount = createMinCount(menuOs)
     minCountCell.appendChild(minCount);
     
     return minCountCell
 }
 
 //Handles Name Edits
-function createMinCount(menuOs, itemId, sectionId) {
+function createMinCount(menuOs) {
     const minCount = document.createElement('p');
     minCount.classList.add('minCount');
     minCount.contentEditable = true;

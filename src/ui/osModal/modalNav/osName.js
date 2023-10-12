@@ -3,19 +3,19 @@ import {
     groupedOs 
 } from '../../context.js'
 
-function createOsNameCell(menuOs, itemId, sectionId) {
+function createOsNameCell(menuOs) {
     //Name Cell
     const osNameCell = document.createElement('div');
     osNameCell.classList.add('osNameCell');
 
-    const osNameHeader = createOsName(menuOs, itemId, sectionId)
+    const osNameHeader = createOsName(menuOs)
     osNameCell.appendChild(osNameHeader);
     
     return osNameCell
 }
 
 //Handles Name Edits
-function createOsName(menuOs, itemId, sectionId) {
+function createOsName(menuOs) {
     const osName = document.createElement('p');
     osName.classList.add('osName');
     osName.contentEditable = true;

@@ -1,6 +1,6 @@
 import { updateMaxCount } from './osMaxCount.js'
 
-function createMaxLenghtButton(selectOptionContainer, menuOs, itemId, sectionId) {
+function createMaxLenghtButton(selectOptionContainer, menuOs) {
     const maxLengthButton = document.createElement('button');
     maxLengthButton.classList.add('sectionButton')
     maxLengthButton.classList.add('maxLengthButton')
@@ -14,11 +14,11 @@ function createMaxLenghtButton(selectOptionContainer, menuOs, itemId, sectionId)
     maxLengthButton.appendChild(maxLengthButtonImg)
 
     maxLengthButton.addEventListener('click', () => {
-        maxLength(menuOs, itemId, sectionId)
+        maxLength(menuOs)
     })
 }
 
-function maxLength(menuOs, itemId, sectionId) {
+function maxLength(menuOs) {
     const optionsArray = Array.from(document.getElementsByClassName('optionRow'));
     const optionsLength = optionsArray.length;
 
@@ -28,10 +28,12 @@ function maxLength(menuOs, itemId, sectionId) {
     }
 
     const maxCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-    const maxSelectCount = maxCountArray.find((p) => p.id == menuOs.MenuItemOptionSetId)
-    maxSelectCount.textContent = optionsLength;
+    const maxSelectCount = maxCountArray.filter((p) => p.id == menuOs.groupOsId)
+    maxSelectCount.forEach(os => {
+        os.textContent = optionsLength;
+    })
 
-    updateMaxCount(menuOs.MenuItemOptionSetId, itemId, sectionId, optionsLength);
+    updateMaxCount(menuOs.groupOsId, optionsLength);
 }
 
 

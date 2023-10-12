@@ -4,17 +4,17 @@ import {  createOsBtnsCell  } from './osButtonContainer.js'
 
 import { createSelectOptionContainer } from './osSelectOption.js'
 
-function createOsModalNav(menuOs, itemId, sectionId) {
+function createOsModalNav(menuOs) {
     const osModalNav = document.createElement('div')
     osModalNav.className = 'osModalNav'
 
     const { closeBtnRow, closeOsModalBtn } = createCloseBtnRow()
     osModalNav.appendChild(closeBtnRow)
 
-    const osOptionsRow = createOsOptionsNav(menuOs, itemId, sectionId)
+    const osOptionsRow = createOsOptionsNav(menuOs)
     osModalNav.appendChild(osOptionsRow)
 
-    const selectOptionContainer = createSelectOptionContainer(menuOs, itemId, sectionId)
+    const selectOptionContainer = createSelectOptionContainer(menuOs)
     osModalNav.appendChild(selectOptionContainer)
 
     const optionSetId = document.createElement('p')
@@ -25,11 +25,11 @@ function createOsModalNav(menuOs, itemId, sectionId) {
     return { osModalNav, closeOsModalBtn }
 }
 
-function createOsOptionsNav(menuOs, itemId, sectionId) {
+function createOsOptionsNav(menuOs) {
     const osOptionsRow = document.createElement('div')
     osOptionsRow.className = 'osOptionsRow'
 
-    const osNameCell = createOsNameCell(menuOs, itemId, sectionId)
+    const osNameCell = createOsNameCell(menuOs)
     osOptionsRow.appendChild(osNameCell)
 
     const osBtnsCell = createOsBtnsCell()

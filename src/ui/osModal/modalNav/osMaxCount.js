@@ -3,7 +3,7 @@ import {
     groupedOs
 } from '../../context.js'
 
-function createMaxCountCell(menuOs, itemId, sectionId) {
+function createMaxCountCell(menuOs) {
     //Name Cell
     const maxCountCell = document.createElement('div');
     maxCountCell.classList.add('maxCountCell');
@@ -13,14 +13,14 @@ function createMaxCountCell(menuOs, itemId, sectionId) {
     maxText.className = 'countText'
     maxCountCell.appendChild(maxText)
 
-    const maxCount = createMaxCount(menuOs, itemId, sectionId)
+    const maxCount = createMaxCount(menuOs)
     maxCountCell.appendChild(maxCount);
     
     return maxCountCell
 }
 
 //Handles Name Edits
-function createMaxCount(menuOs, itemId, sectionId) {
+function createMaxCount(menuOs) {
     const maxCount = document.createElement('p');
     maxCount.classList.add('maxCount');
     maxCount.contentEditable = true;

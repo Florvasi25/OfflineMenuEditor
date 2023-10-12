@@ -9,7 +9,7 @@ function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     osModalContainer.id = 'myModal'
     osModalContainer.classList = 'osModalContainer'
     
-    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs, itemId, sectionId)
+    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
     osModalContainer.appendChild(osModalNav)
 
     const osModalBody = createOsModalBody(sectionId, itemId, osId)
