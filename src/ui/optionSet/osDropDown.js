@@ -1,30 +1,30 @@
 import { createOptionsContainer } from './osOptionsContainer.js'
 
-function createOsDropdown(osRowHeader, sectionId, itemId){
+function createOsDropdown(osRowHeader, menuOs, sectionId, itemId){
     const osDropdownCell = document.createElement('div')
     osDropdownCell.classList.add('osDropdownCell')
 
-    const boxDropdownButton = createOsDropdownButton(osRowHeader, sectionId, itemId)
+    const boxDropdownButton = createOsDropdownButton(osRowHeader, menuOs, sectionId, itemId)
     osDropdownCell.appendChild(boxDropdownButton)
 
     return osDropdownCell
 }
 
-function createOsDropdownButton(osRowHeader, sectionId, itemId){
+function createOsDropdownButton(osRowHeader, menuOs, sectionId, itemId){
     const boxDropdownButton = document.createElement('div')
     boxDropdownButton.classList = 'boxDropdownButton'
     boxDropdownButton.innerHTML = `
     <div class="osDropdownButton"></div>`
 
     boxDropdownButton.addEventListener('click', event => {
-        toggleItemState(osRowHeader, sectionId, itemId);
+        toggleItemState(osRowHeader, menuOs, sectionId, itemId);
         event.stopPropagation();
     });
 
     return boxDropdownButton
 }
 
-function toggleItemState(osRowHeader, sectionId, itemId) {
+function toggleItemState(osRowHeader, menuOs, sectionId, itemId) {
     const expandedClassName = 'expanded';
     const foldedClassName = 'folded';
 
@@ -43,7 +43,7 @@ function toggleItemState(osRowHeader, sectionId, itemId) {
 
         let optionContainer = osRowHeader.nextElementSibling;
         if (!optionContainer || !optionContainer.classList.contains('optionContainer')) {
-            createOptionsContainer(osRowHeader, sectionId, itemId, osRowHeader.id)
+            createOptionsContainer(osRowHeader, menuOs, sectionId, itemId, osRowHeader.id)
         } else {
             optionContainer.classList.remove('optionContainer');
         }

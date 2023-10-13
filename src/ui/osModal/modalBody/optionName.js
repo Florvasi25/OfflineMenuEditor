@@ -32,13 +32,27 @@ function createOptionName(menuOption, menuOs) {
             updateOptionName(menuOption.groupOptionId, menuOs.groupOsId, newOptionName);
             originalName = newOptionName;
             optionName.blur();
-            const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview')); 
-            const optionNamePreview = optionNamePreviewArray.filter(p => p.id == menuOption.groupOptionId)
-            if (optionNamePreview) {
-                optionNamePreview.forEach(option => option.textContent = newOptionName)
+
+            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+
+            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+              const groupOsId = element.getAttribute('groupOsId');
+              return groupOsId === menuOs.groupOsId;
+            });
+            
+            if (optionContainerPreview) {
+                optionContainerPreview.forEach((optionNamePreview) => {
+                    const optionNamePreviewArray = Array.from(optionNamePreview.getElementsByClassName('optionNamePreview'));
+                    
+                    optionNamePreviewArray.forEach(optionPreview => {
+                        if (optionPreview.id === menuOption.groupOptionId) {
+                            optionPreview.textContent = newOptionName;
+                        }
+                    });
+                });
             }
+
         } else if (e.key === 'Escape') {
-            optionName.textContent = originalName;
             optionName.blur();
         }
     });
