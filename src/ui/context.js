@@ -205,18 +205,24 @@ function groupOptionSets() {
 
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
-            items.MenuItemOptionSets.forEach((menuItemOptionSet) => {
-                const { Name, MaxSelectCount, MinSelectCount, MenuItemOptionSetItems } = menuItemOptionSet;
-                const itemCount = MenuItemOptionSetItems.length;
-                const itemKey = MenuItemOptionSetItems.map((item) => `${item.Name}_${item.Price}`).join('|');
-                const groupKey = `${Name}_${MaxSelectCount}_${MinSelectCount}_${itemCount}_${itemKey}`;
-                menuItemOptionSet.groupOsId = groupKey
-                
-                if (!groupedOs[groupKey]) {
-                    groupedOs[groupKey] = [menuItemOptionSet];
+            items.MenuItemOptionSets.forEach(os => {
+                const { Name, MaxSelectCount, MinSelectCount, MenuItemOptionSetItems } = os;
+                const osLength = MenuItemOptionSetItems.length;
+                const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}`).join('|');
+                const groupOsKey = `${Name}_${MaxSelectCount}_${MinSelectCount}_${osLength}_${optionKey}`;
+                os.groupOsId = groupOsKey
+
+                if (!groupedOs[groupOsKey]) {
+                    groupedOs[groupOsKey] = [os];
                 } else {
-                    groupedOs[groupKey].push(menuItemOptionSet);
+                    groupedOs[groupOsKey].push(os);
                 }
+
+                os.MenuItemOptionSetItems.forEach(option => {
+                    const { Name, Price } = option;
+                    const groupOptionKey = `${Name}_${Price}`;
+                    option.groupOptionId = groupOptionKey
+                })
             });
         })
     })

@@ -47,7 +47,7 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId) {
             ExternalImageUrl: null
         };
     
-        let optionRow = createOption(optionRowsContainer, emptyOptionJson, sectionId, itemId, osId)
+        let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson, sectionId, itemId, osId)
 
         optionRowsContainer.appendChild(optionRow);
 

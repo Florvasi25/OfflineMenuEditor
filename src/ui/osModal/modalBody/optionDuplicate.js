@@ -44,7 +44,7 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRow
         newOption.MenuItemOptionSetItemId = newOptionId;
         newOption.PublicId = crypto.randomUUID();
 
-        const newOptionRow = createOption(optionRowsContainer, newOption, sectionId, itemId, osId);
+        const newOptionRow = createOption(optionRowsContainer, menuOs, newOption, sectionId, itemId, osId);
 
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 

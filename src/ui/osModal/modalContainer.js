@@ -12,7 +12,7 @@ function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
     osModalContainer.appendChild(osModalNav)
 
-    const osModalBody = createOsModalBody(sectionId, itemId, osId)
+    const osModalBody = createOsModalBody(menuOs, sectionId, itemId, osId)
     osModalContainer.appendChild(osModalBody)
     
 

@@ -26,7 +26,7 @@ function createOptionRow(menuOption) {
     osRowOption.classList.add('osRowOption');
     osRowOption.classList.add('draggable');
     osRowOption.classList.add('folded')
-    osRowOption.id = menuOption.MenuItemOptionSetItemId
+    osRowOption.id = menuOption.groupOptionId
 
     const nameAndMoM = createNameAndMoM(menuOption)
     osRowOption.appendChild(nameAndMoM)
@@ -46,7 +46,7 @@ function createNameAndMoM(menuOption) {
     const nameAndMoM = document.createElement('div')
     nameAndMoM.className = 'optionText'
     nameAndMoM.innerHTML = `
-    <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>
+    <p class='optionNamePreview' id='${menuOption.groupOptionId}'>${menuOption.Name}</p>
     <p class='dashCountCell'> - </p>
     <p class='optionMoMPreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.NextMenuItemOptionSetId}</p>`
 
