@@ -94,7 +94,7 @@ function createOption(optionRowsContainer, menuOs, menuOption, sectionId, itemId
 
     optionRow.appendChild(nameAndMoM)
     
-    const optionPrice = createOptionPriceCell(menuOption, sectionId, itemId, osId)
+    const optionPrice = createOptionPriceCell(menuOption, menuOs)
     optionRow.appendChild(optionPrice)
 
     const optionTax = createOptionTaxCell(menuOption, jsonData)

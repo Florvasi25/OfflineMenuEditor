@@ -1,6 +1,4 @@
-import { 
-    jsonData,
-    getOptionIndex,
+import {
     updateLocalStorage,
     groupedOs
 } from '../../context.js'
@@ -44,9 +42,9 @@ function createOptionName(menuOption, menuOs) {
                 optionContainerPreview.forEach((optionNamePreview) => {
                     const optionNamePreviewArray = Array.from(optionNamePreview.getElementsByClassName('optionNamePreview'));
                     
-                    optionNamePreviewArray.forEach(optionPreview => {
-                        if (optionPreview.id === menuOption.groupOptionId) {
-                            optionPreview.textContent = newOptionName;
+                    optionNamePreviewArray.forEach(optionNamePreview => {
+                        if (optionNamePreview.id === menuOption.groupOptionId) {
+                            optionNamePreview.textContent = newOptionName;
                         }
                     });
                 });

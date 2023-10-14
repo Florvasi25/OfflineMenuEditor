@@ -70,7 +70,7 @@ function createPriceAndTax(menuOption) {
     const priceAndTax = document.createElement('div')
     priceAndTax.className = 'optionText'
     priceAndTax.innerHTML = `
-    <p class='optionPricePreview' id='${menuOption.MenuItemOptionSetItemId}'>${priceAsNumber.toFixed(2)}</p>
+    <p class='optionPricePreview' id='${menuOption.groupOptionId}'>${priceAsNumber.toFixed(2)}</p>
     <p class='dashCountCell'> - </p>
     <p class='optionTaxPreview' id='${menuOption.MenuItemOptionSetItemId}'>${osTax.textContent}</p>`
 

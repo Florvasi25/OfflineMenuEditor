@@ -1,22 +1,21 @@
 import {
     updateLocalStorage,
-    jsonData,
-    getOptionIndex,
+    groupedOs
 } from '../../context.js'
 
-function createOptionPriceCell(menuOption, sectionId, itemId, osId) {
+function createOptionPriceCell(menuOption, menuOs) {
     //Price Cell
     const optionPriceCell = document.createElement('div');
     optionPriceCell.classList.add('optionPriceCell');
 
-    const optionPrice = createOptionPrice(menuOption, sectionId, itemId, osId)
+    const optionPrice = createOptionPrice(menuOption, menuOs)
     optionPriceCell.appendChild(optionPrice);
     
     return optionPriceCell
 }
 
 //Handles Price Edits
-function createOptionPrice(menuOption, sectionId, itemId, osId) {
+function createOptionPrice(menuOption, menuOs) {
     const optionPrice = document.createElement('p');
     optionPrice.classList.add('optionPrice');
     optionPrice.contentEditable = true;
@@ -29,13 +28,27 @@ function createOptionPrice(menuOption, sectionId, itemId, osId) {
     optionPrice.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            updatePrice(menuOption.MenuItemOptionSetItemId, sectionId, itemId, osId, optionPrice.textContent);
+            updatePrice(menuOption.groupOptionId, menuOs.groupOsId, optionPrice.textContent);
             originalPrice = parseFloat(optionPrice.textContent);
             optionPrice.blur();
-            const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview')); 
-            const optionPricePreview = optionPricePreviewArray.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
-            if (optionPricePreview) {
-                optionPricePreview.textContent = optionPrice.textContent;
+    
+            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+            
+            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+              const groupOsId = element.getAttribute('groupOsId');
+              return groupOsId === menuOs.groupOsId;
+            });
+            
+            if (optionContainerPreview) {
+                optionContainerPreview.forEach((optionPricePreview) => {
+                    const optionPricePreviewArray = Array.from(optionPricePreview.getElementsByClassName('optionPricePreview'));
+                    
+                    optionPricePreviewArray.forEach(optionPricePreview => {
+                        if (optionPricePreview.id === menuOption.groupOptionId) {
+                            optionPricePreview.textContent = optionPrice.textContent;
+                        }
+                    });
+                });
             }
 
         } else if (e.key === 'Escape') {
@@ -62,13 +75,14 @@ function createOptionPrice(menuOption, sectionId, itemId, osId) {
     return optionPrice;
 }
 
-//Updates Price
-function updatePrice(optionId, sectionId, itemId, osId, optionPrice) {
-    const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
+function updatePrice(groupOptionId, groupOsId, optionPrice) {
     const priceAsNumber = parseFloat(parseFloat(optionPrice).toFixed(2));
     
     if (!isNaN(priceAsNumber)) {
-        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].Price = priceAsNumber;
+        groupedOs[groupOsId].forEach(os => {
+            const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+            option.Price = priceAsNumber
+        })
 
         updateLocalStorage();
     }
