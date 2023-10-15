@@ -30,7 +30,7 @@ function itemClockButton(itemButtonsCell, itemId) {
         addTextContent(clockTitle, 'Menu Item Hours');
         //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const item = getItem(jsonData, itemId); 
-        createClockTable(clockBodyDiv, clockSaveBtn, item, itemId);
+        createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, item, itemId);
     });
 }
 

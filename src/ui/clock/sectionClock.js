@@ -33,7 +33,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         if(compareDailySpecialHours(section)) {
             const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
             addSectionAvailabilityButton(clockFooterDiv, section);
-            createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
+            createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
@@ -174,8 +174,8 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section,
         if (errorMsgElement) errorMsgElement.remove();
         const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
         addSectionAvailabilityButton(clockFooterDiv, section);
-        createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
-        setupSaveChanges(clockBodyDiv, sectionId, section);
+        createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
+        setupSaveChanges(clockBodyDiv, clockFooterDiv, sectionId, section);
 
     });
 }

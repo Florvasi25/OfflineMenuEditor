@@ -11,8 +11,10 @@ import {
     invertedDayMapping
 } from "./clockUtils.js";
 
+let clockSectionAvailabilityBtn;
+
 function addSectionAvailabilityButton(clockFooterDiv, section) {
-    const clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-availability');
+    clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-availability');
     
     if (section.MenuSectionAvailability.AvailabilityMode == 1){
         addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
@@ -26,16 +28,22 @@ function addSectionAvailabilityButton(clockFooterDiv, section) {
         if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
             clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
             clockSectionAvailabilityBtn.classList.add('clockBtn-red');
-            deleteAvailiabilityTimes(section.MenuSectionId);
         } else {
             clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
             clockSectionAvailabilityBtn.classList.add('clockBtn-green');
-            addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
-            storeAvailabilityTimes(section.MenuSectionId, clockFooterDiv);
+            addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');  
         }
     });
 }
-
+function availabilityTimes(sectionId, clockFooterDiv){
+    if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
+        storeAvailabilityTimes(sectionId, clockFooterDiv);
+        console.log("Se almacena");
+    }else{
+        deleteAvailiabilityTimes(sectionId)
+        console.log("Se borra");
+    }
+}
 
 function storeAvailabilityTimes(sectionId, clockFooterDiv)
 {
@@ -111,4 +119,5 @@ function storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, secti
 
 export{
     addSectionAvailabilityButton,
+    availabilityTimes
 }
