@@ -8,19 +8,22 @@ function showToolTip(element, message) {
     }
     
     tooltip.textContent = message;
-    
-    // Manually set the position based on the buttons coordinates
+
+    // Initially show the tooltip
     const rect = element.getBoundingClientRect();
     tooltip.style.left = rect.left + 'px';
     tooltip.style.top = rect.bottom + window.scrollY + 'px';
-    
     tooltip.style.display = 'block';
+
+    // Show the tooltip on mouseover
+    element.addEventListener('mouseenter', () => {
+        tooltip.style.display = 'block';
+    });
     
-    setTimeout(() => {
+    // Hide the tooltip on mouseout
+    element.addEventListener('mouseleave', () => {
         tooltip.style.display = 'none';
-    }, 2000);
+    });
 }
 
-export {
-    showToolTip,
-}
+export { showToolTip }

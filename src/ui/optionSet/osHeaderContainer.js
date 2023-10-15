@@ -3,17 +3,11 @@ import {
     getItemIndex,
 } from '../context.js'
 
-import {
-    createOsDropdown,
-} from './osDropDown.js'
+import { createOsDropdown } from './osDropDown.js'
 
-import {
-    createOsModalContainer
-} from '../osModal/modalContainer.js'
+import { createOsModalContainer } from '../osModal/modalContainer.js'
 
-import {
-    createOsNameCell
-} from '../osModal/modalNav/osName.js'
+import { createOsNameCell } from '../osModal/modalNav/osName.js'
 
 function createOsContainer(itemRow, sectionId, itemId) {
     const osContainer = document.createElement('div');
@@ -37,7 +31,6 @@ function createOs(osContainer, sectionId, itemId) {
         } else {
             osRowHeader.classList.add('even');
         }
-
         osContainer.appendChild(osRowHeader);
     });
 }
@@ -54,11 +47,18 @@ function createOsRow(menuOs, sectionId, itemId) {
     dropAndName.className = 'dropAndName'
     osRowHeader.appendChild(dropAndName)
 
-    const osDropDown = createOsDropdown(osRowHeader, sectionId, itemId)
+    const osDropDown = createOsDropdown(osRowHeader, menuOs, sectionId, itemId)
     dropAndName.appendChild(osDropDown)
 
+    const nameAndOsId = document.createElement('div')
+    nameAndOsId.className = 'nameAndOsId'
+    dropAndName.appendChild(nameAndOsId)
+
     const osNameHeader = createOsNameHeader(menuOs, itemId, sectionId, osRowHeader.id)
-    dropAndName.appendChild(osNameHeader)
+    nameAndOsId.appendChild(osNameHeader)
+
+    const optionSetIdPreview = createOptionSetIdPreview(menuOs)
+    nameAndOsId.appendChild(optionSetIdPreview)
 
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     osRowHeader.appendChild(osSelectOptionContainer)
@@ -70,7 +70,7 @@ function createOsNameHeader(menuOs, itemId, sectionId, osId) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
     osNameHeader.textContent = menuOs.Name
-    osNameHeader.id = menuOs.MenuItemOptionSetId
+    osNameHeader.id = menuOs.groupOsId
     osNameHeader.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
         if (existingOsModal) {
@@ -86,15 +86,22 @@ function createOsNameHeader(menuOs, itemId, sectionId, osId) {
     return osNameHeader
 }
 
+function createOptionSetIdPreview(menuOs) {
+    const optionSetIdPreview = document.createElement('p')
+    optionSetIdPreview.textContent = menuOs.MenuItemOptionSetId
+    optionSetIdPreview.className = 'optionSetIdPreview'
+
+    return optionSetIdPreview
+}
+
 function createOsSelectOption(menuOs) {
     const osSelectOptionContainer = document.createElement('div')
     osSelectOptionContainer.className = 'osSelectOptionContainer'
     osSelectOptionContainer.innerHTML = `
-    <p class='minSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MinSelectCount}</p>
+    <p class='minSelectCount' id='${menuOs.groupOsId}'>${menuOs.MinSelectCount}</p>
     <p class='dashCountCell'> - </p>
-    <p class='maxSelectCount' id='${menuOs.MenuItemOptionSetId}'>${menuOs.MaxSelectCount}</p>
-    `
-
+    <p class='maxSelectCount' id='${menuOs.groupOsId}'>${menuOs.MaxSelectCount}</p>`
+    
     return osSelectOptionContainer
 }
 

@@ -3,7 +3,7 @@ import {
     getSectionIndex,
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
 } from '../context.js';
 
 function sectionDeleteButton(sectionButtonsCell, sectionRow) {
@@ -85,7 +85,7 @@ function deleteSection(sectionRow) {
             jsonData.MenuSections.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
-            updateSectionLocalStorage();
+            updateLocalStorage();
             updateCounterLocalStorage(sectionId, false);
 
         }
@@ -101,8 +101,5 @@ function deleteItemLocalStorage(section) {
         }
     }
 }
-   
 
-export {
-    sectionDeleteButton,
-}
+export { sectionDeleteButton }

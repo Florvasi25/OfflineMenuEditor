@@ -24,6 +24,4 @@ function createItemTax(menuItem, jsonData) {
     return itemTax
 }
 
-export {
-    createItemTaxCell,
-}
+export { createItemTaxCell }

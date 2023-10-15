@@ -1,22 +1,21 @@
 import { 
-    jsonData,
-    getOsIndex,
-    updateSectionLocalStorage 
+    updateLocalStorage,
+    groupedOs 
 } from '../../context.js'
 
-function createOsNameCell(menuOs, itemId, sectionId) {
+function createOsNameCell(menuOs) {
     //Name Cell
     const osNameCell = document.createElement('div');
     osNameCell.classList.add('osNameCell');
 
-    const osNameHeader = createOsName(menuOs, itemId, sectionId)
+    const osNameHeader = createOsName(menuOs)
     osNameCell.appendChild(osNameHeader);
     
     return osNameCell
 }
 
 //Handles Name Edits
-function createOsName(menuOs, itemId, sectionId) {
+function createOsName(menuOs) {
     const osName = document.createElement('p');
     osName.classList.add('osName');
     osName.contentEditable = true;
@@ -28,12 +27,14 @@ function createOsName(menuOs, itemId, sectionId) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newOsName = osName.textContent;
-            updateName(menuOs.MenuItemOptionSetId, itemId, sectionId, newOsName);
+            updateName(menuOs.groupOsId, newOsName);
             originalName = newOsName;
             osName.blur();
             const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
-            const osNameHeader = osNameHeaderArray.find((p) => p.id == menuOs.MenuItemOptionSetId)
-            osNameHeader.textContent = newOsName;
+            const osNameHeader = osNameHeaderArray.filter((p) => p.id == menuOs.groupOsId)
+            osNameHeader.forEach(os => {
+                os.textContent = newOsName;
+            })
         } else if (e.key === 'Escape') {
             osName.textContent = originalName;
             osName.blur();
@@ -53,11 +54,12 @@ function createOsName(menuOs, itemId, sectionId) {
 }
 
 //Updates Name
-function updateName(osId, itemId, sectionId, osName) {
-    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].Name = osName;
-
-    updateSectionLocalStorage()
+function updateName(groupOsId, osName) {
+    groupedOs[groupOsId].forEach(os => {
+        os.Name = osName
+    })
+    
+    updateLocalStorage()
 }
 
 export { createOsNameCell }

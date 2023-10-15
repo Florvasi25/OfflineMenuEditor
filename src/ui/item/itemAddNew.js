@@ -1,11 +1,9 @@
-import {
-    createItem,
-} from "./itemContainer.js";
+import { createItem } from "./itemContainer.js";
 
 import {
     jsonData, 
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getLocalStorageItemIDs,
     getUniqueRandomInt,
     getSectionIndex,
@@ -62,7 +60,7 @@ function createItemButton(itemContainer, sectionId) {
 
         jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
     
-        updateSectionLocalStorage()
+        updateLocalStorage()
         updateItemCounterLocalStorage(newId, true);
     });
 

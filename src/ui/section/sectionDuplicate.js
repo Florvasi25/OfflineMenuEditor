@@ -2,7 +2,7 @@ import {
     jsonData,
     getSectionIndex,
     updateCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     setSectionDisplayOrder,
     updateItemCounterLocalStorage,
     getLocalStorageItemIDs,
@@ -10,16 +10,11 @@ import {
     getUniqueRandomInt
 } from '../context.js';
 
-import {
-    createSection
-} from './sectionContainer.js'
+import { createSection } from './sectionContainer.js'
 
-import { 
-    showToolTip 
-} from '../toolTip.js'
+import { showToolTip } from '../toolTip.js'
 
 function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
-
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -68,14 +63,13 @@ function duplicateSection(sectionRow) {
         jsonData.MenuSections.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
-        updateSectionLocalStorage();
+        updateLocalStorage();
         updateCounterLocalStorage(newSectionId, true);
     }
 }
 
 // sets the items id of the duplicated section
-function setItemsID(newSection)
-{
+function setItemsID(newSection) {
     if (newSection.MenuItems) {
         for (const item of newSection.MenuItems) {
             const itemsID = getLocalStorageItemIDs();
@@ -88,6 +82,4 @@ function setItemsID(newSection)
     }
 }
 
-export {
-    sectionDuplicateButton,
-}
+export { sectionDuplicateButton }

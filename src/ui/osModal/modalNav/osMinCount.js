@@ -1,10 +1,9 @@
 import { 
-    jsonData,
-    getOsIndex,
-    updateSectionLocalStorage 
+    updateLocalStorage,
+    groupedOs 
 } from '../../context.js'
 
-function createMinCountCell(menuOs, itemId, sectionId) {
+function createMinCountCell(menuOs) {
     //Name Cell
     const minCountCell = document.createElement('div');
     minCountCell.classList.add('minCountCell');
@@ -14,14 +13,14 @@ function createMinCountCell(menuOs, itemId, sectionId) {
     minText.className = 'countText'
     minCountCell.appendChild(minText)
 
-    const minCount = createMinCount(menuOs, itemId, sectionId)
+    const minCount = createMinCount(menuOs)
     minCountCell.appendChild(minCount);
     
     return minCountCell
 }
 
 //Handles Name Edits
-function createMinCount(menuOs, itemId, sectionId) {
+function createMinCount(menuOs) {
     const minCount = document.createElement('p');
     minCount.classList.add('minCount');
     minCount.contentEditable = true;
@@ -33,12 +32,14 @@ function createMinCount(menuOs, itemId, sectionId) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newMinOsCount = minCount.textContent;
-            updateMinCount(menuOs.MenuItemOptionSetId, itemId, sectionId, newMinOsCount);
+            updateMinCount(menuOs.groupOsId, newMinOsCount);
             originalMinCount = newMinOsCount;
             minCount.blur();
             const minCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
-            const minSelectCount = minCountArray.find((p) => p.id == menuOs.MenuItemOptionSetId)
-            minSelectCount.textContent = newMinOsCount;
+            const minSelectCount = minCountArray.filter((p) => p.id == menuOs.groupOsId)
+            minSelectCount.forEach(os => {
+                os.textContent = newMinOsCount;
+            })
         } else if (e.key === 'Escape') {
             minCount.textContent = originalMinCount;
             minCount.blur();
@@ -58,11 +59,13 @@ function createMinCount(menuOs, itemId, sectionId) {
 }
 
 //Updates Name
-function updateMinCount(osHeaderId, itemId, sectionId, osMinCount) {
-    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osHeaderId)
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MinSelectCount = Number(osMinCount);
+function updateMinCount(groupOsId, osMinCount) {
 
-    updateSectionLocalStorage()
+    groupedOs[groupOsId].forEach(os => {
+        os.MinSelectCount = Number(osMinCount)
+    })
+
+    updateLocalStorage()
 }
 
 export { createMinCountCell }

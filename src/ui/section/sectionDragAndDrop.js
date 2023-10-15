@@ -1,13 +1,11 @@
 import {
     jsonData,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getSectionIndex,
     getDragAfterElement,
 } from '../context.js';
 
-import {
-    showToolTip
-} from '../toolTip.js'
+import { showToolTip } from '../toolTip.js'
 
 function createSectionDragCell(sectionRow) {
     const sectionDragCell = document.createElement('div')
@@ -54,7 +52,6 @@ sectionContainer.addEventListener('dragenter', e => {
     }
 })
 
-
 sectionContainer.addEventListener("dragend", () => {
     if (document.querySelector('.expanded')) return;
     const rows = Array.from(sectionContainer.querySelectorAll(".sectionRow"));
@@ -68,7 +65,7 @@ sectionContainer.addEventListener("dragend", () => {
         jsonData.MenuSections.forEach((obj, indexSection) => {
             obj.DisplayOrder = indexSection;
         });
-        updateSectionLocalStorage()
+        updateLocalStorage()
     }
 })
 

@@ -1,10 +1,9 @@
-import { 
-    jsonData,
-    getOsIndex,
-    updateSectionLocalStorage 
+import {
+    updateLocalStorage,
+    groupedOs
 } from '../../context.js'
 
-function createMaxCountCell(menuOs, itemId, sectionId) {
+function createMaxCountCell(menuOs) {
     //Name Cell
     const maxCountCell = document.createElement('div');
     maxCountCell.classList.add('maxCountCell');
@@ -14,14 +13,14 @@ function createMaxCountCell(menuOs, itemId, sectionId) {
     maxText.className = 'countText'
     maxCountCell.appendChild(maxText)
 
-    const maxCount = createMaxCount(menuOs, itemId, sectionId)
+    const maxCount = createMaxCount(menuOs)
     maxCountCell.appendChild(maxCount);
     
     return maxCountCell
 }
 
 //Handles Name Edits
-function createMaxCount(menuOs, itemId, sectionId) {
+function createMaxCount(menuOs) {
     const maxCount = document.createElement('p');
     maxCount.classList.add('maxCount');
     maxCount.contentEditable = true;
@@ -33,12 +32,15 @@ function createMaxCount(menuOs, itemId, sectionId) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newMaxOsCount = maxCount.textContent;
-            updateMaxCount(menuOs.MenuItemOptionSetId, itemId, sectionId, newMaxOsCount);
+            updateMaxCount(menuOs.groupOsId, newMaxOsCount);
             originalName = newMaxOsCount;
             maxCount.blur();
             const maxCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-            const maxSelectCount = maxCountArray.find((p) => p.id == menuOs.MenuItemOptionSetId)
-            maxSelectCount.textContent = newMaxOsCount;
+            const maxSelectCount = maxCountArray.filter((p) => p.id == menuOs.groupOsId)
+            maxSelectCount.forEach(os => {
+                os.textContent = newMaxOsCount;
+            })
+
         } else if (e.key === 'Escape') {
             maxCount.textContent = originalName;
             maxCount.blur();
@@ -58,11 +60,15 @@ function createMaxCount(menuOs, itemId, sectionId) {
 }
 
 //Updates Name
-function updateMaxCount(osHeaderId, itemId, sectionId, osMaxCount) {
-    const {itemIndex, sectionIndex, osIndex} = getOsIndex(sectionId, itemId, osHeaderId)
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MaxSelectCount = Number(osMaxCount);
+function updateMaxCount(groupOsId, osMaxCount) {
+    groupedOs[groupOsId].forEach(os => {
+        os.MaxSelectCount = Number(osMaxCount)
+    })
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
-export { createMaxCountCell, updateMaxCount }
+export { 
+    createMaxCountCell, 
+    updateMaxCount 
+}

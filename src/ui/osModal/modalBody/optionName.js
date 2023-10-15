@@ -1,22 +1,23 @@
 import { 
     jsonData,
     getOptionIndex,
-    updateSectionLocalStorage
+    updateLocalStorage,
+    groupedOs
 } from '../../context.js'
 
-function createOptionNameCell(menuOption, sectionId, itemId, osId) {
+function createOptionNameCell(menuOption, menuOs) {
     //Name Cell
     const optionNameCell = document.createElement('div');
     optionNameCell.classList.add('optionNameCell');
 
-    const optionName = createOptionName(menuOption, itemId, osId, sectionId)
+    const optionName = createOptionName(menuOption, menuOs)
     optionNameCell.appendChild(optionName);
     
     return optionNameCell
 }
 
 //Handles Name Edits
-function createOptionName(menuOption, itemId, osId, sectionId) {
+function createOptionName(menuOption, menuOs) {
     const optionName = document.createElement('p');
     optionName.classList.add('optionName');
     optionName.contentEditable = true;
@@ -28,16 +29,30 @@ function createOptionName(menuOption, itemId, osId, sectionId) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newOptionName = optionName.textContent;
-            updateOptionName(menuOption.MenuItemOptionSetItemId, itemId, sectionId, osId, newOptionName);
+            updateOptionName(menuOption.groupOptionId, menuOs.groupOsId, newOptionName);
             originalName = newOptionName;
             optionName.blur();
-            const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview')); 
-            const optionNamePreview = optionNamePreviewArray.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
-            if (optionNamePreview) {
-                optionNamePreview.textContent = newOptionName;
+
+            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+
+            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+              const groupOsId = element.getAttribute('groupOsId');
+              return groupOsId === menuOs.groupOsId;
+            });
+            
+            if (optionContainerPreview) {
+                optionContainerPreview.forEach((optionNamePreview) => {
+                    const optionNamePreviewArray = Array.from(optionNamePreview.getElementsByClassName('optionNamePreview'));
+                    
+                    optionNamePreviewArray.forEach(optionPreview => {
+                        if (optionPreview.id === menuOption.groupOptionId) {
+                            optionPreview.textContent = newOptionName;
+                        }
+                    });
+                });
             }
+
         } else if (e.key === 'Escape') {
-            optionName.textContent = originalName;
             optionName.blur();
         }
     });
@@ -55,11 +70,13 @@ function createOptionName(menuOption, itemId, osId, sectionId) {
 }
 
 //Updates Name
-function updateOptionName(optionId, itemId, sectionId, osId, newOptionName) {
-    const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].Name = newOptionName;
+function updateOptionName(groupOptionId, groupOsId, newOptionName) {
+    groupedOs[groupOsId].forEach(os => {
+        const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+        option.Name = newOptionName
+    })
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 export { createOptionNameCell }

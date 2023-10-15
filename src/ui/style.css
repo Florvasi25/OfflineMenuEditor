@@ -44,6 +44,7 @@ main {
 
 .optionRowsContainer {
     padding: 15px;
+    padding-top: 10px;
 }
 
 .newOptionBtnContainer {
@@ -56,6 +57,7 @@ main {
     padding: 5px;
     margin: 0 15px 0 0;
 }
+
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionTable {
@@ -76,7 +78,6 @@ main {
     &.folded .sectionDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .50;
@@ -115,7 +116,6 @@ main {
     &.folded .sectionDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .50;
@@ -130,14 +130,13 @@ main {
     width: 40%;
     justify-content: space-around;
     padding: 7.5px 0px;
-
+    
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
     }
     &.folded .osDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .75;
@@ -180,7 +179,19 @@ main {
 }
 
 .osNameHeader:hover {
-    color: #d7d7d7;
+    opacity: 0.65;
+}
+
+.optionSetIdPreview {
+    font-size: 11px;
+    padding-top: 5px;
+    color: #e4e4e4;
+}
+
+.optionSetId {
+    font-size: 12px;
+    padding-top: 10px;
+    color: #787777;
 }
 
 .osSelectOptionContainer {
@@ -235,6 +246,7 @@ main {
 
 .maxCount {
     padding: 5px 7.5px;
+    font-size: 13px;
 }
 
 .minCountCell {
@@ -245,10 +257,12 @@ main {
 
 .minCount {
     padding: 5px 7.5px;
+    font-size: 13px;
 }
 
 .countText {
     padding-top: 5px;
+    font-size: 12px;
 }
 
 .nameAndMoM {
@@ -266,7 +280,6 @@ main {
     &.folded .osDropdownButton { 
         transform: rotate(-45deg); 
     }
-
     &.dragging {
         border: 1px solid black;
         opacity: .75;
@@ -315,7 +328,7 @@ main {
 }
 
 .sectionDropdownButton:hover {
-    border-color: #afafaf;
+    opacity: 0.5;
 }
 
 .itemDropdownCell {
@@ -345,7 +358,7 @@ main {
 }
 
 .osDropdownButton:hover {
-    border-color: #afafaf;
+    opacity: 0.5;
 }
 
 /* DRAG AND DROP - DRAG AND DROP - DRAG AND DROP - DRAG AND DROP - DRAG AND DROP */

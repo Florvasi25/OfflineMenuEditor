@@ -7,9 +7,6 @@ function osDeleteButton(osBtnsCell) {
     deleteButtonImg.classList.add('sectionButtonImg')
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
-    // deleteButton.addEventListener('click', () => {
-    //     confirmDelete(itemRow, itemButtonsCell, sectionId)
-    // });
 }
 
 export { osDeleteButton }

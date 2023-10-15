@@ -2,22 +2,17 @@ import {
     jsonData,
     getItemIndex,
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getLocalStorageItemIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from '../context.js';
 
-import {
-    createItem
-} from './itemContainer.js'
+import { createItem } from './itemContainer.js'
 
-import { 
-    showToolTip 
-} from '../toolTip.js'
+import { showToolTip } from '../toolTip.js'
 
 function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem) {
-
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -64,12 +59,9 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
-        updateSectionLocalStorage();
+        updateLocalStorage();
         updateItemCounterLocalStorage(newItemId, true);
-
     }
 }
 
-export {
-    itemDuplicateButton,
-}
+export { itemDuplicateButton }

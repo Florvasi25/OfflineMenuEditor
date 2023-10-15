@@ -1,7 +1,7 @@
 import {
     jsonData,
     getSectionIndex,
-    updateSectionLocalStorage,
+    updateLocalStorage,
 } from '../context.js';
 
 //Creates the Cell where all the Desc components should be
@@ -54,9 +54,7 @@ function updateSectionDesc(sectionId, sectionDesc) {
 
     jsonData.MenuSections[sectionIndex].Description = sectionDesc;
 
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
-export {
-    createSectionDescCell,
-}
+export { createSectionDescCell }

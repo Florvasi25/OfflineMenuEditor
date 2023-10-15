@@ -1,5 +1,5 @@
 import {
-    updateSectionLocalStorage,
+    updateLocalStorage,
     jsonData,
     getOptionIndex,
 } from '../../context.js'
@@ -70,7 +70,7 @@ function updatePrice(optionId, sectionId, itemId, osId, optionPrice) {
     if (!isNaN(priceAsNumber)) {
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].Price = priceAsNumber;
 
-        updateSectionLocalStorage();
+        updateLocalStorage();
     }
 }
 

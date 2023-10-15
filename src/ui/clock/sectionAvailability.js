@@ -1,8 +1,9 @@
 import {
     jsonData,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getRandomInt
 } from '../context.js'
+
 import {
     createAndAppend,
     addTextContent,
@@ -13,10 +14,10 @@ import {
 function addSectionAvailabilityButton(clockFooterDiv, section) {
     const clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-availability');
     
-    if(section.MenuSectionAvailability.AvailabilityMode == 1){
+    if (section.MenuSectionAvailability.AvailabilityMode == 1){
         addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
         clockSectionAvailabilityBtn.classList.add('clockBtn-green'); 
-    }else{
+    } else {
         addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');
         clockSectionAvailabilityBtn.classList.add('clockBtn-red'); 
     }
@@ -39,7 +40,7 @@ function addSectionAvailabilityButton(clockFooterDiv, section) {
 function storeAvailabilityTimes(sectionId, clockFooterDiv)
 {
  jsonData.MenuSections.forEach(MenuSection => {
-    if (sectionId == MenuSection.MenuSectionId){
+    if (sectionId == MenuSection.MenuSectionId) {
         MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
         MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
         getTableSchedule(clockFooterDiv, sectionId);
@@ -49,17 +50,17 @@ function storeAvailabilityTimes(sectionId, clockFooterDiv)
 function deleteAvailiabilityTimes(sectionId)
 {
     jsonData.MenuSections.forEach(MenuSection => {
-        if (sectionId == MenuSection.MenuSectionId){
+        if (sectionId == MenuSection.MenuSectionId) {
             MenuSection.MenuSectionAvailability.AvailabilityMode = 0;
             MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
             if (MenuSection.MenuSectionAvailability.AvailableTimes) {
                 MenuSection.MenuSectionAvailability.AvailableTimes = [];
-                updateSectionLocalStorage();
+                updateLocalStorage();
             }
         }})
 }
 
-function getTableSchedule(clockFooterDiv, id){
+function getTableSchedule(clockFooterDiv, id) {
     const clockContentDiv = clockFooterDiv.parentElement;
     const clockBodyDiv = clockContentDiv.querySelector('.clock-body');
     const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
@@ -68,7 +69,7 @@ function getTableSchedule(clockFooterDiv, id){
         const dayName = cells[0].innerText;
         const dayOfWeek = invertedDayMapping[dayName]; // get the corresponding number for the day
         const StartTime = cells[1].querySelector('input').value;
-        const CloseTime = cells[2].querySelector('input').value;    
+        const CloseTime = cells[2].querySelector('input').value;
         let Period = calculatePeriod(StartTime, CloseTime)
 
         storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
@@ -103,7 +104,7 @@ function storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, secti
             };    
             // Push the new time to the array
             MenuSection.MenuSectionAvailability.AvailableTimes.push(newTime);
-            updateSectionLocalStorage();
+            updateLocalStorage();
         }
     });
 }

@@ -2,6 +2,11 @@ import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
+const groupedOs = {};
+
+groupOptionSets()
+
+
 function setJsonData(data) {
     jsonData = data
 }
@@ -98,7 +103,7 @@ function setSectionId(jsonData) {
         section.MenuSectionAvailability.MenuSectionId = id;
         updateCounterLocalStorage(id, true)
     }
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 //set itemID for entire json file
@@ -111,7 +116,7 @@ function setItemId(jsonData) {
             updateItemCounterLocalStorage(id, true)
         }
     }
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 function setOptionId(jsonData) {
@@ -126,7 +131,7 @@ function setOptionId(jsonData) {
             }
         }
     }
-    updateSectionLocalStorage()
+    updateLocalStorage()
 }
 
 function setSectionDisplayOrder(jsonData) {
@@ -136,7 +141,7 @@ function setSectionDisplayOrder(jsonData) {
 }
 
 //Updates JSON LocalStorage
-function updateSectionLocalStorage() {
+function updateLocalStorage() {
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
 }
 
@@ -196,12 +201,42 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
+function groupOptionSets() {
+
+    jsonData.MenuSections.forEach(sections => {
+        sections.MenuItems.forEach(items => {
+            items.MenuItemOptionSets.forEach(os => {
+                const { Name, MaxSelectCount, MinSelectCount, MenuItemOptionSetItems } = os;
+                const osLength = MenuItemOptionSetItems.length;
+                const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}`).join('|');
+                const groupOsKey = `${Name}_${MaxSelectCount}_${MinSelectCount}_${osLength}_${optionKey}`;
+                os.groupOsId = groupOsKey
+
+                if (!groupedOs[groupOsKey]) {
+                    groupedOs[groupOsKey] = [os];
+                } else {
+                    groupedOs[groupOsKey].push(os);
+                }
+
+                os.MenuItemOptionSetItems.forEach(option => {
+                    const { Name, Price } = option;
+                    const groupOptionKey = `${Name}_${Price}`;
+                    option.groupOptionId = groupOptionKey
+                })
+            });
+        })
+    })
+    updateLocalStorage()
+    
+    console.log(groupedOs);
+}
+
 export {
     jsonData,
     getSectionIndex,
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     updateOptionSetCounterLocalStorage,
     getLocalStorageItemIDs,
     getLocalStorageSectionIDs,
@@ -218,5 +253,7 @@ export {
     getOsIndex,
     getOptionIndex,
     getOptionObject,
-    getOsObject
+    getOsObject,
+    groupOptionSets,
+    groupedOs
 }

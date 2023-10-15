@@ -1,14 +1,8 @@
-import {
-    optionDuplicateButton
-} from './optionDuplicate.js'
+import { optionDuplicateButton } from './optionDuplicate.js'
 
-import {
-    optionDeleteButton
-} from './optionDelete.js'
+import { optionDeleteButton } from './optionDelete.js'
 
-import {
-    optionVisibilityButton
-} from './optionVisibility.js'
+import { optionVisibilityButton } from './optionVisibility.js'
 
 function createOptionButtonsCell(optionRow, optionId, sectionId, itemId, osId, optionRowsContainer, menuOption) {
     const optionButtonsCell = document.createElement('div');
@@ -23,6 +17,4 @@ function createOptionButtonsCell(optionRow, optionId, sectionId, itemId, osId, o
     return optionButtonsCell
 }
 
-export {
-    createOptionButtonsCell
-}
+export { createOptionButtonsCell }

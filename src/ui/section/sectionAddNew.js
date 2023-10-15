@@ -1,11 +1,9 @@
-import {
-    createSection,
-} from "./sectionContainer.js";
+import { createSection } from "./sectionContainer.js";
 
 import {
     jsonData, 
     updateCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getLocalStorageSectionIDs,
     getUniqueRandomInt,
 } from '../context.js';
@@ -49,7 +47,7 @@ function createSectionButton() {
         document.getElementById('sectionContainer').appendChild(sectionRow);
     
         jsonData.MenuSections.push(emptySectionJson)
-        updateSectionLocalStorage()
+        updateLocalStorage()
         updateCounterLocalStorage(newId, true);
     
     });

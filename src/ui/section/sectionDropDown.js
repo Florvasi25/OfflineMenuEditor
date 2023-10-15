@@ -1,6 +1,4 @@
-import {
-    createItemContainer
-} from '../item/itemContainer.js';
+import { createItemContainer } from '../item/itemContainer.js';
 
 function createSectionDropdown(sectionRow){
     const sectionDropdownCell = document.createElement('div')
@@ -53,6 +51,4 @@ function toggleSectionState(sectionRow) {
     }
 }
 
-export {
-    createSectionDropdown
-}
+export { createSectionDropdown }

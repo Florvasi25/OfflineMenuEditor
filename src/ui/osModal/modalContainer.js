@@ -1,10 +1,6 @@
-import {
-    createOsModalNav
-} from './modalNav/osNav.js'
+import { createOsModalNav } from './modalNav/osNav.js'
 
-import {
-    createOsModalBody
-} from './modalBody/osBody.js'
+import { createOsModalBody } from './modalBody/osBody.js'
 
 function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     const leftContainer = document.getElementById('leftContainer')
@@ -13,10 +9,10 @@ function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     osModalContainer.id = 'myModal'
     osModalContainer.classList = 'osModalContainer'
     
-    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs, itemId, sectionId)
+    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
     osModalContainer.appendChild(osModalNav)
 
-    const osModalBody = createOsModalBody(sectionId, itemId, osId)
+    const osModalBody = createOsModalBody(menuOs, sectionId, itemId, osId)
     osModalContainer.appendChild(osModalBody)
     
 

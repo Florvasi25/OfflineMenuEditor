@@ -1,5 +1,5 @@
 import {
-    updateSectionLocalStorage,
+    updateLocalStorage,
     getSectionIndex,
     jsonData,
 } from '../context.js'
@@ -42,10 +42,8 @@ function SectionAvailability(sectionRow) {
 
         sectionRow.classList.toggle('unavailable', !isAvailableNew);
 
-        updateSectionLocalStorage()
+        updateLocalStorage()
     }
 }
 
-export {
-    sectionVisibilityButton,
-}
+export { sectionVisibilityButton }

@@ -2,7 +2,7 @@ import {
     jsonData,
     getOptionIndex,
     updateOptionSetCounterLocalStorage,
-    updateSectionLocalStorage,
+    updateLocalStorage,
 } from '../../context.js';
 
 function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId, optionRowsContainer) {
@@ -14,6 +14,7 @@ function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osI
     deleteButtonImg.classList.add('sectionButtonImg')
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
+
     deleteButton.addEventListener('click', () => {
         confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionRowsContainer)
     });
@@ -34,8 +35,7 @@ function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, op
     popupContent.innerHTML = `
         <p>Do you want to delete permanently "${optionObject.Name}"</p>
         <button class="yesButton confirmDeleteBtn">Yes</button>
-        <button class="noButton confirmDeleteBtn">No</button>
-    `;
+        <button class="noButton confirmDeleteBtn">No</button>`
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
         deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer);
@@ -97,12 +97,10 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer) {
                 osRowOptionPreview.remove()
             }
 
-            updateSectionLocalStorage();
+            updateLocalStorage();
             updateOptionSetCounterLocalStorage(optionId, false);
         }
     }
 }
 
-export {
-    optionDeleteButton,
-}
+export { optionDeleteButton }
