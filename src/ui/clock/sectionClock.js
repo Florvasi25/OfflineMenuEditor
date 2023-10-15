@@ -124,13 +124,6 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
         }
     });
 }
-/*function getAvailableTimes(jsonData, sectionId) {
-    const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
-    if (foundSection) {
-        return foundSection.MenuSectionAvailability.AvailableTimes;
-    }
-    return null;
-}*/
 function getSection(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
     if (foundSection) {
