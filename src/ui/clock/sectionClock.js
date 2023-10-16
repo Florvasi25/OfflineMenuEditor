@@ -33,7 +33,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         if(compareDailySpecialHours(section)) {
             const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
             addSectionAvailabilityButton(clockFooterDiv, section);
-            createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
+            createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
@@ -128,15 +128,6 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
         }
     });
 }
-
-/*function getAvailableTimes(jsonData, sectionId) {
-    const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
-    if (foundSection) {
-        return foundSection.MenuSectionAvailability.AvailableTimes;
-    }
-    return null;
-}*/
-
 function getSection(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
     if (foundSection) {
@@ -183,8 +174,8 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section,
         if (errorMsgElement) errorMsgElement.remove();
         const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
         addSectionAvailabilityButton(clockFooterDiv, section);
-        createClockTable(clockBodyDiv, clockSaveBtn, section, sectionId);
-        setupSaveChanges(clockBodyDiv, sectionId, section);
+        createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
+        setupSaveChanges(clockBodyDiv, clockFooterDiv, sectionId, section);
 
     });
 }

@@ -8,9 +8,10 @@ import {
     storeItemTimeTableInJson
 } from './itemClock.js'
 
-import {
-    compareDailySpecialHours
-} from './sectionClock.js'
+import{
+    availabilityTimes
+}from './sectionAvailability.js'
+
 
 const dayMappingToName = {
     0: 'Sunday',
@@ -71,7 +72,7 @@ function createClockBody() {
     };
 }
 
-function createClockTable(clockBodyDiv, clockSaveBtn, data, id) {
+function createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id) {
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
@@ -83,7 +84,7 @@ function createClockTable(clockBodyDiv, clockSaveBtn, data, id) {
         createItemTableRows(clockTbody, data);
     }
     clockSaveBtn.addEventListener('click', () => {
-        setupSaveChanges(clockBodyDiv, id, data);
+        setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data);
     });
 }
 
@@ -103,7 +104,7 @@ function createInputCell(parentRow, text) {
 }
 
 //loops through the table and gets the time table data.
-function setupSaveChanges(clockBodyDiv, id, data) {
+function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data) {
     // Loop through the rows of the table body
     const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
     for (const row of tableRows) {
@@ -115,6 +116,7 @@ function setupSaveChanges(clockBodyDiv, id, data) {
         let Period = calculatePeriod(StartTime, CloseTime)
         if (data.MenuItems) {
             storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); // assuming this is for sections
+            availabilityTimes(id, clockFooterDiv);
         } else {
             storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); // for items
         }
