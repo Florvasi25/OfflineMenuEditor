@@ -39,8 +39,8 @@ function createOptionName(menuOption, menuOs) {
             });
             
             if (optionContainerPreview) {
-                optionContainerPreview.forEach((optionNamePreview) => {
-                    const optionNamePreviewArray = Array.from(optionNamePreview.getElementsByClassName('optionNamePreview'));
+                optionContainerPreview.forEach((optionNameContainerPreview) => {
+                    const optionNamePreviewArray = Array.from(optionNameContainerPreview.getElementsByClassName('optionNamePreview'));
                     
                     optionNamePreviewArray.forEach(optionNamePreview => {
                         if (optionNamePreview.id === menuOption.groupOptionId) {

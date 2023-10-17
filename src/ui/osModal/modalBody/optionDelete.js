@@ -1,6 +1,4 @@
 import {
-    jsonData,
-    getOptionIndex,
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
     groupedOs
@@ -71,48 +69,48 @@ function deleteItem(menuOs, menuOption, optionRow, optionRowsContainer) {
     
     if (optionToDelete) {
         optionRow.remove();
-        console.log(optionToDelete);
-            groupedOs[menuOs.groupOsId].forEach(os => {
-                const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
-                os.MenuItemOptionSetItems.splice(optionIndex, 1)
-                os.MenuItemOptionSetItems.forEach((obj, index) => {
-                    obj.DisplayOrder = index;
-                })
+
+        groupedOs[menuOs.groupOsId].forEach(os => {
+            const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
+            os.MenuItemOptionSetItems.splice(optionIndex, 1)
+            os.MenuItemOptionSetItems.forEach((obj, index) => {
+                obj.DisplayOrder = index;
             })
+        })
 
-            const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-    
-            rows.forEach((row, index) => {
-                if (index % 2 === 0) {
-                    row.classList.remove('even');
-                    row.classList.add('odd');
-                } else {
-                    row.classList.remove('odd');
-                    row.classList.add('even');
-                }
-            });
+        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
 
-            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-
-            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-              const groupOsId = element.getAttribute('groupOsId');
-              return groupOsId === menuOs.groupOsId;
-            });
-            
-            if (optionContainerPreview) {
-                optionContainerPreview.forEach((osRowOptionPreview) => {
-                    const osRowOptionPreviewArray = Array.from(osRowOptionPreview.getElementsByClassName('osRowOption'));
-                    
-                    osRowOptionPreviewArray.forEach(osRowOptionPreview => {
-                        if (osRowOptionPreview.id === menuOption.groupOptionId) {
-                            osRowOptionPreview.remove()
-                        }
-                    });
-                });
+        rows.forEach((row, index) => {
+            if (index % 2 === 0) {
+                row.classList.remove('even');
+                row.classList.add('odd');
+            } else {
+                row.classList.remove('odd');
+                row.classList.add('even');
             }
+        });
 
-            updateLocalStorage();
-            updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
+        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+
+        const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+            const groupOsId = element.getAttribute('groupOsId');
+            return groupOsId === menuOs.groupOsId;
+        });
+        
+        if (optionContainerPreview) {
+            optionContainerPreview.forEach((osRowOptionContainerPreview) => {
+                const osRowOptionPreviewArray = Array.from(osRowOptionContainerPreview.getElementsByClassName('osRowOption'));
+                
+                osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+                    if (osRowOptionPreview.id === menuOption.groupOptionId) {
+                        osRowOptionPreview.remove()
+                    }
+                });
+            });
+        }
+
+        updateLocalStorage();
+        updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
     }
 }
 
