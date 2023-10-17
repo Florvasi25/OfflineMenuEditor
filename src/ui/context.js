@@ -94,6 +94,11 @@ function getLocalStorageOptionSetIDs() {
     return existingoptionSetIDs;
 }
 
+function getLocalStorageOptionSetItemsIDs() {
+    const existingoptionSetItemsIDs = JSON.parse(localStorage.getItem("optionSetItemsIDs") || "[]");
+    return existingoptionSetItemsIDs;
+}
+
 //set sectionID for entire json file
 function setSectionId(jsonData) {
     localStorage.setItem("sectionIDs", "[]");
@@ -119,14 +124,27 @@ function setItemId(jsonData) {
     updateLocalStorage()
 }
 
-function setOptionId(jsonData) {
+function setOptionSetId(jsonData) {
     localStorage.setItem("optionSetIDs", "[]");
+    for (const section of jsonData.MenuSections) {
+        for (const item of section.MenuItems) {
+            for (const optionSet of item.MenuItemOptionSets) {
+                optionSet.MenuItemOptionSetId = getRandomInt();                  
+                updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, true)
+            }
+        }
+    }
+    updateLocalStorage()
+}
+
+function setOptionSetItemsId(jsonData) {
+    localStorage.setItem("optionSetItemsIDs", "[]");
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                     optionSetItem.MenuItemOptionSetItemId = getRandomInt();                  
-                    updateOptionSetCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true)
+                    updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true)
                 }
             }
         }
@@ -174,7 +192,7 @@ function updateItemCounterLocalStorage(id, addID) {
     }
 }
 
-//Updates OS id LocalStorage. 
+//Updates OS id in LocalStorage. 
 function updateOptionSetCounterLocalStorage(id, addID) {
     if(addID) {
         let existingIDs =  getLocalStorageOptionSetIDs();
@@ -185,6 +203,20 @@ function updateOptionSetCounterLocalStorage(id, addID) {
         const indexID = existingIDs.indexOf(Number(id));
         existingIDs.splice(indexID, 1);
         localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
+    }
+}
+
+//Updates OS items id in LocalStorage. 
+function updateOptionSetItemsCounterLocalStorage(id, addID) {
+    if(addID) {
+        let existingIDs =  getLocalStorageOptionSetItemsIDs();
+        existingIDs.push(id);
+        localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
+    } else {
+        let existingIDs = getLocalStorageOptionSetItemsIDs(); 
+        const indexID = existingIDs.indexOf(Number(id));
+        existingIDs.splice(indexID, 1);
+        localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
     }
 }
 
@@ -210,7 +242,7 @@ function groupOptionSets() {
                 const osLength = MenuItemOptionSetItems.length;
                 const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}`).join('|');
                 const groupOsKey = `${Name}_${MaxSelectCount}_${MinSelectCount}_${osLength}_${optionKey}`;
-                os.groupOsId = groupOsKey
+                os.groupOsId = getRandomInt()
 
                 if (!groupedOs[groupOsKey]) {
                     groupedOs[groupOsKey] = [os];
@@ -221,7 +253,7 @@ function groupOptionSets() {
                 os.MenuItemOptionSetItems.forEach(option => {
                     const { Name, Price } = option;
                     const groupOptionKey = `${Name}_${Price}`;
-                    option.groupOptionId = groupOptionKey
+                    option.groupOptionId = getRandomInt()
                 })
             });
         })
@@ -237,13 +269,16 @@ export {
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
     updateLocalStorage,
+    setOptionSetId,
     updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage,
     getLocalStorageItemIDs,
     getLocalStorageSectionIDs,
     getLocalStorageOptionSetIDs,
+    getLocalStorageOptionSetItemsIDs,
     setJsonData,
     setSectionId,
-    setOptionId,
+    setOptionSetItemsId,
     getUniqueRandomInt,
     getRandomInt,
     setSectionDisplayOrder,
