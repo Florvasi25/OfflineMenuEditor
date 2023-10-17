@@ -3,7 +3,11 @@ import {
     getItemIndex,
     updateItemCounterLocalStorage,
     updateLocalStorage,
+    updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage,
     getLocalStorageItemIDs,
+    getLocalStorageOptionSetIDs,
+    getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from '../context.js';
@@ -44,24 +48,50 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
     if (itemIndex !== -1) {
         const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
         const newItem = JSON.parse(JSON.stringify(originalItem));
-        
-        const itemIDs = getLocalStorageItemIDs();
-        const newItemId = getUniqueRandomInt(itemIDs);
-
-        newItem.MenuItemId = newItemId;
-        newItem.PublicId = crypto.randomUUID();
-        
-        const newItemRow = createItem(newItem, sectionId, itemContainer);
+        const item = newIDs(newItem);
+        const newItemRow = createItem(item, sectionId, itemContainer);
         
         itemContainer.insertBefore(newItemRow, itemRow.nextSibling);
         
-        jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex+1, 0, newItem);
+        jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex+1, 0, item);
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
         updateLocalStorage();
-        updateItemCounterLocalStorage(newItemId, true);
+        
     }
+}
+
+function newIDs(newItem){
+    const itemIds = getLocalStorageItemIDs();
+    const newItemId = getUniqueRandomInt(itemIds);
+    newItem.MenuItemId = newItemId;
+    newItem.PublicId = crypto.randomUUID();
+
+    if (newItem.MenuItemOptionSets) {
+        newItem.MenuItemOptionSets.forEach(optionSet => {
+            if (optionSet) {
+                const optionSetIds = getLocalStorageOptionSetIDs();
+                const newOptionSetId = getUniqueRandomInt(optionSetIds);
+                optionSet.MenuItemOptionSetId = newOptionSetId;
+                updateOptionSetCounterLocalStorage(newOptionSetId, true);
+
+                if (optionSet.MenuItemOptionSetItems) {
+                    optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
+                        if (optionSetItem) {
+                            const optionSetItemsIds = getLocalStorageOptionSetItemsIDs();
+                            const newOptionSetItemId = getUniqueRandomInt(optionSetItemsIds);
+                            optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
+                            updateOptionSetItemsCounterLocalStorage(newOptionSetItemId, true);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    updateItemCounterLocalStorage(newItemId, true);
+    return newItem;
 }
 
 export { itemDuplicateButton }

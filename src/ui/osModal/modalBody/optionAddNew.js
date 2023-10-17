@@ -4,7 +4,7 @@ import {
     jsonData,
     updateItemCounterLocalStorage,
     updateLocalStorage,
-    getLocalStorageOptionSetIDs,
+    getLocalStorageOptionSetItemsIDs,
     getUniqueRandomInt,
     getOsIndex,
 } from '../../context.js';
@@ -19,7 +19,7 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId) {
     //Add Section
     newOptionButton.addEventListener('click', () => {
 
-        const optionIds = getLocalStorageOptionSetIDs();
+        const optionIds = getLocalStorageOptionSetItemsIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
         const { sectionIndex, itemIndex, osIndex } = getOsIndex(sectionId, itemId, osId);
 

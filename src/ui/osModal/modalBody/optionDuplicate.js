@@ -2,8 +2,8 @@ import {
     jsonData,
     updateItemCounterLocalStorage,
     updateLocalStorage,
-    updateOptionSetCounterLocalStorage,
-    getLocalStorageOptionSetIDs,
+    updateOptionSetItemsCounterLocalStorage,
+    getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
     getOptionObject,
@@ -38,7 +38,7 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRow
     if (originalOption) {
         const newOption = JSON.parse(JSON.stringify(originalOption));
 
-        const optionIds = getLocalStorageOptionSetIDs();
+        const optionIds = getLocalStorageOptionSetItemsIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
 
         newOption.MenuItemOptionSetItemId = newOptionId;
@@ -81,7 +81,7 @@ function duplicateOption(optionRow, optionId, sectionId, itemId, osId, optionRow
         
         updateLocalStorage();
         updateItemCounterLocalStorage(newOptionId, true);
-        updateOptionSetCounterLocalStorage(newOptionId, true)
+        updateOptionSetItemsCounterLocalStorage(newOptionId, true)
     }
 }
 

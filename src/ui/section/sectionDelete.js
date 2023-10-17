@@ -3,6 +3,8 @@ import {
     getSectionIndex,
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
+    updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
 } from '../context.js';
 
@@ -71,7 +73,7 @@ function deleteSection(sectionRow) {
     if (sectionRow) {
         // Encuentra la sección en jsonData basada en el ID
         const section = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
-        deleteItemLocalStorage(section); 
+        deleteIDs(section);
         if (sectionRow.classList.contains('expanded')) {
             let items = sectionRow.nextElementSibling;
             if (items.tagName === 'DIV' && items.classList.contains('itemTable')) {
@@ -86,8 +88,6 @@ function deleteSection(sectionRow) {
                 obj.DisplayOrder = index;
             });
             updateLocalStorage();
-            updateCounterLocalStorage(sectionId, false);
-
         }
     }
 }
@@ -96,10 +96,26 @@ function deleteSection(sectionRow) {
 function deleteItemLocalStorage(section) {
     if (section && section.MenuItems) {
         for (const item of section.MenuItems) {
-            // Calls updateItemCounterLocalStorage for each item
+            
             updateItemCounterLocalStorage(item.MenuItemId, false);
         }
     }
+}
+
+function deleteIDs(section) {
+    updateCounterLocalStorage(section.MenuSectionId, false);
+    
+    section.MenuItems.forEach(item => {
+        updateItemCounterLocalStorage(item.MenuItemId, false);
+
+        item.MenuItemOptionSets.forEach(optionSet => {
+            updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, false);
+
+            optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
+                updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, false);
+            });
+        });
+    });
 }
 
 export { sectionDeleteButton }

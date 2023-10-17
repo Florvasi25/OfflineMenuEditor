@@ -1,7 +1,7 @@
 import {
     jsonData,
     getOptionIndex,
-    updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
 } from '../../context.js';
 
@@ -98,7 +98,7 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer) {
             }
 
             updateLocalStorage();
-            updateOptionSetCounterLocalStorage(optionId, false);
+            updateOptionSetItemsCounterLocalStorage(optionId, false);
         }
     }
 }

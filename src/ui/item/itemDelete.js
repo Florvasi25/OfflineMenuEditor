@@ -2,6 +2,8 @@ import {
     jsonData,
     getItemIndex,
     updateItemCounterLocalStorage,
+    updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
 } from '../context.js';
 
@@ -79,14 +81,34 @@ function deleteItem(itemRow, sectionId) {
         itemRow.remove(); 
         const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
         if (itemIndex !== -1) {
+            deleteIDs(itemId, itemIndex, sectionIndex);
             jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1);
             jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
             updateLocalStorage();
-            updateItemCounterLocalStorage(itemId, false);
+            
         }
     }
+}
+
+function deleteIDs(itemId, itemIndex, sectionIndex) {
+    const item = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];;
+    if (item.MenuItemOptionSets) {
+        item.MenuItemOptionSets.forEach(optionSet => {
+            if (optionSet && optionSet.MenuItemOptionSetId) {
+                updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, false);
+                if (optionSet.MenuItemOptionSetItems) {
+                    optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
+                        if (optionSetItem && optionSetItem.MenuItemOptionSetItemId) {
+                            updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, false);
+                        }
+                    });
+                }
+            }
+        });
+    }
+    updateItemCounterLocalStorage(itemId, false);
 }
 
 export { itemDeleteButton }

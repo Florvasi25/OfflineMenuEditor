@@ -5,7 +5,11 @@ import {
     updateLocalStorage,
     setSectionDisplayOrder,
     updateItemCounterLocalStorage,
+    updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage,
     getLocalStorageItemIDs,
+    getLocalStorageOptionSetItemsIDs,
+    getLocalStorageOptionSetIDs,
     getLocalStorageSectionIDs,
     getUniqueRandomInt
 } from '../context.js';
@@ -46,40 +50,60 @@ function duplicateSection(sectionRow) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));
 
-        const sectionIDs = getLocalStorageSectionIDs();
-        const newSectionId = getUniqueRandomInt(sectionIDs);
+        const section = newIDs(newSection);
 
-        newSection.MenuSectionId = newSectionId;
-        newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
-        newSection.PublicId = crypto.randomUUID();
-
-        setItemsID(newSection);
-
-        const newSectionRow = createSection(newSection);
+        const newSectionRow = createSection(section);
 
         document.getElementById('sectionContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
 
-        jsonData.MenuSections.splice(sectionIndex+1, 0, newSection);
+        jsonData.MenuSections.splice(sectionIndex+1, 0, section);
         jsonData.MenuSections.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
         updateLocalStorage();
-        updateCounterLocalStorage(newSectionId, true);
     }
 }
 
-// sets the items id of the duplicated section
-function setItemsID(newSection) {
+function newIDs(newSection){
+    const sectionIDs = getLocalStorageSectionIDs();
+    const newSectionId = getUniqueRandomInt(sectionIDs);
+    newSection.MenuSectionId = newSectionId;
+    newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
+    newSection.PublicId = crypto.randomUUID();
+
     if (newSection.MenuItems) {
-        for (const item of newSection.MenuItems) {
-            const itemsID = getLocalStorageItemIDs();
-            const newItemId = getUniqueRandomInt(itemsID);
-            item.MenuItemId = newItemId;
-            item.MenuSectionId = newSection.MenuSectionId;
-            // Calls updateItemCounterLocalStorage for each item
-            updateItemCounterLocalStorage(newItemId, true);
-        }
-    }
-}
+        newSection.MenuItems.forEach(item => {
+            if (item) {
+                const itemsIDs = getLocalStorageItemIDs();
+                const newItemId = getUniqueRandomInt(itemsIDs);
+                item.MenuItemId = newItemId;
+                updateItemCounterLocalStorage(newItemId, true);
 
+                if (item.MenuItemOptionSets) {
+                    item.MenuItemOptionSets.forEach(optionSet => {
+                        if (optionSet) {
+                            const optionSetIds = getLocalStorageOptionSetIDs();
+                            const newOptionSetId = getUniqueRandomInt(optionSetIds);
+                            optionSet.MenuItemOptionSetId = newOptionSetId;
+                            updateOptionSetCounterLocalStorage(newOptionSetId, true);
+
+                            if (optionSet.MenuItemOptionSetItems) {
+                                optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
+                                    if (optionSetItem) {
+                                        const optionSetItemsIds = getLocalStorageOptionSetItemsIDs();
+                                        const newOptionSetItemId = getUniqueRandomInt(optionSetItemsIds);
+                                        optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
+                                        updateOptionSetItemsCounterLocalStorage(newOptionSetItemId, true);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+    updateCounterLocalStorage(newSectionId, true);
+    return newSection;
+}
 export { sectionDuplicateButton }
