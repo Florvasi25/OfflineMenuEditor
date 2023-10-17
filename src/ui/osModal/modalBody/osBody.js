@@ -100,7 +100,7 @@ function createOption(optionRowsContainer, menuOs, menuOption, sectionId, itemId
     const optionTax = createOptionTaxCell(menuOption, jsonData)
     optionRow.appendChild(optionTax)
 
-    const optionButtonsCell = createOptionButtonsCell(optionRow, menuOption.MenuItemOptionSetItemId, sectionId, itemId, osId, optionRowsContainer, menuOption)
+    const optionButtonsCell = createOptionButtonsCell(optionRow, menuOs, menuOption.MenuItemOptionSetItemId, sectionId, itemId, osId, optionRowsContainer, menuOption)
     optionRow.appendChild(optionButtonsCell)
     
     return optionRow

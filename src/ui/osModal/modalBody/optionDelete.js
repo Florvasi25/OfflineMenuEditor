@@ -3,9 +3,10 @@ import {
     getOptionIndex,
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
+    groupedOs
 } from '../../context.js';
 
-function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osId, optionRowsContainer) {
+function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
@@ -16,29 +17,26 @@ function optionDeleteButton(optionButtonsCell, optionRow, sectionId, itemId, osI
     deleteButton.appendChild(deleteButtonImg)
 
     deleteButton.addEventListener('click', () => {
-        confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionRowsContainer)
+        confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionRowsContainer)
     });
 }
 
 //Creates a popup to confirm the deletion of the item
-function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, optionRowsContainer) {
+function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionRowsContainer) {
     const popup = document.createElement("div");
     popup.className = "popup";
-    const optionId = optionRow.id;
-    const sectionObject = jsonData.MenuSections.find(section => section.MenuSectionId == sectionId);
-    const itemObject = sectionObject.MenuItems.find(item => item.MenuItemId == itemId);
-    const osObject = itemObject.MenuItemOptionSets.find(os => os.MenuItemOptionSetId == osId);
-    const optionObject = osObject.MenuItemOptionSetItems.find(option => option.MenuItemOptionSetItemId == optionId);
+    const optionId = menuOption.groupOptionId;
+    console.log(optionId);
 
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";
     popupContent.innerHTML = `
-        <p>Do you want to delete permanently "${optionObject.Name}"</p>
+        <p>Do you want to delete permanently "${menuOption.Name}"</p>
         <button class="yesButton confirmDeleteBtn">Yes</button>
         <button class="noButton confirmDeleteBtn">No</button>`
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
-        deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer);
+        deleteItem(menuOs, menuOption, optionRow, optionRowsContainer);
         popup.remove();
     });
 
@@ -68,16 +66,19 @@ function confirmDelete(optionRow, optionButtonsCell, sectionId, itemId, osId, op
 }
 
 //Deletes item from UI and LS
-function deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer) {
-    const optionId = optionRow.id;
-    if (optionRow) {
-        optionRow.remove(); 
-        const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
-        if (optionIndex !== -1) {
-            jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(optionIndex, 1);
-            jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.forEach((obj, index) => {
-                obj.DisplayOrder = index;
-            });
+function deleteItem(menuOs, menuOption, optionRow, optionRowsContainer) {
+    const optionToDelete = optionRow.id;
+    
+    if (optionToDelete) {
+        optionRow.remove();
+        console.log(optionToDelete);
+            groupedOs[menuOs.groupOsId].forEach(os => {
+                const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
+                os.MenuItemOptionSetItems.splice(optionIndex, 1)
+                os.MenuItemOptionSetItems.forEach((obj, index) => {
+                    obj.DisplayOrder = index;
+                })
+            })
 
             const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
     
@@ -91,15 +92,27 @@ function deleteItem(optionRow, sectionId, itemId, osId, optionRowsContainer) {
                 }
             });
 
-            const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-            const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
-            if ( osRowOptionPreview ) {
-                osRowOptionPreview.remove()
+            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+
+            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+              const groupOsId = element.getAttribute('groupOsId');
+              return groupOsId === menuOs.groupOsId;
+            });
+            
+            if (optionContainerPreview) {
+                optionContainerPreview.forEach((osRowOptionPreview) => {
+                    const osRowOptionPreviewArray = Array.from(osRowOptionPreview.getElementsByClassName('osRowOption'));
+                    
+                    osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+                        if (osRowOptionPreview.id === menuOption.groupOptionId) {
+                            osRowOptionPreview.remove()
+                        }
+                    });
+                });
             }
 
             updateLocalStorage();
-            updateOptionSetItemsCounterLocalStorage(optionId, false);
-        }
+            updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
     }
 }
 

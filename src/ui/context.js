@@ -6,7 +6,6 @@ const groupedOs = {};
 
 groupOptionSets()
 
-
 function setJsonData(data) {
     jsonData = data
 }
@@ -234,15 +233,14 @@ function getUniqueRandomInt(localStorageIDs) {
 }
 
 function groupOptionSets() {
-
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
             items.MenuItemOptionSets.forEach(os => {
-                const { Name, MaxSelectCount, MinSelectCount, MenuItemOptionSetItems } = os;
+                const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
                 const osLength = MenuItemOptionSetItems.length;
                 const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}`).join('|');
-                const groupOsKey = `${Name}_${MaxSelectCount}_${MinSelectCount}_${osLength}_${optionKey}`;
-                os.groupOsId = getRandomInt()
+                const groupOsKey = `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
+                os.groupOsId = groupOsKey
 
                 if (!groupedOs[groupOsKey]) {
                     groupedOs[groupOsKey] = [os];
@@ -253,7 +251,7 @@ function groupOptionSets() {
                 os.MenuItemOptionSetItems.forEach(option => {
                     const { Name, Price } = option;
                     const groupOptionKey = `${Name}_${Price}`;
-                    option.groupOptionId = getRandomInt()
+                    option.groupOptionId = groupOptionKey
                 })
             });
         })
