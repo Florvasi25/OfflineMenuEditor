@@ -22,8 +22,6 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
         const optionIds = getLocalStorageOptionSetItemsIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
         
-        console.log(groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.length);
-
         const emptyOptionJson = {
             CatalogItemId: null,
             MenuId: jsonData.MenuId,

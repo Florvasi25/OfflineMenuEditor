@@ -23,8 +23,6 @@ function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, op
 function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionRowsContainer) {
     const popup = document.createElement("div");
     popup.className = "popup";
-    const optionId = menuOption.groupOptionId;
-    console.log(optionId);
 
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";

@@ -238,7 +238,7 @@ function groupOptionSets() {
             items.MenuItemOptionSets.forEach(os => {
                 const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
                 const osLength = MenuItemOptionSetItems.length;
-                const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}`).join('|');
+                const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
                 const groupOsKey = `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
                 os.groupOsId = groupOsKey
 
@@ -249,8 +249,8 @@ function groupOptionSets() {
                 }
 
                 os.MenuItemOptionSetItems.forEach(option => {
-                    const { Name, Price } = option;
-                    const groupOptionKey = `${Name}_${Price}`;
+                    const { Name, Price, Availability } = option;
+                    const groupOptionKey = `${Name}_${Price}_${Availability}`;
                     option.groupOptionId = groupOptionKey
                 })
             });
