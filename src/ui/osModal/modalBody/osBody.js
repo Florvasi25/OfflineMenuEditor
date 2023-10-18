@@ -35,16 +35,16 @@ function createOsModalBody(menuOs, sectionId, itemId, osId) {
     
     optionsBodyContainer.appendChild(optionRowsContainer)
     
-    const newOptionBtnContainer = createNewOptionBtnContainer(optionRowsContainer, sectionId, itemId, osId)
+    const newOptionBtnContainer = createNewOptionBtnContainer(optionRowsContainer, sectionId, itemId, osId, menuOs)
     optionsBodyContainer.appendChild(newOptionBtnContainer)
 
     return optionsBodyContainer
 }
 
-function createNewOptionBtnContainer(optionRowsContainer, sectionId, itemId, osId) {
+function createNewOptionBtnContainer(optionRowsContainer, sectionId, itemId, osId, menuOs) {
     const newOptionBtnContainer = document.createElement('div')
     newOptionBtnContainer.className = 'newOptionBtnContainer'
-    const newOptionButton = createOptionButton(optionRowsContainer, sectionId, itemId, osId)
+    const newOptionButton = createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs)
     newOptionBtnContainer.appendChild(newOptionButton)
 
     return newOptionBtnContainer

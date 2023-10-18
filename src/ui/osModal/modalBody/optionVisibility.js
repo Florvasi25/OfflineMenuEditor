@@ -41,12 +41,11 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
         const isAvailableNew = !optionObject.IsAvailable
 
         groupedOs[menuOs.groupOsId].forEach(os => {
-            console.log(optionObject);
-            optionObject.IsAvailable = isAvailableNew
+            const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
+            option.IsAvailable = isAvailableNew
+            optionRow.classList.toggle('unavailable', !isAvailableNew);
         })
         
-        optionRow.classList.toggle('unavailable', !isAvailableNew);
-
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
 
         const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
@@ -65,6 +64,7 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
                 });
             });
         }
+
         updateLocalStorage()
     }
 }
