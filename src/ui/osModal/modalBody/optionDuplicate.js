@@ -6,10 +6,7 @@ import {
     getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
-    getOptionObject,
-    getOsObject,
     groupedOs,
-    getRandomInt
 } from '../../context.js';
 
 import { createOption } from './osBody.js'

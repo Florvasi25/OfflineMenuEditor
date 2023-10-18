@@ -8,7 +8,7 @@ function createOptionButtonsCell(optionRow, menuOs, sectionId, itemId, osId, opt
     const optionButtonsCell = document.createElement('div');
     optionButtonsCell.classList = "optionButtonsCell"
 
-    optionVisibilityButton(optionButtonsCell, optionRow, menuOption, sectionId, itemId, osId)
+    optionVisibilityButton(optionButtonsCell, optionRow, menuOption, menuOs)
 
     optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer)
 

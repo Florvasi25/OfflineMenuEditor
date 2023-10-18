@@ -1,15 +1,14 @@
 import {
     updateLocalStorage,
-    getOptionIndex,
-    jsonData,
+    groupedOs
 } from '../../context.js'
 
-function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, sectionId, itemId, osId) {
+function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, menuOs) {
     const visibilityButton = document.createElement('button');
     visibilityButton.classList.add('sectionButton')
     visibilityButton.classList.add('visibilityButton')
     visibilityButton.addEventListener('click', () => {
-        SectionAvailability(optionRow, sectionId, itemId, osId, optionRow.id);
+        SectionAvailability(optionRow, menuOs, menuOption);
     });
     optionButtonsCell.appendChild(visibilityButton);
     const visibilityButtonImg = document.createElement('img')
@@ -34,21 +33,38 @@ function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, sectio
 }
 
 //Section Availability
-function SectionAvailability(optionRow, sectionId, itemId, osId, optionId) {
+function SectionAvailability(optionRow, menuOs, menuOption) {
+    const optionToHide = optionRow.id;
 
-    const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
-    if (itemIndex !== -1) {
-        const isAvailableNew = !jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].IsAvailable
-        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].IsAvailable = isAvailableNew
+    if (optionToHide) {
+        const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
+        const isAvailableNew = !optionObject.IsAvailable
 
+        groupedOs[menuOs.groupOsId].forEach(os => {
+            console.log(optionObject);
+            optionObject.IsAvailable = isAvailableNew
+        })
+        
         optionRow.classList.toggle('unavailable', !isAvailableNew);
 
-        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == optionId)
-        if (osRowOptionPreview) {
-            osRowOptionPreview.classList.toggle('unavailable', !isAvailableNew)
-        }
+        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
 
+        const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+          const groupOsId = element.getAttribute('groupOsId');
+          return groupOsId === menuOs.groupOsId;
+        });
+        
+        if (optionContainerPreview) {
+            optionContainerPreview.forEach((osRowOptionContainerPreview) => {
+                const osRowOptionPreviewArray = Array.from(osRowOptionContainerPreview.getElementsByClassName('osRowOption'));
+                
+                osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+                    if (osRowOptionPreview.id === menuOption.groupOptionId) {
+                        osRowOptionPreview.classList.toggle('unavailable', !isAvailableNew)
+                    }
+                });
+            });
+        }
         updateLocalStorage()
     }
 }
