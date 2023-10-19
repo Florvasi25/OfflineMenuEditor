@@ -31,7 +31,7 @@ function createOsModalBody(menuOs, sectionId, itemId, osId) {
     optionsBodyContainer.appendChild(topButtonsCell)
     
     createOptionRow(optionRowsContainer, menuOs, sectionId, itemId, osId)
-    setDragListeners(optionRowsContainer, sectionId, itemId, osId)
+    setDragListeners(optionRowsContainer, menuOs)
     
     optionsBodyContainer.appendChild(optionRowsContainer)
     

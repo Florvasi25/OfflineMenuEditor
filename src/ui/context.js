@@ -249,8 +249,8 @@ function groupOptionSets() {
                 }
 
                 os.MenuItemOptionSetItems.forEach(option => {
-                    const { Name, Price, Availability } = option;
-                    const groupOptionKey = `${Name}_${Price}_${Availability}`;
+                    const { Name, Price, IsAvailable } = option;
+                    const groupOptionKey = `${Name}_${Price}_${IsAvailable}`;
                     option.groupOptionId = groupOptionKey
                 })
             });

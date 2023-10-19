@@ -1,8 +1,7 @@
 import {
-    jsonData,
     updateLocalStorage,
     getDragAfterElement,
-    getOptionIndex,
+    groupedOs
 } from '../../context.js';
 
 function createOptionDragCell(optionRowsContainer, optionRow) {
@@ -38,7 +37,7 @@ function createOptionDragCell(optionRowsContainer, optionRow) {
 
 let draggable = null;
 
-function setDragListeners(optionRowsContainer, sectionId, itemId, osId) {
+function setDragListeners(optionRowsContainer, menuOs) {
     optionRowsContainer.addEventListener('dragenter', e => {
         e.preventDefault()
         const afterElement = getDragAfterElement(optionRowsContainer, e.clientY)
@@ -51,32 +50,37 @@ function setDragListeners(optionRowsContainer, sectionId, itemId, osId) {
         }
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-        const optionContainerPreview = optionContainerPreviewArray.find((p) => p.id == osId)
-        const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-        const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
-        if (optionContainerPreview) {
-            if (afterElement == null) {
-                optionContainerPreview.appendChild(osRowOptionPreview)
-            } else {
-                const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
-                optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
+        
+        optionContainerPreviewArray.forEach(optionContainerPreview => {
+            const groupOsId = optionContainerPreview.getAttribute('groupOsId');
+            
+            if (groupOsId === menuOs.groupOsId) {
+                const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
+                const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
+                if (afterElement == null) {
+                    optionContainerPreview.appendChild(osRowOptionPreview)
+                } else {
+                    const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
+                    optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
+                }        
             }
-        }
+        });
     })
-    
-    
+
     optionRowsContainer.addEventListener("dragend", () => {
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
         const draggedIdOption = draggable.getAttribute("id");
-        const {itemIndex, sectionIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, draggedIdOption)
+        const optionIndex = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
         const indexNewPosition = rows.indexOf(draggable);
-    
+        
         if(optionIndex !== indexNewPosition) {
-            const sectionToMove = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(optionIndex, 1)[0];
-            jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.splice(indexNewPosition, 0, sectionToMove);
-            jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems.forEach((obj, optionIndex) => {
-                obj.DisplayOrder = optionIndex;
-            });
+            groupedOs[menuOs.groupOsId].forEach(os => {
+                const sectionToMove = os.MenuItemOptionSetItems.splice(optionIndex, 1)[0];
+                os.MenuItemOptionSetItems.splice(indexNewPosition, 0, sectionToMove);
+                os.MenuItemOptionSetItems.forEach((obj, optionIndex) => {
+                    obj.DisplayOrder = optionIndex;
+                })
+            }) 
 
             updateLocalStorage()
         }
