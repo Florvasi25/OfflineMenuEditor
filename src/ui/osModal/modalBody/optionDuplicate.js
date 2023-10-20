@@ -33,25 +33,33 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
     const optionToDuplicate = optionRow.id
 
     if (optionToDuplicate) {
-        const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId == optionToDuplicate)
-        const newOption = JSON.parse(JSON.stringify(optionObject));
-
-        const optionIds = getLocalStorageOptionSetItemsIDs();
-        const newOptionId = getUniqueRandomInt(optionIds);
-
-        newOption.MenuItemOptionSetItemId = newOptionId;
-        newOption.PublicId = crypto.randomUUID();
-        newOption.groupOptionId = crypto.randomUUID()
-
+        const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
+        
+        let newOption = ""
+        const newGroupOptionId = crypto.randomUUID()
         groupedOs[menuOs.groupOsId].forEach(os => {
+            newOption = JSON.parse(JSON.stringify(optionObject));
+
+            const optionIds = getLocalStorageOptionSetItemsIDs();
+            const newOptionId = getUniqueRandomInt(optionIds);
+
+            newOption.MenuItemOptionSetItemId = newOptionId;
+            newOption.PublicId = crypto.randomUUID();
+            newOption.groupOptionId = newGroupOptionId
+            console.log('newOption.groupOptionId', newOption.groupOptionId);
             const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
             os.MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption)
             os.MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
-        }) 
+            updateItemCounterLocalStorage(newOptionId, true);
+            updateOptionSetItemsCounterLocalStorage(newOptionId, true)
+        })
+        
+        console.log('newOption', newOption);
 
         const newOptionRow = createOption(optionRowsContainer, menuOs, newOption, sectionId, itemId, osId);
+        console.log('newOptionRow', newOptionRow);
 
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
@@ -68,25 +76,23 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
         });
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-        
+
         optionContainerPreviewArray.forEach(optionContainerPreview => {
             const groupOsId = optionContainerPreview.getAttribute('groupOsId');
-            
+
             if (groupOsId === menuOs.groupOsId) {
                 const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
                 osRowOptionPreviewArray.forEach(osRowOptionPreview => {
                     const newOptionRow = createOptionRow(newOption);
-                    
+
                     if (osRowOptionPreview.id === menuOption.groupOptionId) {
                         optionContainerPreview.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
                     }
                 });
             }
         });
-        
+
         updateLocalStorage();
-        updateItemCounterLocalStorage(newOptionId, true);
-        updateOptionSetItemsCounterLocalStorage(newOptionId, true)
     }
 }
 

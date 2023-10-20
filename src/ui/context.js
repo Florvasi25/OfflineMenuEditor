@@ -2,12 +2,15 @@ import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
-const groupedOs = {};
+let groupedOs = {};
 
 groupOptionSets()
+console.log('groupedOs', groupedOs);
 
 function setJsonData(data) {
     jsonData = data
+    groupOptionSets()
+    console.log('dentro de jsonData', groupedOs);
 }
 
 //Gets Index
@@ -233,6 +236,7 @@ function getUniqueRandomInt(localStorageIDs) {
 }
 
 function groupOptionSets() {
+    groupedOs = {};
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
             items.MenuItemOptionSets.forEach(os => {
@@ -257,8 +261,6 @@ function groupOptionSets() {
         })
     })
     updateLocalStorage()
-    
-    console.log(groupedOs);
 }
 
 export {
