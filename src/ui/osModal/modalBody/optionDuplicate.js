@@ -39,6 +39,7 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
         const newGroupOptionId = crypto.randomUUID()
         groupedOs[menuOs.groupOsId].forEach(os => {
             newOption = JSON.parse(JSON.stringify(optionObject));
+            console.log('newOption', newOption);
 
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);
@@ -46,25 +47,21 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
             newOption.MenuItemOptionSetItemId = newOptionId;
             newOption.PublicId = crypto.randomUUID();
             newOption.groupOptionId = newGroupOptionId
-            console.log('newOption.groupOptionId', newOption.groupOptionId);
+
             const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
             os.MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption)
             os.MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
+
             updateItemCounterLocalStorage(newOptionId, true);
             updateOptionSetItemsCounterLocalStorage(newOptionId, true)
         })
         
-        console.log('newOption', newOption);
-
         const newOptionRow = createOption(optionRowsContainer, menuOs, newOption, sectionId, itemId, osId);
-        console.log('newOptionRow', newOptionRow);
-
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -76,7 +73,6 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
         });
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-
         optionContainerPreviewArray.forEach(optionContainerPreview => {
             const groupOsId = optionContainerPreview.getAttribute('groupOsId');
 

@@ -18,45 +18,50 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
 
     //Add Section
     newOptionButton.addEventListener('click', () => {
-
-        const optionIds = getLocalStorageOptionSetItemsIDs();
-        const newOptionId = getUniqueRandomInt(optionIds);
         
-        const emptyOptionJson = {
-            CatalogItemId: null,
-            MenuId: jsonData.MenuId,
-            MenuItemOptionSetItemId: newOptionId,
-            Name: null,
-            Price: 0,
-            TaxRateId: null,
-            TaxRate: null,
-            TaxValue: 0,
-            TaxRateName: null,
-            IsAvailable: true,
-            DisplayOrder: groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.length,
-            IsDeleted: false,
-            Tags: [],
-            NextMenuItemOptionSetId: null,
-            PublicId: crypto.randomUUID(),
-            ImageName: null,
-            ImageUrl: null,
-            CellAspectRatio: 0,
-            CellLayoutType: 0,
-            OptionSetItemMetadata: [],
-            ExternalImageUrl: null,
-            groupOptionId: crypto.randomUUID()
-        };
-    
-        let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson, sectionId, itemId, osId)
-
-        optionRowsContainer.appendChild(optionRow);
+        let emptyOptionJson = {}
+        const newGroupOptionId = crypto.randomUUID()
 
         groupedOs[menuOs.groupOsId].forEach(os => {
+
+            const optionIds = getLocalStorageOptionSetItemsIDs();
+            const newOptionId = getUniqueRandomInt(optionIds);   
+
+            emptyOptionJson = {
+                CatalogItemId: null,
+                MenuId: jsonData.MenuId,
+                MenuItemOptionSetItemId : newOptionId,
+                Name: null,
+                Price: 0,
+                TaxRateId: null,
+                TaxRate: null,
+                TaxValue: 0,
+                TaxRateName: null,
+                IsAvailable: true,
+                DisplayOrder: groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.length,
+                IsDeleted: false,
+                Tags: [],
+                NextMenuItemOptionSetId: null,
+                PublicId: crypto.randomUUID(),
+                ImageName: null,
+                ImageUrl: null,
+                CellAspectRatio: 0,
+                CellLayoutType: 0,
+                OptionSetItemMetadata: [],
+                ExternalImageUrl: null,
+                groupOptionId: newGroupOptionId
+            };
+        
             os.MenuItemOptionSetItems.push(emptyOptionJson)
+
+            updateItemCounterLocalStorage(newOptionId, true);
         })
+
+        let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson, sectionId, itemId, osId)
+        optionRowsContainer.appendChild(optionRow);
+
             
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-    
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -82,7 +87,6 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
         }
         
         updateLocalStorage();
-        updateItemCounterLocalStorage(newOptionId, true);
     });
 
     return newOptionButton
