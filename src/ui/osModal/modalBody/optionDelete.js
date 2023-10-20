@@ -1,7 +1,8 @@
 import {
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
-    groupedOs
+    groupedOs,
+    setColorOfRows
 } from '../../context.js';
 
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
@@ -76,17 +77,7 @@ function deleteItem(menuOs, menuOption, optionRow, optionRowsContainer) {
             })
         })
 
-        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-
-        rows.forEach((row, index) => {
-            if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
-            } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
-            }
-        });
+        setColorOfRows(optionRowsContainer)
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
 

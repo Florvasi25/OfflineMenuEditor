@@ -7,6 +7,7 @@ import {
     setSectionDisplayOrder,
     getUniqueRandomInt,
     groupedOs,
+    setColorOfRows
 } from '../../context.js';
 
 import { createOption } from './osBody.js'
@@ -61,16 +62,7 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
         const newOptionRow = createOption(optionRowsContainer, menuOs, newOption, sectionId, itemId, osId);
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
-        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-        rows.forEach((row, index) => {
-            if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
-            } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
-            }
-        });
+        setColorOfRows(optionRowsContainer)
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
         optionContainerPreviewArray.forEach(optionContainerPreview => {

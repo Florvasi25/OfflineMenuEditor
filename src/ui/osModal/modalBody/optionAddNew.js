@@ -6,7 +6,8 @@ import {
     updateLocalStorage,
     getLocalStorageOptionSetItemsIDs,
     getUniqueRandomInt,
-    groupedOs
+    groupedOs,
+    setColorOfRows
 } from '../../context.js';
 
 import { createOptionRow } from '../../optionSet/osOptionsContainer.js'
@@ -59,18 +60,8 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
 
         let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson, sectionId, itemId, osId)
         optionRowsContainer.appendChild(optionRow);
-
             
-        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-        rows.forEach((row, index) => {
-            if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
-            } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
-            }
-        });
+        setColorOfRows(optionRowsContainer)
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
 
