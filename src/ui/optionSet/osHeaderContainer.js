@@ -9,13 +9,15 @@ import { createOsModalContainer } from '../osModal/modalContainer.js'
 
 import { createOsNameCell } from '../osModal/modalNav/osName.js'
 
+import { createSelectOsModalContainer } from '../selectOsModal/selectOsModalContainer.js'
+
 function createOsContainer(itemRow, sectionId, itemId) {
     const osContainer = document.createElement('div');
     osContainer.classList.add('osContainer');
     itemRow.parentNode.insertBefore(osContainer, itemRow.nextSibling);
     createOs(osContainer, sectionId, itemId);
 
-    const osAddNew = addNewOs()
+    const osAddNew = addNewOs(itemRow)
     osContainer.appendChild(osAddNew)
 }
 
@@ -105,10 +107,19 @@ function createOsSelectOption(menuOs) {
     return osSelectOptionContainer
 }
 
-function addNewOs() {
+function addNewOs(itemRow) {
     const osAddNew = document.createElement('button')
     osAddNew.textContent = '+'
     osAddNew. className = 'osAddNew'
+    osAddNew.id = itemRow.id
+
+    osAddNew.addEventListener('click', () => {
+        const selectOsModalContainer = createSelectOsModalContainer()
+        selectOsModalContainer.style.display = 'block';
+        setTimeout(() => {
+            selectOsModalContainer.style.opacity = 1;
+        }, 10);
+    });
 
     return osAddNew
 }

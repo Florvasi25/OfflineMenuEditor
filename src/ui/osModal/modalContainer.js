@@ -6,7 +6,6 @@ function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     const leftContainer = document.getElementById('leftContainer')
     
     const osModalContainer = document.createElement('div')
-    osModalContainer.id = 'myModal'
     osModalContainer.classList = 'osModalContainer'
     
     const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
