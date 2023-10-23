@@ -941,14 +941,3 @@ main {
     border: 1px solid #888;
     width: 70%;
 }
-
-.close {
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: red;
-}
