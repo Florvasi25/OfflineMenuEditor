@@ -21,14 +21,14 @@ function createSelectOsModalContainer() {
     selectOsModalContainer.appendChild(selectOsModalBody)
     
     closeOsModalBtn.addEventListener('click', () => {
-        const existingSelectOsModal = document.querySelector('.selectOsModal')
-        if (existingSelectOsModal) {
-            existingSelectOsModal.remove()
-        }
         selectOsModal.style.opacity = 0
         setTimeout(() => {
+            const existingSelectOsModal = document.querySelector('.selectOsModal')
+            if (existingSelectOsModal) {
+                existingSelectOsModal.remove()
+            }
             selectOsModal.style.display = 'none'; 
-        }, 300);
+        }, 200);
     });
     
     popupModal.appendChild(selectOsModal)

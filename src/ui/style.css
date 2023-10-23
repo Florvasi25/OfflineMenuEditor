@@ -931,13 +931,54 @@ main {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 0;
-    transition: opacity 0.1s ease-in;
+    transition: opacity 0.2s ease-in;
 }
 
 .selectOsModalContainer {
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #888;
     width: 70%;
+}
+
+.selectOsRowHeader {
+    display: flex;
+    height: auto;
+    width: 50%;
+    justify-content: space-around;
+    padding: 7.5px 0px;
+    
+    &.expanded .osDropdownButton { 
+        transform: rotate(45deg); 
+    }
+    &.folded .osDropdownButton { 
+        transform: rotate(-45deg); 
+    }
+    &.dragging {
+        border: 1px solid black;
+        opacity: .75;
+    }
+}
+
+.selectOsRowHeader.odd {
+    background-color: #342F58;
+}
+
+.selectOsRowHeader.even {
+    background-color: #B29346;
+}
+
+.selectOsRowHeader:first-of-type {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.selectOsRowHeader:last-of-type {
+    border-radius: 0px 0px 5px 5px;
+}
+
+.selectOsNameHeader {
+    width: 150px;
+    color: #ffffff;
+    font-size: 14px;
 }
