@@ -2,20 +2,20 @@ import { groupedOs } from '../../context.js';
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
 
-function createSelectOsModalBody() {
+function createSelectOsModalBody(itemRow) {
     const selectOsModalBody = document.createElement('div');
     selectOsModalBody.className = 'selectOsModalBody';
 
-    const selectOsBodyLeft = createSelectOsBodyLeft()
+    const selectOsBodyLeft = createSelectOsBodyLeft(itemRow)
     selectOsModalBody.appendChild(selectOsBodyLeft)
 
-    const selectOsBodyRight = createSectionBodyRight()
+    const selectOsBodyRight = createSectionBodyRight(itemRow)
     selectOsModalBody.appendChild(selectOsBodyRight)
 
     return selectOsModalBody;
 }
 
-function createSelectOsBodyLeft() {
+function createSelectOsBodyLeft(itemRow) {
     const selectOsBodyLeft = document.createElement('div')
     selectOsBodyLeft.className = 'selectOsBodyLeft';
 
@@ -26,6 +26,15 @@ function createSelectOsBodyLeft() {
             return item;
         }
     });
+
+    // const flattenedGroupsArray = Object.values(groupedOs).flatMap(group => group);
+
+    // const groupsArray = flattenedGroupsArray.filter(itemfor => {
+    //     const osItemId = itemfor.MenuItemId;
+    //     return osItemId != itemRow.id;
+    // });
+
+    // console.log('groupsArray izquierda', groupsArray);
 
     groupsArray.forEach((osGroup, index) => {
         const selectOsRowHeader = createSelectOsRow(osGroup)
@@ -42,12 +51,32 @@ function createSelectOsBodyLeft() {
     return selectOsBodyLeft
 }
 
-function createSectionBodyRight() {
-    const selectOsBodyRight = document.createElement('div')
+function createSectionBodyRight(itemRow) {
+    const selectOsBodyRight = document.createElement('div');
     selectOsBodyRight.className = 'selectOsBodyRight';
 
-    return selectOsBodyRight
+    const flattenedGroupsArray = Object.values(groupedOs).flatMap(group => group);
+
+    const groupsArray = flattenedGroupsArray.filter(itemfor => {
+        const osItemId = itemfor.MenuItemId;
+        return itemRow.id == osItemId;
+    });
+
+    groupsArray.forEach((osGroup, index) => {
+        const selectOsRowHeader = createSelectOsRow(osGroup);
+
+        if (index % 2 === 0) {
+            selectOsRowHeader.classList.add('odd');
+        } else {
+            selectOsRowHeader.classList.add('even');
+        }
+
+        selectOsBodyRight.appendChild(selectOsRowHeader);
+    });
+
+    return selectOsBodyRight;
 }
+
 
 function createSelectOsRow(osGroup) {
     const selectOsRowHeader = document.createElement('div');

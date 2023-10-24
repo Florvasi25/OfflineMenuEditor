@@ -2,7 +2,7 @@ import { createSelectOsModalNav } from '../selectOsModal/selectOsModalNav/select
 
 import { createSelectOsModalBody } from '../selectOsModal/selectOsModalBody/selectOsBody.js'
 
-function createSelectOsModalContainer() {
+function createSelectOsModalContainer(itemRow) {
     const popupModal = document.getElementById('popupModal')
     
     const selectOsModal = document.createElement('div')
@@ -16,7 +16,7 @@ function createSelectOsModalContainer() {
     const {selectOsModalNav, closeOsModalBtn } = createSelectOsModalNav()
     selectOsModalContainer.appendChild(selectOsModalNav)
 
-    const selectOsModalBody = createSelectOsModalBody()
+    const selectOsModalBody = createSelectOsModalBody(itemRow)
 
     selectOsModalContainer.appendChild(selectOsModalBody)
     

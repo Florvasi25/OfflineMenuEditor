@@ -918,7 +918,6 @@ main {
     width: auto;
 }
 
-
 /* SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL */
 
 .selectOsModal {
@@ -984,6 +983,17 @@ main {
     font-size: 14px;
 }
 
+.selectOsModalBody {
+    display: flex;
+}
+
 .selectOsBodyLeft {
     width: 50%;
+    margin-right: 10px;
 }
+
+.selectOsBodyRight {
+    width: 50%;
+    margin-left: 10px;
+}
+
