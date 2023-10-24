@@ -19,24 +19,21 @@ function createSelectOsBodyLeft(itemRow) {
     const selectOsBodyLeft = document.createElement('div')
     selectOsBodyLeft.className = 'selectOsBodyLeft';
 
-    const groupsArray = Object.values(groupedOs).map(item => {
-        if (Array.isArray(item)) {
-            return item[0];
-        } else {
-            return item;
-        }
-    });
+    const filteredMainArrays = {};
+    for (const mainArrayName in groupedOs) {
+      const mainArray = groupedOs[mainArrayName];
+      const isExcluded = mainArray.some((subArray) => subArray.MenuItemId == itemRow.id);
+      if (!isExcluded) {
+        filteredMainArrays[mainArrayName] = mainArray;
+      }
+    }
+      
+    console.log('groupsArray izquierda', filteredMainArrays);
 
-    // const flattenedGroupsArray = Object.values(groupedOs).flatMap(group => group);
+    const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
-    // const groupsArray = flattenedGroupsArray.filter(itemfor => {
-    //     const osItemId = itemfor.MenuItemId;
-    //     return osItemId != itemRow.id;
-    // });
 
-    // console.log('groupsArray izquierda', groupsArray);
-
-    groupsArray.forEach((osGroup, index) => {
+    filteredGroup.forEach((osGroup, index) => {
         const selectOsRowHeader = createSelectOsRow(osGroup)
         
         if (index % 2 === 0) {

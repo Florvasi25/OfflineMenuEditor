@@ -8,7 +8,6 @@ function createOptionsContainer(selectOsRowHeader, osGroup) {
 
 function createOptions(osOptionContainer, osGroup) {
     const menuOptions = osGroup.MenuItemOptionSetItems;
-    console.log(menuOptions);
     
     menuOptions.forEach(menuOption => {
         const osRowOption = createOptionRow(menuOption)

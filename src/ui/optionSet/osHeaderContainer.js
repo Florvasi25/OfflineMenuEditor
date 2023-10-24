@@ -113,8 +113,6 @@ function addNewOs(itemRow) {
     osAddNew. className = 'osAddNew'
     osAddNew.id = itemRow.id
 
-    console.log('itemRow', itemRow);
-
     osAddNew.addEventListener('click', () => {
         const selectOsModalContainer = createSelectOsModalContainer(itemRow)
         selectOsModalContainer.style.display = 'block';

@@ -10,7 +10,6 @@ console.log('groupedOs', groupedOs);
 function setJsonData(data) {
     jsonData = data
     groupOptionSets()
-    console.log('dentro de jsonData', groupedOs);
 }
 
 //Gets Index

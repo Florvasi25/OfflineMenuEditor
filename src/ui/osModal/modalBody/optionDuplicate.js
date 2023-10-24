@@ -40,7 +40,6 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
         const newGroupOptionId = crypto.randomUUID()
         groupedOs[menuOs.groupOsId].forEach(os => {
             newOption = JSON.parse(JSON.stringify(optionObject));
-            console.log('newOption', newOption);
 
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);
