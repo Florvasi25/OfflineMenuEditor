@@ -128,9 +128,12 @@ function setItemId(jsonData) {
 
 function setOptionSetId(jsonData) {
     localStorage.setItem("optionSetIDs", "[]");
+    var itemIDInOS
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
+            itemIDInOS = item.MenuItemId;
             for (const optionSet of item.MenuItemOptionSets) {
+                optionSet.MenuItemId = itemIDInOS;
                 optionSet.MenuItemOptionSetId = getRandomInt();                  
                 updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, true)
             }
