@@ -116,10 +116,13 @@ function setSectionId(jsonData) {
 //set itemID for entire json file
 function setItemId(jsonData) {
     localStorage.setItem("itemIDs", "[]");
+    var sectionId;
     for (const section of jsonData.MenuSections) {
+        sectionId = section.MenuSectionId;
         for(const item of section.MenuItems) {
             let id = getRandomInt()
             item.MenuItemId = id;
+            item.MenuSectionId = sectionId;
             updateItemCounterLocalStorage(id, true)
         }
     }
