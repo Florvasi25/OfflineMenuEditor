@@ -945,9 +945,10 @@ main {
 .selectOsRowHeader {
     display: flex;
     height: auto;
-    width: 50%;
+    width: 100%;
     justify-content: space-around;
     padding: 7.5px 0px;
+    margin: 7.5px 0;
     
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
@@ -981,4 +982,8 @@ main {
     width: 150px;
     color: #ffffff;
     font-size: 14px;
+}
+
+.selectOsBodyLeft {
+    width: 50%;
 }

@@ -1,8 +1,23 @@
 import { groupedOs } from '../../context.js';
 
+import { createSelectOsDropdown } from './selectOsDropDown.js'
+
 function createSelectOsModalBody() {
     const selectOsModalBody = document.createElement('div');
     selectOsModalBody.className = 'selectOsModalBody';
+
+    const selectOsBodyLeft = createSelectOsBodyLeft()
+    selectOsModalBody.appendChild(selectOsBodyLeft)
+
+    const selectOsBodyRight = createSectionBodyRight()
+    selectOsModalBody.appendChild(selectOsBodyRight)
+
+    return selectOsModalBody;
+}
+
+function createSelectOsBodyLeft() {
+    const selectOsBodyLeft = document.createElement('div')
+    selectOsBodyLeft.className = 'selectOsBodyLeft';
 
     const groupsArray = Object.values(groupedOs).map(item => {
         if (Array.isArray(item)) {
@@ -12,10 +27,8 @@ function createSelectOsModalBody() {
         }
     });
 
-    console.log('groupsArray', groupsArray);
-
-    groupsArray.forEach((group, index) => {
-        const selectOsRowHeader = createOsRow(group)
+    groupsArray.forEach((osGroup, index) => {
+        const selectOsRowHeader = createSelectOsRow(osGroup)
         
         if (index % 2 === 0) {
             selectOsRowHeader.classList.add('odd');
@@ -23,67 +36,74 @@ function createSelectOsModalBody() {
             selectOsRowHeader.classList.add('even');
         }
 
-        selectOsModalBody.appendChild(selectOsRowHeader)
+        selectOsBodyLeft.appendChild(selectOsRowHeader)
     })
 
-    return selectOsModalBody;
+    return selectOsBodyLeft
 }
 
-function createOsRow(group) {
-    const osRowHeader = document.createElement('div');
-    osRowHeader.classList.add('selectOsRowHeader');
-    osRowHeader.classList.add('defaultColor');
-    osRowHeader.classList.add('draggable');
-    osRowHeader.classList.add('folded')
-    osRowHeader.id = group.MenuItemOptionSetId
+function createSectionBodyRight() {
+    const selectOsBodyRight = document.createElement('div')
+    selectOsBodyRight.className = 'selectOsBodyRight';
+
+    return selectOsBodyRight
+}
+
+function createSelectOsRow(osGroup) {
+    const selectOsRowHeader = document.createElement('div');
+    selectOsRowHeader.classList.add('selectOsRowHeader');
+    selectOsRowHeader.classList.add('defaultColor');
+    selectOsRowHeader.classList.add('draggable');
+    selectOsRowHeader.classList.add('folded')
+    selectOsRowHeader.id = osGroup.MenuItemOptionSetId
 
     const dropAndName = document.createElement('div')
     dropAndName.className = 'dropAndName'
-    osRowHeader.appendChild(dropAndName)
+    selectOsRowHeader.appendChild(dropAndName)
 
-    // const osDropDown = createOsDropdown(osRowHeader, group, sectionId, itemId)
-    // dropAndName.appendChild(osDropDown)
+    const osDropDown = createSelectOsDropdown(selectOsRowHeader, osGroup)
+    dropAndName.appendChild(osDropDown)
 
     const nameAndOsId = document.createElement('div')
     nameAndOsId.className = 'nameAndOsId'
     dropAndName.appendChild(nameAndOsId)
 
-    const osNameHeader = createOsNameHeader(group)
+    const osNameHeader = createSelectOsNameHeader(osGroup)
     nameAndOsId.appendChild(osNameHeader)
 
-    const optionSetIdPreview = createOptionSetIdPreview(group)
+    const optionSetIdPreview = createOptionSetIdPreview(osGroup)
     nameAndOsId.appendChild(optionSetIdPreview)
 
-    const osSelectOptionContainer = createOsSelectOption(group)
-    osRowHeader.appendChild(osSelectOptionContainer)
+    const osSelectOptionContainer = createOsSelectOption(osGroup)
+    selectOsRowHeader.appendChild(osSelectOptionContainer)
 
-    return osRowHeader
+    return selectOsRowHeader
 }
 
-function createOsNameHeader(group) {
+function createSelectOsNameHeader(osGroup) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'selectOsNameHeader'
-    osNameHeader.textContent = group.Name
-    osNameHeader.id = group.groupOsId
+    osNameHeader.textContent = osGroup.Name
+    osNameHeader.id = osGroup.groupOsId
 
     return osNameHeader
 }
 
-function createOptionSetIdPreview(group) {
+function createOptionSetIdPreview(osGroup) {
     const optionSetIdPreview = document.createElement('p')
-    optionSetIdPreview.textContent = group.MenuItemOptionSetId
+    optionSetIdPreview.textContent = osGroup.MenuItemOptionSetId
     optionSetIdPreview.className = 'optionSetIdPreview'
 
     return optionSetIdPreview
 }
 
-function createOsSelectOption(group) {
+function createOsSelectOption(osGroup) {
     const osSelectOptionContainer = document.createElement('div')
     osSelectOptionContainer.className = 'osSelectOptionContainer'
     osSelectOptionContainer.innerHTML = `
-    <p class='minSelectCount' id='${group.groupOsId}'>${group.MinSelectCount}</p>
+    <p class='minSelectCount' id='${osGroup.groupOsId}'>${osGroup.MinSelectCount}</p>
     <p class='dashCountCell'> - </p>
-    <p class='maxSelectCount' id='${group.groupOsId}'>${group.MaxSelectCount}</p>`
+    <p class='maxSelectCount' id='${osGroup.groupOsId}'>${osGroup.MaxSelectCount}</p>`
     
     return osSelectOptionContainer
 }
