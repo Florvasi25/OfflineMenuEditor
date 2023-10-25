@@ -74,6 +74,7 @@ function newIDs(newItem){
                 const optionSetIds = getLocalStorageOptionSetIDs();
                 const newOptionSetId = getUniqueRandomInt(optionSetIds);
                 optionSet.MenuItemOptionSetId = newOptionSetId;
+                optionSet.MenuItemId = newItemId;
                 updateOptionSetCounterLocalStorage(newOptionSetId, true);
 
                 if (optionSet.MenuItemOptionSetItems) {
