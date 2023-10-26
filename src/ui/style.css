@@ -2,6 +2,7 @@
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 /* BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY - BODY */
@@ -64,6 +65,7 @@ main {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    user-select: none
 }
 
 .sectionRow {
@@ -186,6 +188,7 @@ main {
     font-size: 11px;
     padding-top: 5px;
     color: #e4e4e4;
+    user-select: text;
 }
 
 .optionSetId {
@@ -307,6 +310,7 @@ main {
 .optionText {
     display: flex;
     font-size: 13px;
+    user-select: text;
 }
 
 /* DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN */
@@ -948,6 +952,7 @@ main {
     justify-content: space-around;
     padding: 7.5px 0px;
     margin: 7.5px 0;
+    cursor: grab;
     
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
