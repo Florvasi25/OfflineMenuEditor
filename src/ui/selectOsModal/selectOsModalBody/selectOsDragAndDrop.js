@@ -1,8 +1,6 @@
 import {
     updateLocalStorage,
-    getDragAfterElement,
-    groupedOs,
-    jsonData
+    getDragAfterElement
 } from '../../context.js';
 
 function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
@@ -14,8 +12,6 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
     
     osDragCell.appendChild(osDragImg);
     
-    
-
     osDragImg.addEventListener('dragstart', () => {
         selectOsRowHeader.classList.add('dragging')
 
@@ -31,24 +27,12 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
             }
         
             const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
-            console.log('osContainerPreviewArray', osContainerPreviewArray);
-            
-            const osContainerPreview = osContainerPreviewArray.find((p) => { 
-                console.log('p.id', p.id,)
-                console.log('p', p,)
-                console.log('foundItem.id', foundItem.MenuItemId)
-                console.log('foundItem', foundItem)
-                return p.id == foundItem.MenuItemId});
-            console.log('osContainerPreview', osContainerPreview);
+            const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
              
             const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
-            const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => {
-                return p.id == draggable.id;
-            });
-
+            const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == draggable.id);
             
             if (afterElement == null) {
-                console.log('afterElement', afterElement);
                 osContainerPreview.appendChild(osRowOptionPreview)
             } else {
                 const afterElementPreview = osRowHeaderPreviewArray.find((p) => p.id == afterElement.id)
@@ -77,15 +61,27 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
     osDragImg.addEventListener('dragend', () => {
         selectOsRowHeader.classList.remove('dragging');
         
-        const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
+        const selectOsRowHeaders = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
     
-        rows.forEach((row, index) => {
+        selectOsRowHeaders.forEach((selectOsRowHeader, index) => {
             if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
+                selectOsRowHeader.classList.remove('even');
+                selectOsRowHeader.classList.add('odd');
             } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
+                selectOsRowHeader.classList.remove('odd');
+                selectOsRowHeader.classList.add('even');
+            }
+        });
+        
+        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+        
+        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+            if (index % 2 === 0) {
+                osRowHeaderPreview.classList.remove('even');
+                osRowHeaderPreview.classList.add('odd');
+            } else {
+                osRowHeaderPreview.classList.remove('odd');
+                osRowHeaderPreview.classList.add('even');
             }
         });
     });
@@ -95,10 +91,4 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
 
 let draggable = null;
 
-function setDragListeners(selectOsBodyRight) {
-}
-
-export {
-    createOsDrag,
-    setDragListeners
-}
+export { createOsDrag }

@@ -5,10 +5,7 @@ import {
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
 
-import {
-    createOsDrag,
-    setDragListeners
-} from './selectOsDragAndDrop.js'
+import { createOsDrag } from './selectOsDragAndDrop.js'
 
 function createSelectOsModalBody(itemRow) {
     const selectOsModalBody = document.createElement('div');
@@ -20,8 +17,6 @@ function createSelectOsModalBody(itemRow) {
     const selectOsBodyRight = createSectionBodyRight(itemRow)
     selectOsModalBody.appendChild(selectOsBodyRight)
 
-    setDragListeners(selectOsBodyRight)
-
     return selectOsModalBody;
 }
 
@@ -29,7 +24,6 @@ function createSelectOsBodyLeft(itemRow) {
     const selectOsBodyLeft = document.createElement('div')
     selectOsBodyLeft.className = 'selectOsBodyLeft';
     selectOsBodyLeft.classList.add('selectOsContainer')
-
 
     const filteredMainArrays = {};
     for (const mainArrayName in groupedOs) {
@@ -110,7 +104,6 @@ function createSelectOsRow(menuOs, selectOsBodyRight, foundItem) {
 
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     selectOsRowHeader.appendChild(osSelectOptionContainer)
-
 
     return selectOsRowHeader
 }
