@@ -135,6 +135,7 @@ function createOptionSetIdPreview(menuOs) {
 function createOsSelectOption(menuOs) {
     const osSelectOptionContainer = document.createElement('div')
     osSelectOptionContainer.className = 'osSelectOptionContainer'
+    osSelectOptionContainer.classList.add('osModal')
     osSelectOptionContainer.innerHTML = `
     <p class='minSelectCount' id='${menuOs.groupOsId}'>${menuOs.MinSelectCount}</p>
     <p class='dashCountCell'> - </p>

@@ -3,6 +3,7 @@ import { createOptionsContainer } from './selectOsOptions.js'
 function createSelectOsDropdown(selectOsRowHeader, osGroup){
     const osDropdownCell = document.createElement('div')
     osDropdownCell.classList.add('osDropdownCell')
+    osDropdownCell.classList.add('osModal')
 
     const boxDropdownButton = createSelectOsDropdownButton(selectOsRowHeader, osGroup)
     osDropdownCell.appendChild(boxDropdownButton)

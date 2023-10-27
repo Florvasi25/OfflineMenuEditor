@@ -130,8 +130,8 @@ main {
     display: flex;
     height: auto;
     width: 40%;
-    justify-content: space-around;
     padding: 7.5px 0px;
+    justify-content: space-between;
     
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
@@ -173,8 +173,14 @@ main {
     display: flex;
 }
 
+.nameAndOsId {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 0 10px;
+}
+
 .osNameHeader {
-    width: 150px;
+    flex-grow: 1;
     color: #ffffff;
     cursor: pointer;
     font-size: 14px;
@@ -201,6 +207,11 @@ main {
     color: #ffffff;
     display: flex;
     align-items: center;
+    padding-right: 20px;
+}
+
+.osSelectOptionContainer.osModal {
+    padding-right: 10px;
 }
 
 .osRowOption {
@@ -347,7 +358,12 @@ main {
     display: flex;
     align-items: center;
     width: 25px;
+    padding-left: 10px;
     flex-shrink: 0;
+}
+
+.osDropdownCell.osModal {
+    padding: 0;
 }
 
 .osDropdownButton {
@@ -376,14 +392,33 @@ main {
     flex-shrink: 0;
 }
 
+.osDragCell {
+    display: flex;
+    align-items: center;
+    width: 25px;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
 .sectionDragImg {
     width: 22px;
     cursor: grab;
     margin: 0
 }
 
+.osDragImg {
+    width: 22px;
+    cursor: grab;
+    margin: 0;
+    color: white;
+}
+
 .dragging {
     transition: transform 0.01 linear;
+}
+
+selector svg {
+    fill: yellow;
 }
 
 .clickOnDrag {
@@ -949,10 +984,11 @@ main {
     display: flex;
     height: auto;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 7.5px 0px;
     margin: 7.5px 0;
     cursor: grab;
+    border-radius: 5px;
     
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
@@ -974,16 +1010,8 @@ main {
     background-color: #B29346;
 }
 
-.selectOsRowHeader:first-of-type {
-    border-radius: 5px 5px 0px 0px;
-}
-
-.selectOsRowHeader:last-of-type {
-    border-radius: 0px 0px 5px 5px;
-}
-
 .selectOsNameHeader {
-    width: 150px;
+    flex-grow: 1;
     color: #ffffff;
     font-size: 14px;
 }
