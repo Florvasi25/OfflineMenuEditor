@@ -50,6 +50,7 @@ function setDragListeners(optionRowsContainer, menuOs) {
         }
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+        console.log('optionContainerPreviewArray', optionContainerPreviewArray);
         
         optionContainerPreviewArray.forEach(optionContainerPreview => {
             const groupOsId = optionContainerPreview.getAttribute('groupOsId');
@@ -74,12 +75,8 @@ function setDragListeners(optionRowsContainer, menuOs) {
         const indexNewPosition = rows.indexOf(draggable);
         
         if(optionIndex !== indexNewPosition) {
-            console.log('groupedOs', groupedOs);
-            console.log('menuOs', groupedOs[menuOs.groupOsId]);
             groupedOs[menuOs.groupOsId].forEach(os => {
-                console.log('os', os);
                 const optionToMove = os.MenuItemOptionSetItems.splice(optionIndex, 1)[0];
-                console.log('optionToMove', optionToMove);
                 os.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
                 os.MenuItemOptionSetItems.forEach((obj, optionIndex) => {
                     obj.DisplayOrder = optionIndex;

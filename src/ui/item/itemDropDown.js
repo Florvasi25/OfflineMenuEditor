@@ -33,7 +33,7 @@ function toggleItemState(itemRow, sectionId) {
         itemRow.classList.add(foldedClassName);
 
         const osContainer = itemRow.nextElementSibling;
-        if (osContainer && osContainer.classList.contains('osContainer')) {
+        if (osContainer && osContainer.classList.contains('osTable')) {
             osContainer.classList.add('itemRow');
             osContainer.remove(); // Remove the content container
         }
@@ -42,10 +42,10 @@ function toggleItemState(itemRow, sectionId) {
         itemRow.classList.add(expandedClassName);
 
         let osContainer = itemRow.nextElementSibling;
-        if (!osContainer || !osContainer.classList.contains('osContainer')) {
+        if (!osContainer || !osContainer.classList.contains('osTable')) {
             createOsContainer(itemRow, sectionId, itemRow.id);
         } else {
-            osContainer.classList.remove('osContainer');
+            osContainer.classList.remove('osTable');
         }
     }
 }

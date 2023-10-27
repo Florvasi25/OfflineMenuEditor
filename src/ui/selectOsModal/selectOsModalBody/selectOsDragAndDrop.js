@@ -30,34 +30,40 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
                 selectOsBodyRight.insertBefore(draggable, afterElement)
             }
         
-            // const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+            const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
+            console.log('osContainerPreviewArray', osContainerPreviewArray);
             
-            // optionContainerPreviewArray.forEach(optionContainerPreview => {
-            //     const groupOsId = optionContainerPreview.getAttribute('groupOsId');
-                
-            //     if (groupOsId === osGroup.groupOsId) {
-            //         const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
-            //         const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
-            //         if (afterElement == null) {
-            //             optionContainerPreview.appendChild(osRowOptionPreview)
-            //         } else {
-            //             const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
-            //             optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
-            //         }        
-            //     }
-            // });
+            const osContainerPreview = osContainerPreviewArray.find((p) => { 
+                console.log('p.id', p.id,)
+                console.log('p', p,)
+                console.log('foundItem.id', foundItem.MenuItemId)
+                console.log('foundItem', foundItem)
+                return p.id == foundItem.MenuItemId});
+            console.log('osContainerPreview', osContainerPreview);
+             
+            const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
+            const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => {
+                return p.id == draggable.id;
+            });
+
+            
+            if (afterElement == null) {
+                console.log('afterElement', afterElement);
+                osContainerPreview.appendChild(osRowOptionPreview)
+            } else {
+                const afterElementPreview = osRowHeaderPreviewArray.find((p) => p.id == afterElement.id)
+                osContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
+            }
         })
         
         selectOsBodyRight.addEventListener("dragend", () => {
             const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
             const draggedIdOs = draggable.getAttribute("id");
-            const osIndex = foundItem.MenuItemOptionSets.findIndex(os => os.groupOsId == draggedIdOs)
-            console.log(osIndex);
+            const osIndex = foundItem.MenuItemOptionSets.findIndex(os => os.MenuItemOptionSetId == draggedIdOs)
             const indexNewPosition = rows.indexOf(draggable);
             
             if(osIndex !== indexNewPosition) {
                 const osToMove = foundItem.MenuItemOptionSets.splice(osIndex, 1)[0];
-                console.log('osToMove', osToMove);
                 foundItem.MenuItemOptionSets.splice(indexNewPosition, 0, osToMove);
                 foundItem.MenuItemOptionSets.forEach((obj, osIndex) => {
                     obj.DisplayOrder = osIndex;
