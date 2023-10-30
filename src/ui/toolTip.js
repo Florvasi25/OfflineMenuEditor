@@ -26,4 +26,14 @@ function showToolTip(element, message) {
     });
 }
 
-export { showToolTip }
+function removeToolTip(element) {
+    const tooltip = element.querySelector('.tooltip');
+    if (tooltip) {
+        tooltip.remove(); // Remove the tooltip element from the DOM
+    }
+}
+
+export { 
+    showToolTip,
+    removeToolTip
+}

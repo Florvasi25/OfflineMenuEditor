@@ -13,8 +13,14 @@ import {
     getLocalStorageSectionIDs,
     getUniqueRandomInt
 } from '../context.js';
+
 import { createSection } from './sectionContainer.js'
-import { showToolTip } from '../toolTip.js'
+
+import { 
+    showToolTip,
+    removeToolTip
+} from '../toolTip.js'
+
 import { changeSectionClockIcon } from '../clock/sectionClock.js'
 
 function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
@@ -31,6 +37,14 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (sectionRow.classList.contains('expanded')) {
             showToolTip(duplicateButton, "You must close this section before duplicating.");
+        }
+    });
+    
+    // Add an event listener to the sectionRow to watch for class changes
+    sectionRow.addEventListener('transitionend', () => {
+        if (sectionRow.classList.contains('folded')) {
+            // Remove the tooltip if the section is folded
+            removeToolTip(duplicateButton);
         }
     });
     
@@ -109,6 +123,7 @@ function newIDs(newSection){
             }
         });
     }
+    
     updateCounterLocalStorage(newSectionId, true);
     return newSection;
 }

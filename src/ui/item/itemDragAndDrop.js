@@ -5,7 +5,10 @@ import {
     getDragAfterElement,
 } from '../context.js';
 
-import { showToolTip } from '../toolTip.js'
+import { 
+    showToolTip,
+    removeToolTip
+} from '../toolTip.js'
 
 function createItemDragCell(itemRow) {
     const itemDragCell = document.createElement('div')
@@ -21,6 +24,14 @@ function createItemDragCell(itemRow) {
         }
         e.stopPropagation();
     })
+
+    // Add an event listener to the sectionRow to watch for class changes
+    itemRow.addEventListener('transitionend', () => {
+        if (itemRow.classList.contains('folded')) {
+            // Remove the tooltip if the section is folded
+            removeToolTip(itemDragCell);
+        }
+    });
     
     itemDragImg.addEventListener('dragstart', (e) => {
         const expandedItemsInContainer = itemRow.parentElement.querySelector('.expanded');

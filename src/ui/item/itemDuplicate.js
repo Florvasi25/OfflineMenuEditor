@@ -11,8 +11,14 @@ import {
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from '../context.js';
+
 import { createItem } from './itemContainer.js'
-import { showToolTip } from '../toolTip.js'
+
+import { 
+    showToolTip,
+    removeToolTip
+} from '../toolTip.js'
+
 import { changeItemClockIcon } from '../clock/itemClock.js'
 
 function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem) {
@@ -29,6 +35,14 @@ function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer,
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (itemRow.classList.contains('expanded')) {
             showToolTip(duplicateButton, "You must close this item before duplicating.");
+        }
+    });
+
+    // Add an event listener to the sectionRow to watch for class changes
+    itemRow.addEventListener('transitionend', () => {
+        if (itemRow.classList.contains('folded')) {
+            // Remove the tooltip if the section is folded
+            removeToolTip(duplicateButton);
         }
     });
     
