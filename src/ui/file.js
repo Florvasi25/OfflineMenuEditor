@@ -30,6 +30,8 @@ function createLoadJsonButton() {
             setOptionSetId(jsonData);
             setOptionSetItemsId(jsonData);
             generateHTML(jsonData);
+
+            loadJsonButton.value = '';
         };
     
         if (!file) return
