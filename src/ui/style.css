@@ -992,7 +992,6 @@ selector svg {
     justify-content: space-between;
     padding: 7.5px 0px;
     margin: 7.5px 0;
-    cursor: grab;
     border-radius: 5px;
     
     &.expanded .osDropdownButton { 
