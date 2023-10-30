@@ -15,18 +15,20 @@ import {
 } from './clockUtils.js'
 
 import { addSectionAvailabilityButton } from "./sectionAvailability.js";
+import { changeItemClockIcon } from "./itemClock.js";
 
 function sectionClockButton(sectionButtonsCell, sectionId) {
     const clockButton = createAndAppend(sectionButtonsCell, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
+    //addClockIcon(jsonData, sectionId, clockButtonImg);
 
     clockButton.addEventListener('click', () => {
         const clockElements = createClockBody();
         const clockModalDiv = clockElements.clockModalDiv;
         const clockBodyDiv = clockElements.clockBodyDiv;
         const clockFooterDiv = clockElements.clockFooterDiv;
-
+        
         //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const section = getSection(jsonData, sectionId);    
 
@@ -39,6 +41,14 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
             appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
         }
     });
+}
+function changeSectionClockIcon(sectionRow, sectionId){
+    var section = getSection(jsonData, sectionId);
+    const clockButtonImg = sectionRow.querySelector('.sectionButton.clockButton .sectionButtonImg');
+    if (compareDailySpecialHours(section) && section?.MenuItems?.[0]?.DailySpecialHours?.length > 1)
+    {
+        clockButtonImg.src = '../../assets/greenClockIcon.svg';
+    }else {clockButtonImg.src = '../../assets/clockIcon.svg';}
 }
 function addSaveChangesButton(parentElement, closeElement, section) {
     const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn');
@@ -94,9 +104,11 @@ function createSectionTableRows(parentElement, menuSection) {
 
 // Store the data in an object and push it to the jsonData local storage
 function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
+    const sectionRow = document.getElementById(sectionId);
     jsonData.MenuSections.forEach(MenuSection => {
         if (sectionId == MenuSection.MenuSectionId) {
             MenuSection.MenuItems.forEach(MenuItem => {
+                const itemRow = document.getElementById(MenuItem.MenuItemId);
                 if(!MenuItem.DailySpecialHours) {
                     MenuItem.DailySpecialHours = [];
                 }
@@ -123,11 +135,14 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
                 };
                 // Push the new time to the array
                 MenuItem.DailySpecialHours.push(newTime);
+                changeItemClockIcon(itemRow, MenuItem.MenuItemId);
             });
             updateLocalStorage();
         }
     });
+    changeSectionClockIcon(sectionRow, sectionId);
 }
+
 function getSection(jsonData, sectionId) {
     const foundSection = jsonData.MenuSections.find(MenuSection => MenuSection.MenuSectionId == sectionId);
     if (foundSection) {
@@ -137,7 +152,7 @@ function getSection(jsonData, sectionId) {
 }
 
 function compareDailySpecialHours(menuSection) {
-    if (!menuSection.MenuItems || menuSection.MenuItems.length <= 1) {
+    if (!menuSection?.MenuItems || menuSection?.MenuItems?.length <= 1) {
         return true; // if there's only one or no items, then they are inherently the same
     }
     const baseHours = menuSection.MenuItems[0].DailySpecialHours;
@@ -176,13 +191,19 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section,
         addSectionAvailabilityButton(clockFooterDiv, section);
         createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
         setupSaveChanges(clockBodyDiv, clockFooterDiv, sectionId, section);
-
+        resetClockIcons(sectionId);
     });
 }
 
+function resetClockIcons(sectionId){
+    const sectionRow = document.getElementById(sectionId);
+    const clockButtonImg = sectionRow.querySelector('.sectionButton.clockButton .sectionButtonImg');
+    clockButtonImg.src = '../../assets/clockIcon.svg';
+}
 export {
     sectionClockButton,
     createSectionTableRows,
     storeSectionTimeTableInJson,
-    compareDailySpecialHours
+    compareDailySpecialHours,
+    changeSectionClockIcon
 } 

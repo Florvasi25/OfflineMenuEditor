@@ -71,6 +71,7 @@ function createItemTableRows(parentElement, item) {
 
 // Store the data in an object and push it to the jsonData local storage
 function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
+    const itemRow = document.getElementById(id);
     jsonData.MenuSections.forEach(section => {
         section.MenuItems.forEach(item => {
             if(item.MenuItemId == id) {
@@ -102,7 +103,18 @@ function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
             }
     })})
     updateLocalStorage();
+    changeItemClockIcon(itemRow, id);
 }
+
+function changeItemClockIcon(itemRow, itemId){
+    var item = getItem(jsonData, itemId);
+    const clockButtonImg = itemRow.querySelector('.sectionButton.clockButton .sectionButtonImg');
+    if (item?.DailySpecialHours?.length > 1)
+    {
+        clockButtonImg.src = '../../assets/greenClockIcon.svg';
+    }else {clockButtonImg.src = '../../assets/clockIcon.svg';}
+}
+
 function getItem(jsonData, itemId) {
     if (!jsonData || !jsonData.MenuSections) return null;
     for (let section of jsonData.MenuSections) {
@@ -117,5 +129,6 @@ function getItem(jsonData, itemId) {
 export {
     itemClockButton,
     createItemTableRows,
-    storeItemTimeTableInJson
+    storeItemTimeTableInJson,
+    changeItemClockIcon
 }

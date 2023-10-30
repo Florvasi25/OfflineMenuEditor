@@ -11,10 +11,9 @@ import {
     setSectionDisplayOrder,
     getUniqueRandomInt,
 } from '../context.js';
-
 import { createItem } from './itemContainer.js'
-
 import { showToolTip } from '../toolTip.js'
+import { changeItemClockIcon } from '../clock/itemClock.js'
 
 function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem) {
     const duplicateButton = document.createElement('button');
@@ -57,8 +56,8 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
+        changeItemClockIcon(newItemRow, newItemRow.id);
         updateLocalStorage();
-        
     }
 }
 

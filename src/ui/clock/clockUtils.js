@@ -115,7 +115,7 @@ function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data) {
         const CloseTime = cells[2].querySelector('input').value;    
         let Period = calculatePeriod(StartTime, CloseTime)
         if (data.MenuItems) {
-            storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); // assuming this is for sections
+            storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); //for sections
             availabilityTimes(id, clockFooterDiv);
         } else {
             storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); // for items

@@ -4,20 +4,15 @@ import {
 } from '../context.js'
 
 import { createItemNameCell } from './itemName.js'
-
 import { createItemDropdown } from './itemDropDown.js'
-
 import { createItemDragCell } from './itemDragAndDrop.js'
-
 import { createItemButtonsCell } from './itemButtonContainer.js'
-
 import { createItemButton } from './itemAddNew.js'
-
 import { createItemDescCell } from './itemDescription.js'
-
 import { createItemPriceCell, } from './itemPrice.js'
-
 import { createItemTaxCell } from './itemTax.js'
+import { changeItemClockIcon } from '../clock/itemClock.js'
+
 
 function createItemContainer(sectionRow) {
     const itemTable = document.createElement('div');
@@ -66,6 +61,7 @@ function createItem(menuItem, sectionId, itemContainer) {
     //Creates Buttons Cell
     const itemButtonsCell = createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer);
     itemRow.appendChild(itemButtonsCell)
+    changeItemClockIcon(itemRow, menuItem.MenuItemId);
 
     //Creates Section Name Cell
     const itemNameCell = createItemNameCell(itemRow, menuItem, sectionId)

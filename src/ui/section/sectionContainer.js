@@ -8,6 +8,8 @@ import { createSectionNameCell } from './sectionName.js'
 
 import { createSectionDescCell } from './sectionDescription.js'
 
+import { changeSectionClockIcon } from '../clock/sectionClock.js'
+
 //Section components
 function createSection(menuSection) {
     //Section Container
@@ -29,6 +31,7 @@ function createSection(menuSection) {
     //Creates Buttons Cell
     const sectionButtonsCell = createSectionButtonsCell(sectionRow, menuSection)
     sectionRow.appendChild(sectionButtonsCell)
+    changeSectionClockIcon(sectionRow, menuSection.MenuSectionId);
 
     //Creates Section Name Cell
     const sectionNameCell = createSectionNameCell(sectionRow, menuSection)
@@ -38,6 +41,7 @@ function createSection(menuSection) {
     const sectionDescCell = createSectionDescCell(menuSection, sectionRow);
     sectionRow.appendChild(sectionDescCell)
     
+
     return sectionRow
 }
 

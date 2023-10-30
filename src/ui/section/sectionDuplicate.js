@@ -13,10 +13,9 @@ import {
     getLocalStorageSectionIDs,
     getUniqueRandomInt
 } from '../context.js';
-
 import { createSection } from './sectionContainer.js'
-
 import { showToolTip } from '../toolTip.js'
+import { changeSectionClockIcon } from '../clock/sectionClock.js'
 
 function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     const duplicateButton = document.createElement('button');
@@ -57,9 +56,14 @@ function duplicateSection(sectionRow) {
         document.getElementById('sectionContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
 
         jsonData.MenuSections.splice(sectionIndex+1, 0, section);
-        jsonData.MenuSections.forEach((obj, index) => {
-            obj.DisplayOrder = index;
+        jsonData.MenuSections.forEach((menuSection, index) => {
+            menuSection.DisplayOrder = index;
+            /*menuSection.MenuItems.forEach(MenuItem => {
+                const itemRow = document.getElementById(MenuItem.MenuItemId);
+                changeItemClockIcon(itemRow, MenuItem.MenuItemId);
+            });*/
         });
+        changeSectionClockIcon(newSectionRow, newSectionRow.id);
         updateLocalStorage();
     }
 }
