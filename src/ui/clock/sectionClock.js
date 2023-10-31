@@ -135,7 +135,7 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
                 };
                 // Push the new time to the array
                 MenuItem.DailySpecialHours.push(newTime);
-                changeItemClockIcon(itemRow, MenuItem.MenuItemId);
+                if( itemRow != null) {changeItemClockIcon(itemRow, MenuItem.MenuItemId);}
             });
             updateLocalStorage();
         }
