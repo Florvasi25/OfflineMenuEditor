@@ -1,7 +1,8 @@
 import { 
     groupedOs,
     jsonData,
-    updateLocalStorage
+    updateLocalStorage,
+    groupOptionSets,
 } from '../../context.js';
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
@@ -15,7 +16,7 @@ function createSelectOsModalBody(itemRow) {
     const selectOsBodyLeft = createSelectOsBodyLeft(itemRow.id)
     selectOsModalBody.appendChild(selectOsBodyLeft)
 
-    const selectOsBodyRight = createSectionBodyRight(itemRow.id)
+    const selectOsBodyRight = createSelectOsBodyRight(itemRow.id)
     selectOsModalBody.appendChild(selectOsBodyRight)
 
     return selectOsModalBody;
@@ -38,7 +39,7 @@ function createSelectOsBodyLeft(itemRowId) {
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
     filteredGroup.forEach((osGroup, index) => {
-        const selectOsRowHeader = createSelectOsRowLeft(osGroup)
+        const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, filteredGroup, itemRowId)
 
         if (index % 2 === 0) {
             selectOsRowHeader.classList.add('odd');
@@ -52,7 +53,7 @@ function createSelectOsBodyLeft(itemRowId) {
     return selectOsBodyLeft
 }
 
-function createSectionBodyRight(itemRowId) {
+function createSelectOsBodyRight(itemRowId) {
     const selectOsBodyRight = document.createElement('div');
     selectOsBodyRight.className = 'selectOsBodyRight';
     selectOsBodyRight.classList.add('selectOsContainer')
@@ -72,6 +73,36 @@ function createSectionBodyRight(itemRowId) {
     });
 
     return selectOsBodyRight;
+}
+
+function createSelectOsRowLeft(osGroup, selectOsBodyLeft, filteredGroup, itemRowId) {
+    const selectOsRowHeader = createSelectOsRow(osGroup)
+
+    const addBtn = document.createElement('button')
+    addBtn.style.width = '20px'
+    addBtn.textContent = '+'
+
+    const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
+
+    addBtn.addEventListener('click', () => {
+        selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
+        const newOs = JSON.parse(JSON.stringify(osGroup));
+
+        newOs.MenuItemId = foundItem.MenuItemId
+        newOs.MenuItemOptionSetId += 1
+        
+        foundItem.MenuItemOptionSets.push(newOs)
+
+        const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
+        selectOsBodyRight.replaceWith(createSelectOsBodyRight(itemRowId))
+
+        groupOptionSets()
+        updateLocalStorage()
+    })
+
+    selectOsRowHeader.appendChild(addBtn)
+
+    return selectOsRowHeader
 }
 
 function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
@@ -100,22 +131,6 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
     })
 
     selectOsRowHeader.appendChild(deleteBtn)
-
-    return selectOsRowHeader
-}
-
-function createSelectOsRowLeft(osGroup) {
-    const selectOsRowHeader = createSelectOsRow(osGroup)
-
-    const addBtn = document.createElement('button')
-    addBtn.style.width = '20px'
-    addBtn.textContent = '+'
-
-    addBtn.addEventListener('click', () => {
-        
-    })
-
-    selectOsRowHeader.appendChild(addBtn)
 
     return selectOsRowHeader
 }
