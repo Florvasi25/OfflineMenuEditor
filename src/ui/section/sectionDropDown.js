@@ -51,4 +51,4 @@ function toggleSectionState(sectionRow) {
     }
 }
 
-export { createSectionDropdown }
+export { createSectionDropdown, toggleSectionState }

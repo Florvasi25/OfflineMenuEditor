@@ -72,10 +72,6 @@ function duplicateSection(sectionRow) {
         jsonData.MenuSections.splice(sectionIndex+1, 0, section);
         jsonData.MenuSections.forEach((menuSection, index) => {
             menuSection.DisplayOrder = index;
-            /*menuSection.MenuItems.forEach(MenuItem => {
-                const itemRow = document.getElementById(MenuItem.MenuItemId);
-                changeItemClockIcon(itemRow, MenuItem.MenuItemId);
-            });*/
         });
         changeSectionClockIcon(newSectionRow, newSectionRow.id);
         updateLocalStorage();
