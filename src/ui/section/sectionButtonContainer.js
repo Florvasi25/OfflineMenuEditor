@@ -6,6 +6,8 @@ import { sectionDeleteButton } from './sectionDelete.js'
 
 import { sectionDuplicateButton } from './sectionDuplicate.js'
 
+import { sectionListButton } from './sectionList.js'
+
 function createSectionButtonsCell(sectionRow, menuSection) {
     const sectionButtonsCell = document.createElement('div');
     sectionButtonsCell.classList = "sectionButtonsCell"
@@ -18,6 +20,8 @@ function createSectionButtonsCell(sectionRow, menuSection) {
 
     sectionDuplicateButton(sectionRow, sectionButtonsCell, menuSection)
 
+    sectionListButton(sectionButtonsCell);
+    
     return sectionButtonsCell
 }
 

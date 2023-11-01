@@ -637,6 +637,7 @@ selector svg {
 
 .duplicateButton {
     background-color: #cec58a;
+    transition: background-color 0.3s ease;
 }
 
 .duplicateButton:hover {
@@ -647,6 +648,7 @@ selector svg {
 
 .deleteButton {
     background-color: #d18d8d;
+    transition: background-color 0.3s ease;
 }
 
 .deleteButton:hover {
@@ -672,6 +674,7 @@ selector svg {
 
 .visibilityButton {
     background-color: #cdcdcd;
+    transition: background-color 0.3s ease;
 }
 
 .visibilityButton:hover {
@@ -682,6 +685,7 @@ selector svg {
 
 .clockButton {
     background-color: #cdcdcd;
+    transition: background-color 0.3s ease;
 }
 
 .clockButton:hover {
@@ -701,6 +705,18 @@ selector svg {
 .hiddenSection:hover {
     background-color: #1118f1;
 }
+
+/* LIST BTN - LIST BTN - LIST BTN - LIST BTN - LIST BTN - LIST BTN -*/
+
+.listButton {
+    background-color:#cdcdcd; 
+    transition: background-color 0.3s ease; 
+}
+
+.listButton:hover {
+    background-color: #b1b1b1;
+}
+
 
 /* CLOSE MODAL BTN - CLOSE MODAL BTN - CLOSE MODAL BTN - CLOSE MODAL BTN */
 
@@ -960,6 +976,91 @@ selector svg {
     margin-top: 15px;
     padding: 15px 25px;  
     width: auto;
+}
+
+/*SECTION LIST - SECTION LIST - SECTION LIST*/
+.list {
+    width: 300px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.list-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.list-content {
+    margin-top: 10px;
+}
+
+.form-body {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: none; /* Disabling resize for the textarea */
+}
+
+.form-actions .row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit-button-list {
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: #32c5d2;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button-list:hover {
+    background-color: #0056b3;
+}
+
+.submit-button-list:active {
+    background-color: #004999;
+}
+.cancel-button-list{
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #666;
+    background-color: #e1e5ec;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.cancel-button-list:hover {
+    background-color: #888;
+}
+
+.cancel-button-list:active {
+    background-color: #888;
+}
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff;
+    position: absolute;
+    top: -10px;
+    left: calc(50% - 10px);
 }
 
 /* SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL */
