@@ -1018,6 +1018,8 @@ selector svg {
     flex-grow: 1;
     color: #ffffff;
     font-size: 14px;
+    display: flex;
+    align-items: center
 }
 
 .selectOsModalBody {
@@ -1034,3 +1036,24 @@ selector svg {
     margin-left: 10px;
 }
 
+.btnAndSelectOption {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.addOrDeleteBtn {
+    margin-right: 5px;
+    width: 20px;
+    height: 25px;
+    background-color: rgb(255, 255, 255, .35);
+    color: #ffffff;
+    border: #787777 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.addOrDeleteBtn:hover {
+    background-color: rgb(255, 255, 255, .95);
+    color: #555555;
+}
