@@ -48,21 +48,14 @@ function createList(triggerButton){
 
 class List {
     constructor(triggerElement, content) {
-        this.triggerElement = triggerElement; // Element that, when clicked, will trigger the list
+        this.triggerElement = triggerElement; // Element that, when clicked, will trigger the list object
         this.content = content; // Content for the list
         this.listElement = null; // Will hold the actual list DOM element once created
-
+        this.cancelButton = null;
+        this.submitButton = null;
     }
-
     // Create the list HTML structure
     createListHtml() {
-        /*const list = createElementWithClasses('div', 'list');
-        const listContent = createAndAppend(list, 'div', 'list-content');
-        addTextContent(listContent, this.content);
-        // You can add more elements to the list as per the design
-
-        // Append the list to the body or a specific container
-        document.body.appendChild(list);*/
         const list = createAndAppend(body, 'div', 'list');
         const arrow = createAndAppend(list, 'div', 'arrow');
         const listTitle = createAndAppend(list, 'h3', 'list-title');
@@ -77,14 +70,17 @@ class List {
         const textAreaGroupItems = createAndAppend(formGroup, 'textarea', 'form-control');
         textAreaGroupItems.setAttribute('rows', '6');
         textAreaGroupItems.setAttribute('cols', '30');
-        addTextContent(textAreaGroupItems, 'item 1;5.00\nitem 2;5.00\nEmpty;0.00\nitem3;0.00');
         
         const formActions = createAndAppend(itemForm, 'div', 'form-actions');
         const row = createAndAppend(formActions, 'div', 'row');
-        const submitButton = createAndAppend(row, 'button',  'submit-button-list');
-        addTextContent(submitButton, 'Submit');
-        const cancelButton = createAndAppend(row, 'button', 'cancel-button-list');
-        addTextContent(cancelButton, 'Cancel');
+        this.submitButton = createAndAppend(row, 'button',  'submit-button-list');
+        addTextContent(this.submitButton, 'Submit');
+        this.cancelButton = createAndAppend(row, 'button', 'cancel-button-list');
+        addTextContent(this.cancelButton, 'Cancel');
+
+        this.cancelButton.addEventListener('click', () => {
+            this.hideList();
+        });
 
         return list;
     }
@@ -94,13 +90,17 @@ class List {
             this.listElement = this.createListHtml();
         }
         this.positionList();
-        this.listElement.style.display = 'block';
+        this.listElement.classList.remove('hidden');
+
+        document.addEventListener('click', this.handleOutsideClick.bind(this));
     }
 
     hideList() {
         if (this.listElement) {
-            this.listElement.style.display = 'none';
+            this.listElement.classList.add('hidden');
         }
+
+        document.removeEventListener('click', this.handleOutsideClick.bind(this));
     }
 
     positionList() {
@@ -108,6 +108,13 @@ class List {
         this.listElement.style.position = 'absolute';
         this.listElement.style.top = (rect.bottom + window.scrollY) + 'px';
         this.listElement.style.left = (rect.left + window.scrollX) + 'px';
+    }
+
+    //if the user clicks outside the list, it will close.
+    handleOutsideClick(event) {
+        if (!this.listElement.contains(event.target) && !this.triggerElement.contains(event.target)) {
+            this.hideList();
+        }
     }
 }
 
