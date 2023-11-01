@@ -91,8 +91,21 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
     addBtn.addEventListener('click', () => {
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
-        const newOs = JSON.parse(JSON.stringify(osGroup));
 
+        const rows = Array.from(selectOsBodyLeft.querySelectorAll(".selectOsRowHeader"));
+    
+        rows.forEach((row, index) => {
+            if (index % 2 === 0) {
+                row.classList.remove('even');
+                row.classList.add('odd');
+            } else {
+                row.classList.remove('odd');
+                row.classList.add('even');
+            }
+        });
+
+        const newOs = JSON.parse(JSON.stringify(osGroup));
+        
         newOs.MenuItemId = foundItem.MenuItemId
         newOs.MenuItemOptionSetId += 1
         
@@ -136,6 +149,19 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
     deleteBtn.addEventListener('click', () => {
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
+
+        const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
+    
+        rows.forEach((row, index) => {
+            if (index % 2 === 0) {
+                row.classList.remove('even');
+                row.classList.add('odd');
+            } else {
+                row.classList.remove('odd');
+                row.classList.add('even');
+            }
+        });
+
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
         menuOs.MenuItemId = null
 
@@ -168,18 +194,12 @@ function createSelectOsRow(menuOs) {
     const osDropDown = createSelectOsDropdown(selectOsRowHeader, menuOs)
     dropAndName.appendChild(osDropDown)
 
-    // const osDrag = createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem)
-    // dropAndName.appendChild(osDrag)
-
     const nameAndOsId = document.createElement('div')
     nameAndOsId.className = 'nameAndOsId'
     dropAndName.appendChild(nameAndOsId)
 
     const osNameHeader = createSelectOsNameHeader(menuOs)
     nameAndOsId.appendChild(osNameHeader)
-
-    // const optionSetIdPreview = createOptionSetIdPreview(menuOs)
-    // nameAndOsId.appendChild(optionSetIdPreview)
 
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     selectOsRowHeader.appendChild(osSelectOptionContainer)

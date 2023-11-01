@@ -32,20 +32,20 @@ function toggleItemState(itemRow, sectionId) {
         itemRow.classList.remove(expandedClassName);
         itemRow.classList.add(foldedClassName);
 
-        const osContainer = itemRow.nextElementSibling;
-        if (osContainer && osContainer.classList.contains('osContainer')) {
-            osContainer.classList.add('itemRow');
-            osContainer.remove(); // Remove the content container
+        const osTable = itemRow.nextElementSibling;
+        if (osTable && osTable.classList.contains('osTable')) {
+            osTable.classList.add('itemRow');
+            osTable.remove(); // Remove the content container
         }
     } else {
         itemRow.classList.remove(foldedClassName);
         itemRow.classList.add(expandedClassName);
 
-        let osContainer = itemRow.nextElementSibling;
-        if (!osContainer || !osContainer.classList.contains('osContainer')) {
+        let osTable = itemRow.nextElementSibling;
+        if (!osTable || !osTable.classList.contains('osTable')) {
             createOsContainer(itemRow, sectionId, itemRow.id);
         } else {
-            osContainer.classList.remove('osContainer');
+            osTable.classList.remove('osTable');
         }
     }
 }
