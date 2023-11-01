@@ -137,5 +137,6 @@ function addNewOs(itemRow) {
 
 export {
     createOsContainer,
-    createOsNameCell
+    createOsNameCell,
+    createOsRow
 }

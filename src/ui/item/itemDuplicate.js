@@ -10,6 +10,7 @@ import {
     getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
+    groupOptionSets,
 } from '../context.js';
 
 import { createItem } from './itemContainer.js'
@@ -70,6 +71,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
+        groupOptionSets()
         changeItemClockIcon(newItemRow, newItemRow.id);
         updateLocalStorage();
     }

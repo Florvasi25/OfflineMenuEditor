@@ -9,6 +9,10 @@ import { createSelectOsDropdown } from './selectOsDropDown.js'
 
 import { createOsDrag } from './selectOsDragAndDrop.js'
 
+import {
+    createOsRow
+} from '../../optionSet/osHeaderContainer.js'
+
 function createSelectOsModalBody(itemRow) {
     const selectOsModalBody = document.createElement('div');
     selectOsModalBody.className = 'selectOsModalBody';
@@ -114,6 +118,24 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
         const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
         selectOsBodyRight.replaceWith(createSelectOsBodyRight(itemRowId))
 
+        const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
+        const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
+         
+        const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
+        osContainerPreview.appendChild(newOptionRow);
+
+        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+        
+        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+            if (index % 2 === 0) {
+                osRowHeaderPreview.classList.remove('even');
+                osRowHeaderPreview.classList.add('odd');
+            } else {
+                osRowHeaderPreview.classList.remove('odd');
+                osRowHeaderPreview.classList.add('even');
+            }
+        });
+
         groupOptionSets()
         updateLocalStorage()
     })
@@ -167,6 +189,24 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
         const selectOsBodyLeft = selectOsBodyRight.parentNode.getElementsByClassName('selectOsBodyLeft')[0]
         selectOsBodyLeft.replaceWith(createSelectOsBodyLeft(foundItem.MenuItemId))
+
+        const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
+        const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
+        console.log('osRowOptionPreview', osRowOptionPreview);
+         
+        osRowOptionPreview.remove();
+
+        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+        
+        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+            if (index % 2 === 0) {
+                osRowHeaderPreview.classList.remove('even');
+                osRowHeaderPreview.classList.add('odd');
+            } else {
+                osRowHeaderPreview.classList.remove('odd');
+                osRowHeaderPreview.classList.add('even');
+            }
+        });
 
         updateLocalStorage()
     })
