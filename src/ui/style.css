@@ -1167,3 +1167,14 @@ selector svg {
     background-color: rgb(255, 255, 255, .95);
     color: #555555;
 }
+
+.osEditButton {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.osEditButtonImg {
+    width: 25px;
+} 

@@ -117,12 +117,17 @@ function addNewOs(itemRow) {
     const newOsBtnContainer = document.createElement('div')
     newOsBtnContainer.className = 'newOsBtnContainer'
 
-    const osAddNew = document.createElement('button')
-    osAddNew.textContent = '+'
-    osAddNew. className = 'osAddNew'
-    osAddNew.id = itemRow.id
+    const osEditButton = document.createElement('button')
+    osEditButton. className = 'osEditButton'
+    osEditButton.id = itemRow.id
 
-    osAddNew.addEventListener('click', () => {
+    const editButtonImg = document.createElement('img')
+    editButtonImg.className = 'osEditButtonImg'
+    editButtonImg.src = '../../assets/editIcon.svg'
+
+    osEditButton.appendChild(editButtonImg)
+
+    osEditButton.addEventListener('click', () => {
         const selectOsModalContainer = createSelectOsModalContainer(itemRow)
         selectOsModalContainer.style.display = 'block';
         setTimeout(() => {
@@ -130,7 +135,7 @@ function addNewOs(itemRow) {
         }, 10);
     });
 
-    newOsBtnContainer.appendChild(osAddNew)
+    newOsBtnContainer.appendChild(osEditButton)
 
     return newOsBtnContainer
 }

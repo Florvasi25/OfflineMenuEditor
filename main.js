@@ -13,8 +13,6 @@ function createWindow()
         {
             label: "File",
             submenu:[
-                {label: 'Load JSON'},
-                {label: 'Save JSON'},
                 {label: 'Exit',
                 click(){
                     app.quit()
