@@ -12,6 +12,10 @@ import{
     availabilityTimes
 }from './sectionAvailability.js'
 
+import {
+    createAndAppend,  
+    addTextContent
+}  from '../helpers.js';
 
 const dayMappingToName = {
     0: 'Sunday',
@@ -32,22 +36,6 @@ const invertedDayMapping = {
     'Friday': 5,
     'Saturday': 6
 };
-
-function createElementWithClasses(tagName, ...classes) {
-    const element = document.createElement(tagName);
-    element.classList.add(...classes);
-    return element;
-}
-
-function createAndAppend(parent, tagName, ...classes) {
-    const element = createElementWithClasses(tagName, ...classes);
-    parent.appendChild(element);
-    return element;
-}
-
-function addTextContent(element, text) {
-    element.textContent = text;
-}
 
 function createClockBody() {
     const clockModalDiv = createAndAppend(document.body, 'div', 'clockModal');

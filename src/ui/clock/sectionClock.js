@@ -5,14 +5,17 @@ import {
 } from '../context.js'
 
 import {
-    createAndAppend,
-    addTextContent,
     createClockBody,
     createClockTable,
     createInputCell,
     dayMappingToName,
     setupSaveChanges
 } from './clockUtils.js'
+
+import {
+    createAndAppend,  
+    addTextContent
+}  from '../helpers.js';
 
 import { addSectionAvailabilityButton } from "./sectionAvailability.js";
 import { changeItemClockIcon } from "./itemClock.js";

@@ -3,6 +3,8 @@ import {
     jsonData,
     updateLocalStorage,
     groupOptionSets,
+    getUniqueRandomInt,
+    getLocalStorageOptionSetIDs
 } from '../../context.js';
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
@@ -111,7 +113,10 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
         const newOs = JSON.parse(JSON.stringify(osGroup));
         
         newOs.MenuItemId = foundItem.MenuItemId
-        newOs.MenuItemOptionSetId += 1
+
+        const optionSetsIds =  getLocalStorageOptionSetIDs();
+        const newOptionSetId = getUniqueRandomInt(optionSetsIds);
+        newOs.MenuItemOptionSetId = newOptionSetId;
         
         foundItem.MenuItemOptionSets.push(newOs)
 

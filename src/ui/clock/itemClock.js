@@ -5,13 +5,16 @@ import {
 } from '../context.js'
 
 import {
-    createAndAppend,
-    addTextContent,
     createClockBody,
     createClockTable,
     createInputCell,
     dayMappingToName
 } from './clockUtils.js'
+
+import {
+    createAndAppend,  
+    addTextContent
+}  from '../helpers.js';
 
 
 function itemClockButton(itemButtonsCell, itemId) {

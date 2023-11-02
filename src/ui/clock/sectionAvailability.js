@@ -5,11 +5,14 @@ import {
 } from '../context.js'
 
 import {
-    createAndAppend,
-    addTextContent,
     calculatePeriod,
     invertedDayMapping
 } from "./clockUtils.js";
+
+import {
+    createAndAppend,  
+    addTextContent
+}  from '../helpers.js';
 
 let clockSectionAvailabilityBtn;
 

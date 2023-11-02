@@ -14,6 +14,11 @@ import {
     getUniqueRandomInt
 } from '../context.js';
 
+import {
+    createAndAppend,  
+    addTextContent
+}  from '../helpers.js';
+
 function sectionListButton(sectionButtonsCell) {
     const listButton = document.createElement('button');
     listButton.classList.add('sectionButton')
@@ -50,7 +55,7 @@ class List {
     constructor(triggerElement, content) {
         this.triggerElement = triggerElement; // Element that, when clicked, will trigger the list object
         this.content = content; // Content for the list
-        this.listElement = null; // Will hold the actual list DOM element once created
+        this.listElement = null; // Will hold the DOM element once created
         this.cancelButton = null;
         this.submitButton = null;
     }
@@ -116,22 +121,6 @@ class List {
             this.hideList();
         }
     }
-}
-
-function createElementWithClasses(tagName, ...classes) {
-    const element = document.createElement(tagName);
-    element.classList.add(...classes);
-    return element;
-}
-
-function createAndAppend(parent, tagName, ...classes) {
-    const element = createElementWithClasses(tagName, ...classes);
-    parent.appendChild(element);
-    return element;
-}
-
-function addTextContent(element, text) {
-    element.textContent = text;
 }
 
 
