@@ -2,7 +2,7 @@ import {
     groupedOs,
     jsonData,
     updateLocalStorage,
-    groupOptionSets,
+    // groupOptionSets,
     getUniqueRandomInt,
     getLocalStorageOptionSetIDs
 } from '../../context.js';
@@ -141,7 +141,7 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
             }
         });
 
-        groupOptionSets()
+        // groupOptionSets()
         updateLocalStorage()
     })
 

@@ -6,7 +6,8 @@ import {
     setItemId,
     setSectionDisplayOrder,
     setOptionSetId,
-    setOptionSetItemsId
+    setOptionSetItemsId,
+    groupInitOptionSets
 } from './context.js';
 
 import { generateHTML } from './mainContainer.js'
@@ -30,6 +31,7 @@ function createLoadJsonButton() {
             setOptionSetId(jsonData);
             setOptionSetItemsId(jsonData);
             generateHTML(jsonData);
+            groupInitOptionSets()
 
             loadJsonButton.value = '';
         };

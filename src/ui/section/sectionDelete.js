@@ -6,7 +6,7 @@ import {
     updateOptionSetCounterLocalStorage,
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
-    groupOptionSets
+    // groupOptionSets
 } from '../context.js';
 
 function sectionDeleteButton(sectionButtonsCell, sectionRow) {
@@ -88,7 +88,7 @@ function deleteSection(sectionRow) {
             jsonData.MenuSections.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
-            groupOptionSets()
+            // groupOptionSets()
             updateLocalStorage();
         }
     }

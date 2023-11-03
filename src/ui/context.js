@@ -2,14 +2,12 @@ import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
-let groupedOs = {};
+let groupedOs = JSON.parse(localStorage.getItem("groupedOs")) ?? {};
 
-groupOptionSets()
 console.log('groupedOs', groupedOs);
 
 function setJsonData(data) {
     jsonData = data
-    groupOptionSets()
 }
 
 //Gets Index
@@ -240,7 +238,7 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
-function groupOptionSets() {
+function groupInitOptionSets() {
     groupedOs = {};
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
@@ -250,11 +248,13 @@ function groupOptionSets() {
                 const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
                 const groupOsKey = `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
                 os.groupOsId = groupOsKey
+                
+                const osClone = { ...os }
 
                 if (!groupedOs[groupOsKey]) {
-                    groupedOs[groupOsKey] = [os];
+                    groupedOs[groupOsKey] = [osClone];
                 } else {
-                    groupedOs[groupOsKey].push(os);
+                    groupedOs[groupOsKey].push(osClone);
                 }
 
                 os.MenuItemOptionSetItems.forEach(option => {
@@ -265,8 +265,36 @@ function groupOptionSets() {
             });
         })
     })
-    updateLocalStorage()
+
+    localStorage.setItem("groupedOs", JSON.stringify(groupedOs));
 }
+
+// function regroupOs() {
+//     groupedOs = {};
+//     for (const key in allOs) {
+//         allOs[key].forEach(os => {
+//             const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
+//             const osLength = MenuItemOptionSetItems.length;
+//             const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
+//             const groupOsKey = `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
+//             os.groupOsId = groupOsKey
+
+//             if (!groupedOs[groupOsKey]) {
+//                 groupedOs[groupOsKey] = [os];
+//             } else {
+//                 groupedOs[groupOsKey].push(os);
+//             }
+
+//             os.MenuItemOptionSetItems.forEach(option => {
+//                 const { Name, Price, IsAvailable } = option;
+//                 const groupOptionKey = `${Name}_${Price}_${IsAvailable}`;
+//                 option.groupOptionId = groupOptionKey
+//             })        
+//         });
+//     }
+
+//     localStorage.setItem("groupedOs", JSON.stringify(groupedOs));
+// }
 
 function setColorOfRows(optionRowsContainer) {
     const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
@@ -308,6 +336,6 @@ export {
     getOptionIndex,
     getOptionObject,
     getOsObject,
-    groupOptionSets,
+    groupInitOptionSets,
     setColorOfRows,
 }
