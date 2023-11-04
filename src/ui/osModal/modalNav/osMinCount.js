@@ -1,6 +1,6 @@
 import { 
     updateLocalStorage,
-    groupedOs 
+    getOsByGroupID 
 } from '../../context.js'
 
 function createMinCountCell(menuOs) {
@@ -60,8 +60,9 @@ function createMinCount(menuOs) {
 
 //Updates Name
 function updateMinCount(groupOsId, osMinCount) {
+    const matchingOS = getOsByGroupID(groupOsId)
 
-    groupedOs[groupOsId].forEach(os => {
+    matchingOS.forEach(os => {
         os.MinSelectCount = Number(osMinCount)
     })
 

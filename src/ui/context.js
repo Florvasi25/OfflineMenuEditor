@@ -269,6 +269,16 @@ function groupInitOptionSets() {
     localStorage.setItem("groupedOs", JSON.stringify(groupedOs));
 }
 
+function getOsByGroupID(groupOsId) {
+    return (
+        jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .flatMap(i => i.MenuItemOptionSets)
+        .filter(i => i.groupOsId == groupOsId)
+    )
+}
+
+
 // function regroupOs() {
 //     groupedOs = {};
 //     for (const key in allOs) {
@@ -338,4 +348,5 @@ export {
     getOsObject,
     groupInitOptionSets,
     setColorOfRows,
+    getOsByGroupID
 }

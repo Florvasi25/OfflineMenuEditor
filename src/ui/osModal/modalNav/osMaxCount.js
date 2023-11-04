@@ -1,6 +1,6 @@
 import {
     updateLocalStorage,
-    groupedOs
+    getOsByGroupID
 } from '../../context.js'
 
 function createMaxCountCell(menuOs) {
@@ -61,14 +61,16 @@ function createMaxCount(menuOs) {
 
 //Updates Name
 function updateMaxCount(groupOsId, osMaxCount) {
-    groupedOs[groupOsId].forEach(os => {
+    const matchingOS = getOsByGroupID(groupOsId)
+
+    matchingOS.forEach(os => {
         os.MaxSelectCount = Number(osMaxCount)
     })
 
     updateLocalStorage()
 }
 
-export { 
+export {
     createMaxCountCell, 
     updateMaxCount 
 }

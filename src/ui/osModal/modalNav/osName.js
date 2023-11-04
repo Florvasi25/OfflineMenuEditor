@@ -1,6 +1,6 @@
 import { 
     updateLocalStorage,
-    jsonData
+    getOsByGroupID
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {
@@ -51,15 +51,6 @@ function createOsName(menuOs) {
     })
 
     return osName
-}
-
-function getOsByGroupID(groupOsId) {
-    return (
-        jsonData.MenuSections
-        .flatMap(i => i.MenuItems)
-        .flatMap(i => i.MenuItemOptionSets)
-        .filter(i => i.groupOsId == groupOsId)
-    )
 }
 
 //Updates Name
