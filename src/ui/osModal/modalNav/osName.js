@@ -1,6 +1,6 @@
 import { 
     updateLocalStorage,
-    groupedOs 
+    jsonData
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {
@@ -53,9 +53,20 @@ function createOsName(menuOs) {
     return osName
 }
 
+function getOsByGroupID(groupOsId) {
+    return (
+        jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .flatMap(i => i.MenuItemOptionSets)
+        .filter(i => i.groupOsId == groupOsId)
+    )
+}
+
 //Updates Name
 function updateName(groupOsId, osName) {
-    groupedOs[groupOsId].forEach(os => {
+    const matchingOS = getOsByGroupID(groupOsId)
+
+    matchingOS.forEach(os => {
         os.Name = osName
     })
     

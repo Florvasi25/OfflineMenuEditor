@@ -1,4 +1,4 @@
-import { 
+import {
     groupedOs,
     jsonData,
     updateLocalStorage,
@@ -31,16 +31,15 @@ function createSelectOsModalBody(itemRow) {
 function createSelectOsBodyLeft(itemRowId) {
     const selectOsBodyLeft = document.createElement('div')
     selectOsBodyLeft.className = 'selectOsBodyLeft';
-    selectOsBodyLeft.classList.add('selectOsContainer')
+    selectOsBodyLeft.classList.add('selectOsContainer');
 
-    const filteredMainArrays = {};
-    for (const mainArrayName in groupedOs) {
-        const mainArray = groupedOs[mainArrayName];
-        const isExcluded = mainArray.some((subArray) => subArray.MenuItemId == itemRowId);
-        if (!isExcluded) {
-            filteredMainArrays[mainArrayName] = mainArray;
-        }
-    }
+    const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
+    const menuOptionSetsGroupIds = foundItem.MenuItemOptionSets.map((os) => os.groupOsId);
+
+    // get entries from groupedOs where key not in menuOptionSetsGroupIds
+    const filteredMainArrays = Object.fromEntries(Object.entries(groupedOs).filter(
+        ([key]) => !(menuOptionSetsGroupIds.includes(key))
+    ));
 
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
@@ -86,7 +85,7 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
     const btnAndSelectOption = document.createElement('div')
     btnAndSelectOption.className = 'btnAndSelectOption'
-    
+
     const selectOptionContainer = selectOsRowHeader.getElementsByClassName('osSelectOptionContainer')[0]
 
     const addBtn = document.createElement('button')
@@ -99,7 +98,7 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyLeft.querySelectorAll(".selectOsRowHeader"));
-    
+
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -111,13 +110,13 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
         });
 
         const newOs = JSON.parse(JSON.stringify(osGroup));
-        
+
         newOs.MenuItemId = foundItem.MenuItemId
 
         const optionSetsIds =  getLocalStorageOptionSetIDs();
         const newOptionSetId = getUniqueRandomInt(optionSetsIds);
         newOs.MenuItemOptionSetId = newOptionSetId;
-        
+
         foundItem.MenuItemOptionSets.push(newOs)
 
         const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
@@ -125,12 +124,12 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
         const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
         const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
-         
+
         const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
         osContainerPreview.appendChild(newOptionRow);
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-        
+
         osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
             if (index % 2 === 0) {
                 osRowHeaderPreview.classList.remove('even');
@@ -167,7 +166,7 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
     const btnAndSelectOption = document.createElement('div')
     btnAndSelectOption.className = 'btnAndSelectOption'
-    
+
     const selectOptionContainer = selectOsRowHeader.getElementsByClassName('osSelectOptionContainer')[0]
 
     const deleteBtn = document.createElement('button')
@@ -178,7 +177,7 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
-    
+
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -190,7 +189,6 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         });
 
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
-        menuOs.MenuItemId = null
 
         const selectOsBodyLeft = selectOsBodyRight.parentNode.getElementsByClassName('selectOsBodyLeft')[0]
         selectOsBodyLeft.replaceWith(createSelectOsBodyLeft(foundItem.MenuItemId))
@@ -198,11 +196,11 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
         const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
         console.log('osRowOptionPreview', osRowOptionPreview);
-         
+
         osRowOptionPreview.remove();
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-        
+
         osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
             if (index % 2 === 0) {
                 osRowHeaderPreview.classList.remove('even');
