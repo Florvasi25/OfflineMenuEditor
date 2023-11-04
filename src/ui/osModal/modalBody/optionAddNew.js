@@ -6,7 +6,7 @@ import {
     updateLocalStorage,
     getLocalStorageOptionSetItemsIDs,
     getUniqueRandomInt,
-    groupedOs,
+    getOsByGroupID,
     setColorOfRows
 } from '../../context.js';
 
@@ -22,8 +22,9 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
         
         let emptyOptionJson = {}
         const newGroupOptionId = crypto.randomUUID()
+        const matchingOS = getOsByGroupID(menuOs.groupOsId)
 
-        groupedOs[menuOs.groupOsId].forEach(os => {
+        matchingOS.forEach(os => {
 
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);   
@@ -39,7 +40,7 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
                 TaxValue: 0,
                 TaxRateName: null,
                 IsAvailable: true,
-                DisplayOrder: groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.length,
+                DisplayOrder: matchingOS[0].MenuItemOptionSetItems.length,
                 IsDeleted: false,
                 Tags: [],
                 NextMenuItemOptionSetId: null,

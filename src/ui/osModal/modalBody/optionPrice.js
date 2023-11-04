@@ -1,6 +1,6 @@
 import {
     updateLocalStorage,
-    groupedOs
+    getOsByGroupID
 } from '../../context.js'
 
 function createOptionPriceCell(menuOption, menuOs) {
@@ -77,9 +77,11 @@ function createOptionPrice(menuOption, menuOs) {
 
 function updatePrice(groupOptionId, groupOsId, optionPrice) {
     const priceAsNumber = parseFloat(parseFloat(optionPrice).toFixed(2));
+
+    const matchingOS = getOsByGroupID(groupOsId)
     
     if (!isNaN(priceAsNumber)) {
-        groupedOs[groupOsId].forEach(os => {
+        matchingOS.forEach(os => {
             const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
             option.Price = priceAsNumber
         })

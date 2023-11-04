@@ -1,6 +1,6 @@
 import {
     updateLocalStorage,
-    groupedOs
+    getOsByGroupID
 } from '../../context.js'
 
 function createOptionNameCell(menuOption, menuOs) {
@@ -69,7 +69,9 @@ function createOptionName(menuOption, menuOs) {
 
 //Updates Name
 function updateOptionName(groupOptionId, groupOsId, newOptionName) {
-    groupedOs[groupOsId].forEach(os => {
+    const matchingOS = getOsByGroupID(groupOsId)
+
+    matchingOS.forEach(os => {
         const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
         option.Name = newOptionName
     })

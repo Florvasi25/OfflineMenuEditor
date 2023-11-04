@@ -6,7 +6,7 @@ import {
     getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
-    groupedOs,
+    getOsByGroupID,
     setColorOfRows
 } from '../../context.js';
 
@@ -34,11 +34,13 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
     const optionToDuplicate = optionRow.id
 
     if (optionToDuplicate) {
-        const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
+        const matchingOS = getOsByGroupID(menuOs.groupOsId)
+
+        const optionObject = matchingOS[0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
         
         let newOption = ""
         const newGroupOptionId = crypto.randomUUID()
-        groupedOs[menuOs.groupOsId].forEach(os => {
+        matchingOS.forEach(os => {
             newOption = JSON.parse(JSON.stringify(optionObject));
 
             const optionIds = getLocalStorageOptionSetItemsIDs();

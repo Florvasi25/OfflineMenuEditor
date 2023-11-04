@@ -1,6 +1,6 @@
 import {
     updateLocalStorage,
-    groupedOs
+    getOsByGroupID
 } from '../../context.js'
 
 function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, menuOs) {
@@ -35,12 +35,13 @@ function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, menuOs
 //Section Availability
 function SectionAvailability(optionRow, menuOs, menuOption) {
     const optionToHide = optionRow.id;
+    const matchingOS = getOsByGroupID(menuOs.groupOsId)
 
     if (optionToHide) {
-        const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
+        const optionObject = matchingOS[0].MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
         const isAvailableNew = !optionObject.IsAvailable
 
-        groupedOs[menuOs.groupOsId].forEach(os => {
+        matchingOS.forEach(os => {
             const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
             option.IsAvailable = isAvailableNew
             optionRow.classList.toggle('unavailable', !isAvailableNew);

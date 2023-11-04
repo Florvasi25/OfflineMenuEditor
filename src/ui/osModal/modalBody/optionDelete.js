@@ -1,7 +1,7 @@
 import {
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
-    groupedOs,
+    getOsByGroupID,
     setColorOfRows
 } from '../../context.js';
 
@@ -68,8 +68,9 @@ function deleteItem(menuOs, menuOption, optionRow, optionRowsContainer) {
     
     if (optionToDelete) {
         optionRow.remove();
+        const matchingOS = getOsByGroupID(menuOs.groupOsId)
 
-        groupedOs[menuOs.groupOsId].forEach(os => {
+        matchingOS.forEach(os => {
             const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
             os.MenuItemOptionSetItems.splice(optionIndex, 1)
             os.MenuItemOptionSetItems.forEach((obj, index) => {

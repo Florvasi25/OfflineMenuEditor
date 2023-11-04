@@ -1,7 +1,7 @@
 import {
     updateLocalStorage,
     getDragAfterElement,
-    groupedOs
+    getOsByGroupID
 } from '../../context.js';
 
 function createOptionDragCell(optionRowsContainer, optionRow) {
@@ -71,11 +71,12 @@ function setDragListeners(optionRowsContainer, menuOs) {
     optionRowsContainer.addEventListener("dragend", () => {
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
         const draggedIdOption = draggable.getAttribute("id");
-        const optionIndex = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
+        const matchingOS = getOsByGroupID(menuOs.groupOsId)
+        const optionIndex = matchingOS[0].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
         const indexNewPosition = rows.indexOf(draggable);
         
         if(optionIndex !== indexNewPosition) {
-            groupedOs[menuOs.groupOsId].forEach(os => {
+            matchingOS.forEach(os => {
                 const optionToMove = os.MenuItemOptionSetItems.splice(optionIndex, 1)[0];
                 os.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
                 os.MenuItemOptionSetItems.forEach((obj, optionIndex) => {
