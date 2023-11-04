@@ -30,4 +30,28 @@ function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     return osModalContainer
 }
 
-export { createOsModalContainer }
+function newOsModalContainer(menuOs) {
+    const leftContainer = document.getElementById('leftContainer')
+    
+    const osModalContainer = document.createElement('div')
+    osModalContainer.classList = 'osModalContainer'
+    
+    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
+    osModalContainer.appendChild(osModalNav)
+    
+    closeOsModalBtn.addEventListener('click', () => {
+        osModalContainer.classList.remove('show');
+        osModalContainer.classList.add('hide');
+        setTimeout(() => {
+            osModalContainer.style.display = 'none'; 
+            osModalContainer.classList.remove('hide'); 
+            osModalContainer.remove()
+        }, 300);
+    });
+    
+    leftContainer.appendChild(osModalContainer)
+
+    return osModalContainer
+}
+
+export { createOsModalContainer, newOsModalContainer }

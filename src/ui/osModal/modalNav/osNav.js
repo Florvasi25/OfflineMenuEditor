@@ -32,7 +32,7 @@ function createOsOptionsNav(menuOs) {
     const osNameCell = createOsNameCell(menuOs)
     osOptionsRow.appendChild(osNameCell)
 
-    const osBtnsCell = createOsBtnsCell()
+    const osBtnsCell = createOsBtnsCell(menuOs)
     osOptionsRow.appendChild(osBtnsCell)
 
     return osOptionsRow

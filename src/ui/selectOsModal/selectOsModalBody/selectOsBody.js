@@ -4,7 +4,9 @@ import {
     updateLocalStorage,
     groupOptionSets,
     getUniqueRandomInt,
-    getLocalStorageOptionSetIDs
+    getLocalStorageOptionSetIDs,
+    itemlessOs,
+    deleteItemlessOs
 } from '../../context.js';
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
@@ -47,13 +49,21 @@ function createSelectOsBodyLeft(itemRowId) {
     filteredGroup.forEach((osGroup, index) => {
         const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId)
 
+        selectOsBodyLeft.appendChild(selectOsRowHeader)
+    })
+    
+    itemlessOs.forEach((osGroup, index) => {
+        const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId)
+
+        selectOsBodyLeft.appendChild(selectOsRowHeader)
+    })
+
+    selectOsBodyLeft.childNodes.forEach((selectOsRowHeader, index) => {
         if (index % 2 === 0) {
             selectOsRowHeader.classList.add('odd');
         } else {
             selectOsRowHeader.classList.add('even');
         }
-
-        selectOsBodyLeft.appendChild(selectOsRowHeader)
     })
 
     return selectOsBodyLeft
@@ -112,6 +122,12 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
         const newOs = JSON.parse(JSON.stringify(osGroup));
         
+        itemlessOs.forEach((os, index) => {
+            if (os.MenuItemOptionSetId == newOs.MenuItemOptionSetId) {
+                deleteItemlessOs(index)
+            }
+        })
+        
         newOs.MenuItemId = foundItem.MenuItemId
 
         const optionSetsIds =  getLocalStorageOptionSetIDs();
@@ -140,6 +156,9 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
                 osRowHeaderPreview.classList.add('even');
             }
         });
+
+        // if newOs.MenuItemOptionSetId is present in itemlessOs array, delete it from the array
+
 
         groupOptionSets()
         updateLocalStorage()

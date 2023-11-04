@@ -3,6 +3,7 @@ import { emptyMenu } from './emptyMenu.js'
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
 let groupedOs = {};
+let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ??[];
 
 groupOptionSets()
 console.log('groupedOs', groupedOs);
@@ -268,6 +269,16 @@ function groupOptionSets() {
     updateLocalStorage()
 }
 
+function addItemlessOs(os) {
+    itemlessOs.push(os)
+    localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
+}
+
+function deleteItemlessOs(index) {
+    itemlessOs.splice(index, 1);
+    localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
+}
+
 function setColorOfRows(optionRowsContainer) {
     const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
     rows.forEach((row, index) => {
@@ -284,6 +295,7 @@ function setColorOfRows(optionRowsContainer) {
 export {
     jsonData,
     groupedOs,
+    itemlessOs,
     getSectionIndex,
     updateCounterLocalStorage,
     updateItemCounterLocalStorage,
@@ -310,4 +322,6 @@ export {
     getOsObject,
     groupOptionSets,
     setColorOfRows,
+    addItemlessOs,
+    deleteItemlessOs
 }
