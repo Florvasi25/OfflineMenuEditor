@@ -6,7 +6,8 @@ import {
     getUniqueRandomInt,
     getLocalStorageOptionSetIDs,
     itemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    addItemlessOs,
 } from '../../context.js';
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
@@ -33,16 +34,15 @@ function createSelectOsModalBody(itemRow) {
 function createSelectOsBodyLeft(itemRowId) {
     const selectOsBodyLeft = document.createElement('div')
     selectOsBodyLeft.className = 'selectOsBodyLeft';
-    selectOsBodyLeft.classList.add('selectOsContainer')
+    selectOsBodyLeft.classList.add('selectOsContainer');
 
-    const filteredMainArrays = {};
-    for (const mainArrayName in groupedOs) {
-        const mainArray = groupedOs[mainArrayName];
-        const isExcluded = mainArray.some((subArray) => subArray.MenuItemId == itemRowId);
-        if (!isExcluded) {
-            filteredMainArrays[mainArrayName] = mainArray;
-        }
-    }
+    const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
+    const menuOptionSetsGroupIds = foundItem.MenuItemOptionSets.map((os) => os.groupOsId);
+
+    // get entries from groupedOs where key not in menuOptionSetsGroupIds
+    const filteredMainArrays = Object.fromEntries(Object.entries(groupedOs).filter(
+        ([key]) => !(menuOptionSetsGroupIds.includes(key))
+    ));
 
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
@@ -153,9 +153,6 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
             }
         });
 
-        // if newOs.MenuItemOptionSetId is present in itemlessOs array, delete it from the array
-
-
         groupOptionSets()
         updateLocalStorage()
     })
@@ -205,7 +202,13 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         });
 
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
-        menuOs.MenuItemId = null
+        const index = groupedOs[menuOs.groupOsId].findIndex(i => i.MenuItemOptionSetId == menuOs.MenuItemOptionSetId)
+        groupedOs[menuOs.groupOsId].splice(index, 1)
+
+        if (groupedOs[menuOs.groupOsId].length === 0) {
+            delete groupedOs[menuOs.groupOsId]
+            addItemlessOs(menuOs)
+        }
 
         const selectOsBodyLeft = selectOsBodyRight.parentNode.getElementsByClassName('selectOsBodyLeft')[0]
         selectOsBodyLeft.replaceWith(createSelectOsBodyLeft(foundItem.MenuItemId))
@@ -228,6 +231,7 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
             }
         });
 
+        groupOptionSets()
         updateLocalStorage()
     })
 
