@@ -202,10 +202,8 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         });
 
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
-        const index = groupedOs[menuOs.groupOsId].findIndex(i => i.MenuItemOptionSetId == menuOs.MenuItemOptionSetId)
-        groupedOs[menuOs.groupOsId].splice(index, 1)
 
-        if (groupedOs[menuOs.groupOsId].length === 0) {
+        if (groupedOs[menuOs.groupOsId].length === 1) {
             delete groupedOs[menuOs.groupOsId]
             addItemlessOs(menuOs)
         }
