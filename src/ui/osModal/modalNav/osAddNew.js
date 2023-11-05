@@ -18,7 +18,7 @@
 import {
     jsonData,
     itemlessOs,
-    // updateGroupOptionSets,
+    getRandomInt,
     addItemlessOs
 } from '../../context.js';
 
@@ -42,7 +42,7 @@ function osNewButton(osBtnsCell, menuOs) {
         const emptyOsJson = {
             CatalogItemId: null,
             MenuId: jsonData.MenuId,
-            Name: "New Option Set",
+            Name: "New Option Set " + getRandomInt(),
             MenuItemOptionSetId: crypto.randomUUID(), // TODO: change to a proper ID
             IsMasterOptionSet: false,
             DisplayOrder: 0,

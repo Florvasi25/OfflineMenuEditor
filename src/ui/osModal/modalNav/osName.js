@@ -3,7 +3,10 @@ import {
     groupedOs,
     itemlessOs,
     updateItemlessLocalStorage,
-    groupOptionSets
+    groupOptionSets,
+    addItemlessOs,
+    deleteItemlessOs,
+    updateGroupedIdItemlessOs
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {
@@ -67,7 +70,8 @@ function updateName(groupOsId, osName) {
         updateLocalStorage()
     } else if (itemlessOs[groupOsId]) {
         itemlessOs[groupOsId].Name = osName
-        updateItemlessLocalStorage()
+        addItemlessOs(itemlessOs[groupOsId])
+        deleteItemlessOs(groupOsId)
     }
 }
 

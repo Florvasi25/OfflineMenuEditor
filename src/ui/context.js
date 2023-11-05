@@ -278,6 +278,18 @@ function groupOptionSets() {
     updateLocalStorage()
 }
 
+function updateGroupedIdItemlessOs() {
+    // update groupedOsId from ItemlessOs everytime there is a change in itemlessOs
+    Object.values(itemlessOs).forEach(os => {
+        const groupOsKey = getGroupOsKey(os)
+        const oldGroupOsKey = os.groupOsId
+        os.groupOsId = groupOsKey
+        itemlessOs[groupOsKey] = os
+        delete itemlessOs[oldGroupOsKey]
+    })
+    updateItemlessLocalStorage()
+}
+
 function addItemlessOs(os) {
     const groupOsKey = getGroupOsKey(os)
     if (groupedOs[groupOsKey]) {
@@ -339,5 +351,6 @@ export {
     setColorOfRows,
     addItemlessOs,
     deleteItemlessOs,
-    updateItemlessLocalStorage
+    updateItemlessLocalStorage,
+    updateGroupedIdItemlessOs
 }
