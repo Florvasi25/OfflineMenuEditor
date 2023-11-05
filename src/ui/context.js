@@ -172,6 +172,10 @@ function updateLocalStorage() {
     localStorage.setItem("jsonData", JSON.stringify(jsonData));
 }
 
+function updateItemlessLocalStorage() {
+    localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
+}
+
 //Updates sections id LocalStorage. 
 //If 'addID' is true, will be added to localStorage. else, will be removed.
 function updateCounterLocalStorage(id, addID) {
@@ -282,12 +286,12 @@ function addItemlessOs(os) {
 
     os.groupOsId = groupOsKey
     itemlessOs[groupOsKey] = os;
-    localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
+    updateItemlessLocalStorage();
 }
 
 function deleteItemlessOs(groupOsId) {
     delete itemlessOs[groupOsId];
-    localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
+    updateItemlessLocalStorage();
 }
 
 function setColorOfRows(optionRowsContainer) {
@@ -334,5 +338,6 @@ export {
     groupOptionSets,
     setColorOfRows,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateItemlessLocalStorage
 }

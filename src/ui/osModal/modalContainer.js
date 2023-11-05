@@ -2,6 +2,7 @@ import { createOsModalNav } from './modalNav/osNav.js'
 
 import { createOsModalBody } from './modalBody/osBody.js'
 
+import { createNewOsModalNav } from './newOsModalNav/newOsNav.js'
 function createOsModalContainer(menuOs, itemId, sectionId, osId) {
     const leftContainer = document.getElementById('leftContainer')
     
@@ -36,7 +37,7 @@ function newOsModalContainer(menuOs) {
     const osModalContainer = document.createElement('div')
     osModalContainer.classList = 'osModalContainer'
     
-    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
+    const {osModalNav, closeOsModalBtn } = createNewOsModalNav(menuOs)
     osModalContainer.appendChild(osModalNav)
     
     closeOsModalBtn.addEventListener('click', () => {

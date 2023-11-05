@@ -1,6 +1,9 @@
 import { 
     updateLocalStorage,
-    groupedOs 
+    groupedOs,
+    itemlessOs,
+    updateItemlessLocalStorage,
+    groupOptionSets
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {
@@ -27,13 +30,14 @@ function createOsName(menuOs) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newOsName = osName.textContent;
-            updateName(menuOs.groupOsId, newOsName);
             originalName = newOsName;
             osName.blur();
             const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
             const osNameHeader = osNameHeaderArray.filter((p) => p.id == menuOs.groupOsId)
+            updateName(menuOs.groupOsId, newOsName);
             osNameHeader.forEach(os => {
                 os.textContent = newOsName;
+                os.id = menuOs.groupOsId
             })
         } else if (e.key === 'Escape') {
             osName.textContent = originalName;
@@ -55,11 +59,16 @@ function createOsName(menuOs) {
 
 //Updates Name
 function updateName(groupOsId, osName) {
-    groupedOs[groupOsId].forEach(os => {
-        os.Name = osName
-    })
-    
-    updateLocalStorage()
+    if (groupedOs[groupOsId]) {
+        groupedOs[groupOsId].forEach(os => {
+            os.Name = osName
+        })
+        groupOptionSets()
+        updateLocalStorage()
+    } else if (itemlessOs[groupOsId]) {
+        itemlessOs[groupOsId].Name = osName
+        updateItemlessLocalStorage()
+    }
 }
 
 export { createOsNameCell }
