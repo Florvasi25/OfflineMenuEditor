@@ -3,7 +3,7 @@ import { emptyMenu } from './emptyMenu.js'
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
 let groupedOs = {};
-let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ??[];
+let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? {};
 
 groupOptionSets()
 console.log('groupedOs', groupedOs);
@@ -11,6 +11,7 @@ console.log('groupedOs', groupedOs);
 function setJsonData(data) {
     jsonData = data
     groupOptionSets()
+    itemlessOs = {}
 }
 
 //Gets Index
@@ -241,15 +242,19 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
+function getGroupOsKey(os) {
+    const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
+    const osLength = MenuItemOptionSetItems.length;
+    const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
+    return `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
+}
+
 function groupOptionSets() {
     groupedOs = {};
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
             items.MenuItemOptionSets.forEach(os => {
-                const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
-                const osLength = MenuItemOptionSetItems.length;
-                const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
-                const groupOsKey = `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
+                const groupOsKey = getGroupOsKey(os)
                 os.groupOsId = groupOsKey
 
                 if (!groupedOs[groupOsKey]) {
@@ -270,12 +275,18 @@ function groupOptionSets() {
 }
 
 function addItemlessOs(os) {
-    itemlessOs.push(os)
+    const groupOsKey = getGroupOsKey(os)
+    if (groupedOs[groupOsKey]) {
+        return;
+    }
+
+    os.groupOsId = groupOsKey
+    itemlessOs[groupOsKey] = os;
     localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
 }
 
-function deleteItemlessOs(index) {
-    itemlessOs.splice(index, 1);
+function deleteItemlessOs(groupOsId) {
+    delete itemlessOs[groupOsId];
     localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
 }
 

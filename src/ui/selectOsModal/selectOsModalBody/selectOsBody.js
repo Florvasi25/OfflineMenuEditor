@@ -1,4 +1,4 @@
-import { 
+import {
     groupedOs,
     jsonData,
     updateLocalStorage,
@@ -46,13 +46,13 @@ function createSelectOsBodyLeft(itemRowId) {
 
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
-    filteredGroup.forEach((osGroup, index) => {
+    filteredGroup.forEach(osGroup => {
         const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId)
 
         selectOsBodyLeft.appendChild(selectOsRowHeader)
     })
-    
-    itemlessOs.forEach((osGroup, index) => {
+
+    Object.values(itemlessOs).forEach(osGroup => {
         const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId)
 
         selectOsBodyLeft.appendChild(selectOsRowHeader)
@@ -96,7 +96,7 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
     const btnAndSelectOption = document.createElement('div')
     btnAndSelectOption.className = 'btnAndSelectOption'
-    
+
     const selectOptionContainer = selectOsRowHeader.getElementsByClassName('osSelectOptionContainer')[0]
 
     const addBtn = document.createElement('button')
@@ -109,7 +109,7 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyLeft.querySelectorAll(".selectOsRowHeader"));
-    
+
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -121,19 +121,15 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
         });
 
         const newOs = JSON.parse(JSON.stringify(osGroup));
-        
-        itemlessOs.forEach((os, index) => {
-            if (os.MenuItemOptionSetId == newOs.MenuItemOptionSetId) {
-                deleteItemlessOs(index)
-            }
-        })
-        
+
+        deleteItemlessOs(newOs.groupOsId)
+
         newOs.MenuItemId = foundItem.MenuItemId
 
         const optionSetsIds =  getLocalStorageOptionSetIDs();
         const newOptionSetId = getUniqueRandomInt(optionSetsIds);
         newOs.MenuItemOptionSetId = newOptionSetId;
-        
+
         foundItem.MenuItemOptionSets.push(newOs)
 
         const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
@@ -141,12 +137,12 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
         const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
         const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
-         
+
         const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
         osContainerPreview.appendChild(newOptionRow);
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-        
+
         osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
             if (index % 2 === 0) {
                 osRowHeaderPreview.classList.remove('even');
@@ -186,7 +182,7 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
     const btnAndSelectOption = document.createElement('div')
     btnAndSelectOption.className = 'btnAndSelectOption'
-    
+
     const selectOptionContainer = selectOsRowHeader.getElementsByClassName('osSelectOptionContainer')[0]
 
     const deleteBtn = document.createElement('button')
@@ -197,7 +193,7 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
-    
+
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -217,11 +213,11 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
         const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
         console.log('osRowOptionPreview', osRowOptionPreview);
-         
+
         osRowOptionPreview.remove();
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-        
+
         osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
             if (index % 2 === 0) {
                 osRowHeaderPreview.classList.remove('even');
