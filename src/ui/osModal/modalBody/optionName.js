@@ -1,6 +1,10 @@
 import {
     updateLocalStorage,
-    groupedOs
+    groupedOs,
+    groupOptionSets,
+    itemlessOs,
+    addItemlessOs,
+    deleteItemlessOs
 } from '../../context.js'
 
 function createOptionNameCell(menuOption, menuOs) {
@@ -69,12 +73,20 @@ function createOptionName(menuOption, menuOs) {
 
 //Updates Name
 function updateOptionName(groupOptionId, groupOsId, newOptionName) {
-    groupedOs[groupOsId].forEach(os => {
-        const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
-        option.Name = newOptionName
-    })
 
-    updateLocalStorage()
+    if (groupedOs[groupOsId]) {
+        groupedOs[groupOsId].forEach(os => {
+            const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+            option.Name = newOptionName
+        })
+        groupOptionSets()
+        updateLocalStorage()
+    } else if (itemlessOs[groupOsId]) {
+        const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+        option.Name = newOptionName
+        addItemlessOs(itemlessOs[groupOsId])
+        deleteItemlessOs(groupOsId)
+    }
 }
 
 export { createOptionNameCell }

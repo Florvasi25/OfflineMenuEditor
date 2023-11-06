@@ -1,5 +1,7 @@
 import { 
-    updateLocalStorage
+    itemlessOs,
+    updateLocalStorage,
+    updateItemlessLocalStorage
 } from '../../context.js'
 
 function createOptionMoMCell(menuOption, menuOs) {
@@ -60,15 +62,15 @@ function createOptionMoM(menuOption, menuOs) {
 
 //Updates MoM
 function updateOptionMoM(optionId, menuOs, newOptionMoM) {
-    // I need the index of the MenuItemOptionSetItem in the menuOs.MenuItemOptionSetItems array
     const optionIndex = menuOs.MenuItemOptionSetItems.findIndex((menuOption) => {
         return menuOption.MenuItemOptionSetItemId == optionId
     })
     
-    // Update the NextMenuItemOptionSetId
     menuOs.MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
-
     updateLocalStorage()
+
+    itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
+    updateItemlessLocalStorage();
 }
 
 export { createOptionMoMCell }

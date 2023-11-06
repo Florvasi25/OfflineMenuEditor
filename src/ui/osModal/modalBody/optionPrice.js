@@ -1,6 +1,10 @@
 import {
     updateLocalStorage,
-    groupedOs
+    groupedOs,
+    groupOptionSets,
+    itemlessOs,
+    addItemlessOs,
+    deleteItemlessOs
 } from '../../context.js'
 
 function createOptionPriceCell(menuOption, menuOs) {
@@ -77,14 +81,22 @@ function createOptionPrice(menuOption, menuOs) {
 
 function updatePrice(groupOptionId, groupOsId, optionPrice) {
     const priceAsNumber = parseFloat(parseFloat(optionPrice).toFixed(2));
-    
-    if (!isNaN(priceAsNumber)) {
-        groupedOs[groupOsId].forEach(os => {
-            const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
-            option.Price = priceAsNumber
-        })
 
-        updateLocalStorage();
+    if (!isNaN(priceAsNumber)) {
+
+        if (groupedOs[groupOsId]) {
+            groupedOs[groupOsId].forEach(os => {
+                const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+                option.Price = priceAsNumber
+            })
+            groupOptionSets()
+            updateLocalStorage()
+        } else if (itemlessOs[groupOsId]) {
+            const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+            option.Price = priceAsNumber
+            addItemlessOs(itemlessOs[groupOsId])
+            deleteItemlessOs(groupOsId)
+        }
     }
 }
 
