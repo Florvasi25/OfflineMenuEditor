@@ -12,6 +12,7 @@ function setJsonData(data) {
     jsonData = data
     groupOptionSets()
     itemlessOs = {}
+    updateItemlessLocalStorage();
 }
 
 //Gets Index
