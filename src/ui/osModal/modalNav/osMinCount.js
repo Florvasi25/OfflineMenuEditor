@@ -1,6 +1,10 @@
 import { 
     updateLocalStorage,
-    groupedOs 
+    groupedOs,
+    itemlessOs,
+    groupOptionSets,
+    addItemlessOs,
+    deleteItemlessOs
 } from '../../context.js'
 
 function createMinCountCell(menuOs) {
@@ -32,13 +36,14 @@ function createMinCount(menuOs) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newMinOsCount = minCount.textContent;
-            updateMinCount(menuOs.groupOsId, newMinOsCount);
             originalMinCount = newMinOsCount;
             minCount.blur();
             const minCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
             const minSelectCount = minCountArray.filter((p) => p.id == menuOs.groupOsId)
+            updateMinCount(menuOs.groupOsId, newMinOsCount);
             minSelectCount.forEach(os => {
                 os.textContent = newMinOsCount;
+                os.id = menuOs.groupOsId
             })
         } else if (e.key === 'Escape') {
             minCount.textContent = originalMinCount;
@@ -60,12 +65,17 @@ function createMinCount(menuOs) {
 
 //Updates Name
 function updateMinCount(groupOsId, osMinCount) {
-
-    groupedOs[groupOsId].forEach(os => {
-        os.MinSelectCount = Number(osMinCount)
-    })
-
-    updateLocalStorage()
+    if (groupedOs[groupOsId]) {
+        groupedOs[groupOsId].forEach(os => {
+            os.MinSelectCount = Number(osMinCount)
+        })
+        groupOptionSets()
+        updateLocalStorage()
+    } else if (itemlessOs[groupOsId]) {
+        itemlessOs[groupOsId].MinSelectCount = Number(osMinCount)
+        addItemlessOs(itemlessOs[groupOsId])
+        deleteItemlessOs(groupOsId)
+    }
 }
 
 export { createMinCountCell }

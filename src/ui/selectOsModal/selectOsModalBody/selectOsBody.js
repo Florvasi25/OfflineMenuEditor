@@ -213,7 +213,6 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
         const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
-        console.log('osRowOptionPreview', osRowOptionPreview);
 
         osRowOptionPreview.remove();
 

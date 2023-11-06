@@ -17,9 +17,10 @@
 
 import {
     jsonData,
-    itemlessOs,
+    getLocalStorageOptionSetIDs,
     getRandomInt,
-    addItemlessOs
+    addItemlessOs,
+    getUniqueRandomInt
 } from '../../context.js';
 
 import { newOsModalContainer } from "../modalContainer.js";
@@ -37,13 +38,14 @@ function osNewButton(osBtnsCell, menuOs) {
 
     //Add Section
     newOsButton.addEventListener('click', () => {
-        const newId = 1111
-    
+            const osIds = getLocalStorageOptionSetIDs();
+            const newOsId = getUniqueRandomInt(osIds);   
+
         const emptyOsJson = {
             CatalogItemId: null,
             MenuId: jsonData.MenuId,
             Name: "New Option Set " + getRandomInt(),
-            MenuItemOptionSetId: crypto.randomUUID(), // TODO: change to a proper ID
+            MenuItemOptionSetId: newOsId,
             IsMasterOptionSet: false,
             DisplayOrder: 0,
             MinSelectCount: 0,
@@ -72,7 +74,6 @@ function osNewButton(osBtnsCell, menuOs) {
         }, 10);
 
         addItemlessOs(emptyOsJson)
-        console.log('itemlessOs', itemlessOs);
     });
 
     return newOsButton

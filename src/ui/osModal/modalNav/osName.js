@@ -2,11 +2,9 @@ import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
-    updateItemlessLocalStorage,
     groupOptionSets,
     addItemlessOs,
-    deleteItemlessOs,
-    updateGroupedIdItemlessOs
+    deleteItemlessOs
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {

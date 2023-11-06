@@ -50,7 +50,6 @@ function setDragListeners(optionRowsContainer, menuOs) {
         }
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-        console.log('optionContainerPreviewArray', optionContainerPreviewArray);
         
         optionContainerPreviewArray.forEach(optionContainerPreview => {
             const groupOsId = optionContainerPreview.getAttribute('groupOsId');

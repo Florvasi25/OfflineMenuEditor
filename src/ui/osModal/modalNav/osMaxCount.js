@@ -1,6 +1,10 @@
 import {
     updateLocalStorage,
-    groupedOs
+    groupedOs,
+    itemlessOs,
+    groupOptionSets,
+    addItemlessOs,
+    deleteItemlessOs
 } from '../../context.js'
 
 function createMaxCountCell(menuOs) {
@@ -32,13 +36,14 @@ function createMaxCount(menuOs) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newMaxOsCount = maxCount.textContent;
-            updateMaxCount(menuOs.groupOsId, newMaxOsCount);
             originalName = newMaxOsCount;
             maxCount.blur();
             const maxCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
             const maxSelectCount = maxCountArray.filter((p) => p.id == menuOs.groupOsId)
+            updateMaxCount(menuOs.groupOsId, newMaxOsCount);
             maxSelectCount.forEach(os => {
                 os.textContent = newMaxOsCount;
+                os.id = menuOs.groupOsId
             })
 
         } else if (e.key === 'Escape') {
@@ -61,11 +66,17 @@ function createMaxCount(menuOs) {
 
 //Updates Name
 function updateMaxCount(groupOsId, osMaxCount) {
-    groupedOs[groupOsId].forEach(os => {
-        os.MaxSelectCount = Number(osMaxCount)
-    })
-
-    updateLocalStorage()
+    if (groupedOs[groupOsId]) {
+        groupedOs[groupOsId].forEach(os => {
+            os.MaxSelectCount = osMaxCount
+        })
+        groupOptionSets()
+        updateLocalStorage()
+    } else if (itemlessOs[groupOsId]) {
+        itemlessOs[groupOsId].MaxSelectCount = osMaxCount
+        addItemlessOs(itemlessOs[groupOsId])
+        deleteItemlessOs(groupOsId)
+    }
 }
 
 export { 
