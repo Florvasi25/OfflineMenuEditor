@@ -279,16 +279,11 @@ function groupOptionSets() {
     updateLocalStorage()
 }
 
-function updateGroupedIdItemlessOs() {
-    // update groupedOsId from ItemlessOs everytime there is a change in itemlessOs
-    Object.values(itemlessOs).forEach(os => {
-        const groupOsKey = getGroupOsKey(os)
-        const oldGroupOsKey = os.groupOsId
-        os.groupOsId = groupOsKey
-        itemlessOs[groupOsKey] = os
-        delete itemlessOs[oldGroupOsKey]
-    })
-    updateItemlessLocalStorage()
+function updateGroupedIdItemlessOs(menuOs) {
+    const oldGroupOsId = menuOs.groupOsId
+
+    addItemlessOs(itemlessOs[oldGroupOsId])
+    deleteItemlessOs(oldGroupOsId)    
 }
 
 function addItemlessOs(os) {

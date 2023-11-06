@@ -14,7 +14,7 @@ import { createOption } from './osBody.js'
 
 import { createOptionRow } from '../../optionSet/osOptionsContainer.js'
 
-function optionDuplicateButton(optionRow, sectionId, itemId, osId, optionRowsContainer, optionButtonsCell, menuOption, menuOs) {
+function optionDuplicateButton(optionRow, optionRowsContainer, optionButtonsCell, menuOption, menuOs) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -25,12 +25,12 @@ function optionDuplicateButton(optionRow, sectionId, itemId, osId, optionRowsCon
     duplicateButton.appendChild(duplicateButtonImg)
 
     duplicateButton.addEventListener('click', () => {
-        duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer, menuOption, menuOs);
+        duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs);
         setSectionDisplayOrder(jsonData);
     });
 }
 
-function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer, menuOption, menuOs) {
+function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
     const optionToDuplicate = optionRow.id
 
     if (optionToDuplicate) {
@@ -58,7 +58,7 @@ function duplicateOption(optionRow, sectionId, itemId, osId, optionRowsContainer
             updateOptionSetItemsCounterLocalStorage(newOptionId, true)
         })
         
-        const newOptionRow = createOption(optionRowsContainer, menuOs, newOption, sectionId, itemId, osId);
+        const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
         setColorOfRows(optionRowsContainer)

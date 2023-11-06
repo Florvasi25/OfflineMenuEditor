@@ -7,12 +7,14 @@ import {
     getLocalStorageOptionSetItemsIDs,
     getUniqueRandomInt,
     groupedOs,
-    setColorOfRows
+    setColorOfRows,
+    itemlessOs,
+    updateGroupedIdItemlessOs
 } from '../../context.js';
 
 import { createOptionRow } from '../../optionSet/osOptionsContainer.js'
 
-function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs) {
+function createOptionButton(optionRowsContainer, menuOs) {
     const newOptionButton = document.createElement('button')
     newOptionButton.className = 'optionAddNew'
     newOptionButton.textContent = 'New Option'
@@ -20,15 +22,71 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
     //Add Section
     newOptionButton.addEventListener('click', () => {
         
-        let emptyOptionJson = {}
-        const newGroupOptionId = crypto.randomUUID()
+        if (groupedOs[menuOs.groupOsId]) {
+            let emptyOptionJson = {}
+            const newGroupOptionId = crypto.randomUUID()
 
-        groupedOs[menuOs.groupOsId].forEach(os => {
+            groupedOs[menuOs.groupOsId].forEach(os => {
+
+                const optionIds = getLocalStorageOptionSetItemsIDs();
+                const newOptionId = getUniqueRandomInt(optionIds);   
+
+                emptyOptionJson = {
+                    CatalogItemId: null,
+                    MenuId: jsonData.MenuId,
+                    MenuItemOptionSetItemId : newOptionId,
+                    Name: null,
+                    Price: 0,
+                    TaxRateId: null,
+                    TaxRate: null,
+                    TaxValue: 0,
+                    TaxRateName: null,
+                    IsAvailable: true,
+                    DisplayOrder: groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.length,
+                    IsDeleted: false,
+                    Tags: [],
+                    NextMenuItemOptionSetId: null,
+                    PublicId: crypto.randomUUID(),
+                    ImageName: null,
+                    ImageUrl: null,
+                    CellAspectRatio: 0,
+                    CellLayoutType: 0,
+                    OptionSetItemMetadata: [],
+                    ExternalImageUrl: null,
+                    groupOptionId: newGroupOptionId
+                };
+            
+                os.MenuItemOptionSetItems.push(emptyOptionJson)
+
+                updateItemCounterLocalStorage(newOptionId, true);
+            })
+
+            let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson)
+            optionRowsContainer.appendChild(optionRow);
+                
+            setColorOfRows(optionRowsContainer)
+
+            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+
+            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
+            const groupOsId = element.getAttribute('groupOsId');
+            return groupOsId === menuOs.groupOsId;
+            });
+            
+            if (optionContainerPreview) {
+                optionContainerPreview.forEach((osRowOptionContainerPreview) => {
+                    const newOptionRow = createOptionRow(emptyOptionJson)
+                    osRowOptionContainerPreview.appendChild(newOptionRow);
+                });
+            }
+            
+            updateLocalStorage();
+        } else if (itemlessOs[menuOs.groupOsId]) {
 
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);   
 
-            emptyOptionJson = {
+            const emptyOptionJson = {
                 CatalogItemId: null,
                 MenuId: jsonData.MenuId,
                 MenuItemOptionSetItemId : newOptionId,
@@ -39,7 +97,7 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
                 TaxValue: 0,
                 TaxRateName: null,
                 IsAvailable: true,
-                DisplayOrder: groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.length,
+                DisplayOrder: itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems.length,
                 IsDeleted: false,
                 Tags: [],
                 NextMenuItemOptionSetId: null,
@@ -50,34 +108,20 @@ function createOptionButton(optionRowsContainer, sectionId, itemId, osId, menuOs
                 CellLayoutType: 0,
                 OptionSetItemMetadata: [],
                 ExternalImageUrl: null,
-                groupOptionId: newGroupOptionId
             };
-        
-            os.MenuItemOptionSetItems.push(emptyOptionJson)
 
-            updateItemCounterLocalStorage(newOptionId, true);
-        })
+            let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson)
+            optionRowsContainer.appendChild(optionRow);
 
-        let optionRow = createOption(optionRowsContainer, menuOs, emptyOptionJson, sectionId, itemId, osId)
-        optionRowsContainer.appendChild(optionRow);
+            itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems.push(emptyOptionJson)
+                
+            setColorOfRows(optionRowsContainer)
+
+            updateGroupedIdItemlessOs(menuOs)
             
-        setColorOfRows(optionRowsContainer)
-
-        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-
-        const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-          const groupOsId = element.getAttribute('groupOsId');
-          return groupOsId === menuOs.groupOsId;
-        });
-        
-        if (optionContainerPreview) {
-            optionContainerPreview.forEach((osRowOptionContainerPreview) => {
-                const newOptionRow = createOptionRow(emptyOptionJson)
-                osRowOptionContainerPreview.appendChild(newOptionRow);
-            });
-        }
-        
-        updateLocalStorage();
+        } else {
+            console.log('error');
+        }	
     });
 
     return newOptionButton

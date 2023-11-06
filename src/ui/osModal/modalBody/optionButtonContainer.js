@@ -4,7 +4,7 @@ import { optionDeleteButton } from './optionDelete.js'
 
 import { optionVisibilityButton } from './optionVisibility.js'
 
-function createOptionButtonsCell(optionRow, menuOs, sectionId, itemId, osId, optionRowsContainer, menuOption) {
+function createOptionButtonsCell(optionRow, menuOs, optionRowsContainer, menuOption) {
     const optionButtonsCell = document.createElement('div');
     optionButtonsCell.classList = "optionButtonsCell"
 
@@ -12,7 +12,7 @@ function createOptionButtonsCell(optionRow, menuOs, sectionId, itemId, osId, opt
 
     optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer)
 
-    optionDuplicateButton(optionRow, sectionId, itemId, osId, optionRowsContainer, optionButtonsCell, menuOption, menuOs)
+    optionDuplicateButton(optionRow, optionRowsContainer, optionButtonsCell, menuOption, menuOs)
 
     return optionButtonsCell
 }

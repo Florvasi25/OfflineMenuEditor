@@ -1,22 +1,20 @@
 import { 
-    jsonData,
-    getOptionIndex,
     updateLocalStorage
 } from '../../context.js'
 
-function createOptionMoMCell(menuOption, sectionId, itemId, osId) {
+function createOptionMoMCell(menuOption, menuOs) {
     //MoM Cell
     const optionMoMCell = document.createElement('div');
     optionMoMCell.classList.add('optionMoMCell');
 
-    const optionMoM = createOptionMoM(menuOption, itemId, osId, sectionId)
+    const optionMoM = createOptionMoM(menuOption, menuOs)
     optionMoMCell.appendChild(optionMoM);
     
     return optionMoMCell
 }
 
 //Handles MoM Edits
-function createOptionMoM(menuOption, itemId, osId, sectionId) {
+function createOptionMoM(menuOption, menuOs) {
     const optionMoM = document.createElement('p');
     optionMoM.classList.add('optionMoM');
     optionMoM.contentEditable = true;
@@ -28,7 +26,7 @@ function createOptionMoM(menuOption, itemId, osId, sectionId) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newOptionMoM = optionMoM.textContent;
-            updateOptionMoM(menuOption.MenuItemOptionSetItemId, itemId, sectionId, osId, newOptionMoM);
+            updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
             originalMoM = newOptionMoM;
             optionMoM.blur();
             const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview')); 
@@ -61,9 +59,14 @@ function createOptionMoM(menuOption, itemId, osId, sectionId) {
 }
 
 //Updates MoM
-function updateOptionMoM(optionId, itemId, sectionId, osId, newOptionMoM) {
-    const {sectionIndex, itemIndex, osIndex, optionIndex} = getOptionIndex(sectionId, itemId, osId, optionId);
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
+function updateOptionMoM(optionId, menuOs, newOptionMoM) {
+    // I need the index of the MenuItemOptionSetItem in the menuOs.MenuItemOptionSetItems array
+    const optionIndex = menuOs.MenuItemOptionSetItems.findIndex((menuOption) => {
+        return menuOption.MenuItemOptionSetItemId == optionId
+    })
+    
+    // Update the NextMenuItemOptionSetId
+    menuOs.MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
 
     updateLocalStorage()
 }
