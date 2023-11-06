@@ -20,7 +20,7 @@ function createSectionButtonsCell(sectionRow, menuSection) {
 
     sectionDuplicateButton(sectionRow, sectionButtonsCell, menuSection)
 
-    sectionListButton(sectionButtonsCell);
+    sectionListButton(sectionButtonsCell, menuSection);
     
     return sectionButtonsCell
 }
