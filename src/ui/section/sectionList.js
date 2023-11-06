@@ -19,7 +19,7 @@ import {
     addTextContent
 }  from '../helpers.js';
 
-function sectionListButton(sectionButtonsCell) {
+function sectionListButton(sectionButtonsCell, menuSection) {
     const listButton = document.createElement('button');
     listButton.classList.add('sectionButton')
     listButton.classList.add('listButton')
@@ -29,16 +29,16 @@ function sectionListButton(sectionButtonsCell) {
     listButtonImg.src = '../../assets/listIcon.svg'
     listButton.appendChild(listButtonImg)
     
-    createList(listButton);
+    createList(listButton, menuSection);
 }
 
-function createList(triggerButton){
+function createList(triggerButton, menuSection){
     triggerButton.addEventListener('click', function(event) {
         //'this' refers to triggerButton. listInstance property is being used as a way to associate 
         //a specific instance of the List class with a specific button, 
         //so that the code can determine whether it needs to create a new list or show/hide an existing one.
         if (!this.listInstance) {
-            this.listInstance = new List(triggerButton, 'Your list Content');
+            this.listInstance = new List(triggerButton, menuSection);
             this.listInstance.showList();
         } else {
             // If list already exists, simply toggle its visibility
@@ -52,12 +52,13 @@ function createList(triggerButton){
 }
 
 class List {
-    constructor(triggerElement, content) {
+    constructor(triggerElement, menuSection) {
         this.triggerElement = triggerElement; // Element that, when clicked, will trigger the list object
-        this.content = content; // Content for the list
+        this.menuSection = menuSection; // Content for the list
         this.listElement = null; // Will hold the DOM element once created
         this.cancelButton = null;
         this.submitButton = null;
+        
     }
     // Create the list HTML structure
     createListHtml() {
@@ -75,7 +76,9 @@ class List {
         const textAreaGroupItems = createAndAppend(formGroup, 'textarea', 'form-control');
         textAreaGroupItems.setAttribute('rows', '6');
         textAreaGroupItems.setAttribute('cols', '30');
-        
+        textAreaGroupItems.style.resize = 'both';
+        textAreaGroupItems.value = this.getItems();
+
         const formActions = createAndAppend(itemForm, 'div', 'form-actions');
         const row = createAndAppend(formActions, 'div', 'row');
         this.submitButton = createAndAppend(row, 'button',  'submit-button-list');
@@ -89,7 +92,14 @@ class List {
 
         return list;
     }
-
+    getItems() {
+        if (this.menuSection.MenuItems.length === 0) {
+            return 'Empty;0.00';
+        }
+        return this.menuSection.MenuItems.map(item => {
+            return `${item.Name};${item.Price}`;
+        }).join('\n');
+    }
     showList() {
         if (!this.listElement) {
             this.listElement = this.createListHtml();
