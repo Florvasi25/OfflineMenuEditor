@@ -1071,7 +1071,22 @@ selector svg {
     top: -10px;
     left: calc(50% - 10px);
 }
+.error-message {
+    color: #ff0000;
+    background-color: #ffebeb;
+    border: 1px solid #ff0000;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+}
 
+.form-control.error {
+    border: 1px solid #ff0000; /* Red border to indicate error */
+    /* Optional: background color change
+    background-color: #ffebeb; */
+}
 /* SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL */
 
 .selectOsModal {

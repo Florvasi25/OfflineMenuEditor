@@ -56,9 +56,10 @@ class List {
         this.triggerElement = triggerElement; // Element that, when clicked, will trigger the list object
         this.menuSection = menuSection; // Content for the list
         this.listElement = null; // Will hold the DOM element once created
+        this.textAreaGroupItems = null; // Will hold the textarea element
         this.cancelButton = null;
         this.submitButton = null;
-        
+        this.errorMessage = null;
     }
     // Create the list HTML structure
     createListHtml() {
@@ -77,7 +78,8 @@ class List {
         textAreaGroupItems.setAttribute('rows', '6');
         textAreaGroupItems.setAttribute('cols', '30');
         textAreaGroupItems.style.resize = 'both';
-        textAreaGroupItems.value = this.getItems();
+        this.textAreaGroupItems = textAreaGroupItems;
+        this.textAreaGroupItems.value = this.getItems();
 
         const formActions = createAndAppend(itemForm, 'div', 'form-actions');
         const row = createAndAppend(formActions, 'div', 'row');
@@ -85,13 +87,30 @@ class List {
         addTextContent(this.submitButton, 'Submit');
         this.cancelButton = createAndAppend(row, 'button', 'cancel-button-list');
         addTextContent(this.cancelButton, 'Cancel');
+        this.errorMessage = createAndAppend(formGroup, 'div', 'error-message');
+        addTextContent(this.errorMessage, 'Input is not valid.');
+        this.errorMessage.style.display = 'none';
 
         this.cancelButton.addEventListener('click', () => {
             this.hideList();
         });
 
+        this.submitButton.addEventListener('click', () => {
+            if(this.validateItemsFormat(this.textAreaGroupItems.value)){
+                const itemsNotInJson = this.compareItems(this.textAreaGroupItems.value);
+                if(itemsNotInJson && itemsNotInJson.length > 0){
+                    this.createItems(itemsNotInJson);
+                }
+                this.hideList();
+            }else{
+                this.errorMessage.style.display = 'block';
+                this.textAreaGroupItems.classList.add('error');
+            }
+        });
+
         return list;
     }
+    
     getItems() {
         if (this.menuSection.MenuItems.length === 0) {
             return 'Empty;0.00';
@@ -100,10 +119,95 @@ class List {
             return `${item.Name};${item.Price}`;
         }).join('\n');
     }
-    showList() {
-        if (!this.listElement) {
-            this.listElement = this.createListHtml();
+
+    validateItemsFormat(textBoxContent) {
+        this.errorMessage.style.display = 'none';
+        this.textAreaGroupItems.classList.remove('error');
+        // Trim the input to remove leading and trailing whitespace
+        const trimmedInput = textBoxContent.trim();
+        // Split the trimmed input into lines and filter out empty lines
+        const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
+        // RegExp to validate the item format: "ItemName;price"
+        const itemRegExp = new RegExp(/^.+;\d+(\.\d+)?$/);
+        for (let line of lines) { 
+          if (!itemRegExp.test(line)) {
+            this.errorMessage.style.display = 'block';
+            this.textAreaGroupItems.classList.add('error');
+            return false;
+          }
         }
+        return true;
+      }
+
+      compareItems(textBoxContent) {
+        // Convert the text box content into an array of lines and trim each line
+        const lines = textBoxContent.trim().split('\n').map(line => line.trim());
+        // Create an array of strings in the format "Name;Price" from the JSON MenuItems
+        const menuItemsFromJson = this.menuSection.MenuItems.map(item => {
+          // Ensure the name and price are trimmed to avoid whitespace issues
+          const name = item.Name.trim();
+          const price = item.Price.toString().trim();
+          return `${name};${price}`;
+        });
+        // Filter the lines that are not found in the menuItemsFromJson array
+        const itemsNotInJson = lines.filter(line => {
+          if (line === '') return false;
+          // Split the line by semicolon and trim parts to handle extra whitespaces
+          const [itemName, itemPrice] = line.split(';').map(part => part.trim());
+          // Reconstruct the line in a normalized format
+          const normalizedLine = `${itemName};${itemPrice}`;
+          // Return true if the line (item;price) is not found in the JSON
+          return !menuItemsFromJson.includes(normalizedLine);
+        });
+        return itemsNotInJson;
+    }
+
+    createItems(items) {
+        //first we need to trim 'items'
+        const sectionIndex = getSectionIndex(this.menuSection.MenuSectionId);
+        for(let i = 0; i < items.length; i++){
+            const itemIDs = getLocalStorageItemIDs();
+            const newId = getUniqueRandomInt(itemIDs);
+            const emptyItemJson = {
+                MenuId: jsonData.MenuId,
+                MenuItemId: newId,
+                Name: null,
+                Description: null,
+                SpicinessRating: 0,
+                Price: 0,
+                DisplayOrder: jsonData.MenuSections[sectionIndex].MenuItems.length,
+                IsDeleted: false,
+                Alcohol: false,
+                CatalogItemId: null,
+                Tags: [],
+                PublicId: crypto.randomUUID(),
+                IsAvailable: true,
+                MenuItemOptionSets: [],
+                TaxRate: null,
+                TaxRateId: null,
+                TaxValue: 0,
+                TaxRateName: null,
+                MenuSectionId: jsonData.MenuSections[sectionIndex].MenuSectionId,
+                ImageName: null,
+                ImageUrl: null,
+                CellAspectRatio: 4,
+                CellLayoutType: 0,
+                ActualPrice: 0,
+                DisableVouchers: false,
+                ExcludeFromVoucherDiscounting: false,
+                DailySpecialHours: [],
+                PriceCanIncrease: false,
+                MenuItemMetadata: [],
+                ExternalImageUrl: null
+            };
+            jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
+            updateLocalStorage()
+            updateItemCounterLocalStorage(newId, true);
+        }
+    }
+
+    showList() {
+        this.listElement = this.createListHtml();
         this.positionList();
         this.listElement.classList.remove('hidden');
 
@@ -114,7 +218,6 @@ class List {
         if (this.listElement) {
             this.listElement.classList.add('hidden');
         }
-
         document.removeEventListener('click', this.handleOutsideClick.bind(this));
     }
 
