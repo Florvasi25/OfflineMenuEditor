@@ -14,7 +14,7 @@ function createOptionNameCell(menuOption, menuOs) {
 
     const optionName = createOptionName(menuOption, menuOs)
     optionNameCell.appendChild(optionName);
-    
+
     return optionNameCell
 }
 
@@ -38,14 +38,14 @@ function createOptionName(menuOption, menuOs) {
             const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
 
             const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-              const groupOsId = element.getAttribute('groupOsId');
-              return groupOsId === menuOs.groupOsId;
+                const groupOsId = element.getAttribute('groupOsId');
+                return groupOsId === menuOs.groupOsId;
             });
-            
+
             if (optionContainerPreview) {
                 optionContainerPreview.forEach((optionNameContainerPreview) => {
                     const optionNamePreviewArray = Array.from(optionNameContainerPreview.getElementsByClassName('optionNamePreview'));
-                    
+
                     optionNamePreviewArray.forEach(optionNamePreview => {
                         if (optionNamePreview.id === menuOption.groupOptionId) {
                             optionNamePreview.textContent = newOptionName;
