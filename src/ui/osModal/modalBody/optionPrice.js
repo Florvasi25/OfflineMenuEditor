@@ -89,7 +89,7 @@ function updatePrice(groupOptionId, groupOsId, optionPrice) {
                 const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
                 option.Price = priceAsNumber
             })
-            groupOptionSets()
+            // groupOptionSets()
             updateLocalStorage()
         } else if (itemlessOs[groupOsId]) {
             const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)

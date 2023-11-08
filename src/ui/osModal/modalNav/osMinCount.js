@@ -4,7 +4,8 @@ import {
     itemlessOs,
     groupOptionSets,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateOsDomIds
 } from '../../context.js'
 
 function createMinCountCell(menuOs) {
@@ -38,13 +39,15 @@ function createMinCount(menuOs) {
             const newMinOsCount = minCount.textContent;
             originalMinCount = newMinOsCount;
             minCount.blur();
-            const minCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
-            const minSelectCount = minCountArray.filter((p) => p.id == menuOs.groupOsId)
+            // const minCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
+            // const minSelectCount = minCountArray.filter((p) => p.id == menuOs.groupOsId)
+            const oldGroupOsId = menuOs.groupOsId
             updateMinCount(menuOs.groupOsId, newMinOsCount);
-            minSelectCount.forEach(os => {
-                os.textContent = newMinOsCount;
-                os.id = menuOs.groupOsId
-            })
+            updateOsDomIds(menuOs, oldGroupOsId)
+            // minSelectCount.forEach(os => {
+            //     os.textContent = newMinOsCount;
+            //     // os.id = menuOs.groupOsId
+            // })
         } else if (e.key === 'Escape') {
             minCount.textContent = originalMinCount;
             minCount.blur();

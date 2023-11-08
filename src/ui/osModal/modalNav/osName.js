@@ -4,7 +4,8 @@ import {
     itemlessOs,
     groupOptionSets,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateOsDomIds
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {
@@ -33,13 +34,9 @@ function createOsName(menuOs) {
             const newOsName = osName.textContent;
             originalName = newOsName;
             osName.blur();
-            const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
-            const osNameHeader = osNameHeaderArray.filter((p) => p.id == menuOs.groupOsId)
+            const oldGroupOsId = menuOs.groupOsId
             updateName(menuOs.groupOsId, newOsName);
-            osNameHeader.forEach(os => {
-                os.textContent = newOsName;
-                os.id = menuOs.groupOsId
-            })
+            updateOsDomIds(menuOs, oldGroupOsId)
         } else if (e.key === 'Escape') {
             osName.textContent = originalName;
             osName.blur();
@@ -72,5 +69,7 @@ function updateName(groupOsId, osName) {
         deleteItemlessOs(groupOsId)
     }
 }
+
+
 
 export { createOsNameCell }
