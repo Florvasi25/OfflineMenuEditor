@@ -35,24 +35,14 @@ function createOptionName(menuOption, menuOs) {
             originalName = newOptionName;
             optionName.blur();
 
-            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+            const optionNamePreview =  document.getElementsByClassName('optionNamePreview')
+            const optionNamePreviewArray = Array.from(optionNamePreview);
 
-            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-                const groupOsId = element.getAttribute('groupOsId');
-                return groupOsId === menuOs.groupOsId;
+            optionNamePreviewArray.forEach(optionNamePreview => {
+                if (optionNamePreview.id === menuOption.groupOptionId) {
+                    optionNamePreview.textContent = newOptionName;
+                }
             });
-
-            if (optionContainerPreview) {
-                optionContainerPreview.forEach((optionNameContainerPreview) => {
-                    const optionNamePreviewArray = Array.from(optionNameContainerPreview.getElementsByClassName('optionNamePreview'));
-
-                    optionNamePreviewArray.forEach(optionNamePreview => {
-                        if (optionNamePreview.id === menuOption.groupOptionId) {
-                            optionNamePreview.textContent = newOptionName;
-                        }
-                    });
-                });
-            }
 
         } else if (e.key === 'Escape') {
             optionName.blur();

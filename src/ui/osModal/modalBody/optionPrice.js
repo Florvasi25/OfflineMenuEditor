@@ -36,24 +36,14 @@ function createOptionPrice(menuOption, menuOs) {
             originalPrice = parseFloat(optionPrice.textContent);
             optionPrice.blur();
     
-            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+            const optionPricePreview =  document.getElementsByClassName('optionPricePreview')
+            const optionPricePreviewArray = Array.from(optionPricePreview);
             
-            const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-              const groupOsId = element.getAttribute('groupOsId');
-              return groupOsId === menuOs.groupOsId;
+            optionPricePreviewArray.forEach(optionPricePreview => {
+                if (optionPricePreview.id === menuOption.groupOptionId) {
+                    optionPricePreview.textContent = optionPrice.textContent;
+                }
             });
-            
-            if (optionContainerPreview) {
-                optionContainerPreview.forEach((optionPricePreview) => {
-                    const optionPricePreviewArray = Array.from(optionPricePreview.getElementsByClassName('optionPricePreview'));
-                    
-                    optionPricePreviewArray.forEach(optionPricePreview => {
-                        if (optionPricePreview.id === menuOption.groupOptionId) {
-                            optionPricePreview.textContent = optionPrice.textContent;
-                        }
-                    });
-                });
-            }
 
         } else if (e.key === 'Escape') {
             optionPrice.textContent = originalPrice.toFixed(2);
