@@ -19,6 +19,8 @@ import {
     addTextContent
 }  from '../helpers.js';
 
+import { deleteIDs } from '../item/itemDelete.js';
+
 function sectionListButton(sectionButtonsCell, menuSection) {
     const listButton = document.createElement('button');
     listButton.classList.add('sectionButton')
@@ -42,10 +44,10 @@ function createList(triggerButton, menuSection){
             this.listInstance.showList();
         } else {
             // If list already exists, simply toggle its visibility
-            if (this.listInstance.listElement && this.listInstance.listElement.style.display === 'block') {
-                this.listInstance.hideList();
-            } else {
+            if (this.listInstance.listElement && this.listInstance.listElement.style.display === 'none') {
                 this.listInstance.showList();
+            } else {
+                this.listInstance.hideList();
             }
         }
     });
@@ -91,15 +93,21 @@ class List {
         addTextContent(this.errorMessage, 'Input is not valid.');
         this.errorMessage.style.display = 'none';
 
-        this.cancelButton.addEventListener('click', () => {
+        this.cancelButton.addEventListener('click', (e) => {
             this.hideList();
+            e.preventDefault();
         });
 
-        this.submitButton.addEventListener('click', () => {
-            if(this.validateItemsFormat(this.textAreaGroupItems.value)){
-                const itemsNotInJson = this.compareItems(this.textAreaGroupItems.value);
+        this.submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(this.validateItemsFormat(this.textAreaGroupItems.value) && this.checkDuplicatedItems(this.textAreaGroupItems.value)){
+                const { itemsNotInJson , jsonItemsNotInText } = this.compareItems(this.textAreaGroupItems.value);
+                const sectionIndex = getSectionIndex(this.menuSection.MenuSectionId);
                 if(itemsNotInJson && itemsNotInJson.length > 0){
-                    this.createItems(itemsNotInJson);
+                    this.createItems(itemsNotInJson, sectionIndex);
+                }
+                if(jsonItemsNotInText && jsonItemsNotInText.length > 0){
+                    this.deleteItems(jsonItemsNotInText, sectionIndex);
                 }
                 this.hideList();
             }else{
@@ -139,6 +147,27 @@ class List {
         return true;
       }
 
+      checkDuplicatedItems(textBoxContent){
+        this.errorMessage.style.display = 'none';
+        this.textAreaGroupItems.classList.remove('error');
+
+        const trimmedInput = textBoxContent.trim();
+        const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
+        const itemsSeen = {}; 
+
+        for (let line of lines) {
+            let [itemName, itemPrice] = line.split(';');
+            let itemKey = `${itemName.toLowerCase().trim()};${itemPrice.trim()}`; 
+            if (itemsSeen[itemKey]) {
+                this.errorMessage.style.display = 'block';
+                this.textAreaGroupItems.classList.add('error');
+                return false;
+            } else {
+                itemsSeen[itemKey] = true;
+            }
+        }
+        return true;    
+      }
       compareItems(textBoxContent) {
         // Convert the text box content into an array of lines and trim each line
         const lines = textBoxContent.trim().split('\n').map(line => line.trim());
@@ -159,22 +188,27 @@ class List {
           // Return true if the line (item;price) is not found in the JSON
           return !menuItemsFromJson.includes(normalizedLine);
         });
-        return itemsNotInJson;
+        const jsonItemsNotInText = menuItemsFromJson.filter(menuItem => {
+            return !lines.includes(menuItem);
+        });
+
+         return { itemsNotInJson, jsonItemsNotInText };
     }
 
-    createItems(items) {
-        //first we need to trim 'items'
-        const sectionIndex = getSectionIndex(this.menuSection.MenuSectionId);
+    createItems(items, sectionIndex) {
+        
         for(let i = 0; i < items.length; i++){
+            const { itemName, itemPrice } = this.trimItems(items[i]);
             const itemIDs = getLocalStorageItemIDs();
             const newId = getUniqueRandomInt(itemIDs);
+
             const emptyItemJson = {
                 MenuId: jsonData.MenuId,
                 MenuItemId: newId,
-                Name: null,
+                Name: itemName,
                 Description: null,
                 SpicinessRating: 0,
-                Price: 0,
+                Price: itemPrice,
                 DisplayOrder: jsonData.MenuSections[sectionIndex].MenuItems.length,
                 IsDeleted: false,
                 Alcohol: false,
@@ -192,7 +226,7 @@ class List {
                 ImageUrl: null,
                 CellAspectRatio: 4,
                 CellLayoutType: 0,
-                ActualPrice: 0,
+                ActualPrice: itemPrice,
                 DisableVouchers: false,
                 ExcludeFromVoucherDiscounting: false,
                 DailySpecialHours: [],
@@ -205,20 +239,49 @@ class List {
             updateItemCounterLocalStorage(newId, true);
         }
     }
+    deleteItems(jsonItemsNotInText, sectionIndex){
+        const itemsToDelete = jsonItemsNotInText.map(itemText => this.trimItems(itemText));
+        const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
 
+        const filteredItems = menuItems.filter(item => {
+            return !itemsToDelete.some(toDelete => toDelete.itemName === item.Name && toDelete.itemPrice === item.Price);
+        });
+        jsonData.MenuSections[sectionIndex].MenuItems = filteredItems;
+    
+        jsonData.MenuSections[sectionIndex].MenuItems.forEach((item, index) => {
+            item.DisplayOrder = index;
+        });
+    
+        updateLocalStorage();
+    }
+
+    trimItems(item){
+        let parts = item.split(';');
+        let trimmedItemName = parts[0].trim();
+        let trimmedItemPrice = parts[1].trim();
+        
+        return {
+          itemName: trimmedItemName,
+          itemPrice: +trimmedItemPrice
+        };
+        
+    }
+    
     showList() {
         this.listElement = this.createListHtml();
         this.positionList();
-        this.listElement.classList.remove('hidden');
-
-        document.addEventListener('click', this.handleOutsideClick.bind(this));
+        body.appendChild(this.listElement);
+        
+        this.listElement.style.display = 'block'; 
+    
+        document.addEventListener('click', this.handleOutsideClick.bind(this), true);
     }
 
     hideList() {
         if (this.listElement) {
-            this.listElement.classList.add('hidden');
+            this.listElement.style.display = 'none';
         }
-        document.removeEventListener('click', this.handleOutsideClick.bind(this));
+        document.removeEventListener('click', this.handleOutsideClick.bind(this), true);
     }
 
     positionList() {
