@@ -139,7 +139,7 @@ function setOptionSetId(jsonData) {
             itemIDInOS = item.MenuItemId;
             for (const optionSet of item.MenuItemOptionSets) {
                 optionSet.MenuItemId = itemIDInOS;
-                optionSet.MenuItemOptionSetId = getRandomInt();                  
+                optionSet.MenuItemOptionSetId = getRandomInt();
                 updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, true)
             }
         }
@@ -153,7 +153,7 @@ function setOptionSetItemsId(jsonData) {
         for (const item of section.MenuItems) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
-                    optionSetItem.MenuItemOptionSetItemId = getRandomInt();                  
+                    optionSetItem.MenuItemOptionSetItemId = getRandomInt();
                     updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true)
                 }
             }
@@ -177,7 +177,7 @@ function updateItemlessLocalStorage() {
     localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
 }
 
-//Updates sections id LocalStorage. 
+//Updates sections id LocalStorage.
 //If 'addID' is true, will be added to localStorage. else, will be removed.
 function updateCounterLocalStorage(id, addID) {
     if(addID) {
@@ -185,7 +185,7 @@ function updateCounterLocalStorage(id, addID) {
         existingIDs.push(id);
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
     } else {
-        let existingIDs = getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]"); 
+        let existingIDs = getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]");
         const indexID = existingIDs.indexOf(Number(id));
         existingIDs.splice(indexID, 1);
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
@@ -199,35 +199,35 @@ function updateItemCounterLocalStorage(id, addID) {
         existingIDs.push(id);
         localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
     } else {
-        let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]"); 
+        let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]");
         const indexID = existingIDs.indexOf(Number(id));
         existingIDs.splice(indexID, 1);
         localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
     }
 }
 
-//Updates OS id in LocalStorage. 
+//Updates OS id in LocalStorage.
 function updateOptionSetCounterLocalStorage(id, addID) {
     if(addID) {
         let existingIDs =  getLocalStorageOptionSetIDs();
         existingIDs.push(id);
         localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
     } else {
-        let existingIDs = getLocalStorageOptionSetIDs(); 
+        let existingIDs = getLocalStorageOptionSetIDs();
         const indexID = existingIDs.indexOf(Number(id));
         existingIDs.splice(indexID, 1);
         localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
     }
 }
 
-//Updates OS items id in LocalStorage. 
+//Updates OS items id in LocalStorage.
 function updateOptionSetItemsCounterLocalStorage(id, addID) {
     if(addID) {
         let existingIDs =  getLocalStorageOptionSetItemsIDs();
         existingIDs.push(id);
         localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
     } else {
-        let existingIDs = getLocalStorageOptionSetItemsIDs(); 
+        let existingIDs = getLocalStorageOptionSetItemsIDs();
         const indexID = existingIDs.indexOf(Number(id));
         existingIDs.splice(indexID, 1);
         localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
@@ -283,7 +283,7 @@ function updateGroupedIdItemlessOs(menuOs) {
     const oldGroupOsId = menuOs.groupOsId
 
     addItemlessOs(itemlessOs[oldGroupOsId])
-    deleteItemlessOs(oldGroupOsId)    
+    deleteItemlessOs(oldGroupOsId)
 }
 
 function addItemlessOs(os) {
@@ -316,21 +316,21 @@ function setColorOfRows(optionRowsContainer) {
 }
 
 function updateOsDomIds(menuOs, oldGroupOsId) {
-    const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
+    const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
     const osNameHeader = osNameHeaderArray.filter((p) => p.id == oldGroupOsId)
     osNameHeader.forEach(os => {
         os.textContent = menuOs.Name;
         os.id = menuOs.groupOsId
     })
 
-    const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount')); 
+    const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
     const minSelectCount = minSelectCountArray.filter((p) => p.id == oldGroupOsId)
     minSelectCount.forEach(os => {
         os.textContent = menuOs.MinSelectCount
         os.id = menuOs.groupOsId
     })
 
-    const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount')); 
+    const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
     const maxSelectCount = maxSelectCountArray.filter((p) => p.id == oldGroupOsId)
     maxSelectCount.forEach(os => {
         os.textContent = menuOs.MaxSelectCount
