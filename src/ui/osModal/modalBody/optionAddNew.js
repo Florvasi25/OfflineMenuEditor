@@ -81,7 +81,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
         updateGroupedIdItemlessOs(menuOs);
     } else {
-        console.log("error");
+        console.warn("Warn: No option set found");
     }
 
     const optionRow = createOption(
