@@ -357,6 +357,13 @@ function updateOptionDomIds(menuOption, oldGroupOptionId) {
         os.textContent = menuOption.Name
         os.id = menuOption.groupOptionId
     })
+
+    const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
+    const optionPricePreview = optionPricePreviewArray.filter((p) => p.id == oldGroupOptionId)
+    optionPricePreview.forEach(os => {
+        os.textContent = menuOption.Price
+        os.id = menuOption.groupOptionId
+    })
 }
 
 export {

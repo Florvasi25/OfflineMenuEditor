@@ -4,7 +4,9 @@ import {
     groupOptionSets,
     itemlessOs,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateOsDomIds,
+    updateOptionDomIds
 } from '../../context.js'
 
 function createOptionPriceCell(menuOption, menuOs) {
@@ -32,19 +34,14 @@ function createOptionPrice(menuOption, menuOs) {
     optionPrice.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            updatePrice(menuOption.groupOptionId, menuOs.groupOsId, optionPrice.textContent);
             originalPrice = parseFloat(optionPrice.textContent);
             optionPrice.blur();
     
-            const optionPricePreview =  document.getElementsByClassName('optionPricePreview')
-            const optionPricePreviewArray = Array.from(optionPricePreview);
-            
-            optionPricePreviewArray.forEach(optionPricePreview => {
-                if (optionPricePreview.id === menuOption.groupOptionId) {
-                    optionPricePreview.textContent = optionPrice.textContent;
-                }
-            });
-
+            const oldGroupOsId = menuOs.groupOsId
+            const oldGroupOptionId = menuOption.groupOptionId
+            updatePrice(menuOption.groupOptionId, menuOs.groupOsId, optionPrice.textContent);
+            updateOptionDomIds(menuOption, oldGroupOptionId)
+            updateOsDomIds(menuOs, oldGroupOsId)
         } else if (e.key === 'Escape') {
             optionPrice.textContent = originalPrice.toFixed(2);
             optionPrice.blur();
@@ -79,7 +76,7 @@ function updatePrice(groupOptionId, groupOsId, optionPrice) {
                 const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
                 option.Price = priceAsNumber
             })
-            // groupOptionSets()
+            groupOptionSets()
             updateLocalStorage()
         } else if (itemlessOs[groupOsId]) {
             const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
