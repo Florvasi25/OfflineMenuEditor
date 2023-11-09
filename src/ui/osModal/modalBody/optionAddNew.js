@@ -28,13 +28,10 @@ function createOptionButton(optionRowsContainer, menuOs) {
 }
 
 function handleClickNewOptionButton(optionRowsContainer, menuOs) {
-    const optionIds = getLocalStorageOptionSetItemsIDs();
-    const newOptionId = getUniqueRandomInt(optionIds);
-
     let emptyOptionJson = {
         CatalogItemId: null,
         MenuId: jsonData.MenuId,
-        MenuItemOptionSetItemId: newOptionId,
+        MenuItemOptionSetItemId: null,
         Name: null,
         Price: 0,
         TaxRateId: null,
@@ -58,9 +55,14 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
     if (groupedOs[menuOs.groupOsId]) {
         groupedOs[menuOs.groupOsId].forEach((os) => {
+            const optionIds = getLocalStorageOptionSetItemsIDs();
+            const newOptionId = getUniqueRandomInt(optionIds);
+            updateItemCounterLocalStorage(newOptionId, true);
+
+            emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
+
             os.MenuItemOptionSetItems.push(emptyOptionJson);
 
-            updateItemCounterLocalStorage(newOptionId, true);
         });
 
         const optionContainerPreviewArray = Array.from(
@@ -83,6 +85,12 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
         updateLocalStorage();
     } else if (itemlessOs[menuOs.groupOsId]) {
+        const optionIds = getLocalStorageOptionSetItemsIDs();
+        const newOptionId = getUniqueRandomInt(optionIds);
+        updateItemCounterLocalStorage(newOptionId, true);
+
+        emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
+
         itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems.push(
             emptyOptionJson
         );
