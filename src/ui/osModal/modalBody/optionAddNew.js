@@ -65,23 +65,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
         });
 
-        const optionContainerPreviewArray = Array.from(
-            document.getElementsByClassName("optionContainer")
-        );
-
-        const optionContainerPreview = optionContainerPreviewArray.filter(
-            (element) => {
-                const groupOsId = element.getAttribute("groupOsId");
-                return groupOsId === menuOs.groupOsId;
-            }
-        );
-
-        if (optionContainerPreview) {
-            optionContainerPreview.forEach((osRowOptionContainerPreview) => {
-                const newOptionRow = createOptionRow(emptyOptionJson);
-                osRowOptionContainerPreview.appendChild(newOptionRow);
-            });
-        }
+        updatePreview(menuOs, emptyOptionJson);
 
         updateLocalStorage();
     } else if (itemlessOs[menuOs.groupOsId]) {
@@ -109,6 +93,26 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
     optionRowsContainer.appendChild(optionRow);
 
     setColorOfRows(optionRowsContainer);
+}
+
+function updatePreview(menuOs, emptyOptionJson) {
+    const optionContainerPreviewArray = Array.from(
+        document.getElementsByClassName("optionContainer")
+    );
+
+    const optionContainerPreview = optionContainerPreviewArray.filter(
+        (element) => {
+            const groupOsId = element.getAttribute("groupOsId");
+            return groupOsId === menuOs.groupOsId;
+        }
+    );
+
+    if (optionContainerPreview) {
+        optionContainerPreview.forEach((osRowOptionContainerPreview) => {
+            const newOptionRow = createOptionRow(emptyOptionJson);
+            osRowOptionContainerPreview.appendChild(newOptionRow);
+        });
+    }
 }
 
 export { createOptionButton };
