@@ -113,4 +113,4 @@ function deleteIDs(itemId, itemIndex, sectionIndex) {
     updateItemCounterLocalStorage(itemId, false);
 }
 
-export { itemDeleteButton }
+export { itemDeleteButton, deleteIDs }

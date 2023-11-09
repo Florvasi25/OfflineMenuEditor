@@ -63,19 +63,14 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
 
         setColorOfRows(optionRowsContainer)
 
-        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-        optionContainerPreviewArray.forEach(optionContainerPreview => {
-            const groupOsId = optionContainerPreview.getAttribute('groupOsId');
+        const osRowOption =  document.getElementsByClassName('osRowOption')
+        const osRowOptionPreviewArray = Array.from(osRowOption);
+        
+        osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+            const newOptionRow = createOptionRow(newOption);
 
-            if (groupOsId === menuOs.groupOsId) {
-                const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
-                osRowOptionPreviewArray.forEach(osRowOptionPreview => {
-                    const newOptionRow = createOptionRow(newOption);
-
-                    if (osRowOptionPreview.id === menuOption.groupOptionId) {
-                        optionContainerPreview.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
-                    }
-                });
+            if (osRowOptionPreview.id === menuOption.groupOptionId) {
+                osRowOptionPreview.parentNode.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
             }
         });
 

@@ -315,6 +315,29 @@ function setColorOfRows(optionRowsContainer) {
     });
 }
 
+function updateOsDomIds(menuOs, oldGroupOsId) {
+    const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader')); 
+    const osNameHeader = osNameHeaderArray.filter((p) => p.id == oldGroupOsId)
+    osNameHeader.forEach(os => {
+        os.textContent = menuOs.Name;
+        os.id = menuOs.groupOsId
+    })
+
+    const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount')); 
+    const minSelectCount = minSelectCountArray.filter((p) => p.id == oldGroupOsId)
+    minSelectCount.forEach(os => {
+        os.textContent = menuOs.MinSelectCount
+        os.id = menuOs.groupOsId
+    })
+
+    const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount')); 
+    const maxSelectCount = maxSelectCountArray.filter((p) => p.id == oldGroupOsId)
+    maxSelectCount.forEach(os => {
+        os.textContent = menuOs.MaxSelectCount
+        os.id = menuOs.groupOsId
+    })
+}
+
 export {
     jsonData,
     groupedOs,
@@ -348,5 +371,6 @@ export {
     addItemlessOs,
     deleteItemlessOs,
     updateItemlessLocalStorage,
-    updateGroupedIdItemlessOs
+    updateGroupedIdItemlessOs,
+    updateOsDomIds
 }

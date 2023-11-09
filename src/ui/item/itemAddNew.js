@@ -24,7 +24,7 @@ function createItemButton(itemContainer, sectionId) {
         const emptyItemJson = {
             MenuId: jsonData.MenuId,
             MenuItemId: newId,
-            Name: null,
+            Name: "Empty",
             Description: null,
             SpicinessRating: 0,
             Price: 0,

@@ -4,7 +4,8 @@ import {
     itemlessOs,
     groupOptionSets,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateOsDomIds
 } from '../../context.js'
 
 function createMaxCountCell(menuOs) {
@@ -38,13 +39,15 @@ function createMaxCount(menuOs) {
             const newMaxOsCount = maxCount.textContent;
             originalName = newMaxOsCount;
             maxCount.blur();
-            const maxCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-            const maxSelectCount = maxCountArray.filter((p) => p.id == menuOs.groupOsId)
+            // const maxCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
+            // const maxSelectCount = maxCountArray.filter((p) => p.id == menuOs.groupOsId)
+            const oldGroupOsId = menuOs.groupOsId
             updateMaxCount(menuOs.groupOsId, newMaxOsCount);
-            maxSelectCount.forEach(os => {
-                os.textContent = newMaxOsCount;
-                os.id = menuOs.groupOsId
-            })
+            updateOsDomIds(menuOs, oldGroupOsId)
+            // maxSelectCount.forEach(os => {
+            //     os.textContent = newMaxOsCount;
+            //     // os.id = menuOs.groupOsId
+            // })
 
         } else if (e.key === 'Escape') {
             maxCount.textContent = originalName;

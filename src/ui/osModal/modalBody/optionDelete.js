@@ -79,24 +79,14 @@ function deleteItem(menuOs, menuOption, optionRow, optionRowsContainer) {
 
         setColorOfRows(optionRowsContainer)
 
-        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-
-        const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-            const groupOsId = element.getAttribute('groupOsId');
-            return groupOsId === menuOs.groupOsId;
-        });
+        const osRowOption = document.getElementsByClassName('osRowOption')
+        const osRowOptionPreviewArray = Array.from(osRowOption);
         
-        if (optionContainerPreview) {
-            optionContainerPreview.forEach((osRowOptionContainerPreview) => {
-                const osRowOptionPreviewArray = Array.from(osRowOptionContainerPreview.getElementsByClassName('osRowOption'));
-                
-                osRowOptionPreviewArray.forEach(osRowOptionPreview => {
-                    if (osRowOptionPreview.id === menuOption.groupOptionId) {
-                        osRowOptionPreview.remove()
-                    }
-                });
-            });
-        }
+        osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+            if (osRowOptionPreview.id === menuOption.groupOptionId) {
+                osRowOptionPreview.remove()
+            }
+        });
 
         updateLocalStorage();
         updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
