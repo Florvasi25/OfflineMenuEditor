@@ -65,8 +65,6 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
         });
 
-        updatePreview(menuOs, emptyOptionJson);
-
         updateLocalStorage();
     } else if (itemlessOs[menuOs.groupOsId]) {
         const optionIds = getLocalStorageOptionSetItemsIDs();
@@ -83,6 +81,8 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
     } else {
         console.warn("Warn: No option set found");
     }
+
+    updatePreview(menuOs, emptyOptionJson);
 
     const optionRow = createOption(
         optionRowsContainer,
