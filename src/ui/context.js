@@ -336,6 +336,12 @@ function updateOsDomIds(menuOs, oldGroupOsId) {
         os.textContent = menuOs.MaxSelectCount
         os.id = menuOs.groupOsId
     })
+
+    const optionContainerArray = Array.from(document.getElementsByClassName('optionContainer'));
+    const optionContainer = optionContainerArray.filter((p) => p.getAttribute("groupOsId") == oldGroupOsId)
+    optionContainer.forEach(os => {
+        os.setAttribute("groupOsId", menuOs.groupOsId)
+    })
 }
 
 export {
