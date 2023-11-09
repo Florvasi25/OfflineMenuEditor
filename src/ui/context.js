@@ -344,6 +344,21 @@ function updateOsDomIds(menuOs, oldGroupOsId) {
     })
 }
 
+function updateOptionDomIds(menuOption, oldGroupOptionId) {
+    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+    const osRowOptionPreview = osRowOptionPreviewArray.filter((p) => p.id == oldGroupOptionId)
+    osRowOptionPreview.forEach(os => {
+        os.id = menuOption.groupOptionId
+    })
+
+    const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
+    const optionNamePreview = optionNamePreviewArray.filter((p) => p.id == oldGroupOptionId)
+    optionNamePreview.forEach(os => {
+        os.textContent = menuOption.Name
+        os.id = menuOption.groupOptionId
+    })
+}
+
 export {
     jsonData,
     groupedOs,
@@ -378,5 +393,6 @@ export {
     deleteItemlessOs,
     updateItemlessLocalStorage,
     updateGroupedIdItemlessOs,
-    updateOsDomIds
+    updateOsDomIds,
+    updateOptionDomIds
 }

@@ -4,7 +4,9 @@ import {
     groupOptionSets,
     itemlessOs,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateOptionDomIds,
+    updateOsDomIds
 } from '../../context.js'
 
 function createOptionNameCell(menuOption, menuOs) {
@@ -31,19 +33,14 @@ function createOptionName(menuOption, menuOs) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const newOptionName = optionName.textContent;
-            updateOptionName(menuOption.groupOptionId, menuOs.groupOsId, newOptionName);
             originalName = newOptionName;
             optionName.blur();
 
-            const optionNamePreview =  document.getElementsByClassName('optionNamePreview')
-            const optionNamePreviewArray = Array.from(optionNamePreview);
-
-            optionNamePreviewArray.forEach(optionNamePreview => {
-                if (optionNamePreview.id === menuOption.groupOptionId) {
-                    optionNamePreview.textContent = newOptionName;
-                }
-            });
-
+            const oldGroupOsId = menuOs.groupOsId
+            const oldGroupOptionId = menuOption.groupOptionId
+            updateOptionName(menuOption.groupOptionId, menuOs.groupOsId, newOptionName);
+            updateOptionDomIds(menuOption, oldGroupOptionId)
+            updateOsDomIds(menuOs, oldGroupOsId)
         } else if (e.key === 'Escape') {
             optionName.blur();
         }
@@ -69,7 +66,7 @@ function updateOptionName(groupOptionId, groupOsId, newOptionName) {
             const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
             option.Name = newOptionName
         })
-        // groupOptionSets()
+        groupOptionSets()
         updateLocalStorage()
     } else if (itemlessOs[groupOsId]) {
         const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
