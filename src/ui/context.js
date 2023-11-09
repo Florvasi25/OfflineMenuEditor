@@ -364,6 +364,13 @@ function updateOptionDomIds(menuOption, oldGroupOptionId) {
         os.textContent = menuOption.Price
         os.id = menuOption.groupOptionId
     })
+
+    osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+        if (osRowOptionPreview.id === menuOption.groupOptionId) {
+            osRowOptionPreview.classList.toggle('unavailable', !isAvailableNew)
+        }
+    });
+
 }
 
 export {
