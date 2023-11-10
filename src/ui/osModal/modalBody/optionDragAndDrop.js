@@ -1,7 +1,13 @@
 import {
     updateLocalStorage,
     getDragAfterElement,
-    groupedOs
+    groupedOs,
+    groupOptionSets,
+    updateOsDomIds,
+    itemlessOs,
+    addItemlessOs,
+    deleteItemlessOs,
+
 } from '../../context.js';
 
 function createOptionDragCell(optionRowsContainer, optionRow) {
@@ -49,42 +55,64 @@ function setDragListeners(optionRowsContainer, menuOs) {
             optionRowsContainer.insertBefore(draggable, afterElement)
         }
 
-        const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-        
-        optionContainerPreviewArray.forEach(optionContainerPreview => {
-            const groupOsId = optionContainerPreview.getAttribute('groupOsId');
-            
-            if (groupOsId === menuOs.groupOsId) {
-                const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
-                const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
-                if (afterElement == null) {
-                    optionContainerPreview.appendChild(osRowOptionPreview)
-                } else {
-                    const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
-                    optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
-                }        
-            }
-        });
+        updatePreview(menuOs, draggable, afterElement)
     })
 
     optionRowsContainer.addEventListener("dragend", () => {
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
         const draggedIdOption = draggable.getAttribute("id");
-        const optionIndex = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
         const indexNewPosition = rows.indexOf(draggable);
         
-        if(optionIndex !== indexNewPosition) {
-            groupedOs[menuOs.groupOsId].forEach(os => {
-                const optionToMove = os.MenuItemOptionSetItems.splice(optionIndex, 1)[0];
-                os.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
-                os.MenuItemOptionSetItems.forEach((obj, optionIndex) => {
-                    obj.DisplayOrder = optionIndex;
-                })
-            }) 
+        const oldGroupOsId = menuOs.groupOsId;
+        
+        if (groupedOs[oldGroupOsId]) {
+            const optionIndex = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
+            if(optionIndex !== indexNewPosition) {
+                groupedOs[menuOs.groupOsId].forEach(os => {
+                    const optionToMove = os.MenuItemOptionSetItems.splice(optionIndex, 1)[0];
+                    os.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
+                    os.MenuItemOptionSetItems.forEach((obj, optionIndex) => {
+                        obj.DisplayOrder = optionIndex;
+                    })
+                }) 
+                groupOptionSets()
+                updateLocalStorage()
 
-            updateLocalStorage()
+                updateOsDomIds(menuOs, oldGroupOsId)
+            } 
+        } else if (itemlessOs[oldGroupOsId]) {
+            const optionItemlessIndex = itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
+            if(optionItemlessIndex !== indexNewPosition) {
+                const optionToMove = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionItemlessIndex, 1)[0];
+                console.log('optionToMove', optionToMove);
+                itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
+                itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, optionItemlessIndex) => {
+                    obj.DisplayOrder = optionItemlessIndex;
+                })
+            }
+            addItemlessOs(itemlessOs[oldGroupOsId])
+            deleteItemlessOs(oldGroupOsId)
         }
     })
+}
+
+function updatePreview(menuOs, draggable, afterElement) {
+    const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
+        
+    optionContainerPreviewArray.forEach(optionContainerPreview => {
+        const groupOsId = optionContainerPreview.getAttribute('groupOsId');
+        
+        if (groupOsId === menuOs.groupOsId) {
+            const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
+            const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
+            if (afterElement == null) {
+                optionContainerPreview.appendChild(osRowOptionPreview)
+            } else {
+                const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
+                optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
+            }
+        }
+    });
 }
 
 export {

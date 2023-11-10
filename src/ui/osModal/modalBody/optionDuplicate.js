@@ -38,7 +38,6 @@ function optionDuplicateButton(optionRow, optionRowsContainer, optionButtonsCell
 function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
     const optionToDuplicate = optionRow.id
     const oldGroupOsId = menuOs.groupOsId;
-    const oldGroupOptionId = menuOption.groupOptionId;
 
     if (optionToDuplicate) {
         if (groupedOs[oldGroupOsId]) {
