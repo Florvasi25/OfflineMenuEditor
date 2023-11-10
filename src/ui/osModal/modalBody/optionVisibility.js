@@ -4,7 +4,9 @@ import {
     groupOptionSets,
     itemlessOs,
     addItemlessOs,
-    deleteItemlessOs
+    deleteItemlessOs,
+    updateOsDomIds,
+    updateOptionDomIds
 } from '../../context.js'
 
 function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, menuOs) {
@@ -40,6 +42,7 @@ function optionVisibilityButton(optionButtonsCell, optionRow, menuOption, menuOs
 function SectionAvailability(optionRow, menuOs, menuOption) {
     const optionToHide = optionRow.id;
     const oldGroupOsId = menuOs.groupOsId
+    const oldGroupOptionId = menuOption.groupOptionId
 
     if (optionToHide) {
         if (groupedOs[oldGroupOsId]) {
@@ -49,9 +52,12 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
                 const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
                 option.IsAvailable = isAvailableNew
                 optionRow.classList.toggle('unavailable', !isAvailableNew);
-            })
+            })            
             groupOptionSets()
             updateLocalStorage()
+
+            updateOptionDomIds(menuOption, oldGroupOptionId)
+            updateOsDomIds(menuOs, oldGroupOsId)
         } else if (itemlessOs[oldGroupOsId]) {
             const option = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == optionToHide)
             const isAvailableNew = !option.IsAvailable
@@ -60,25 +66,6 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
             addItemlessOs(itemlessOs[oldGroupOsId])
             deleteItemlessOs(oldGroupOsId)
         }
-
-            // const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-
-            // const optionContainerPreview = optionContainerPreviewArray.filter((element) => {
-            //   const groupOsId = element.getAttribute('groupOsId');
-            //   return groupOsId === menuOs.groupOsId;
-            // });
-
-            // if (optionContainerPreview) {
-            //     optionContainerPreview.forEach((osRowOptionContainerPreview) => {
-            //         const osRowOptionPreviewArray = Array.from(osRowOptionContainerPreview.getElementsByClassName('osRowOption'));
-
-            //         osRowOptionPreviewArray.forEach(osRowOptionPreview => {
-            //             if (osRowOptionPreview.id === menuOption.groupOptionId) {
-            //                 osRowOptionPreview.classList.toggle('unavailable', !isAvailableNew)
-            //             }
-            //         });
-            //     });
-            // }
     }
 }
 
