@@ -2,7 +2,12 @@ import {
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
     groupedOs,
-    setColorOfRows
+    setColorOfRows,
+    groupOptionSets,
+    updateOsDomIds,
+    itemlessOs,
+    addItemlessOs,
+    deleteItemlessOs
 } from '../../context.js';
 
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
@@ -33,7 +38,7 @@ function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionR
         <button class="noButton confirmDeleteBtn">No</button>`
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
-        deleteItem(menuOs, menuOption, optionRow, optionRowsContainer);
+        deleteOption(menuOs, menuOption, optionRow, optionRowsContainer);
         popup.remove();
     });
 
@@ -63,34 +68,51 @@ function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionR
 }
 
 //Deletes item from UI and LS
-function deleteItem(menuOs, menuOption, optionRow, optionRowsContainer) {
+function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
     const optionToDelete = optionRow.id;
+    const oldGroupOsId = menuOs.groupOsId;
     
     if (optionToDelete) {
         optionRow.remove();
 
-        groupedOs[menuOs.groupOsId].forEach(os => {
-            const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
-            os.MenuItemOptionSetItems.splice(optionIndex, 1)
-            os.MenuItemOptionSetItems.forEach((obj, index) => {
+        if (groupedOs[oldGroupOsId]) {
+            groupedOs[menuOs.groupOsId].forEach(os => {
+                const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
+                os.MenuItemOptionSetItems.splice(optionIndex, 1)
+                os.MenuItemOptionSetItems.forEach((obj, index) => {
+                    obj.DisplayOrder = index;
+                })
+                updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
+                groupOptionSets()
+                updateLocalStorage();
+
+                updatePreview(menuOption)
+                updateOsDomIds(menuOs, oldGroupOsId);
+            })
+        } else if (itemlessOs[oldGroupOsId]) {
+            const optionIndex = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
+            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionIndex, 1)
+            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
-        })
+
+            addItemlessOs(itemlessOs[oldGroupOsId]);
+            deleteItemlessOs(oldGroupOsId);
+        }
 
         setColorOfRows(optionRowsContainer)
-
-        const osRowOption = document.getElementsByClassName('osRowOption')
-        const osRowOptionPreviewArray = Array.from(osRowOption);
-        
-        osRowOptionPreviewArray.forEach(osRowOptionPreview => {
-            if (osRowOptionPreview.id === menuOption.groupOptionId) {
-                osRowOptionPreview.remove()
-            }
-        });
-
-        updateLocalStorage();
-        updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
     }
+}
+
+function updatePreview(menuOption) {
+    const osRowOption = document.getElementsByClassName('osRowOption')
+    const osRowOptionPreviewArray = Array.from(osRowOption);
+    
+    osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+        if (osRowOptionPreview.id === menuOption.groupOptionId) {
+            osRowOptionPreview.remove()
+        }
+    });
 }
 
 export { optionDeleteButton }

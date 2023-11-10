@@ -45,7 +45,6 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
             
             let newOption = ""
-            // const newGroupOptionId = crypto.randomUUID()
             groupedOs[menuOs.groupOsId].forEach(os => {
                 newOption = JSON.parse(JSON.stringify(optionObject));
     
@@ -54,8 +53,6 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
     
                 newOption.MenuItemOptionSetItemId = newOptionId;
                 newOption.PublicId = crypto.randomUUID();
-                // newOption.groupOptionId = newGroupOptionId
-                // newOption.groupOptionId = groupOptionId + "_copy"
                 newOption.Name = menuOption.Name + "_copy"
     
                 const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
@@ -75,7 +72,6 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             
             updatePreview(menuOption, newOption)
 
-            // updateOptionDomIds(menuOption, oldGroupOptionId);
             updateOsDomIds(menuOs, oldGroupOsId);
         } else if (itemlessOs[oldGroupOsId]) {
             const optionObject = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.find(
@@ -109,7 +105,6 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
         }
         
         setColorOfRows(optionRowsContainer)
-
     }
 }
 
