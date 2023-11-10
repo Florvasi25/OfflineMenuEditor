@@ -348,9 +348,7 @@ function updateOptionDomIds(menuOption, oldGroupOptionId) {
     const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
     const osRowOptionPreview = osRowOptionPreviewArray.filter((p) => p.id == oldGroupOptionId)
     osRowOptionPreview.forEach(os => {
-        console.log(menuOption);
         os.id = menuOption.groupOptionId
-        console.log('os', os);
         os.classList.toggle('unavailable', !menuOption.IsAvailable)
     })
 

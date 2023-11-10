@@ -7,7 +7,11 @@ import {
     setSectionDisplayOrder,
     getUniqueRandomInt,
     groupedOs,
-    setColorOfRows
+    setColorOfRows,
+    groupOptionSets,
+    itemlessOs,
+    addItemlessOs,
+    deleteItemlessOs,
 } from '../../context.js';
 
 import { createOption } from './osBody.js'
@@ -32,14 +36,49 @@ function optionDuplicateButton(optionRow, optionRowsContainer, optionButtonsCell
 
 function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
     const optionToDuplicate = optionRow.id
+    const oldGroupOsId = menuOs.groupOsId;
+    const oldGroupOptionId = menuOption.groupOptionId;
 
     if (optionToDuplicate) {
-        const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
-        
-        let newOption = ""
-        const newGroupOptionId = crypto.randomUUID()
-        groupedOs[menuOs.groupOsId].forEach(os => {
-            newOption = JSON.parse(JSON.stringify(optionObject));
+        if (groupedOs[oldGroupOsId]) {
+            const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
+            
+            let newOption = ""
+            const newGroupOptionId = crypto.randomUUID()
+            groupedOs[menuOs.groupOsId].forEach(os => {
+                newOption = JSON.parse(JSON.stringify(optionObject));
+    
+                const optionIds = getLocalStorageOptionSetItemsIDs();
+                const newOptionId = getUniqueRandomInt(optionIds);
+    
+                newOption.MenuItemOptionSetItemId = newOptionId;
+                newOption.PublicId = crypto.randomUUID();
+                newOption.groupOptionId = newGroupOptionId
+    
+                const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
+                os.MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption)
+                os.MenuItemOptionSetItems.forEach((obj, index) => {
+                    obj.DisplayOrder = index;
+                })
+    
+                updateItemCounterLocalStorage(newOptionId, true);
+                updateOptionSetItemsCounterLocalStorage(newOptionId, true)
+            })
+            const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
+            optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+            
+            groupOptionSets()
+            updateLocalStorage();
+
+            // updateOptionDomIds(menuOption, oldGroupOptionId);
+            // updateOsDomIds(menuOs, oldGroupOsId);
+        } else if (itemlessOs[oldGroupOsId]) {
+            const optionObject = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.find(
+                (option) => option.groupOptionId === optionToDuplicate
+            );
+            const newGroupOptionId = crypto.randomUUID()
+
+            const newOption = JSON.parse(JSON.stringify(optionObject));
 
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);
@@ -48,19 +87,22 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             newOption.PublicId = crypto.randomUUID();
             newOption.groupOptionId = newGroupOptionId
 
-            const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
-            os.MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption)
-            os.MenuItemOptionSetItems.forEach((obj, index) => {
+            const optionIndex = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
+            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption)
+            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
 
             updateItemCounterLocalStorage(newOptionId, true);
             updateOptionSetItemsCounterLocalStorage(newOptionId, true)
-        })
-        
-        const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
-        optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
+            const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
+            optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+
+            addItemlessOs(itemlessOs[oldGroupOsId]);
+            deleteItemlessOs(oldGroupOsId);
+        }
+        
         setColorOfRows(optionRowsContainer)
 
         const osRowOption =  document.getElementsByClassName('osRowOption')
@@ -74,7 +116,6 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             }
         });
 
-        updateLocalStorage();
     }
 }
 
