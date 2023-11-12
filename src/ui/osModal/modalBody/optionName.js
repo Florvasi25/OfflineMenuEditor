@@ -3,8 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOptionDomIds,
     updateOsDomIds
 } from '../../context.js'
@@ -71,8 +70,7 @@ function updateOptionName(groupOptionId, groupOsId, newOptionName) {
     } else if (itemlessOs[groupOsId]) {
         const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
         option.Name = newOptionName
-        addItemlessOs(itemlessOs[groupOsId])
-        deleteItemlessOs(groupOsId)
+        updateItemlessOsKey(groupOsId)
     }
 }
 

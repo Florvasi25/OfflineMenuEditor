@@ -3,8 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOsDomIds
 } from '../../context.js'
 
@@ -35,7 +34,7 @@ function createOsName(menuOs) {
             originalName = newOsName;
             osName.blur();
             const oldGroupOsId = menuOs.groupOsId
-            updateName(menuOs.groupOsId, newOsName);
+            updateName(oldGroupOsId, newOsName);
             updateOsDomIds(menuOs, oldGroupOsId)
         } else if (e.key === 'Escape') {
             osName.textContent = originalName;
@@ -65,8 +64,7 @@ function updateName(groupOsId, osName) {
         updateLocalStorage()
     } else if (itemlessOs[groupOsId]) {
         itemlessOs[groupOsId].Name = osName
-        addItemlessOs(itemlessOs[groupOsId])
-        deleteItemlessOs(groupOsId)
+        updateItemlessOsKey(groupOsId)
     }
 }
 

@@ -297,6 +297,28 @@ function addItemlessOs(os) {
     updateItemlessLocalStorage();
 }
 
+/**
+ * Updates the key of an itemless OS in the itemlessOs object.
+ * If the new key already exists in the groupedOs object, the itemless OS is not added to the itemlessOs object.
+ * @param {string} oldKey - The old key of the itemless OS.
+ */
+function updateItemlessOsKey(oldKey) {
+    const os = itemlessOs[oldKey];
+    const newKey = getGroupOsKey(os);
+
+    if (oldKey === newKey) {
+        return;
+    }
+
+    if (!groupedOs[newKey]) {
+        itemlessOs[newKey] = os;
+    }
+
+    os.groupOsId = newKey;
+    delete itemlessOs[oldKey];
+    updateItemlessLocalStorage();
+}
+
 function deleteItemlessOs(groupOsId) {
     delete itemlessOs[groupOsId];
     updateItemlessLocalStorage();
@@ -408,5 +430,6 @@ export {
     updateItemlessLocalStorage,
     updateGroupedIdItemlessOs,
     updateOsDomIds,
-    updateOptionDomIds
+    updateOptionDomIds,
+    updateItemlessOsKey,
 }
