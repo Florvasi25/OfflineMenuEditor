@@ -10,8 +10,7 @@ import {
     setColorOfRows,
     groupOptionSets,
     itemlessOs,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOsDomIds
 } from '../../context.js';
 
@@ -99,8 +98,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
             optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
-            addItemlessOs(itemlessOs[oldGroupOsId]);
-            deleteItemlessOs(oldGroupOsId);
+            updateItemlessOsKey(oldGroupOsId);
         }
         
         setColorOfRows(optionRowsContainer)

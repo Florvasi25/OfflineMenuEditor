@@ -525,6 +525,7 @@ selector svg {
     align-items: center;
     height: auto;
     padding: 5px;
+    word-break: break-word; 
 }
 
 /* MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM */
@@ -1108,6 +1109,7 @@ selector svg {
     padding: 10px;
     border: 1px solid #888;
     width: 70%;
+    height: 70%;
 }
 
 .selectOsRowHeader {
@@ -1149,16 +1151,19 @@ selector svg {
 
 .selectOsModalBody {
     display: flex;
+    height: 95%;
 }
 
 .selectOsBodyLeft {
     width: 50%;
     margin-right: 10px;
+    overflow-y: scroll;
 }
 
 .selectOsBodyRight {
     width: 50%;
     margin-left: 10px;
+    overflow-y: scroll;
 }
 
 .btnAndSelectOption {

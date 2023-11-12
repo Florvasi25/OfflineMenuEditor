@@ -3,8 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOsDomIds
 } from '../../context.js'
 
@@ -76,8 +75,7 @@ function updateMinCount(groupOsId, osMinCount) {
         updateLocalStorage()
     } else if (itemlessOs[groupOsId]) {
         itemlessOs[groupOsId].MinSelectCount = Number(osMinCount)
-        addItemlessOs(itemlessOs[groupOsId])
-        deleteItemlessOs(groupOsId)
+        updateItemlessOsKey(groupOsId)
     }
 }
 

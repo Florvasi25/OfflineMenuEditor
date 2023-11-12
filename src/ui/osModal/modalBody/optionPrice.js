@@ -3,8 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOsDomIds,
     updateOptionDomIds
 } from '../../context.js'
@@ -81,8 +80,7 @@ function updatePrice(groupOptionId, groupOsId, optionPrice) {
         } else if (itemlessOs[groupOsId]) {
             const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
             option.Price = priceAsNumber
-            addItemlessOs(itemlessOs[groupOsId])
-            deleteItemlessOs(groupOsId)
+            updateItemlessOsKey(groupOsId)
         }
     }
 }

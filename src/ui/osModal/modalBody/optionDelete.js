@@ -6,8 +6,7 @@ import {
     groupOptionSets,
     updateOsDomIds,
     itemlessOs,
-    addItemlessOs,
-    deleteItemlessOs
+    updateItemlessOsKey
 } from '../../context.js';
 
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
@@ -96,8 +95,7 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
                 obj.DisplayOrder = index;
             })
 
-            addItemlessOs(itemlessOs[oldGroupOsId]);
-            deleteItemlessOs(oldGroupOsId);
+            updateItemlessOsKey(oldGroupOsId)
         }
 
         setColorOfRows(optionRowsContainer)

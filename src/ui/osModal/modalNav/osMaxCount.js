@@ -3,8 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOsDomIds
 } from '../../context.js'
 
@@ -77,8 +76,7 @@ function updateMaxCount(groupOsId, osMaxCount) {
         updateLocalStorage()
     } else if (itemlessOs[groupOsId]) {
         itemlessOs[groupOsId].MaxSelectCount = osMaxCount
-        addItemlessOs(itemlessOs[groupOsId])
-        deleteItemlessOs(groupOsId)
+        updateItemlessOsKey(groupOsId)
     }
 }
 

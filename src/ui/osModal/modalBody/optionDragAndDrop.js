@@ -5,9 +5,7 @@ import {
     groupOptionSets,
     updateOsDomIds,
     itemlessOs,
-    addItemlessOs,
-    deleteItemlessOs,
-
+    updateItemlessOsKey
 } from '../../context.js';
 
 function createOptionDragCell(optionRowsContainer, optionRow) {
@@ -90,8 +88,7 @@ function setDragListeners(optionRowsContainer, menuOs) {
                     obj.DisplayOrder = optionItemlessIndex;
                 })
             }
-            addItemlessOs(itemlessOs[oldGroupOsId])
-            deleteItemlessOs(oldGroupOsId)
+            updateItemlessOsKey(oldGroupOsId)
         }
     })
 }

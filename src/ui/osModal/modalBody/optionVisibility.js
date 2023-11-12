@@ -3,8 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    addItemlessOs,
-    deleteItemlessOs,
+    updateItemlessOsKey,
     updateOsDomIds,
     updateOptionDomIds,
 } from "../../context.js";
@@ -69,8 +68,7 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
             );
             optionRow.classList.toggle("unavailable", option.IsAvailable);
             option.IsAvailable = !option.IsAvailable;
-            addItemlessOs(itemlessOs[oldGroupOsId]);
-            deleteItemlessOs(oldGroupOsId);
+            updateItemlessOsKey(oldGroupOsId);
         }
     }
 }
