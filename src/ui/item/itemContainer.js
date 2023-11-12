@@ -85,4 +85,5 @@ function createItem(menuItem, sectionId, itemContainer) {
 export {
     createItemContainer,
     createItem,
+    createItemRows
 }

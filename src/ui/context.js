@@ -247,6 +247,11 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
+function getSectionRow(menuSectionId){
+    const sectionRowsArray = Array.from(document.getElementsByClassName('sectionRow'));
+    const sectionRow = sectionRowsArray.find((p) => p.id == menuSectionId.toString())
+    return sectionRow;
+}
 function getGroupOsKey(os) {
     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
     const osLength = MenuItemOptionSetItems.length;
@@ -408,5 +413,6 @@ export {
     updateItemlessLocalStorage,
     updateGroupedIdItemlessOs,
     updateOsDomIds,
-    updateOptionDomIds
+    updateOptionDomIds,
+    getSectionRow
 }

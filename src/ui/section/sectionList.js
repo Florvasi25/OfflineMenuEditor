@@ -11,7 +11,8 @@ import {
     getLocalStorageOptionSetItemsIDs,
     getLocalStorageOptionSetIDs,
     getLocalStorageSectionIDs,
-    getUniqueRandomInt
+    getUniqueRandomInt,
+    getSectionRow
 } from '../context.js';
 
 import {
@@ -19,7 +20,7 @@ import {
     addTextContent
 }  from '../helpers.js';
 
-import { deleteIDs } from '../item/itemDelete.js';
+import { CreateItem } from '../item/itemAddNew.js';
 
 function sectionListButton(sectionButtonsCell, menuSection) {
     const listButton = document.createElement('button');
@@ -36,11 +37,9 @@ function sectionListButton(sectionButtonsCell, menuSection) {
 
 function createList(triggerButton, menuSection){
     triggerButton.addEventListener('click', function(event) {
-        //'this' refers to triggerButton. listInstance property is being used as a way to associate 
-        //a specific instance of the List class with a specific button, 
-        //so that the code can determine whether it needs to create a new list or show/hide an existing one.
+        let sectionRow = getSectionRow(menuSection.MenuSectionId);
         if (!this.listInstance) {
-            this.listInstance = new List(triggerButton, menuSection);
+            this.listInstance = new List(triggerButton, menuSection, sectionRow);
             this.listInstance.showList();
         } else {
             // If list already exists, simply toggle its visibility
@@ -54,9 +53,10 @@ function createList(triggerButton, menuSection){
 }
 
 class List {
-    constructor(triggerElement, menuSection) {
+    constructor(triggerElement, menuSection, sectionRow) {
         this.triggerElement = triggerElement; // Element that, when clicked, will trigger the list object
         this.menuSection = menuSection; // Content for the list
+        this.sectionRow = sectionRow;
         this.listElement = null; // Will hold the DOM element once created
         this.textAreaGroupItems = null; // Will hold the textarea element
         this.cancelButton = null;
@@ -115,7 +115,6 @@ class List {
                 this.textAreaGroupItems.classList.add('error');
             }
         });
-
         return list;
     }
     
@@ -191,12 +190,10 @@ class List {
         const jsonItemsNotInText = menuItemsFromJson.filter(menuItem => {
             return !lines.includes(menuItem);
         });
-
          return { itemsNotInJson, jsonItemsNotInText };
     }
 
-    createItems(items, sectionIndex) {
-        
+    createItems(items, sectionIndex) { 
         for(let i = 0; i < items.length; i++){
             const { itemName, itemPrice } = this.trimItems(items[i]);
             const itemIDs = getLocalStorageItemIDs();
@@ -221,7 +218,7 @@ class List {
                 TaxRateId: null,
                 TaxValue: 0,
                 TaxRateName: null,
-                MenuSectionId: jsonData.MenuSections[sectionIndex].MenuSectionId,
+                MenuSectionId: this.menuSection.MenuSectionId,
                 ImageName: null,
                 ImageUrl: null,
                 CellAspectRatio: 4,
@@ -234,7 +231,13 @@ class List {
                 MenuItemMetadata: [],
                 ExternalImageUrl: null
             };
-            jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
+            if( this.sectionRow.className === "sectionRow draggable expanded") {
+                var itemTable = this.sectionRow.nextElementSibling;
+                var itemContainer = itemTable.querySelector('.itemContainer');
+                CreateItem(itemContainer, emptyItemJson, sectionIndex, this.menuSection.MenuSectionId, newId)
+            }else{
+                jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
+            }
             updateLocalStorage()
             updateItemCounterLocalStorage(newId, true);
         }
@@ -243,15 +246,31 @@ class List {
         const itemsToDelete = jsonItemsNotInText.map(itemText => this.trimItems(itemText));
         const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
 
+        let itemsToDeleteIds = [];
+    
+        // Filter the items that need to be deleted and store their ids
         const filteredItems = menuItems.filter(item => {
-            return !itemsToDelete.some(toDelete => toDelete.itemName === item.Name && toDelete.itemPrice === item.Price);
+            const isToDelete = itemsToDelete.some(toDelete => 
+                toDelete.itemName === item.Name && toDelete.itemPrice === item.Price
+            );
+            if (isToDelete) {
+                itemsToDeleteIds.push(item.MenuItemId);
+            }
+            return !isToDelete;
         });
         jsonData.MenuSections[sectionIndex].MenuItems = filteredItems;
-    
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((item, index) => {
             item.DisplayOrder = index;
         });
-    
+        if( this.sectionRow.className === "sectionRow draggable expanded") {
+            const itemRows = Array.from(document.getElementsByClassName('itemRow'));
+            itemsToDeleteIds.forEach(MenuItemId => {
+                const itemRowToDelete = itemRows.find((p) => p.id === MenuItemId.toString());
+                if (itemRowToDelete) {
+                    itemRowToDelete.remove();
+                }
+            });
+        }
         updateLocalStorage();
     }
 
