@@ -53,18 +53,23 @@ function createItemButton(itemContainer, sectionId) {
             MenuItemMetadata: [],
             ExternalImageUrl: null
         };
-    
-        let itemRow = createItem(emptyItemJson, sectionId, itemContainer)
-    
-        itemContainer.appendChild(itemRow);
-
-        jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
-    
-        updateLocalStorage()
-        updateItemCounterLocalStorage(newId, true);
+        
+        CreateItem(itemContainer, emptyItemJson, sectionIndex, sectionId, newId)
     });
 
     return newItemButton
 }
 
-export { createItemButton }
+function CreateItem(itemContainer, item, sectionIndex, sectionId, newId){
+
+    let itemRow = createItem(item, sectionId, itemContainer)
+    
+    itemContainer.appendChild(itemRow);
+
+    jsonData.MenuSections[sectionIndex].MenuItems.push(item)
+
+    updateLocalStorage()
+    updateItemCounterLocalStorage(newId, true);
+}
+
+export { createItemButton, CreateItem }

@@ -24,8 +24,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
     const clockButton = createAndAppend(sectionButtonsCell, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
-    //addClockIcon(jsonData, sectionId, clockButtonImg);
-
+   
     clockButton.addEventListener('click', () => {
         const clockElements = createClockBody();
         const clockModalDiv = clockElements.clockModalDiv;
