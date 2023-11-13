@@ -428,12 +428,12 @@ function updateOptionDomIds(menuOption, oldGroupOptionId) {
         os.id = menuOption.groupOptionId
     })
 
-    const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
-    const optionNamePreview = optionNamePreviewArray.filter((p) => p.id == oldGroupOptionId)
-    optionNamePreview.forEach(os => {
-        os.textContent = menuOption.Name
-        os.id = menuOption.groupOptionId
-    })
+    // const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
+    // const optionNamePreview = optionNamePreviewArray.filter((p) => p.id == oldGroupOptionId)
+    // optionNamePreview.forEach(os => {
+    //     os.textContent = menuOption.Name
+    //     os.id = menuOption.groupOptionId
+    // })
 
     const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
     const optionPricePreview = optionPricePreviewArray.filter((p) => p.id == oldGroupOptionId)

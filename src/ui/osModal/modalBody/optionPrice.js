@@ -36,11 +36,20 @@ function createOptionPrice(menuOption, menuOs) {
             originalPrice = parseFloat(optionPrice.textContent);
             optionPrice.blur();
     
-            const oldGroupOsId = menuOs.groupOsId
-            const oldGroupOptionId = menuOption.groupOptionId
-            updatePrice(menuOption.groupOptionId, menuOs.groupOsId, optionPrice.textContent);
-            updateOptionDomIds(menuOption, oldGroupOptionId)
-            updateOsDomIds(menuOs, oldGroupOsId)
+            const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+                option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
+            )
+
+            updatePrice(indexOfOption, menuOs.groupOsId, optionPrice.textContent);
+            
+            const optionsIds = groupedOs[menuOs.groupOsId].map(
+                os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+            );
+            const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
+            const optionPricePreview = optionPricePreviewArray.filter(p => optionsIds.includes(p.id));
+            optionPricePreview.forEach(os => {
+                os.textContent = menuOption.Price.toFixed(2)
+            })
         } else if (e.key === 'Escape') {
             optionPrice.textContent = originalPrice.toFixed(2);
             optionPrice.blur();
@@ -65,15 +74,14 @@ function createOptionPrice(menuOption, menuOs) {
     return optionPrice;
 }
 
-function updatePrice(groupOptionId, groupOsId, optionPrice) {
+function updatePrice(indexOfOption, groupOsId, optionPrice) {
     const priceAsNumber = parseFloat(parseFloat(optionPrice).toFixed(2));
 
     if (!isNaN(priceAsNumber)) {
 
         if (groupedOs[groupOsId]) {
             groupedOs[groupOsId].forEach(os => {
-                const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
-                option.Price = priceAsNumber
+                os.MenuItemOptionSetItems[indexOfOption].Price = priceAsNumber
             })
             groupOptionSets()
             updateLocalStorage()
