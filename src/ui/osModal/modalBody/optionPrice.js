@@ -86,7 +86,7 @@ function updatePrice(indexOfOption, groupOsId, optionPrice) {
             groupOptionSets()
             updateLocalStorage()
         } else if (itemlessOs[groupOsId]) {
-            const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+            const option = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
             option.Price = priceAsNumber
             updateItemlessOsKey(groupOsId)
         }

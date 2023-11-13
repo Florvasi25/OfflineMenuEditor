@@ -46,26 +46,33 @@ function optionVisibilityButton(
 function SectionAvailability(optionRow, menuOs, menuOption) {
     const optionToHide = optionRow.id;
     const oldGroupOsId = menuOs.groupOsId;
-    const oldGroupOptionId = menuOption.groupOptionId;
+
+    const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+        option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
+    )
 
     if (optionToHide) {
         if (groupedOs[oldGroupOsId]) {
             groupedOs[oldGroupOsId].forEach((os) => {
-                const option = os.MenuItemOptionSetItems.find(
-                    (option) => option.groupOptionId == optionToHide
-                );
+                const option = os.MenuItemOptionSetItems[indexOfOption]
+
                 optionRow.classList.toggle("unavailable", option.IsAvailable);
                 option.IsAvailable = !option.IsAvailable;
             });
             groupOptionSets();
             updateLocalStorage();
 
-            updateOptionDomIds(menuOption, oldGroupOptionId);
-            updateOsDomIds(menuOs, oldGroupOsId);
-        } else if (itemlessOs[oldGroupOsId]) {
-            const option = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.find(
-                (option) => option.groupOptionId == optionToHide
+            const optionsIds = groupedOs[menuOs.groupOsId].map(
+                os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
             );
+            const osRowOptionArray = Array.from(document.getElementsByClassName('osRowOption'));
+            const osRowOption = osRowOptionArray.filter(p => optionsIds.includes(p.id));
+            osRowOption.forEach(os => {
+                os.classList.toggle('unavailable', !menuOption.IsAvailable)
+            })
+
+        } else if (itemlessOs[oldGroupOsId]) {
+            const option = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
             optionRow.classList.toggle("unavailable", option.IsAvailable);
             option.IsAvailable = !option.IsAvailable;
             updateItemlessOsKey(oldGroupOsId);

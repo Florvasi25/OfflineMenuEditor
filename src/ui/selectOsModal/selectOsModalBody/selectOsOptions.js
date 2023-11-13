@@ -20,7 +20,7 @@ function createOptionRow(menuOption) {
     osRowOption.classList.add('osRowOption');
     osRowOption.classList.add('draggable');
     osRowOption.classList.add('folded')
-    osRowOption.id = menuOption.groupOptionId
+    osRowOption.id = menuOption.MenuItemOptionSetId
 
     const nameAndMoM = createNameAndMoM(menuOption)
     osRowOption.appendChild(nameAndMoM)
