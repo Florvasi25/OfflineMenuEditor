@@ -33,9 +33,11 @@ function createOsName(menuOs) {
             const newOsName = osName.textContent;
             originalName = newOsName;
             osName.blur();
+
             const oldGroupOsId = menuOs.groupOsId
+
             updateName(oldGroupOsId, newOsName);
-            // updateOsDomIds(menuOs, oldGroupOsId)
+            
             const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
             const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
             const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));

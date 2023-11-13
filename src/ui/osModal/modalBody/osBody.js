@@ -1,6 +1,5 @@
 import { 
-    jsonData,
-    getOsIndex
+    jsonData
 } from '../../context.js'
 
 import {

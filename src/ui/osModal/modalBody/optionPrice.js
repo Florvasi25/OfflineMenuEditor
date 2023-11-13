@@ -3,9 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey,
-    updateOsDomIds,
-    updateOptionDomIds
+    updateItemlessOsKey
 } from '../../context.js'
 
 function createOptionPriceCell(menuOption, menuOs) {

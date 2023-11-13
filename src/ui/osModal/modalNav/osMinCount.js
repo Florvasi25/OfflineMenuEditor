@@ -3,8 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    updateItemlessOsKey,
-    updateOsDomIds
+    updateItemlessOsKey
 } from '../../context.js'
 
 function createMinCountCell(menuOs) {
@@ -38,8 +37,11 @@ function createMinCount(menuOs) {
             const newMinOsCount = minCount.textContent;
             originalMinCount = newMinOsCount;
             minCount.blur();
+
             const oldGroupOsId = menuOs.groupOsId
+
             updateMinCount(oldGroupOsId, newMinOsCount);
+            
             const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
             const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
             const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));

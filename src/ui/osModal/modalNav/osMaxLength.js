@@ -30,6 +30,7 @@ function maxLength(menuOs) {
     }
 
     const oldGroupOsId = menuOs.groupOsId
+    
     const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
     const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
     const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));

@@ -3,8 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    updateItemlessOsKey,
-    updateOsDomIds
+    updateItemlessOsKey
 } from '../../context.js'
 
 function createMaxCountCell(menuOs) {
@@ -38,8 +37,11 @@ function createMaxCount(menuOs) {
             const newMaxOsCount = maxCount.textContent;
             originalName = newMaxOsCount;
             maxCount.blur();
+
             const oldGroupOsId = menuOs.groupOsId
+
             updateMaxCount(oldGroupOsId, newMaxOsCount);
+            
             const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
             const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
             const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));

@@ -11,7 +11,6 @@ import {
     groupOptionSets,
     itemlessOs,
     updateItemlessOsKey,
-    updateOsDomIds
 } from '../../context.js';
 
 import { createOption } from './osBody.js'
@@ -38,43 +37,44 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
     const optionToDuplicate = optionRow.id
     const oldGroupOsId = menuOs.groupOsId;
 
+    const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+        option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
+    )
+
     if (optionToDuplicate) {
         if (groupedOs[oldGroupOsId]) {
-            const optionObject = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.find(option => option.groupOptionId === optionToDuplicate)
-            
+
             let newOption = ""
             groupedOs[menuOs.groupOsId].forEach(os => {
+                const optionObject = os.MenuItemOptionSetItems[indexOfOption]
                 newOption = JSON.parse(JSON.stringify(optionObject));
-    
+
                 const optionIds = getLocalStorageOptionSetItemsIDs();
                 const newOptionId = getUniqueRandomInt(optionIds);
-    
+
                 newOption.MenuItemOptionSetItemId = newOptionId;
                 newOption.PublicId = crypto.randomUUID();
                 newOption.Name = menuOption.Name + "_copy"
-    
+
                 const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDuplicate)
                 os.MenuItemOptionSetItems.splice(optionIndex+1, 0, newOption)
                 os.MenuItemOptionSetItems.forEach((obj, index) => {
                     obj.DisplayOrder = index;
                 })
-    
+
                 updateItemCounterLocalStorage(newOptionId, true);
                 updateOptionSetItemsCounterLocalStorage(newOptionId, true)
             })
             groupOptionSets()
             updateLocalStorage();
-            
+
             const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
             optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
-            
-            updatePreview(menuOption, newOption)
 
-            updateOsDomIds(menuOs, oldGroupOsId);
+            updatePreview(indexOfOption, newOption, menuOs)
+
         } else if (itemlessOs[oldGroupOsId]) {
-            const optionObject = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.find(
-                (option) => option.groupOptionId === optionToDuplicate
-            );
+            const optionObject = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
             const newGroupOptionId = crypto.randomUUID()
 
             const newOption = JSON.parse(JSON.stringify(optionObject));
@@ -100,21 +100,19 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
 
             updateItemlessOsKey(oldGroupOsId);
         }
-        
         setColorOfRows(optionRowsContainer)
     }
 }
 
-function updatePreview(menuOption, newOption) {
-    const osRowOption =  document.getElementsByClassName('osRowOption')
-    const osRowOptionPreviewArray = Array.from(osRowOption);
-    
-    osRowOptionPreviewArray.forEach(osRowOptionPreview => {
+function updatePreview(indexOfOption, newOption, menuOs) {
+    const optionsIds = groupedOs[menuOs.groupOsId].map(
+        os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+    );
+    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+    const osRowOptionPreview = osRowOptionPreviewArray.filter(p => optionsIds.includes(p.id));
+    osRowOptionPreview.forEach(os => {
         const newOptionRow = createOptionRow(newOption);
-
-        if (osRowOptionPreview.id === menuOption.groupOptionId) {
-            osRowOptionPreview.parentNode.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
-        }
-    });
+        os.parentNode.insertBefore(newOptionRow, os.nextSibling);
+    })
 }
 export { optionDuplicateButton }
