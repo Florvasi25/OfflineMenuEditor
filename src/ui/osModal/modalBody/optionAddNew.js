@@ -66,11 +66,11 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
             emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
 
             os.MenuItemOptionSetItems.push(emptyOptionJson);
-
         });
 
         groupOptionSets();
         updateLocalStorage();
+        
     } else if (itemlessOs[menuOs.groupOsId]) {
         const optionIds = getLocalStorageOptionSetItemsIDs();
         const newOptionId = getUniqueRandomInt(optionIds);

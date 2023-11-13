@@ -8,8 +8,9 @@ function createOsModalContainer(menuOs) {
     
     const osModalContainer = document.createElement('div')
     osModalContainer.classList = 'osModalContainer'
+    osModalContainer.id = menuOs.MenuItemOptionSetId
     
-    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
+    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs, osModalContainer)
     osModalContainer.appendChild(osModalNav)
 
     const osModalBody = createOsModalBody(menuOs)
