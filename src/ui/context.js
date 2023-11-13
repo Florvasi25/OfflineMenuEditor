@@ -2,7 +2,10 @@ import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
-let groupedOs = {};
+let numericId = 1; // Initialize a numeric ID
+let groupedOs = {}; // Store the grouped os objects
+let numericIds = {}; // Store the numericIds for groupOsKeys
+
 let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? {};
 
 groupOptionSets()
@@ -252,37 +255,79 @@ function getSectionRow(menuSectionId){
     const sectionRow = sectionRowsArray.find((p) => p.id == menuSectionId.toString())
     return sectionRow;
 }
+// function getGroupOsKey(os) {
+//     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
+//     const osLength = MenuItemOptionSetItems.length;
+//     const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
+//     return `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
+// }
+// function groupOptionSets() {
+//     groupedOs = {};
+//     jsonData.MenuSections.forEach(sections => {
+//         sections.MenuItems.forEach(items => {
+//             items.MenuItemOptionSets.forEach(os => {
+//                 const groupOsKey = getGroupOsKey(os)
+//                 os.groupOsId = groupOsKey
+
+//                 if (!groupedOs[groupOsKey]) {
+//                     groupedOs[groupOsKey] = [os];
+//                 } else {
+//                     groupedOs[groupOsKey].push(os);
+//                 }
+
+//                 os.MenuItemOptionSetItems.forEach(option => {
+//                     const { Name, Price, IsAvailable } = option;
+//                     const groupOptionKey = `${Name}_${Price}_${IsAvailable}`;
+//                     option.groupOptionId = groupOptionKey
+//                 })
+//             });
+//         })
+//     })
+//     updateLocalStorage()
+// }
+
 function getGroupOsKey(os) {
     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
     const osLength = MenuItemOptionSetItems.length;
     const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
     return `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
 }
-
 function groupOptionSets() {
     groupedOs = {};
+    const groupOsKeyToId = {}; // Dictionary to store groupOsKeys and their IDs
+    // let groupId = 1; // Initialize a group ID
+
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
             items.MenuItemOptionSets.forEach(os => {
-                const groupOsKey = getGroupOsKey(os)
-                os.groupOsId = groupOsKey
+                const groupOsKey = getGroupOsKey(os);
+                if (!groupOsKeyToId[groupOsKey]) {
+                    groupOsKeyToId[groupOsKey] = getRandomInt();
+                }
+                const numericId = groupOsKeyToId[groupOsKey];
 
-                if (!groupedOs[groupOsKey]) {
-                    groupedOs[groupOsKey] = [os];
+                const groupOsKeyWithId = `${groupOsKey}_${numericId}`;
+                os.groupOsId = groupOsKeyWithId;
+
+                if (!groupedOs[groupOsKeyWithId]) {
+                    groupedOs[groupOsKeyWithId] = [os];
                 } else {
-                    groupedOs[groupOsKey].push(os);
+                    groupedOs[groupOsKeyWithId].push(os);
                 }
 
                 os.MenuItemOptionSetItems.forEach(option => {
                     const { Name, Price, IsAvailable } = option;
                     const groupOptionKey = `${Name}_${Price}_${IsAvailable}`;
-                    option.groupOptionId = groupOptionKey
-                })
+                    option.groupOptionId = groupOptionKey;
+                });
             });
-        })
-    })
-    updateLocalStorage()
+        });
+    });
+
+    updateLocalStorage();
 }
+
+
 
 function updateGroupedIdItemlessOs(menuOs) {
     const oldGroupOsId = menuOs.groupOsId
@@ -293,22 +338,24 @@ function updateGroupedIdItemlessOs(menuOs) {
 
 function addItemlessOs(os) {
     const groupOsKey = getGroupOsKey(os)
-    if (groupedOs[groupOsKey]) {
+    const groupOsKeyWithId = `${groupOsKey}_${getRandomInt()}`;
+
+    if (groupedOs[groupOsKeyWithId]) {
         return;
     }
 
-    os.groupOsId = groupOsKey
-    itemlessOs[groupOsKey] = os;
+    os.groupOsId = groupOsKeyWithId
+    itemlessOs[groupOsKeyWithId] = os;
     updateItemlessLocalStorage();
 }
 
 function updateItemlessOsKey(oldKey) {
     const os = itemlessOs[oldKey];
-    const newKey = getGroupOsKey(os);
+    const newKey = `${getGroupOsKey(os)}_${getRandomInt()}`;
 
-    if (oldKey === newKey) {
-        return;
-    }
+    // if (oldKey === newKey) {
+    //     return;
+    // }
 
     if (!groupedOs[newKey]) {
         itemlessOs[newKey] = os;

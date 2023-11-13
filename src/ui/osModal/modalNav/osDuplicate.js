@@ -23,7 +23,7 @@ import {
 import { newOsModalContainer } from "../modalContainer.js";
 
 
-function osDuplicateButton(osBtnsCell, menuOs, osModalContainer) {
+function osDuplicateButton(osBtnsCell, menuOs) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
@@ -36,13 +36,13 @@ function osDuplicateButton(osBtnsCell, menuOs, osModalContainer) {
     duplicateButton.addEventListener('click', () => {
         // if (itemRow.classList.contains('expanded')) return;
 
-        duplicateOs(menuOs, osModalContainer);
+        duplicateOs(menuOs);
         // setSectionDisplayOrder(jsonData);
     });
     
 }
 
-function duplicateOs(menuOs, osModalContainer) {
+function duplicateOs(menuOs) {
 
         const newOs = JSON.parse(JSON.stringify(menuOs));
         newOs.Name += "_copy"

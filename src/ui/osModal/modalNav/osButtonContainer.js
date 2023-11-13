@@ -6,7 +6,7 @@ import { osNewButton } from './osAddNew.js'
 
 import { osCaseButton } from './osCase.js'
 
-function createOsBtnsCell(menuOs, osModalContainer) {
+function createOsBtnsCell(menuOs) {
     const osBtnsCell = document.createElement('div')
     osBtnsCell.className = 'osBtnsCell'
 
@@ -16,7 +16,7 @@ function createOsBtnsCell(menuOs, osModalContainer) {
 
     osDeleteButton(osBtnsCell)
 
-    osDuplicateButton(osBtnsCell, menuOs, osModalContainer)
+    osDuplicateButton(osBtnsCell, menuOs)
 
     return osBtnsCell
 }

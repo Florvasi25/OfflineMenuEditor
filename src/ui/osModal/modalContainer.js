@@ -10,7 +10,7 @@ function createOsModalContainer(menuOs) {
     osModalContainer.classList = 'osModalContainer'
     osModalContainer.id = menuOs.MenuItemOptionSetId
     
-    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs, osModalContainer)
+    const {osModalNav, closeOsModalBtn } = createOsModalNav(menuOs)
     osModalContainer.appendChild(osModalNav)
 
     const osModalBody = createOsModalBody(menuOs)
