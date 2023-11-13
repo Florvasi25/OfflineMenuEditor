@@ -78,7 +78,7 @@ function createOsNameHeader(menuOs) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
     osNameHeader.textContent = menuOs.Name
-    osNameHeader.id = menuOs.groupOsId
+    osNameHeader.id = menuOs.MenuItemOptionSetId
     osNameHeader.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
         if (existingOsModal) {

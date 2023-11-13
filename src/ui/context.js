@@ -306,7 +306,7 @@ function groupOptionSets() {
                 }
                 const numericId = groupOsKeyToId[groupOsKey];
 
-                const groupOsKeyWithId = `${groupOsKey}_${numericId}`;
+                const groupOsKeyWithId = `group${numericId}`;
                 os.groupOsId = groupOsKeyWithId;
 
                 if (!groupedOs[groupOsKeyWithId]) {
@@ -385,12 +385,13 @@ function setColorOfRows(optionRowsContainer) {
 }
 
 function updateOsDomIds(menuOs, oldGroupOsId) {
-    const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
-    const osNameHeader = osNameHeaderArray.filter((p) => p.id == oldGroupOsId)
-    osNameHeader.forEach(os => {
-        os.textContent = menuOs.Name;
-        os.id = menuOs.groupOsId
-    })
+    // const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+    // const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
+    // const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));
+    // osNameHeader.forEach(os => {
+    //     os.textContent = menuOs.Name;
+    //     // os.id = menuOs.groupOsId
+    // })
 
     const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
     const minSelectCount = minSelectCountArray.filter((p) => p.id == oldGroupOsId)
