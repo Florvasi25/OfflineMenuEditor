@@ -393,19 +393,19 @@ function updateOsDomIds(menuOs, oldGroupOsId) {
     //     // os.id = menuOs.groupOsId
     // })
 
-    const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
-    const minSelectCount = minSelectCountArray.filter((p) => p.id == oldGroupOsId)
-    minSelectCount.forEach(os => {
-        os.textContent = menuOs.MinSelectCount
-        os.id = menuOs.groupOsId
-    })
+    // const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
+    // const minSelectCount = minSelectCountArray.filter((p) => p.id == oldGroupOsId)
+    // minSelectCount.forEach(os => {
+    //     os.textContent = menuOs.MinSelectCount
+    //     os.id = menuOs.groupOsId
+    // })
 
-    const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-    const maxSelectCount = maxSelectCountArray.filter((p) => p.id == oldGroupOsId)
-    maxSelectCount.forEach(os => {
-        os.textContent = menuOs.MaxSelectCount
-        os.id = menuOs.groupOsId
-    })
+    // const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
+    // const maxSelectCount = maxSelectCountArray.filter((p) => p.id == oldGroupOsId)
+    // maxSelectCount.forEach(os => {
+    //     os.textContent = menuOs.MaxSelectCount
+    //     os.id = menuOs.groupOsId
+    // })
 
     const optionContainerArray = Array.from(document.getElementsByClassName('optionContainer'));
     const optionContainer = optionContainerArray.filter((p) => p.getAttribute("groupOsId") == oldGroupOsId)

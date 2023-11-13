@@ -38,16 +38,14 @@ function createMaxCount(menuOs) {
             const newMaxOsCount = maxCount.textContent;
             originalName = newMaxOsCount;
             maxCount.blur();
-            // const maxCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-            // const maxSelectCount = maxCountArray.filter((p) => p.id == menuOs.groupOsId)
             const oldGroupOsId = menuOs.groupOsId
-            updateMaxCount(menuOs.groupOsId, newMaxOsCount);
-            updateOsDomIds(menuOs, oldGroupOsId)
-            // maxSelectCount.forEach(os => {
-            //     os.textContent = newMaxOsCount;
-            //     // os.id = menuOs.groupOsId
-            // })
-
+            updateMaxCount(oldGroupOsId, newMaxOsCount);
+            const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+            const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
+            const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));
+            maxSelectCount.forEach(os => {
+                os.textContent = menuOs.MaxSelectCount
+            })
         } else if (e.key === 'Escape') {
             maxCount.textContent = originalName;
             maxCount.blur();

@@ -1,6 +1,6 @@
 import { updateMaxCount } from './osMaxCount.js'
 
-import { updateOsDomIds } from '../../context.js'
+import { groupedOs } from '../../context.js'
 
 function createMaxLenghtButton(selectOptionContainer, menuOs) {
     const maxLengthButton = document.createElement('button');
@@ -30,8 +30,14 @@ function maxLength(menuOs) {
     }
 
     const oldGroupOsId = menuOs.groupOsId
-    updateMaxCount(menuOs.groupOsId, optionsLength);
-    updateOsDomIds(menuOs, oldGroupOsId)
+    const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+    const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
+    const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));
+    maxSelectCount.forEach(os => {
+        os.textContent = optionsLength
+    })
+
+    updateMaxCount(oldGroupOsId, optionsLength);
 }
 
 

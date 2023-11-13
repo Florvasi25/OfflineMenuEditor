@@ -38,15 +38,14 @@ function createMinCount(menuOs) {
             const newMinOsCount = minCount.textContent;
             originalMinCount = newMinOsCount;
             minCount.blur();
-            // const minCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
-            // const minSelectCount = minCountArray.filter((p) => p.id == menuOs.groupOsId)
             const oldGroupOsId = menuOs.groupOsId
-            updateMinCount(menuOs.groupOsId, newMinOsCount);
-            updateOsDomIds(menuOs, oldGroupOsId)
-            // minSelectCount.forEach(os => {
-            //     os.textContent = newMinOsCount;
-            //     // os.id = menuOs.groupOsId
-            // })
+            updateMinCount(oldGroupOsId, newMinOsCount);
+            const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+            const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
+            const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));
+            minSelectCount.forEach(os => {
+                os.textContent = menuOs.MinSelectCount
+            })
         } else if (e.key === 'Escape') {
             minCount.textContent = originalMinCount;
             minCount.blur();
