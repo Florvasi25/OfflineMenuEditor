@@ -35,11 +35,20 @@ function createOptionName(menuOption, menuOs) {
             originalName = newOptionName;
             optionName.blur();
 
-            const oldGroupOsId = menuOs.groupOsId
-            const oldGroupOptionId = menuOption.groupOptionId
-            updateOptionName(menuOption.groupOptionId, menuOs.groupOsId, newOptionName);
-            updateOptionDomIds(menuOption, oldGroupOptionId)
-            updateOsDomIds(menuOs, oldGroupOsId)
+            const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+                option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
+            )
+
+            updateOptionName(indexOfOption, menuOs.groupOsId, newOptionName);
+
+            const optionsIds = groupedOs[menuOs.groupOsId].map(
+                os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+            );
+            const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
+            const optionNamePreview = optionNamePreviewArray.filter(p => optionsIds.includes(p.id));
+            optionNamePreview.forEach(os => {
+                os.textContent = menuOption.Name
+            })
         } else if (e.key === 'Escape') {
             optionName.blur();
         }
@@ -58,17 +67,17 @@ function createOptionName(menuOption, menuOs) {
 }
 
 //Updates Name
-function updateOptionName(groupOptionId, groupOsId, newOptionName) {
+function updateOptionName(indexOfOption, groupOsId, newOptionName) {
 
     if (groupedOs[groupOsId]) {
-        groupedOs[groupOsId].forEach(os => {
-            const option = os.MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
-            option.Name = newOptionName
-        })
+        groupedOs[groupOsId].forEach(os =>
+            os.MenuItemOptionSetItems[indexOfOption].Name = newOptionName
+        );
+
         groupOptionSets()
         updateLocalStorage()
     } else if (itemlessOs[groupOsId]) {
-        const option = itemlessOs[groupOsId].MenuItemOptionSetItems.find(option => option.groupOptionId == groupOptionId)
+        const option = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
         option.Name = newOptionName
         updateItemlessOsKey(groupOsId)
     }
