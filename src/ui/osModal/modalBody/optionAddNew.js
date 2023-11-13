@@ -63,9 +63,11 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
             const newOptionId = getUniqueRandomInt(optionIds);
             updateItemCounterLocalStorage(newOptionId, true);
 
-            emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
+            const emptyOptionCopy = { ...emptyOptionJson };
+            emptyOptionCopy.MenuItemOptionSetItemId = newOptionId;
 
-            os.MenuItemOptionSetItems.push(emptyOptionJson);
+            os.MenuItemOptionSetItems.push(emptyOptionCopy);
+
         });
 
         groupOptionSets();
