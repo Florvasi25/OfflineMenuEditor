@@ -44,10 +44,10 @@ function osDuplicateButton(osBtnsCell, menuOs, osModalContainer) {
 
 function duplicateOs(menuOs, osModalContainer) {
 
-        const newOs = JSON.parse(JSON.stringify(menuOs));
-        newOs.Name += "_copy"
+    const newOs = JSON.parse(JSON.stringify(menuOs));
+    newOs.Name += "_copy"
 
-        addItemlessOs(newOs)
+    addItemlessOs(newOs)
     
     // if (itemIndex !== -1) {
     //     const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
