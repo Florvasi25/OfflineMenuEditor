@@ -70,13 +70,17 @@ function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionR
 function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
     const optionToDelete = optionRow.id;
     const oldGroupOsId = menuOs.groupOsId;
+
+    const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+        option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
+    )
     
     if (optionToDelete) {
         optionRow.remove();
 
         if (groupedOs[oldGroupOsId]) {
             groupedOs[menuOs.groupOsId].forEach(os => {
-                const optionIndex = os.MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
+                const optionIndex = os.MenuItemOptionSetItems[indexOfOption]
                 os.MenuItemOptionSetItems.splice(optionIndex, 1)
                 os.MenuItemOptionSetItems.forEach((obj, index) => {
                     obj.DisplayOrder = index;
@@ -85,11 +89,11 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
                 groupOptionSets()
                 updateLocalStorage();
 
-                updatePreview(menuOption)
-                updateOsDomIds(menuOs, oldGroupOsId);
+                updatePreview(indexOfOption, menuOs)
+                // updateOsDomIds(menuOs, oldGroupOsId);
             })
         } else if (itemlessOs[oldGroupOsId]) {
-            const optionIndex = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == optionToDelete)
+            const optionIndex = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
             itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionIndex, 1)
             itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
@@ -102,15 +106,15 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
     }
 }
 
-function updatePreview(menuOption) {
-    const osRowOption = document.getElementsByClassName('osRowOption')
-    const osRowOptionPreviewArray = Array.from(osRowOption);
-    
-    osRowOptionPreviewArray.forEach(osRowOptionPreview => {
-        if (osRowOptionPreview.id === menuOption.groupOptionId) {
-            osRowOptionPreview.remove()
-        }
-    });
+function updatePreview(indexOfOption, menuOs) {
+    const optionsIds = groupedOs[menuOs.groupOsId].map(
+        os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+    );
+    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+    const osRowOptionPreview = osRowOptionPreviewArray.filter(p => optionsIds.includes(p.id));
+    osRowOptionPreview.forEach(os => {
+        os.remove()
+    })
 }
 
 export { optionDeleteButton }

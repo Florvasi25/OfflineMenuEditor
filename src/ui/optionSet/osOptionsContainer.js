@@ -7,7 +7,6 @@ function createOptionsContainer(osRowOption, menuOs, sectionId, itemId, osId) {
     const optionContainer = document.createElement('div');
     optionContainer.classList.add('optionContainer');
     optionContainer.id = osId;
-    // optionContainer.setAttribute('groupOsId', menuOs.groupOsId);
     osRowOption.parentNode.insertBefore(optionContainer, osRowOption.nextSibling);
     createOptions(optionContainer, sectionId, itemId, osId);
 }

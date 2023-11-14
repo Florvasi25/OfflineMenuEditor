@@ -17,7 +17,6 @@ function createSection(menuSection) {
     sectionRow.classList.add('sectionRow');
     sectionRow.classList.add('draggable');
     sectionRow.classList.add('folded')
-    sectionRow.setAttribute('colspan', 5)
     sectionRow.id = menuSection.MenuSectionId;
 
     //Creates Dropdown Cell
