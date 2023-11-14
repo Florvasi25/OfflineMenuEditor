@@ -34,97 +34,77 @@ function optionDuplicateButton(optionRow, optionRowsContainer, optionButtonsCell
 }
 
 function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
-    const optionToDuplicate = optionRow.id
-    const oldGroupOsId = menuOs.groupOsId;
+    const groupOsId = menuOs.groupOsId;
 
     const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
         option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
     )
 
-    if (optionToDuplicate) {
-        if (groupedOs[oldGroupOsId]) {
-
-            let newOption = ""
-            groupedOs[menuOs.groupOsId].forEach(os => {
-                const optionObject = os.MenuItemOptionSetItems[indexOfOption]
-                newOption = JSON.parse(JSON.stringify(optionObject));
-
-                const optionIds = getLocalStorageOptionSetItemsIDs();
-                const newOptionId = getUniqueRandomInt(optionIds);
-
-                newOption.MenuItemOptionSetItemId = newOptionId;
-                newOption.PublicId = crypto.randomUUID();
-                newOption.Name = menuOption.Name + "_copy"
-
-                os.MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
-                os.MenuItemOptionSetItems.forEach((obj, index) => {
-                    obj.DisplayOrder = index;
-                })
-
-                updateItemCounterLocalStorage(newOptionId, true);
-                updateOptionSetItemsCounterLocalStorage(newOptionId, true);
-
-                if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
-                    const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
-                    optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
-                }
-
-                updatePreview2(optionObject, newOption)
-            })
-            groupOptionSets()
-            updateLocalStorage();
-
-            // const newOptionRow = createOption(optionRowsContainer, menuOs, menuOs.MenuItemOptionSetItems[indexOfOption+1]);
-            // optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
-
-            // updatePreview(indexOfOption, newOption, menuOs)
-
-        } else if (itemlessOs[oldGroupOsId]) {
-            const optionObject = itemlessOs[oldGroupOsId].MenuItemOptionSetItems[indexOfOption]
-            const newGroupOptionId = crypto.randomUUID()
-
-            const newOption = JSON.parse(JSON.stringify(optionObject));
-
+    if (groupedOs[groupOsId]) {
+        groupedOs[groupOsId].forEach(os => {
+            const sourceOption = os.MenuItemOptionSetItems[indexOfOption]
+            const newOption = JSON.parse(JSON.stringify(sourceOption));
+            
+            // Get new unique ID
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);
+            updateItemCounterLocalStorage(newOptionId, true);
+            updateOptionSetItemsCounterLocalStorage(newOptionId, true);
 
             newOption.MenuItemOptionSetItemId = newOptionId;
             newOption.PublicId = crypto.randomUUID();
-            newOption.groupOptionId = newGroupOptionId
+            newOption.Name = menuOption.Name + "_copy"
 
-            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
-            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
+            os.MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
+            os.MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
 
-            updateItemCounterLocalStorage(newOptionId, true);
-            updateOptionSetItemsCounterLocalStorage(newOptionId, true)
+            if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
+                const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
+                optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+            }
 
-            const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
-            optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+            updatePreview(sourceOption, newOption)
+        })
 
-            updateItemlessOsKey(oldGroupOsId);
-        }
-        setColorOfRows(optionRowsContainer)
+        groupOptionSets()
+        updateLocalStorage();
+    } else if (itemlessOs[groupOsId]) {
+        const sourceOption = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
+
+        const newOption = JSON.parse(JSON.stringify(sourceOption));
+
+        // Get new unique ID
+        const optionIds = getLocalStorageOptionSetItemsIDs();
+        const newOptionId = getUniqueRandomInt(optionIds);
+        updateItemCounterLocalStorage(newOptionId, true);
+        updateOptionSetItemsCounterLocalStorage(newOptionId, true)
+
+        newOption.MenuItemOptionSetItemId = newOptionId;
+        newOption.PublicId = crypto.randomUUID();
+
+        itemlessOs[groupOsId].MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
+        itemlessOs[groupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
+            obj.DisplayOrder = index;
+        })
+
+        const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
+        optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
+
+        updateItemlessOsKey(groupOsId);
     }
+
+    setColorOfRows(optionRowsContainer)
 }
 
-function updatePreview(indexOfOption, newOption, menuOs) {
-    const optionsIds = groupedOs[menuOs.groupOsId].map(
-        os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+function updatePreview(sourceOption, newOption) {
+    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+    const osRowOptionPreview = osRowOptionPreviewArray.find(
+        p => p.id === sourceOption.MenuItemOptionSetItemId.toString()
     );
-    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-    const osRowOptionPreview = osRowOptionPreviewArray.filter(p => optionsIds.includes(p.id));
-    osRowOptionPreview.forEach(os => {
-        const newOptionRow = createOptionRow(newOption);
-        os.parentNode.insertBefore(newOptionRow, os.nextSibling);
-    })
-}
-
-function updatePreview2(optionObject, newOption) {
-    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-    const osRowOptionPreview = osRowOptionPreviewArray.find(p => p.id === optionObject.MenuItemOptionSetItemId.toString());
     const newOptionRow = createOptionRow(newOption);
     osRowOptionPreview.parentNode.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
 }
+
 export { optionDuplicateButton }
