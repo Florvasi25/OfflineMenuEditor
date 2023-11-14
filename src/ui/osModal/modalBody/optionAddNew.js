@@ -55,10 +55,10 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         ExternalImageUrl: null,
         groupOptionId: crypto.randomUUID(),
     };
-    const oldGroupOsId = menuOs.groupOsId
+    const groupOsId = menuOs.groupOsId;
 
-    if (groupedOs[menuOs.groupOsId]) {
-        groupedOs[menuOs.groupOsId].forEach((os) => {
+    if (groupedOs[groupOsId]) {
+        groupedOs[groupOsId].forEach((os) => {
             const optionIds = getLocalStorageOptionSetItemsIDs();
             const newOptionId = getUniqueRandomInt(optionIds);
             updateItemCounterLocalStorage(newOptionId, true);
@@ -67,39 +67,44 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
             emptyOptionCopy.MenuItemOptionSetItemId = newOptionId;
 
             os.MenuItemOptionSetItems.push(emptyOptionCopy);
+            
+            if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
+                const optionRow = createOption(
+                    optionRowsContainer,
+                    menuOs,
+                    emptyOptionCopy
+                );
+                optionRowsContainer.appendChild(optionRow);
+            }
 
+            updatePreview(os, emptyOptionCopy);
         });
 
         groupOptionSets();
         updateLocalStorage();
         
-    } else if (itemlessOs[menuOs.groupOsId]) {
+    } else if (itemlessOs[groupOsId]) {
         const optionIds = getLocalStorageOptionSetItemsIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
         updateItemCounterLocalStorage(newOptionId, true);
 
         emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
 
-        itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems.push(
+        itemlessOs[groupOsId].MenuItemOptionSetItems.push(
             emptyOptionJson
         );
+
+        const optionRow = createOption(
+            optionRowsContainer,
+            menuOs,
+            emptyOptionJson
+        );
+        optionRowsContainer.appendChild(optionRow);
 
         updateGroupedIdItemlessOs(menuOs);
     } else {
         console.warn("Warn: No option set found");
     }
-
-    updateOsDomIds(menuOs, oldGroupOsId);
-
-    updatePreview(menuOs, emptyOptionJson);
-
-    const optionRow = createOption(
-        optionRowsContainer,
-        menuOs,
-        emptyOptionJson
-    );
-
-    optionRowsContainer.appendChild(optionRow);
 
     setColorOfRows(optionRowsContainer);
 }
@@ -109,18 +114,13 @@ function updatePreview(menuOs, emptyOptionJson) {
         document.getElementsByClassName("optionContainer")
     );
 
-    const optionContainerPreview = optionContainerPreviewArray.filter(
-        (element) => {
-            const groupOsId = element.getAttribute("groupOsId");
-            return groupOsId === menuOs.groupOsId;
-        }
+    const optionContainerPreview = optionContainerPreviewArray.find(
+        p => p.id == menuOs.MenuItemOptionSetId
     );
 
     if (optionContainerPreview) {
-        optionContainerPreview.forEach((osRowOptionContainerPreview) => {
-            const newOptionRow = createOptionRow(emptyOptionJson);
-            osRowOptionContainerPreview.appendChild(newOptionRow);
-        });
+        const newOptionRow = createOptionRow(emptyOptionJson);
+        optionContainerPreview.appendChild(newOptionRow);
     }
 }
 
