@@ -45,7 +45,7 @@ function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionR
         popup.remove();
     });
 
-    popup.appendChild(popupContent); 
+    popup.appendChild(popupContent);
     optionButtonsCell.appendChild(popup);
 
     //Close the delete popup when clicked outside
@@ -68,42 +68,36 @@ function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionR
 
 //Deletes item from UI and LS
 function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
-    const optionToDelete = optionRow.id;
-    const oldGroupOsId = menuOs.groupOsId;
+    const groupOsId = menuOs.groupOsId;
 
     const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
         option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
     )
-    
-    if (optionToDelete) {
-        optionRow.remove();
 
-        if (groupedOs[oldGroupOsId]) {
-            groupedOs[menuOs.groupOsId].forEach(os => {
-                const optionIndex = os.MenuItemOptionSetItems[indexOfOption]
-                os.MenuItemOptionSetItems.splice(optionIndex, 1)
-                os.MenuItemOptionSetItems.forEach((obj, index) => {
-                    obj.DisplayOrder = index;
-                })
-                updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
-                groupOptionSets()
-                updateLocalStorage();
+    optionRow.remove();
 
-                updatePreview(indexOfOption, menuOs)
-                // updateOsDomIds(menuOs, oldGroupOsId);
-            })
-        } else if (itemlessOs[oldGroupOsId]) {
-            const optionIndex = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
-            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionIndex, 1)
-            itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
+    if (groupedOs[groupOsId]) {
+        updatePreview(indexOfOption, menuOs)
+
+        groupedOs[groupOsId].forEach(os => {
+            os.MenuItemOptionSetItems.splice(indexOfOption, 1)
+            os.MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
+            updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
+            groupOptionSets()
+            updateLocalStorage();
+        })
+    } else if (itemlessOs[groupOsId]) {
+        itemlessOs[groupOsId].MenuItemOptionSetItems.splice(indexOfOption, 1)
+        itemlessOs[groupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
+            obj.DisplayOrder = index;
+        })
 
-            updateItemlessOsKey(oldGroupOsId)
-        }
-
-        setColorOfRows(optionRowsContainer)
+        updateItemlessOsKey(groupOsId)
     }
+
+    setColorOfRows(optionRowsContainer)
 }
 
 function updatePreview(indexOfOption, menuOs) {
