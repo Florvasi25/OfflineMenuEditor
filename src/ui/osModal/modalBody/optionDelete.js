@@ -106,9 +106,11 @@ function updatePreview(indexOfOption, menuOs) {
     );
     const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
     const osRowOptionPreview = osRowOptionPreviewArray.filter(p => optionsIds.includes(p.id));
-    osRowOptionPreview.forEach(os => {
-        os.remove()
-    })
+    if (osRowOptionPreview) {
+        osRowOptionPreview.forEach(os => {
+            os.remove()
+        })
+    }
 }
 
 export { optionDeleteButton }

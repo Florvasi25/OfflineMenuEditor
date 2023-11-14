@@ -103,8 +103,10 @@ function updatePreview(sourceOption, newOption) {
     const osRowOptionPreview = osRowOptionPreviewArray.find(
         p => p.id === sourceOption.MenuItemOptionSetItemId.toString()
     );
-    const newOptionRow = createOptionRow(newOption);
-    osRowOptionPreview.parentNode.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
+    if (osRowOptionPreview) {
+        const newOptionRow = createOptionRow(newOption);
+        osRowOptionPreview.parentNode.insertBefore(newOptionRow, osRowOptionPreview.nextSibling);
+    }
 }
 
 export { optionDuplicateButton }
