@@ -79,6 +79,7 @@ class List {
         const textAreaGroupItems = createAndAppend(formGroup, 'textarea', 'form-control');
         textAreaGroupItems.setAttribute('rows', '6');
         textAreaGroupItems.setAttribute('cols', '30');
+        textAreaGroupItems.setAttribute('spellcheck', 'false');
         textAreaGroupItems.style.resize = 'both';
         this.textAreaGroupItems = textAreaGroupItems;
         this.textAreaGroupItems.value = this.getItems();
