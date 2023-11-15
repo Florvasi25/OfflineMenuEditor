@@ -120,7 +120,7 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
             }
         });
 
-        const newOs = JSON.parse(JSON.stringify(osGroup));
+        const newOs = JSON.parse(JSON.stringify(os));
 
         deleteItemlessOs(newOs)
 
