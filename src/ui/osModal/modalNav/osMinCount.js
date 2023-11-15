@@ -3,7 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js'
 
 function createMinCountCell(menuOs) {
@@ -38,16 +38,16 @@ function createMinCount(menuOs) {
             originalMinCount = newMinOsCount;
             minCount.blur();
 
-            const oldGroupOsId = menuOs.groupOsId
+            updateMinCount(menuOs, newMinOsCount);
 
-            updateMinCount(oldGroupOsId, newMinOsCount);
-
-            const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
-            const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
-            const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));
-            minSelectCount.forEach(os => {
-                os.textContent = menuOs.MinSelectCount
-            })
+            if (groupedOs[menuOs.groupOsId]) {
+                const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+                const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
+                const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));
+                minSelectCount.forEach(os => {
+                    os.textContent = menuOs.MinSelectCount
+                })
+            }
         } else if (e.key === 'Escape') {
             minCount.textContent = originalMinCount;
             minCount.blur();
@@ -67,16 +67,16 @@ function createMinCount(menuOs) {
 }
 
 //Updates Name
-function updateMinCount(groupOsId, osMinCount) {
-    if (groupedOs[groupOsId]) {
-        groupedOs[groupOsId].forEach(os => {
+function updateMinCount(menuOs, osMinCount) {
+    if (groupedOs[menuOs.groupOsId]) {
+        groupedOs[menuOs.groupOsId].forEach(os => {
             os.MinSelectCount = Number(osMinCount)
         })
         groupOptionSets()
         updateLocalStorage()
-    } else if (itemlessOs[groupOsId]) {
-        itemlessOs[groupOsId].MinSelectCount = Number(osMinCount)
-        updateItemlessOsKey(groupOsId)
+    } else if (itemlessOs.includes(menuOs)){
+        menuOs.MinSelectCount = Number(osMinCount)
+        updateItemlessLocalStorage();
     }
 }
 

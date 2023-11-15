@@ -3,7 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js'
 
 function createMaxCountCell(menuOs) {
@@ -18,7 +18,7 @@ function createMaxCountCell(menuOs) {
 
     const maxCount = createMaxCount(menuOs)
     maxCountCell.appendChild(maxCount);
-    
+
     return maxCountCell
 }
 
@@ -38,16 +38,16 @@ function createMaxCount(menuOs) {
             originalName = newMaxOsCount;
             maxCount.blur();
 
-            const oldGroupOsId = menuOs.groupOsId
+            updateMaxCount(menuOs, newMaxOsCount);
 
-            updateMaxCount(oldGroupOsId, newMaxOsCount);
-            
-            const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
-            const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-            const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));
-            maxSelectCount.forEach(os => {
-                os.textContent = menuOs.MaxSelectCount
-            })
+            if (groupedOs[menuOs.groupOsId]) {
+                const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+                const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
+                const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));
+                maxSelectCount.forEach(os => {
+                    os.textContent = menuOs.MaxSelectCount
+                })
+            }
         } else if (e.key === 'Escape') {
             maxCount.textContent = originalName;
             maxCount.blur();
@@ -67,20 +67,20 @@ function createMaxCount(menuOs) {
 }
 
 //Updates Name
-function updateMaxCount(groupOsId, osMaxCount) {
-    if (groupedOs[groupOsId]) {
-        groupedOs[groupOsId].forEach(os => {
+function updateMaxCount(menuOs, osMaxCount) {
+    if (groupedOs[menuOs.groupOsId]) {
+        groupedOs[menuOs.groupOsId].forEach(os => {
             os.MaxSelectCount = osMaxCount
         })
         groupOptionSets()
         updateLocalStorage()
-    } else if (itemlessOs[groupOsId]) {
-        itemlessOs[groupOsId].MaxSelectCount = osMaxCount
-        updateItemlessOsKey(groupOsId)
+    } else if (itemlessOs.includes(menuOs)){
+        menuOs.MaxSelectCount = osMaxCount
+        updateItemlessLocalStorage();
     }
 }
 
-export { 
-    createMaxCountCell, 
-    updateMaxCount 
+export {
+    createMaxCountCell,
+    updateMaxCount
 }

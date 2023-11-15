@@ -7,7 +7,6 @@ let groupedOs = {}; // Store the grouped os objects
 let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? [];
 
 groupOptionSets()
-console.log('groupedOs', groupedOs);
 
 function setJsonData(data) {
     jsonData = data
@@ -283,7 +282,7 @@ function groupOptionSets() {
             });
         });
     });
-
+    console.log('groupedOs', groupedOs);
     updateLocalStorage();
 }
 
