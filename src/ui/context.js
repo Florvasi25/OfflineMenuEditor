@@ -4,7 +4,7 @@ let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
 let groupedOs = {}; // Store the grouped os objects
 
-let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? {};
+let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? [];
 
 groupOptionSets()
 console.log('groupedOs', groupedOs);
@@ -12,7 +12,7 @@ console.log('groupedOs', groupedOs);
 function setJsonData(data) {
     jsonData = data
     groupOptionSets()
-    itemlessOs = {}
+    itemlessOs = []
     updateItemlessLocalStorage();
 }
 
@@ -288,33 +288,34 @@ function groupOptionSets() {
 }
 
 function addItemlessOs(os) {
-    const groupOsKey = getGroupOsKey(os)
-    const groupOsKeyWithId = `${groupOsKey}_${getRandomInt()}`;
+    // const groupOsKey = getGroupOsKey(os)
+    // const groupOsKeyWithId = `${groupOsKey}_${getRandomInt()}`;
 
-    if (groupedOs[groupOsKeyWithId]) {
-        return;
-    }
+    // if (groupedOs[groupOsKeyWithId]) {
+    //     return;
+    // }
 
-    os.groupOsId = groupOsKeyWithId
-    itemlessOs[groupOsKeyWithId] = os;
+    // os.groupOsId = groupOsKeyWithId
+    // itemlessOs[groupOsKeyWithId] = os;
+    itemlessOs.push(os);
     updateItemlessLocalStorage();
 }
 
 function updateItemlessOsKey(oldKey) {
-    const os = itemlessOs[oldKey];
-    const newKey = `${getGroupOsKey(os)}_${getRandomInt()}`;
+    // const os = itemlessOs[oldKey];
+    // const newKey = `${getGroupOsKey(os)}_${getRandomInt()}`;
 
-    if (!groupedOs[newKey]) {
-        itemlessOs[newKey] = os;
-    }
+    // if (!groupedOs[newKey]) {
+    //     itemlessOs[newKey] = os;
+    // }
 
-    os.groupOsId = newKey;
-    delete itemlessOs[oldKey];
-    updateItemlessLocalStorage();
+    // os.groupOsId = newKey;
+    // delete itemlessOs[oldKey];
+    // updateItemlessLocalStorage();
 }
 
-function deleteItemlessOs(groupOsId) {
-    delete itemlessOs[groupOsId];
+function deleteItemlessOs(os) {
+    itemlessOs = itemlessOs.filter(o => o.MenuItemOptionSetId !== os.MenuItemOptionSetId);
     updateItemlessLocalStorage();
 }
 

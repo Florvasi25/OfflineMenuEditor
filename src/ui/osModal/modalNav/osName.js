@@ -3,7 +3,7 @@ import {
     groupedOs,
     itemlessOs,
     groupOptionSets,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js'
 
 function createOsNameCell(menuOs) {
@@ -33,16 +33,16 @@ function createOsName(menuOs) {
             originalName = newOsName;
             osName.blur();
 
-            const oldGroupOsId = menuOs.groupOsId
+            updateName(menuOs, newOsName);
 
-            updateName(oldGroupOsId, newOsName);
-
-            const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
-            const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
-            const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));
-            osNameHeader.forEach(os => {
-                os.textContent = menuOs.Name;
-            })
+            if (groupedOs[menuOs.groupOsId]) {
+                const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+                const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
+                const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));
+                osNameHeader.forEach(os => {
+                    os.textContent = menuOs.Name;
+                })
+            }
         } else if (e.key === 'Escape') {
             osName.textContent = originalName;
             osName.blur();
@@ -62,16 +62,16 @@ function createOsName(menuOs) {
 }
 
 //Updates Name
-function updateName(groupOsId, osName) {
-    if (groupedOs[groupOsId]) {
-        groupedOs[groupOsId].forEach(os => {
+function updateName(menuOs, osName) {
+    if (groupedOs[menuOs.groupOsId]) {
+        groupedOs[menuOs.groupOsId].forEach(os => {
             os.Name = osName
         })
         groupOptionSets()
         updateLocalStorage()
-    } else if (itemlessOs[groupOsId]) {
-        itemlessOs[groupOsId].Name = osName
-        updateItemlessOsKey(groupOsId)
+    } else if (itemlessOs.includes(menuOs)){
+        menuOs.Name = osName;
+        updateItemlessLocalStorage();
     }
 }
 
