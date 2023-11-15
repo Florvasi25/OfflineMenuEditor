@@ -3,7 +3,6 @@ import {
     getDragAfterElement,
     groupedOs,
     groupOptionSets,
-    updateOsDomIds,
     itemlessOs,
     updateItemlessOsKey
 } from '../../context.js';

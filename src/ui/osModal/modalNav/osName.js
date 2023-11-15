@@ -1,4 +1,4 @@
-import { 
+import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
@@ -13,7 +13,7 @@ function createOsNameCell(menuOs) {
 
     const osNameHeader = createOsName(menuOs)
     osNameCell.appendChild(osNameHeader);
-    
+
     return osNameCell
 }
 
@@ -36,7 +36,7 @@ function createOsName(menuOs) {
             const oldGroupOsId = menuOs.groupOsId
 
             updateName(oldGroupOsId, newOsName);
-            
+
             const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
             const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
             const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));

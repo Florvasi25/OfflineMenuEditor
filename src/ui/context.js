@@ -338,15 +338,6 @@ function setColorOfRows(optionRowsContainer) {
     });
 }
 
-function updateOsDomIds(menuOs, oldGroupOsId) {
-
-    const optionContainerArray = Array.from(document.getElementsByClassName('optionContainer'));
-    const optionContainer = optionContainerArray.filter((p) => p.getAttribute("groupOsId") == oldGroupOsId)
-    optionContainer.forEach(os => {
-        os.setAttribute("groupOsId", menuOs.groupOsId)
-    })
-}
-
 export {
     jsonData,
     groupedOs,
@@ -381,7 +372,6 @@ export {
     deleteItemlessOs,
     updateItemlessLocalStorage,
     updateGroupedIdItemlessOs,
-    updateOsDomIds,
     updateItemlessOsKey,
     getSectionRow
 }
