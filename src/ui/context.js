@@ -287,13 +287,6 @@ function groupOptionSets() {
     updateLocalStorage();
 }
 
-function updateGroupedIdItemlessOs(menuOs) {
-    const oldGroupOsId = menuOs.groupOsId
-
-    addItemlessOs(itemlessOs[oldGroupOsId])
-    deleteItemlessOs(oldGroupOsId)
-}
-
 function addItemlessOs(os) {
     const groupOsKey = getGroupOsKey(os)
     const groupOsKeyWithId = `${groupOsKey}_${getRandomInt()}`;
@@ -371,7 +364,6 @@ export {
     addItemlessOs,
     deleteItemlessOs,
     updateItemlessLocalStorage,
-    updateGroupedIdItemlessOs,
     updateItemlessOsKey,
     getSectionRow
 }

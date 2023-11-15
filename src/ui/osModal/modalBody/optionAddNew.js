@@ -10,7 +10,7 @@ import {
     groupedOs,
     setColorOfRows,
     itemlessOs,
-    updateGroupedIdItemlessOs,
+    updateItemlessOsKey,
     groupOptionSets,
 } from "../../context.js";
 
@@ -99,7 +99,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         );
         optionRowsContainer.appendChild(optionRow);
 
-        updateGroupedIdItemlessOs(menuOs);
+        updateItemlessOsKey(groupOsId);
     } else {
         console.warn("Warn: No option set found");
     }
