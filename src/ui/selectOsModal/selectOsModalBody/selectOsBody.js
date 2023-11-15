@@ -246,7 +246,6 @@ function createSelectOsRow(menuOs) {
     selectOsRowHeader.classList.add('defaultColor');
     selectOsRowHeader.classList.add('draggable');
     selectOsRowHeader.classList.add('folded')
-    selectOsRowHeader.id = menuOs.MenuItemOptionSetId
 
     const dropAndName = document.createElement('div')
     dropAndName.className = 'dropAndName'
@@ -272,7 +271,6 @@ function createSelectOsNameHeader(menuOs) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'selectOsNameHeader'
     osNameHeader.textContent = menuOs.Name
-    osNameHeader.id = menuOs.groupOsId
 
     return osNameHeader
 }
@@ -290,9 +288,9 @@ function createOsSelectOption(menuOs) {
     osSelectOptionContainer.className = 'osSelectOptionContainer'
     osSelectOptionContainer.classList.add('osModal')
     osSelectOptionContainer.innerHTML = `
-    <p class='minSelectCount' id='${menuOs.groupOsId}'>${menuOs.MinSelectCount}</p>
+    <p class='minSelectCount'>${menuOs.MinSelectCount}</p>
     <p class='dashCountCell'> - </p>
-    <p class='maxSelectCount' id='${menuOs.groupOsId}'>${menuOs.MaxSelectCount}</p>`
+    <p class='maxSelectCount'>${menuOs.MaxSelectCount}</p>`
 
     return osSelectOptionContainer
 }
