@@ -6,7 +6,7 @@ import {
     getUniqueRandomInt
 } from '../../context.js';
 
-import { newOsModalContainer } from "../modalContainer.js";
+import { createOsModalContainer } from "../modalContainer.js";
 
 
 function osNewButton(osBtnsCell, menuOs) {
@@ -50,7 +50,7 @@ function osNewButton(osBtnsCell, menuOs) {
         if (existingOsModal) {
             existingOsModal.remove()
         }
-        const osModalContainer = newOsModalContainer(emptyOsJson)
+        const osModalContainer = createOsModalContainer(emptyOsJson)
         osModalContainer.style.display = 'block';
         setTimeout(() => {
             osModalContainer.classList.add('show');

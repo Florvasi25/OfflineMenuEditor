@@ -2,7 +2,7 @@ import {
     addItemlessOs
 } from '../../context.js';
 
-import { newOsModalContainer } from "../modalContainer.js";
+import { createOsModalContainer } from "../modalContainer.js";
 
 function osDuplicateButton(osBtnsCell, menuOs) {
     const duplicateButton = document.createElement('button');
@@ -31,7 +31,7 @@ function duplicateOs(menuOs) {
         existingOsModal.remove()
     }
 
-    const openOsModalContainer = newOsModalContainer(newOs)
+    const openOsModalContainer = createOsModalContainer(newOs)
     openOsModalContainer.style.display = 'block';
     setTimeout(() => {
         openOsModalContainer.classList.add('show');
