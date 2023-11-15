@@ -2,9 +2,7 @@ import { emptyMenu } from './emptyMenu.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
-let numericId = 1; // Initialize a numeric ID
 let groupedOs = {}; // Store the grouped os objects
-let numericIds = {}; // Store the numericIds for groupOsKeys
 
 let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? {};
 
@@ -67,7 +65,6 @@ function getOptionObject(sectionId, itemId, osId, optionId) {
     const optionIndex = menuOptions.findIndex(
         optionElement => optionElement.MenuItemOptionSetItemId == optionId
     )
-    // const optionObject = menuOptions.find(option => option.MenuItemOptionSetItemId == optionId);
 
     return optionIndex
 }
@@ -255,36 +252,6 @@ function getSectionRow(menuSectionId){
     const sectionRow = sectionRowsArray.find((p) => p.id == menuSectionId.toString())
     return sectionRow;
 }
-// function getGroupOsKey(os) {
-//     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
-//     const osLength = MenuItemOptionSetItems.length;
-//     const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
-//     return `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
-// }
-// function groupOptionSets() {
-//     groupedOs = {};
-//     jsonData.MenuSections.forEach(sections => {
-//         sections.MenuItems.forEach(items => {
-//             items.MenuItemOptionSets.forEach(os => {
-//                 const groupOsKey = getGroupOsKey(os)
-//                 os.groupOsId = groupOsKey
-
-//                 if (!groupedOs[groupOsKey]) {
-//                     groupedOs[groupOsKey] = [os];
-//                 } else {
-//                     groupedOs[groupOsKey].push(os);
-//                 }
-
-//                 os.MenuItemOptionSetItems.forEach(option => {
-//                     const { Name, Price, IsAvailable } = option;
-//                     const groupOptionKey = `${Name}_${Price}_${IsAvailable}`;
-//                     option.groupOptionId = groupOptionKey
-//                 })
-//             });
-//         })
-//     })
-//     updateLocalStorage()
-// }
 
 function getGroupOsKey(os) {
     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
@@ -295,7 +262,6 @@ function getGroupOsKey(os) {
 function groupOptionSets() {
     groupedOs = {};
     const groupOsKeyToId = {}; // Dictionary to store groupOsKeys and their IDs
-    // let groupId = 1; // Initialize a group ID
 
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
@@ -314,20 +280,12 @@ function groupOptionSets() {
                 } else {
                     groupedOs[groupOsKeyWithId].push(os);
                 }
-
-                os.MenuItemOptionSetItems.forEach(option => {
-                    const { Name, Price, IsAvailable } = option;
-                    const groupOptionKey = `${Name}_${Price}_${IsAvailable}`;
-                    option.groupOptionId = groupOptionKey;
-                });
             });
         });
     });
 
     updateLocalStorage();
 }
-
-
 
 function updateGroupedIdItemlessOs(menuOs) {
     const oldGroupOsId = menuOs.groupOsId
@@ -352,10 +310,6 @@ function addItemlessOs(os) {
 function updateItemlessOsKey(oldKey) {
     const os = itemlessOs[oldKey];
     const newKey = `${getGroupOsKey(os)}_${getRandomInt()}`;
-
-    // if (oldKey === newKey) {
-    //     return;
-    // }
 
     if (!groupedOs[newKey]) {
         itemlessOs[newKey] = os;
@@ -385,62 +339,12 @@ function setColorOfRows(optionRowsContainer) {
 }
 
 function updateOsDomIds(menuOs, oldGroupOsId) {
-    // const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
-    // const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
-    // const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));
-    // osNameHeader.forEach(os => {
-    //     os.textContent = menuOs.Name;
-    //     // os.id = menuOs.groupOsId
-    // })
-
-    // const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
-    // const minSelectCount = minSelectCountArray.filter((p) => p.id == oldGroupOsId)
-    // minSelectCount.forEach(os => {
-    //     os.textContent = menuOs.MinSelectCount
-    //     os.id = menuOs.groupOsId
-    // })
-
-    // const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
-    // const maxSelectCount = maxSelectCountArray.filter((p) => p.id == oldGroupOsId)
-    // maxSelectCount.forEach(os => {
-    //     os.textContent = menuOs.MaxSelectCount
-    //     os.id = menuOs.groupOsId
-    // })
 
     const optionContainerArray = Array.from(document.getElementsByClassName('optionContainer'));
     const optionContainer = optionContainerArray.filter((p) => p.getAttribute("groupOsId") == oldGroupOsId)
     optionContainer.forEach(os => {
         os.setAttribute("groupOsId", menuOs.groupOsId)
     })
-}
-
-function updateOptionDomIds(menuOption, oldGroupOptionId) {
-    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
-    const osRowOptionPreview = osRowOptionPreviewArray.filter((p) => p.id == oldGroupOptionId)
-    osRowOptionPreview.forEach(os => {
-        os.id = menuOption.groupOptionId
-        os.classList.toggle('unavailable', !menuOption.IsAvailable)
-    })
-
-    const optionRowwArray = Array.from(document.getElementsByClassName('optionRow'));
-    const optionRoww = optionRowwArray.filter((p) => p.id == oldGroupOptionId)
-    optionRoww.forEach(os => {
-        os.id = menuOption.groupOptionId
-    })
-
-    // const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
-    // const optionNamePreview = optionNamePreviewArray.filter((p) => p.id == oldGroupOptionId)
-    // optionNamePreview.forEach(os => {
-    //     os.textContent = menuOption.Name
-    //     os.id = menuOption.groupOptionId
-    // })
-
-    // const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
-    // const optionPricePreview = optionPricePreviewArray.filter((p) => p.id == oldGroupOptionId)
-    // optionPricePreview.forEach(os => {
-    //     os.textContent = menuOption.Price
-    //     os.id = menuOption.groupOptionId
-    // })
 }
 
 export {
@@ -478,7 +382,6 @@ export {
     updateItemlessLocalStorage,
     updateGroupedIdItemlessOs,
     updateOsDomIds,
-    updateOptionDomIds,
     updateItemlessOsKey,
     getSectionRow
 }

@@ -75,7 +75,7 @@ function createOption(optionRowsContainer, menuOs, menuOption) {
     const optionRow = document.createElement('div')
     optionRow.classList.add('optionRow');
     optionRow.classList.add('draggable');
-    optionRow.id = menuOption.groupOptionId
+    optionRow.id = menuOption.MenuItemOptionSetItemId
 
     const dragOptionCell = createOptionDragCell(optionRowsContainer, optionRow)
     optionRow.appendChild(dragOptionCell)

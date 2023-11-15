@@ -40,11 +40,12 @@ function createOptionDragCell(optionRowsContainer, optionRow) {
 }
 
 let draggable = null;
+let afterElement = null
 
 function setDragListeners(optionRowsContainer, menuOs) {
     optionRowsContainer.addEventListener('dragenter', e => {
         e.preventDefault()
-        const afterElement = getDragAfterElement(optionRowsContainer, e.clientY)
+        afterElement = getDragAfterElement(optionRowsContainer, e.clientY)
         draggable = document.querySelector('.dragging')
 
         if (afterElement == null) {
@@ -53,7 +54,6 @@ function setDragListeners(optionRowsContainer, menuOs) {
             optionRowsContainer.insertBefore(draggable, afterElement)
         }
 
-        updatePreview(menuOs, draggable, afterElement)
     })
 
     optionRowsContainer.addEventListener("dragend", () => {
@@ -64,22 +64,26 @@ function setDragListeners(optionRowsContainer, menuOs) {
         const oldGroupOsId = menuOs.groupOsId;
         
         if (groupedOs[oldGroupOsId]) {
-            const optionIndex = groupedOs[menuOs.groupOsId][0].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
-            if(optionIndex !== indexNewPosition) {
+            const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+                option => option.MenuItemOptionSetItemId == draggedIdOption
+            )
+            if(indexOfOption !== indexNewPosition) {
                 groupedOs[menuOs.groupOsId].forEach(os => {
-                    const optionToMove = os.MenuItemOptionSetItems.splice(optionIndex, 1)[0];
+                    const optionToMove = os.MenuItemOptionSetItems.splice(indexOfOption, 1)[0];
+                    const afterOption = os.MenuItemOptionSetItems[indexNewPosition];
                     os.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
-                    os.MenuItemOptionSetItems.forEach((obj, optionIndex) => {
-                        obj.DisplayOrder = optionIndex;
+                    os.MenuItemOptionSetItems.forEach((obj, index) => {
+                        obj.DisplayOrder = index;
                     })
+
+                    updatePreview(optionToMove, afterOption)
+
                 }) 
                 groupOptionSets()
                 updateLocalStorage()
-
-                updateOsDomIds(menuOs, oldGroupOsId)
             } 
         } else if (itemlessOs[oldGroupOsId]) {
-            const optionItemlessIndex = itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems.findIndex(option => option.groupOptionId == draggedIdOption)
+            const optionItemlessIndex = itemlessOs[oldGroupOsId].MenuItemOptionSetItems[indexOfOption]
             if(optionItemlessIndex !== indexNewPosition) {
                 const optionToMove = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionItemlessIndex, 1)[0];
                 console.log('optionToMove', optionToMove);
@@ -93,23 +97,20 @@ function setDragListeners(optionRowsContainer, menuOs) {
     })
 }
 
-function updatePreview(menuOs, draggable, afterElement) {
-    const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'));
-        
-    optionContainerPreviewArray.forEach(optionContainerPreview => {
-        const groupOsId = optionContainerPreview.getAttribute('groupOsId');
-        
-        if (groupOsId === menuOs.groupOsId) {
-            const osRowOptionPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('osRowOption'));
-            const osRowOptionPreview = osRowOptionPreviewArray.find((p) => p.id == draggable.id)
-            if (afterElement == null) {
-                optionContainerPreview.appendChild(osRowOptionPreview)
-            } else {
-                const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterElement.id)
-                optionContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
-            }
+function updatePreview(optionToMove, afterOption) {
+    const osRowOptionPreviewArray = Array.from(document.getElementsByClassName('osRowOption'));
+    const osRowOptionPreview = osRowOptionPreviewArray.find(
+        p => p.id == optionToMove.MenuItemOptionSetItemId
+    );
+
+    if (osRowOptionPreview) {
+        if (afterOption == null) {
+            osRowOptionPreview.parentNode.appendChild(osRowOptionPreview)
+        } else {
+            const afterElementPreview = osRowOptionPreviewArray.find((p) => p.id == afterOption.MenuItemOptionSetItemId)
+            osRowOptionPreview.parentNode.insertBefore(osRowOptionPreview, afterElementPreview)
         }
-    });
+    }
 }
 
 export {

@@ -4,7 +4,6 @@ import {
     groupedOs,
     setColorOfRows,
     groupOptionSets,
-    updateOsDomIds,
     itemlessOs,
     updateItemlessOsKey
 } from '../../context.js';

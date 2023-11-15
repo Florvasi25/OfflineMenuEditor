@@ -12,7 +12,6 @@ import {
     itemlessOs,
     updateGroupedIdItemlessOs,
     groupOptionSets,
-    updateOsDomIds,
 } from "../../context.js";
 
 import { createOptionRow } from "../../optionSet/osOptionsContainer.js";
@@ -53,7 +52,6 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         CellLayoutType: 0,
         OptionSetItemMetadata: [],
         ExternalImageUrl: null,
-        groupOptionId: crypto.randomUUID(),
     };
     const groupOsId = menuOs.groupOsId;
 
