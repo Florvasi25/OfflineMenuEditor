@@ -3,7 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js'
 
 function createOptionNameCell(menuOption, menuOs) {
@@ -37,16 +37,18 @@ function createOptionName(menuOption, menuOs) {
                 option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
             )
 
-            updateOptionName(indexOfOption, menuOs.groupOsId, newOptionName);
+            updateOptionName(indexOfOption, menuOs, newOptionName);
 
-            const optionsIds = groupedOs[menuOs.groupOsId].map(
-                os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
-            );
-            const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
-            const optionNamePreview = optionNamePreviewArray.filter(p => optionsIds.includes(p.id));
-            optionNamePreview.forEach(os => {
-                os.textContent = menuOption.Name
-            })
+            if (groupedOs[menuOs.groupOsId]) {
+                const optionsIds = groupedOs[menuOs.groupOsId].map(
+                    os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+                );
+                const optionNamePreviewArray = Array.from(document.getElementsByClassName('optionNamePreview'));
+                const optionNamePreview = optionNamePreviewArray.filter(p => optionsIds.includes(p.id));
+                optionNamePreview.forEach(os => {
+                    os.textContent = menuOption.Name
+                })
+            }
         } else if (e.key === 'Escape') {
             optionName.blur();
         }
@@ -65,19 +67,19 @@ function createOptionName(menuOption, menuOs) {
 }
 
 //Updates Name
-function updateOptionName(indexOfOption, groupOsId, newOptionName) {
+function updateOptionName(indexOfOption, menuOs, newOptionName) {
 
-    if (groupedOs[groupOsId]) {
-        groupedOs[groupOsId].forEach(os =>
+    if (groupedOs[menuOs.groupOsId]) {
+        groupedOs[menuOs.groupOsId].forEach(os =>
             os.MenuItemOptionSetItems[indexOfOption].Name = newOptionName
         );
 
         groupOptionSets()
         updateLocalStorage()
-    } else if (itemlessOs[groupOsId]) {
-        const option = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
+    } else if (itemlessOs.includes(menuOs)){
+        const option = menuOs.MenuItemOptionSetItems[indexOfOption]
         option.Name = newOptionName
-        updateItemlessOsKey(groupOsId)
+        updateItemlessLocalStorage();
     }
 }
 

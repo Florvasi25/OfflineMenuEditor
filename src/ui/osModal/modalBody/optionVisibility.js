@@ -3,7 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from "../../context.js";
 
 function optionVisibilityButton(
@@ -43,15 +43,14 @@ function optionVisibilityButton(
 //Section Availability
 function SectionAvailability(optionRow, menuOs, menuOption) {
     const optionToHide = optionRow.id;
-    const oldGroupOsId = menuOs.groupOsId;
 
     const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
         option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
     )
 
     if (optionToHide) {
-        if (groupedOs[oldGroupOsId]) {
-            groupedOs[oldGroupOsId].forEach((os) => {
+        if (groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId].forEach((os) => {
                 const option = os.MenuItemOptionSetItems[indexOfOption]
 
                 optionRow.classList.toggle("unavailable", option.IsAvailable);
@@ -69,11 +68,11 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
                 os.classList.toggle('unavailable', !menuOption.IsAvailable)
             })
 
-        } else if (itemlessOs[oldGroupOsId]) {
-            const option = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
+        } else if (itemlessOs.includes(menuOs)){
+            const option = menuOs.MenuItemOptionSetItems[indexOfOption]
             optionRow.classList.toggle("unavailable", option.IsAvailable);
             option.IsAvailable = !option.IsAvailable;
-            updateItemlessOsKey(oldGroupOsId);
+            updateItemlessLocalStorage();
         }
     }
 }

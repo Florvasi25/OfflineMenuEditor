@@ -287,30 +287,8 @@ function groupOptionSets() {
 }
 
 function addItemlessOs(os) {
-    // const groupOsKey = getGroupOsKey(os)
-    // const groupOsKeyWithId = `${groupOsKey}_${getRandomInt()}`;
-
-    // if (groupedOs[groupOsKeyWithId]) {
-    //     return;
-    // }
-
-    // os.groupOsId = groupOsKeyWithId
-    // itemlessOs[groupOsKeyWithId] = os;
     itemlessOs.push(os);
     updateItemlessLocalStorage();
-}
-
-function updateItemlessOsKey(oldKey) {
-    // const os = itemlessOs[oldKey];
-    // const newKey = `${getGroupOsKey(os)}_${getRandomInt()}`;
-
-    // if (!groupedOs[newKey]) {
-    //     itemlessOs[newKey] = os;
-    // }
-
-    // os.groupOsId = newKey;
-    // delete itemlessOs[oldKey];
-    // updateItemlessLocalStorage();
 }
 
 function deleteItemlessOs(os) {
@@ -364,6 +342,5 @@ export {
     addItemlessOs,
     deleteItemlessOs,
     updateItemlessLocalStorage,
-    updateItemlessOsKey,
     getSectionRow
 }

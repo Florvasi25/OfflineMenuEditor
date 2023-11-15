@@ -3,7 +3,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js'
 
 function createOptionPriceCell(menuOption, menuOs) {
@@ -38,16 +38,18 @@ function createOptionPrice(menuOption, menuOs) {
                 option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
             )
 
-            updatePrice(indexOfOption, menuOs.groupOsId, optionPrice.textContent);
+            updatePrice(indexOfOption, menuOs, optionPrice.textContent);
             
-            const optionsIds = groupedOs[menuOs.groupOsId].map(
-                os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
-            );
-            const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
-            const optionPricePreview = optionPricePreviewArray.filter(p => optionsIds.includes(p.id));
-            optionPricePreview.forEach(os => {
-                os.textContent = menuOption.Price.toFixed(2)
-            })
+            if (groupedOs[menuOs.groupOsId]) {
+                const optionsIds = groupedOs[menuOs.groupOsId].map(
+                    os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
+                );
+                const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
+                const optionPricePreview = optionPricePreviewArray.filter(p => optionsIds.includes(p.id));
+                optionPricePreview.forEach(os => {
+                    os.textContent = menuOption.Price.toFixed(2)
+                })
+            }
         } else if (e.key === 'Escape') {
             optionPrice.textContent = originalPrice.toFixed(2);
             optionPrice.blur();
@@ -72,21 +74,21 @@ function createOptionPrice(menuOption, menuOs) {
     return optionPrice;
 }
 
-function updatePrice(indexOfOption, groupOsId, optionPrice) {
+function updatePrice(indexOfOption, menuOs, optionPrice) {
     const priceAsNumber = parseFloat(parseFloat(optionPrice).toFixed(2));
 
     if (!isNaN(priceAsNumber)) {
 
-        if (groupedOs[groupOsId]) {
-            groupedOs[groupOsId].forEach(os => {
+        if (groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId].forEach(os => {
                 os.MenuItemOptionSetItems[indexOfOption].Price = priceAsNumber
             })
             groupOptionSets()
             updateLocalStorage()
-        } else if (itemlessOs[groupOsId]) {
-            const option = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
+        } else if (itemlessOs.includes(menuOs)){
+            const option = menuOs.MenuItemOptionSetItems[indexOfOption]
             option.Price = priceAsNumber
-            updateItemlessOsKey(groupOsId)
+            updateItemlessLocalStorage();
         }
     }
 }

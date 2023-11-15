@@ -4,7 +4,7 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js';
 
 function createOptionDragCell(optionRowsContainer, optionRow) {
@@ -21,9 +21,9 @@ function createOptionDragCell(optionRowsContainer, optionRow) {
 
     optionDragImg.addEventListener('dragend', () => {
         optionRow.classList.remove('dragging');
-        
+
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-    
+
         rows.forEach((row, index) => {
             if (index % 2 === 0) {
                 row.classList.remove('even');
@@ -57,15 +57,13 @@ function setDragListeners(optionRowsContainer, menuOs) {
 
     optionRowsContainer.addEventListener("dragend", () => {
         const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-        const draggedIdOption = draggable.getAttribute("id");
         const indexNewPosition = rows.indexOf(draggable);
-        
-        const oldGroupOsId = menuOs.groupOsId;
-        
-        if (groupedOs[oldGroupOsId]) {
-            const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
-                option => option.MenuItemOptionSetItemId == draggedIdOption
-            )
+
+        const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+            option => option.MenuItemOptionSetItemId == draggable.id
+        )
+
+        if (groupedOs[menuOs.groupOsId]) {
             if(indexOfOption !== indexNewPosition) {
                 groupedOs[menuOs.groupOsId].forEach(os => {
                     const optionToMove = os.MenuItemOptionSetItems.splice(indexOfOption, 1)[0];
@@ -77,21 +75,20 @@ function setDragListeners(optionRowsContainer, menuOs) {
 
                     updatePreview(optionToMove, afterOption)
 
-                }) 
+                })
                 groupOptionSets()
                 updateLocalStorage()
-            } 
-        } else if (itemlessOs[oldGroupOsId]) {
-            const optionItemlessIndex = itemlessOs[oldGroupOsId].MenuItemOptionSetItems[indexOfOption]
-            if(optionItemlessIndex !== indexNewPosition) {
-                const optionToMove = itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(optionItemlessIndex, 1)[0];
+            }
+        } else if (itemlessOs.includes(menuOs)){
+            if(indexOfOption !== indexNewPosition) {
+                const optionToMove = menuOs.MenuItemOptionSetItems.splice(indexOfOption, 1)[0];
                 console.log('optionToMove', optionToMove);
-                itemlessOs[oldGroupOsId].MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
-                itemlessOs[oldGroupOsId].MenuItemOptionSetItems.forEach((obj, optionItemlessIndex) => {
-                    obj.DisplayOrder = optionItemlessIndex;
+                menuOs.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
+                menuOs.MenuItemOptionSetItems.forEach((obj, index) => {
+                    obj.DisplayOrder = index;
                 })
             }
-            updateItemlessOsKey(oldGroupOsId)
+            updateItemlessLocalStorage();
         }
     })
 }

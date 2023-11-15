@@ -5,7 +5,7 @@ import {
     setColorOfRows,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey
+    updateItemlessLocalStorage
 } from '../../context.js';
 
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
@@ -87,13 +87,13 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
             groupOptionSets()
             updateLocalStorage();
         })
-    } else if (itemlessOs[groupOsId]) {
-        itemlessOs[groupOsId].MenuItemOptionSetItems.splice(indexOfOption, 1)
-        itemlessOs[groupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
+    } else if (itemlessOs.includes(menuOs)){
+        menuOs.MenuItemOptionSetItems.splice(indexOfOption, 1)
+        menuOs.MenuItemOptionSetItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         })
 
-        updateItemlessOsKey(groupOsId)
+        updateItemlessLocalStorage();
     }
 
     setColorOfRows(optionRowsContainer)
