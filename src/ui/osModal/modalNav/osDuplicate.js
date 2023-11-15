@@ -1,5 +1,9 @@
 import {
-    addItemlessOs
+    addItemlessOs,
+    getLocalStorageOptionSetIDs,
+    getUniqueRandomInt,
+    updateOptionSetCounterLocalStorage,
+    updateOptionSetItemsCounterLocalStorage
 } from '../../context.js';
 
 import { createOsModalContainer } from "../modalContainer.js";
@@ -22,6 +26,14 @@ function osDuplicateButton(osBtnsCell, menuOs) {
 
 function duplicateOs(menuOs) {
     const newOs = JSON.parse(JSON.stringify(menuOs));
+    const osIds = getLocalStorageOptionSetIDs();
+    const newOsId = getUniqueRandomInt(osIds);
+    updateOptionSetCounterLocalStorage(newOsId, true);
+    updateOptionSetItemsCounterLocalStorage(newOsId, true);
+
+    newOs.MenuItemOptionSetId = newOsId;
+    newOs.PublicId = crypto.randomUUID();
+
     newOs.Name += "_copy"
 
     addItemlessOs(newOs)
