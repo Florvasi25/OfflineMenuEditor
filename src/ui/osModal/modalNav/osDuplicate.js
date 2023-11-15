@@ -17,7 +17,7 @@ function osDuplicateButton(osBtnsCell, menuOs) {
     duplicateButton.addEventListener('click', () => {
         duplicateOs(menuOs);
     });
-    
+
 }
 
 function duplicateOs(menuOs) {
@@ -25,7 +25,7 @@ function duplicateOs(menuOs) {
     newOs.Name += "_copy"
 
     addItemlessOs(newOs)
-    
+
     const existingOsModal = document.querySelector('.osModalContainer')
     if (existingOsModal) {
         existingOsModal.remove()

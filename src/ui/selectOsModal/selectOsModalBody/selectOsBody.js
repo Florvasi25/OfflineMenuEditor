@@ -46,14 +46,14 @@ function createSelectOsBodyLeft(itemRowId) {
 
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
-    filteredGroup.forEach(osGroup => {
-        const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId)
+    filteredGroup.forEach(os => {
+        const selectOsRowHeader = createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId)
 
         selectOsBodyLeft.appendChild(selectOsRowHeader)
     })
 
-    Object.values(itemlessOs).forEach(osGroup => {
-        const selectOsRowHeader = createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId)
+    itemlessOs.forEach(os => {
+        const selectOsRowHeader = createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId)
 
         selectOsBodyLeft.appendChild(selectOsRowHeader)
     })
@@ -91,8 +91,8 @@ function createSelectOsBodyRight(itemRowId) {
     return selectOsBodyRight;
 }
 
-function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
-    const selectOsRowHeader = createSelectOsRow(osGroup)
+function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
+    const selectOsRowHeader = createSelectOsRow(os)
 
     const btnAndSelectOption = document.createElement('div')
     btnAndSelectOption.className = 'btnAndSelectOption'
@@ -122,7 +122,7 @@ function createSelectOsRowLeft(osGroup, selectOsBodyLeft, itemRowId) {
 
         const newOs = JSON.parse(JSON.stringify(osGroup));
 
-        deleteItemlessOs(newOs.groupOsId)
+        deleteItemlessOs(newOs)
 
         newOs.MenuItemId = foundItem.MenuItemId
 

@@ -10,7 +10,7 @@ import {
     groupedOs,
     setColorOfRows,
     itemlessOs,
-    updateItemlessOsKey,
+    updateItemlessLocalStorage,
     groupOptionSets,
 } from "../../context.js";
 
@@ -65,7 +65,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
             emptyOptionCopy.MenuItemOptionSetItemId = newOptionId;
 
             os.MenuItemOptionSetItems.push(emptyOptionCopy);
-            
+
             if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
                 const optionRow = createOption(
                     optionRowsContainer,
@@ -80,15 +80,15 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
         groupOptionSets();
         updateLocalStorage();
-        
-    } else if (itemlessOs[groupOsId]) {
+
+    } else if (itemlessOs.includes(menuOs)){
         const optionIds = getLocalStorageOptionSetItemsIDs();
         const newOptionId = getUniqueRandomInt(optionIds);
         updateItemCounterLocalStorage(newOptionId, true);
 
         emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
 
-        itemlessOs[groupOsId].MenuItemOptionSetItems.push(
+        menuOs.MenuItemOptionSetItems.push(
             emptyOptionJson
         );
 
@@ -99,7 +99,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         );
         optionRowsContainer.appendChild(optionRow);
 
-        updateItemlessOsKey(groupOsId);
+        updateItemlessLocalStorage();
     } else {
         console.warn("Warn: No option set found");
     }

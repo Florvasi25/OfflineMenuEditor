@@ -10,7 +10,7 @@ import {
     setColorOfRows,
     groupOptionSets,
     itemlessOs,
-    updateItemlessOsKey,
+    updateItemlessLocalStorage,
 } from '../../context.js';
 
 import { createOption } from './osBody.js'
@@ -70,8 +70,8 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
 
         groupOptionSets()
         updateLocalStorage();
-    } else if (itemlessOs[groupOsId]) {
-        const sourceOption = itemlessOs[groupOsId].MenuItemOptionSetItems[indexOfOption]
+    } else if (itemlessOs.includes(menuOs)){
+        const sourceOption = menuOs.MenuItemOptionSetItems[indexOfOption]
 
         const newOption = JSON.parse(JSON.stringify(sourceOption));
 
@@ -84,15 +84,15 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
         newOption.MenuItemOptionSetItemId = newOptionId;
         newOption.PublicId = crypto.randomUUID();
 
-        itemlessOs[groupOsId].MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
-        itemlessOs[groupOsId].MenuItemOptionSetItems.forEach((obj, index) => {
+        menuOs.MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
+        menuOs.MenuItemOptionSetItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         })
 
         const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
-        updateItemlessOsKey(groupOsId);
+        updateItemlessLocalStorage();
     }
 
     setColorOfRows(optionRowsContainer)

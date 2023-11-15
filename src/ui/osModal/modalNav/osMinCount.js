@@ -1,4 +1,4 @@
-import { 
+import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
@@ -18,7 +18,7 @@ function createMinCountCell(menuOs) {
 
     const minCount = createMinCount(menuOs)
     minCountCell.appendChild(minCount);
-    
+
     return minCountCell
 }
 
@@ -41,7 +41,7 @@ function createMinCount(menuOs) {
             const oldGroupOsId = menuOs.groupOsId
 
             updateMinCount(oldGroupOsId, newMinOsCount);
-            
+
             const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
             const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
             const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));
