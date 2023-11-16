@@ -67,6 +67,7 @@ function confirmDelete(menuOs, osBtnsCell) {
 
 function deleteOs(menuOs) {
     if (groupedOs[menuOs.groupOsId]) {
+
         // find all the ids to remove
         const osIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId);
         // delete groupOs reference to these os
@@ -101,6 +102,12 @@ function updatePreview(osIds) {
     const osRowHeaderPreview = osRowHeaderPreviewArray.filter(p => osIds.includes(p.id));
     if (osRowHeaderPreview) {
         osRowHeaderPreview.forEach(os => {
+            if (os.classList.contains('expanded')) {
+                let option = os.nextElementSibling;
+                if (option.tagName === 'DIV' && option.classList.contains('optionContainer')) {
+                    option.remove();
+                }
+            }
             os.remove()
         })
     }
