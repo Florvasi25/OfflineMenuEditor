@@ -14,7 +14,7 @@ function createOsBtnsCell(menuOs) {
 
     osCaseButton(osBtnsCell)
 
-    osDeleteButton(osBtnsCell)
+    osDeleteButton(osBtnsCell, menuOs)
 
     osDuplicateButton(osBtnsCell, menuOs)
 
