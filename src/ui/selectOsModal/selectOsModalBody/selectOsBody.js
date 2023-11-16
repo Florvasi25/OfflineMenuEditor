@@ -245,7 +245,8 @@ function createSelectOsRow(menuOs) {
     selectOsRowHeader.classList.add('selectOsRowHeader');
     selectOsRowHeader.classList.add('defaultColor');
     selectOsRowHeader.classList.add('draggable');
-    selectOsRowHeader.classList.add('folded')
+    selectOsRowHeader.classList.add('folded');
+    selectOsRowHeader.id = menuOs.MenuItemOptionSetId;
 
     const dropAndName = document.createElement('div')
     dropAndName.className = 'dropAndName'
