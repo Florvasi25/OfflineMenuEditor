@@ -73,10 +73,16 @@ function confirmDelete(itemRow, itemButtonsCell, sectionId) {
 function deleteItem(itemRow, sectionId) {
     const itemId = itemRow.id;
     if (itemRow) {
+        // if (itemRow.classList.contains('expanded')) {
+        //     let optionSet = itemRow.nextElementSibling;
+        //     if (optionSet && optionSet.tagName === 'DIV' && optionSet.classList.contains('osContainer')) {
+        //         optionSet.remove();
+        //     }
+        // }
         if (itemRow.classList.contains('expanded')) {
-            let optionSet = itemRow.nextElementSibling;
-            if (optionSet && optionSet.tagName === 'DIV' && optionSet.classList.contains('osContainer')) {
-                optionSet.remove();
+            let item = itemRow.nextElementSibling;
+            if (item.tagName === 'DIV' && item.classList.contains('osTable')) {
+                item.remove();
             }
         }
         itemRow.remove(); 
