@@ -3,7 +3,6 @@ import {
     updateLocalStorage,
     groupedOs,
     jsonData,
-    setColorOfRows,
     groupOptionSets,
     itemlessOs,
     updateItemlessLocalStorage
@@ -37,8 +36,7 @@ function confirmDelete(menuOs, osBtnsCell) {
         <button class="noButton confirmDeleteBtn">No</button>`
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
-        // deleteOs(menuOs, menuOption, optionRow, optionRowsContainer);
-        deleteOs2(menuOs);
+        deleteOs(menuOs);
         popup.remove();
     });
 
@@ -67,7 +65,7 @@ function confirmDelete(menuOs, osBtnsCell) {
     });
 }
 
-function deleteOs2(menuOs) {
+function deleteOs(menuOs) {
     if (groupedOs[menuOs.groupOsId]) {
         // find all the ids to remove
         const osIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId);
@@ -98,45 +96,8 @@ function deleteOs2(menuOs) {
     }
 }
 
-// //Deletes item from UI and LS
-// function deleteOs(menuOs, menuOption, optionRow, optionRowsContainer) {
-//     const groupOsId = menuOs.groupOsId;
-
-    
-//     const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
-    
-//     const indexOfOs = foundItem.MenuItemOptionSets.findIndex(
-//         os => os.MenuItemOptionSetId == menuOption.MenuItemOptionSetId
-//     )
-//     // optionRow.remove();
-
-//     if (indexOfOs) {
-//         // updatePreview(indexOfOs, menuOs)
-
-//         foundItem.forEach(os => {
-//             os.MenuItemOptionSets.splice(indexOfOs, 1)
-//             os.MenuItemOptionSets.forEach((obj, index) => {
-//                 obj.DisplayOrder = index;
-//             })
-//             updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
-//             groupOptionSets()
-//             updateLocalStorage();
-//         })
-//     } else if (itemlessOs.includes(menuOs)){
-//         menuOs.MenuItemOptionSetItems.splice(indexOfOs, 1)
-//         menuOs.MenuItemOptionSetItems.forEach((obj, index) => {
-//             obj.DisplayOrder = index;
-//         })
-
-//         updateItemlessLocalStorage();
-//     }
-
-//     setColorOfRows(optionRowsContainer)
-// }
-
 function updatePreview(osIds) {
     const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
-    // const osRowHeaderPreview = osRowHeaderPreviewArray.filter(p => p.id == osIds.toString());
     const osRowHeaderPreview = osRowHeaderPreviewArray.filter(p => osIds.includes(p.id));
     if (osRowHeaderPreview) {
         osRowHeaderPreview.forEach(os => {

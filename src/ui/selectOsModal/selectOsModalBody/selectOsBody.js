@@ -137,6 +137,8 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
             option.MenuItemOptionSetItemId = newOptionId
         })
 
+        newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+
         foundItem.MenuItemOptionSets.push(newOs)
 
         const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
