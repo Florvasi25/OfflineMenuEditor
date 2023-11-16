@@ -79,6 +79,7 @@ class List {
         const textAreaGroupItems = createAndAppend(formGroup, 'textarea', 'form-control');
         textAreaGroupItems.setAttribute('rows', '6');
         textAreaGroupItems.setAttribute('cols', '30');
+        textAreaGroupItems.setAttribute('spellcheck', 'false');
         textAreaGroupItems.style.resize = 'both';
         this.textAreaGroupItems = textAreaGroupItems;
         this.textAreaGroupItems.value = this.getItems();
@@ -100,7 +101,8 @@ class List {
 
         this.submitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            if(this.validateItemsFormat(this.textAreaGroupItems.value) && this.checkDuplicatedItems(this.textAreaGroupItems.value)){
+            if(this.validateItemsFormat(this.textAreaGroupItems.value) && 
+                this.checkDuplicatedItems(this.textAreaGroupItems.value)){
                 const { itemsNotInJson , jsonItemsNotInText } = this.compareItems(this.textAreaGroupItems.value);
                 const sectionIndex = getSectionIndex(this.menuSection.MenuSectionId);
                 if(itemsNotInJson && itemsNotInJson.length > 0){
@@ -138,6 +140,7 @@ class List {
         const itemRegExp = new RegExp(/^.+;\d+(\.\d+)?$/);
         for (let line of lines) { 
           if (!itemRegExp.test(line)) {
+            this.errorMessage.textContent = 'Invalid input';
             this.errorMessage.style.display = 'block';
             this.textAreaGroupItems.classList.add('error');
             return false;
@@ -146,27 +149,41 @@ class List {
         return true;
       }
 
-      checkDuplicatedItems(textBoxContent){
-        this.errorMessage.style.display = 'none';
-        this.textAreaGroupItems.classList.remove('error');
-
+      checkDuplicatedItems(textBoxContent) {
         const trimmedInput = textBoxContent.trim();
         const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
-        const itemsSeen = {}; 
-
+        const itemsSeen = {};
+        let duplicatedItem = '';
+    
         for (let line of lines) {
             let [itemName, itemPrice] = line.split(';');
             let itemKey = `${itemName.toLowerCase().trim()};${itemPrice.trim()}`; 
             if (itemsSeen[itemKey]) {
-                this.errorMessage.style.display = 'block';
-                this.textAreaGroupItems.classList.add('error');
-                return false;
+                duplicatedItem = line;
+                break;
             } else {
                 itemsSeen[itemKey] = true;
             }
         }
-        return true;    
-      }
+    
+        if (duplicatedItem) {
+            this.textAreaGroupItems.style.display = 'none'; // Hide the text area
+            this.errorMessage.textContent = `Duplicated item: "${duplicatedItem}", delete it manually and try again.`;
+            this.errorMessage.style.display = 'block'; // Show the error message
+            this.errorMessage.style.width = '100%'; // Make the error message full width
+            this.errorMessage.style.height = '100px'; // Set a fixed height or calculate the height of the text area
+            this.errorMessage.style.overflow = 'hidden'; // Prevent scrolling
+            this.errorMessage.classList.add('full-size-error'); // Add class for full-size error styling if needed
+            return false;
+        } else {
+            this.textAreaGroupItems.style.display = 'block'; // Show the text area when there are no duplicates
+            this.errorMessage.style.display = 'none'; // Hide the error message
+            this.errorMessage.classList.remove('full-size-error'); // Remove the full-size error styling
+        }
+        return true;
+    }
+    
+      
       compareItems(textBoxContent) {
         // Convert the text box content into an array of lines and trim each line
         const lines = textBoxContent.trim().split('\n').map(line => line.trim());
@@ -192,6 +209,9 @@ class List {
         });
          return { itemsNotInJson, jsonItemsNotInText };
     }
+    
+    
+      
 
     createItems(items, sectionIndex) { 
         for(let i = 0; i < items.length; i++){

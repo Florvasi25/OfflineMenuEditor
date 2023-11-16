@@ -8,6 +8,7 @@ import {
     itemlessOs,
     deleteItemlessOs,
     addItemlessOs,
+    getLocalStorageOptionSetItemsIDs,
 } from '../../context.js';
 
 import { createSelectOsDropdown } from './selectOsDropDown.js'
@@ -129,6 +130,14 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
         const optionSetsIds =  getLocalStorageOptionSetIDs();
         const newOptionSetId = getUniqueRandomInt(optionSetsIds);
         newOs.MenuItemOptionSetId = newOptionSetId;
+
+        newOs.MenuItemOptionSetItems.forEach(option => {
+            const optionIds = getLocalStorageOptionSetItemsIDs();
+            const newOptionId = getUniqueRandomInt(optionIds);
+            option.MenuItemOptionSetItemId = newOptionId
+        })
+
+        newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
 
         foundItem.MenuItemOptionSets.push(newOs)
 
