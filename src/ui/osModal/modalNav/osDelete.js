@@ -104,6 +104,18 @@ function updatePreview(osIds) {
             os.remove()
         })
     }
+
+    const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+        
+    osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+        if (index % 2 === 0) {
+            osRowHeaderPreview.classList.remove('even');
+            osRowHeaderPreview.classList.add('odd');
+        } else {
+            osRowHeaderPreview.classList.remove('odd');
+            osRowHeaderPreview.classList.add('even');
+        }
+    });
 }
 
 export { osDeleteButton }

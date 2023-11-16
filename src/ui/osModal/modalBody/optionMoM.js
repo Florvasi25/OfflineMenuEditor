@@ -66,11 +66,17 @@ function updateOptionMoM(optionId, menuOs, newOptionMoM) {
         return menuOption.MenuItemOptionSetItemId == optionId
     })
     
-    menuOs.MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
-    updateLocalStorage()
-
-    itemlessOs[menuOs.groupOsId].MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
-    updateItemlessLocalStorage();
+    if (newOptionMoM == "") {
+        menuOs.MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = null;
+    } else {
+        menuOs.MenuItemOptionSetItems[optionIndex].NextMenuItemOptionSetId = Number(newOptionMoM);
+    }
+        
+    if (itemlessOs.includes(menuOs)) {
+        updateItemlessLocalStorage();
+    } else {
+        updateLocalStorage()
+    }
 }
 
 export { createOptionMoMCell }

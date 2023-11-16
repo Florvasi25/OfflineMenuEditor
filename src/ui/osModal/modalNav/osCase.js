@@ -5,7 +5,7 @@ function osCaseButton(osBtnsCell) {
     osBtnsCell.appendChild(caseButton);
     const caseButtonImg = document.createElement('img')
     caseButtonImg.classList.add('sectionButtonImg')
-    caseButtonImg.src = '../../assets/caseIcon.svg'
+    caseButtonImg.src = '../../assets/expandIcon.svg'
     caseButton.appendChild(caseButtonImg)
 }
 

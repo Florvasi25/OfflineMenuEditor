@@ -10,9 +10,9 @@ function createOsBtnsCell(menuOs) {
     const osBtnsCell = document.createElement('div')
     osBtnsCell.className = 'osBtnsCell'
 
-    osNewButton(osBtnsCell, menuOs)
-
     osCaseButton(osBtnsCell)
+    
+    osNewButton(osBtnsCell, menuOs)
 
     osDeleteButton(osBtnsCell, menuOs)
 
