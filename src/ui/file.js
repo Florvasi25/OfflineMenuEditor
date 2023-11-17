@@ -1,5 +1,5 @@
 import {
-    jsonData, 
+    jsonData,
     setJsonData,
     updateLocalStorage,
     setSectionId,
@@ -12,34 +12,54 @@ import {
 import { generateHTML } from './mainContainer.js'
 
 function createLoadJsonButton() {
-    const loadJsonButton = document.createElement('input')
-    loadJsonButton.setAttribute('id', 'jsonFileInput')
-    loadJsonButton.setAttribute('accept', '.json, .txt')
-    loadJsonButton.setAttribute('type', 'file')
+    const loadJsonButton = document.createElement('button');
+    loadJsonButton.setAttribute('id', 'loadJsonButton');
+    loadJsonButton.textContent = 'Load JSON';
 
-    loadJsonButton.addEventListener('change', function (event) {
+    const fileInput = document.createElement('input');
+    fileInput.setAttribute('id', 'jsonFileInput');
+    fileInput.setAttribute('type', 'file');
+    fileInput.setAttribute('accept', '.json, .txt');
+    fileInput.style.display = 'none'; // Hide the file input initially
+
+    const container = document.createElement('div');
+    container.appendChild(loadJsonButton);
+    container.appendChild(fileInput);
+
+    loadJsonButton.addEventListener('click', function () {
+        fileInput.click(); // Trigger file input when button is clicked
+    });
+
+    fileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
         const reader = new FileReader();
-    
-        reader.onload = function (e) {
-            setJsonData(JSON.parse(e.target.result));
-            updateLocalStorage()
-            setSectionId(jsonData);
-            setSectionDisplayOrder(jsonData);
-            setItemId(jsonData);
-            setOptionSetId(jsonData);
-            setOptionSetItemsId(jsonData);
-            generateHTML(jsonData);
 
-            loadJsonButton.value = '';
+        reader.onload = function (e) {
+            try {
+                const jsonData = JSON.parse(e.target.result);
+                setJsonData(jsonData);
+                updateLocalStorage();
+                setSectionId(jsonData);
+                setSectionDisplayOrder(jsonData);
+                setItemId(jsonData);
+                setOptionSetId(jsonData);
+                setOptionSetItemsId(jsonData);
+                generateHTML(jsonData);
+
+                fileInput.value = ''; // Clear the file input
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
         };
-    
-        if (!file) return
+
+        if (!file) return;
         reader.readAsText(file);
     });
 
-    return loadJsonButton
+    return container
 }
+
+
 
 function createSaveButton() {
     const saveButton = document.createElement('button')
@@ -74,8 +94,8 @@ function saveToFile(data) {
     URL.revokeObjectURL(url);
 }
 
-export { 
-    saveToFile, 
-    createSaveButton, 
-    createLoadJsonButton 
+export {
+    saveToFile,
+    createSaveButton,
+    createLoadJsonButton
 }

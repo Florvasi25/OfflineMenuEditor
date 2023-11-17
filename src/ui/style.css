@@ -11,6 +11,27 @@ main {
     width: 100%;
 }
 
+#body {
+    display: flex;
+    padding: 10px;
+}
+
+#fileOptionsContainer {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#loadJsonButton {
+    text-wrap: nowrap;
+    padding: 5px;
+}
+
+#saveButton {
+    text-wrap: nowrap;
+    padding: 5px;
+    margin-left: 20px;
+}
+
 /* MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL */
 
 .leftSidebar {
@@ -63,7 +84,6 @@ main {
 
 .sectionTable {
     width: 100%;
-    padding: 10px;
     box-sizing: border-box;
     user-select: none
 }
@@ -750,7 +770,7 @@ selector svg {
 .sectionAddNew {
     text-wrap: nowrap;
     padding: 5px;
-    margin: 0px 10px 10px 10px;
+    margin-top: 10px;
 }
 
 .newItemBtnContainer {
