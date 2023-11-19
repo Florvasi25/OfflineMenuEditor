@@ -149,9 +149,9 @@ main {
 .osRowHeader {
     display: flex;
     height: auto;
-    width: 40%;
     padding: 7.5px 0px;
     justify-content: space-between;
+    border-radius: 5px;
     
     &.expanded .osDropdownButton { 
         transform: rotate(45deg); 
@@ -171,14 +171,6 @@ main {
 
 .osRowHeader.even {
     background-color: #B29346;
-}
-
-.osRowHeader:first-of-type {
-    border-radius: 5px 5px 0px 0px;
-}
-
-.osRowHeader:last-of-type {
-    border-radius: 0px 0px 5px 5px;
 }
 
 .osContainer {
@@ -334,7 +326,6 @@ main {
 
 .optionContainer {
     height: auto;
-    width: 40%;
     padding: 7.5px 0px;
 }
 
@@ -1218,3 +1209,8 @@ selector svg {
 .osEditButtonImg {
     width: 25px;
 } 
+
+
+.osRow {
+    width: 40%;
+}

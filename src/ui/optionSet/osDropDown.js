@@ -34,18 +34,15 @@ function toggleItemState(osRowHeader, menuOs, sectionId, itemId) {
 
         const optionContainer = osRowHeader.nextElementSibling;
         if (optionContainer && optionContainer.classList.contains('optionContainer')) {
-            optionContainer.classList.add('osRowHeader');
             optionContainer.remove(); // Remove the content container
         }
     } else {
         osRowHeader.classList.remove(foldedClassName);
         osRowHeader.classList.add(expandedClassName);
 
-        let optionContainer = osRowHeader.nextElementSibling;
+        const optionContainer = osRowHeader.nextElementSibling;
         if (!optionContainer || !optionContainer.classList.contains('optionContainer')) {
-            createOptionsContainer(osRowHeader, menuOs, sectionId, itemId, osRowHeader.id)
-        } else {
-            optionContainer.classList.remove('optionContainer');
+            createOptionsContainer(osRowHeader, sectionId, itemId, osRowHeader.id)
         }
     }
 }

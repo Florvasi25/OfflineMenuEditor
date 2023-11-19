@@ -32,24 +32,27 @@ function createOs(osContainer, sectionId, itemId) {
     const menuOsItems = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
     
     menuOsItems.forEach((menuOs, index) => {
-        const osRowHeader = createOsRow(menuOs, sectionId, itemId);
+        const osRow = createOsRow(menuOs, sectionId, itemId);
 
         if (index % 2 === 0) {
-            osRowHeader.classList.add('odd');
+            osRow.firstChild.classList.add('odd');
         } else {
-            osRowHeader.classList.add('even');
+            osRow.firstChild.classList.add('even');
         }
-        osContainer.appendChild(osRowHeader);
+        osContainer.appendChild(osRow);
     });
 }
 
 function createOsRow(menuOs, sectionId, itemId) {
+    const osRow = document.createElement('div');
+    osRow.classList.add('osRow');
+
     const osRowHeader = document.createElement('div');
     osRowHeader.classList.add('osRowHeader');
     osRowHeader.classList.add('defaultColor');
-    osRowHeader.classList.add('draggable');
     osRowHeader.classList.add('folded')
     osRowHeader.id = menuOs.MenuItemOptionSetId
+    osRow.appendChild(osRowHeader);
 
     const dropAndName = document.createElement('div')
     dropAndName.className = 'dropAndName'
@@ -71,7 +74,7 @@ function createOsRow(menuOs, sectionId, itemId) {
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     osRowHeader.appendChild(osSelectOptionContainer)
 
-    return osRowHeader
+    return osRow
 }
 
 function createOsNameHeader(menuOs) {

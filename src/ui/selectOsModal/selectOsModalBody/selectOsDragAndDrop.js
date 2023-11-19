@@ -56,12 +56,12 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
             const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
 
             const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
-            const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == draggable.id);
+            const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == draggable.id).parentNode;
 
             if (afterElement == null) {
                 osContainerPreview.appendChild(osRowOptionPreview)
             } else {
-                const afterElementPreview = osRowHeaderPreviewArray.find((p) => p.id == afterElement.id)
+                const afterElementPreview = osRowHeaderPreviewArray.find((p) => p.id == afterElement.id).parentNode
                 osContainerPreview.insertBefore(osRowOptionPreview, afterElementPreview)
             }
         })

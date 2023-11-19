@@ -3,7 +3,7 @@ import {
     getOsIndex, 
 } from '../context.js'
 
-function createOptionsContainer(osRowOption, menuOs, sectionId, itemId, osId) {
+function createOptionsContainer(osRowOption, sectionId, itemId, osId) {
     const optionContainer = document.createElement('div');
     optionContainer.classList.add('optionContainer');
     optionContainer.id = osId;
