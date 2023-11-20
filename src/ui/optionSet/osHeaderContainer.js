@@ -132,7 +132,9 @@ function addNewOs(itemRow) {
 
     osEditButton.addEventListener('click', () => {
         const selectOsModalContainer = createSelectOsModalContainer(itemRow)
-        selectOsModalContainer.style.display = 'block';
+        selectOsModalContainer.style.display = 'flex';
+        selectOsModalContainer.style.justifyContent = 'center';
+        selectOsModalContainer.style.alignItems = 'center';
         setTimeout(() => {
             selectOsModalContainer.style.opacity = 1;
         }, 10);

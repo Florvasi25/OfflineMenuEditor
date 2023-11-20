@@ -1,5 +1,5 @@
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
     user-select: none;
@@ -39,7 +39,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #342F58;
+    background-color: #342f58;
 }
 
 .osModalContainer {
@@ -51,17 +51,17 @@ main {
     width: 60%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: left 0.3s ease-in-out; 
+    transition: left 0.3s ease-in-out;
     z-index: 10;
 }
 
 .osModalContainer.show {
-    left: 0; 
+    left: 0;
     overflow-y: auto;
 }
 
 .osModalContainer.hide {
-    left: -60%; 
+    left: -60%;
 }
 
 .optionRowsContainer {
@@ -85,7 +85,7 @@ main {
 .sectionTable {
     width: 100%;
     box-sizing: border-box;
-    user-select: none
+    user-select: none;
 }
 
 .sectionRow {
@@ -94,15 +94,15 @@ main {
     list-style: none;
     display: flex;
 
-    &.expanded .sectionDropdownButton { 
-        transform: rotate(45deg); 
+    &.expanded .sectionDropdownButton {
+        transform: rotate(45deg);
     }
-    &.folded .sectionDropdownButton { 
-        transform: rotate(-45deg); 
+    &.folded .sectionDropdownButton {
+        transform: rotate(-45deg);
     }
     &.dragging {
         border: 1px solid black;
-        opacity: .50;
+        opacity: 0.5;
     }
 }
 
@@ -132,15 +132,15 @@ main {
     background-color: #e2def9;
     list-style: none;
 
-    &.expanded .sectionDropdownButton { 
-        transform: rotate(45deg); 
+    &.expanded .sectionDropdownButton {
+        transform: rotate(45deg);
     }
-    &.folded .sectionDropdownButton { 
-        transform: rotate(-45deg); 
+    &.folded .sectionDropdownButton {
+        transform: rotate(-45deg);
     }
     &.dragging {
         border: 1px solid black;
-        opacity: .50;
+        opacity: 0.5;
     }
 }
 
@@ -152,25 +152,25 @@ main {
     padding: 7.5px 0px;
     justify-content: space-between;
     border-radius: 5px;
-    
-    &.expanded .osDropdownButton { 
-        transform: rotate(45deg); 
+
+    &.expanded .osDropdownButton {
+        transform: rotate(45deg);
     }
-    &.folded .osDropdownButton { 
-        transform: rotate(-45deg); 
+    &.folded .osDropdownButton {
+        transform: rotate(-45deg);
     }
     &.dragging {
         border: 1px solid black;
-        opacity: .75;
+        opacity: 0.75;
     }
 }
 
 .osRowHeader.odd {
-    background-color: #342F58;
+    background-color: #342f58;
 }
 
 .osRowHeader.even {
-    background-color: #B29346;
+    background-color: #b29346;
 }
 
 .osContainer {
@@ -300,15 +300,15 @@ main {
     display: flex;
     border-radius: 7.5px;
 
-    &.expanded .osDropdownButton { 
-        transform: rotate(45deg); 
+    &.expanded .osDropdownButton {
+        transform: rotate(45deg);
     }
-    &.folded .osDropdownButton { 
-        transform: rotate(-45deg); 
+    &.folded .osDropdownButton {
+        transform: rotate(-45deg);
     }
     &.dragging {
         border: 1px solid black;
-        opacity: .75;
+        opacity: 0.75;
     }
 }
 
@@ -414,7 +414,7 @@ main {
 .sectionDragImg {
     width: 22px;
     cursor: grab;
-    margin: 0
+    margin: 0;
 }
 
 .osDragImg {
@@ -536,7 +536,7 @@ selector svg {
     align-items: center;
     height: auto;
     padding: 5px;
-    word-break: break-word; 
+    word-break: break-word;
 }
 
 /* MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM */
@@ -559,7 +559,7 @@ selector svg {
     padding: 5px;
     flex-grow: 1;
     display: flex;
-    align-items: center;    
+    align-items: center;
     border: solid 1px #ffffff;
 }
 
@@ -576,7 +576,7 @@ selector svg {
     padding: 5px;
     flex-grow: 1;
     display: flex;
-    align-items: center;    
+    align-items: center;
     border: solid 1px #ffffff;
 }
 
@@ -628,7 +628,7 @@ selector svg {
 
 .itemTax {
     font-size: 12px;
-    cursor: default
+    cursor: default;
 }
 
 .optionTaxCell {
@@ -721,14 +721,13 @@ selector svg {
 /* LIST BTN - LIST BTN - LIST BTN - LIST BTN - LIST BTN - LIST BTN -*/
 
 .listButton {
-    background-color:#cdcdcd; 
-    transition: background-color 0.3s ease; 
+    background-color: #cdcdcd;
+    transition: background-color 0.3s ease;
 }
 
 .listButton:hover {
     background-color: #b1b1b1;
 }
-
 
 /* CLOSE MODAL BTN - CLOSE MODAL BTN - CLOSE MODAL BTN - CLOSE MODAL BTN */
 
@@ -859,9 +858,9 @@ selector svg {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
-  
+
 .clock-dialog {
     display: flex;
     justify-content: center;
@@ -880,15 +879,15 @@ selector svg {
     width: 700px;
     height: 400px;
 }
-  
-.clock-header{
+
+.clock-header {
     padding: 15px;
     background-color: #3598dc;
     border-bottom: 1px solid #ccc;
     text-align: center;
 }
 
-.clock-title{
+.clock-title {
     color: #ffffff;
     display: inline-block;
     font-size: 15px;
@@ -897,18 +896,18 @@ selector svg {
 .clock-footer {
     padding: 15px;
     border-bottom: none;
-    text-align: center; 
+    text-align: center;
     position: relative;
 }
-  
+
 .clock-body {
     padding: 15px;
     text-align: center;
 }
-.clockBtn-close{
-    padding-left: 15px; 
-    padding-right: 15px;  
-    color: black; 
+.clockBtn-close {
+    padding-left: 15px;
+    padding-right: 15px;
+    color: black;
     cursor: pointer;
 }
 
@@ -919,13 +918,13 @@ selector svg {
     font-size: 20px;
     cursor: pointer;
 }
-  
+
 .clockBtn {
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
 }
-  
+
 .clockBtn-save {
     background: #36c6d3;
     color: white;
@@ -949,11 +948,11 @@ selector svg {
     color: white;
 }
 
-.clockBtn-availability-enabled{
+.clockBtn-availability-enabled {
     background: #36c6d3;
     color: white;
 }
-.clockBtn-availability-disabled{
+.clockBtn-availability-disabled {
     background: #d4d4d4;
     color: #a8a8a8;
     font-weight: 500;
@@ -966,27 +965,28 @@ selector svg {
     border-collapse: collapse;
     margin-top: 20px;
 }
-  
-.clockTableHeader, .clockTableData{
+
+.clockTableHeader,
+.clockTableData {
     border: 1px solid #ccc;
     text-align: center;
     padding: 8px;
 }
-  
+
 .clockTableHeader {
     background-color: #f2f2f2;
 }
 
 .clockBtn-unsetButton {
-    background: #F1C40F; 
+    background: #f1c40f;
     border-color: #dab10d;
-    color: #fff;       
+    color: #fff;
     font-weight: 500;
     cursor: pointer;
     border: 1px solid #b0b0b0;
     border-radius: 4px;
     margin-top: 15px;
-    padding: 15px 25px;  
+    padding: 15px 25px;
     width: auto;
 }
 
@@ -1055,7 +1055,7 @@ selector svg {
 .submit-button-list:active {
     background-color: #004999;
 }
-.cancel-button-list{
+.cancel-button-list {
     padding: 8px 12px;
     border-radius: 4px;
     color: #666;
@@ -1064,7 +1064,6 @@ selector svg {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
 
 .cancel-button-list:hover {
     background-color: #888;
@@ -1131,25 +1130,25 @@ selector svg {
     padding: 7.5px 0px;
     margin: 7.5px 0;
     border-radius: 5px;
-    
-    &.expanded .osDropdownButton { 
-        transform: rotate(45deg); 
+
+    &.expanded .osDropdownButton {
+        transform: rotate(45deg);
     }
-    &.folded .osDropdownButton { 
-        transform: rotate(-45deg); 
+    &.folded .osDropdownButton {
+        transform: rotate(-45deg);
     }
     &.dragging {
         border: 1px solid black;
-        opacity: .75;
+        opacity: 0.75;
     }
 }
 
 .selectOsRowHeader.odd {
-    background-color: #342F58;
+    background-color: #342f58;
 }
 
 .selectOsRowHeader.even {
-    background-color: #B29346;
+    background-color: #b29346;
 }
 
 .selectOsNameHeader {
@@ -1157,7 +1156,7 @@ selector svg {
     color: #ffffff;
     font-size: 14px;
     display: flex;
-    align-items: center
+    align-items: center;
 }
 
 .selectOsModalBody {
@@ -1187,7 +1186,7 @@ selector svg {
     margin-right: 5px;
     width: 20px;
     height: 25px;
-    background-color: rgb(255, 255, 255, .35);
+    background-color: rgb(255, 255, 255, 0.35);
     color: #ffffff;
     border: #787777 1px solid;
     border-radius: 5px;
@@ -1195,7 +1194,7 @@ selector svg {
 }
 
 .addOrDeleteBtn:hover {
-    background-color: rgb(255, 255, 255, .95);
+    background-color: rgb(255, 255, 255, 0.95);
     color: #555555;
 }
 
@@ -1208,9 +1207,68 @@ selector svg {
 
 .osEditButtonImg {
     width: 25px;
-} 
-
+}
 
 .osRow {
     width: 40%;
+}
+
+.expandButtonContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.expandListButton {
+    background-color: #cdcdcd;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+/* Dropdown button on hover & focus */
+.expandListButton:hover {
+    background-color: #b1b1b1;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    margin-top: 30px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu when the button is clicked */
+.show {
+    display: block;
+}
+
+/* Rotate the arrow when the dropdown is open */
+.expandListButton .expandListButtonImg {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.expandListButton.rotate .expandListButtonImg {
+    transform: rotate(180deg);
 }

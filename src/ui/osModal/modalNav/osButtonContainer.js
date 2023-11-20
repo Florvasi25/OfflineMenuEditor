@@ -4,13 +4,13 @@ import { osDuplicateButton } from './osDuplicate.js'
 
 import { osNewButton } from './osAddNew.js'
 
-import { osCaseButton } from './osCase.js'
+import { osExpandListButton } from './osExpandList.js'
 
 function createOsBtnsCell(menuOs) {
     const osBtnsCell = document.createElement('div')
     osBtnsCell.className = 'osBtnsCell'
 
-    osCaseButton(osBtnsCell)
+    osExpandListButton(osBtnsCell)
     
     osNewButton(osBtnsCell, menuOs)
 
