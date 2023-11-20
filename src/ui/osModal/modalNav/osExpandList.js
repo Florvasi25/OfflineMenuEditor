@@ -74,6 +74,18 @@ function createOsRow(os) {
     osListRowHeader.appendChild(osNameList)
     osListRowHeader.appendChild(osSelectOptionList)
 
+    osListRowHeader.addEventListener('click', () => {
+        const existingOsModal = document.querySelector('.osModalContainer')
+        if (existingOsModal) {
+            existingOsModal.remove()
+        }
+        const osModalContainer = createOsModalContainer(os)
+        osModalContainer.style.display = 'block';
+        setTimeout(() => {
+            osModalContainer.classList.add('show');
+        }, 10);
+    });
+
     return osListRowHeader
 }
 
@@ -86,18 +98,6 @@ function createOsNameHeader(os) {
     <p class='osNameList'>${os.Name}</p>
     <p class='osLenghtList'> (${osLenght})</p>`
     osNameAndLengthList.id = os.MenuItemOptionSetId
-
-    osNameAndLengthList.addEventListener('click', () => {
-        const existingOsModal = document.querySelector('.osModalContainer')
-        if (existingOsModal) {
-            existingOsModal.remove()
-        }
-        const osModalContainer = createOsModalContainer(os)
-        osModalContainer.style.display = 'block';
-        setTimeout(() => {
-            osModalContainer.classList.add('show');
-        }, 10);
-    });
 
     return osNameAndLengthList
 }

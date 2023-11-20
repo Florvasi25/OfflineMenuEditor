@@ -1257,7 +1257,7 @@ selector svg {
 }
 
 .showOsList {
-    height: -webkit-fill-available;
+    max-height: -webkit-fill-available;
     display: block;
     overflow-y: auto;
 }
