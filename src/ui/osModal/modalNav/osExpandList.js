@@ -59,29 +59,33 @@ function toggleDropdown() {
 
 
 function createOsRow(os) {
-    const osRowList = document.createElement('div');
-    osRowList.classList.add('osRowList');
-
     const osListRowHeader = document.createElement('div');
     osListRowHeader.classList.add('osListRowHeader');
     osListRowHeader.classList.add('defaultColor');
     osListRowHeader.classList.add('folded')
     osListRowHeader.id = os.MenuItemOptionSetId
-    osRowList.appendChild(osListRowHeader);
 
     const osNameList = createOsNameHeader(os)
+    
+    const osSelectOptionList = createOsSelectOption(os)
+    
     osListRowHeader.appendChild(osNameList)
+    osListRowHeader.appendChild(osSelectOptionList)
 
-    return osRowList
+    return osListRowHeader
 }
 
 
 function createOsNameHeader(os) {
-    const osNameList = document.createElement('p')
-    osNameList.className = 'osNameList'
-    osNameList.textContent = os.Name
-    osNameList.id = os.MenuItemOptionSetId
-    osNameList.addEventListener('click', () => {
+    const osNameAndLengthList = document.createElement('div')
+    osNameAndLengthList.className = 'osNameAndLengthList'
+    // osNameAndLengthList.textContent = os.Name
+    const osLenght = os.MenuItemOptionSetItems.length
+    osNameAndLengthList.innerHTML = `
+    <p class='osNameList'>${os.Name}</p>
+    <p class='osLenghtList'> (${osLenght})</p>`
+    osNameAndLengthList.id = os.MenuItemOptionSetId
+    osNameAndLengthList.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
         if (existingOsModal) {
             existingOsModal.remove()
@@ -93,7 +97,18 @@ function createOsNameHeader(os) {
         }, 10);
     });
 
-    return osNameList
+    return osNameAndLengthList
+}
+
+function createOsSelectOption(os) {
+    const osListSelectOptionContainer = document.createElement('div')
+    osListSelectOptionContainer.className = 'osListSelectOptionContainer'
+    osListSelectOptionContainer.innerHTML = `
+    <p class='minSelectCount' id='${os.MenuItemOptionSetId}'>${os.MinSelectCount}</p>
+    <p class='dashCountCell'> - </p>
+    <p class='maxSelectCount' id='${os.MenuItemOptionSetId}'>${os.MaxSelectCount}</p>`
+    
+    return osListSelectOptionContainer
 }
 
 

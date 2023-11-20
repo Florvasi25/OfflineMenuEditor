@@ -1243,6 +1243,7 @@ selector svg {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     margin-top: 30px;
+    width: 35%;
 }
 
 /* Links inside the dropdown */
@@ -1271,4 +1272,36 @@ selector svg {
 
 .expandListButton.rotate .expandListButtonImg {
     transform: rotate(180deg);
+}
+
+.osRowList {
+    display: flex;
+}
+
+.osNameAndLengthList {
+    display: flex;
+    width: 80%;
+}
+
+.osListRowHeader {
+    display: flex;
+    padding: 5px;
+    background-color: #f5f5f5;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.osListRowHeader:hover {
+    background-color: #cac5e6;
+}
+
+.osListSelectOptionContainer {
+    display: flex;
+    width: 20%;
+    justify-content: end;
+}
+
+.osLenghtList {
+    margin-left: 10px;
 }
