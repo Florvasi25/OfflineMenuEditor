@@ -23,23 +23,6 @@ function osExpandListButton(osBtnsCell) {
     dropdownContent.classList.add('dropdown-content');
     dropdownContent.id = 'myDropdown';
 
-    const foundGroupedOs = Object.values(groupedOs).flatMap(group => group[0])
-    console.log('menuOs', foundGroupedOs);
-
-    foundGroupedOs.forEach((os) => {
-        const osRowList = createOsRow(os)
-
-        dropdownContent.appendChild(osRowList);
-    });
-
-    const foundItemlessOs = itemlessOs
-
-    foundItemlessOs.forEach((os) => {
-        const osRowList = createOsRow(os)
-
-        dropdownContent.appendChild(osRowList);
-    })
-
     expandListButton.addEventListener('click', toggleDropdown);
     
     expandButtonContainer.appendChild(expandListButton)
@@ -51,12 +34,31 @@ function osExpandListButton(osBtnsCell) {
 // Toggle dropdown visibility and rotate arrow
 function toggleDropdown() {
     const dropdownContent = document.getElementById('myDropdown');
-    dropdownContent.classList.toggle('show');
-
     const expandListButton = document.querySelector('.expandListButton');
-    expandListButton.classList.toggle('rotate');
-}
 
+    const isDropdownShown = dropdownContent.classList.toggle('showOsList');
+
+    expandListButton.classList.toggle('rotate');
+
+    if (isDropdownShown) {
+        const foundGroupedOs = Object.values(groupedOs).flatMap(group => group[0]);
+        foundGroupedOs.forEach((os) => {
+            const osRowList = createOsRow(os);
+            dropdownContent.appendChild(osRowList);
+        });
+
+        const foundItemlessOs = itemlessOs;
+        foundItemlessOs.forEach((os) => {
+            const osRowList = createOsRow(os);
+            dropdownContent.appendChild(osRowList);
+        });
+    } else {
+        const osRows = dropdownContent.querySelectorAll('.osListRowHeader');
+        osRows.forEach((osRow) => {
+            osRow.remove();
+        });
+    }
+}
 
 function createOsRow(os) {
     const osListRowHeader = document.createElement('div');
@@ -75,16 +77,16 @@ function createOsRow(os) {
     return osListRowHeader
 }
 
-
 function createOsNameHeader(os) {
+    const osLenght = os.MenuItemOptionSetItems.length
+
     const osNameAndLengthList = document.createElement('div')
     osNameAndLengthList.className = 'osNameAndLengthList'
-    // osNameAndLengthList.textContent = os.Name
-    const osLenght = os.MenuItemOptionSetItems.length
     osNameAndLengthList.innerHTML = `
     <p class='osNameList'>${os.Name}</p>
     <p class='osLenghtList'> (${osLenght})</p>`
     osNameAndLengthList.id = os.MenuItemOptionSetId
+
     osNameAndLengthList.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
         if (existingOsModal) {
@@ -110,7 +112,5 @@ function createOsSelectOption(os) {
     
     return osListSelectOptionContainer
 }
-
-
 
 export { osExpandListButton }

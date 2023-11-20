@@ -10,7 +10,7 @@ function createOsBtnsCell(menuOs) {
     const osBtnsCell = document.createElement('div')
     osBtnsCell.className = 'osBtnsCell'
 
-    osExpandListButton(osBtnsCell, menuOs)
+    osExpandListButton(osBtnsCell)
     
     osNewButton(osBtnsCell, menuOs)
 
