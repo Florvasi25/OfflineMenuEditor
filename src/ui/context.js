@@ -134,15 +134,19 @@ function setOptionSetId(jsonData) {
     localStorage.setItem("optionSetIDs", "[]");
     var itemIDInOS;
     window.optionSetIdMap = {}; // Create a global map to store ID mapping
+
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
             itemIDInOS = item.MenuItemId;
             for (const optionSet of item.MenuItemOptionSets) {
                 const oldId = optionSet.MenuItemOptionSetId;
                 const newId = getRandomInt();
+
                 optionSet.MenuItemId = itemIDInOS;
                 optionSet.MenuItemOptionSetId = newId;
+
                 window.optionSetIdMap[oldId] = newId; // Map old ID to new ID
+
                 updateOptionSetCounterLocalStorage(newId, true);
             }
         }
@@ -150,20 +154,24 @@ function setOptionSetId(jsonData) {
     updateLocalStorage();
 }
 
+
 function setOptionSetItemsId(jsonData) {
     localStorage.setItem("optionSetItemsIDs", "[]");
+
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                     optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                    // Update NextMenuItemOptionSetId if it's not null
+
+                    
                     if (optionSetItem.NextMenuItemOptionSetId !== null) {
                         const newNextId = window.optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
                         if (newNextId) {
                             optionSetItem.NextMenuItemOptionSetId = newNextId;
                         }
                     }
+
                     updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true);
                 }
             }
@@ -171,6 +179,7 @@ function setOptionSetItemsId(jsonData) {
     }
     updateLocalStorage();
 }
+
 
 
 function setSectionDisplayOrder(jsonData) {
