@@ -232,6 +232,7 @@ main {
     padding: 7.5px 15px;
     justify-content: space-between;
     background-color: #f5f5f5;
+    align-items: center;
 }
 
 /*  OPTION NAV -  OPTION NAV -  OPTION NAV -  OPTION NAV -  OPTION NAV -  OPTION NAV */
@@ -297,6 +298,12 @@ main {
     flex-grow: 1;
 }
 
+.optionMoMPreview {
+    user-select: text;
+    display: flex;
+    align-items: center;
+}
+
 .optionRow {
     display: flex;
     border-radius: 7.5px;
@@ -334,6 +341,23 @@ main {
     display: flex;
     font-size: 13px;
     user-select: text;
+}
+
+.previewPriceAndTax {
+    display: flex;
+    font-size: 13px;
+    user-select: text;
+}
+
+.previewNameAndMoM {
+    display: flex;
+    font-size: 13px;
+    user-select: text;
+    margin-right: 10px;
+}
+
+.dashAndMoM {
+    display: flex;
 }
 
 /* DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN - DROPDOWN */

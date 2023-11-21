@@ -44,11 +44,13 @@ function createOptionRow(menuOption) {
 
 function createNameAndMoM(menuOption) {
     const nameAndMoM = document.createElement('div')
-    nameAndMoM.className = 'optionText'
+    nameAndMoM.className = 'previewNameAndMoM'
     nameAndMoM.innerHTML = `
     <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>
-    <p class='dashCountCell'> - </p>
-    <p class='optionMoMPreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.NextMenuItemOptionSetId}</p>`
+    <div class='dashAndMoM'>
+        <p class='dashCountCell'> - </p>
+        <p class='optionMoMPreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.NextMenuItemOptionSetId}</p>
+    </div>`
 
     return nameAndMoM
 }
@@ -67,7 +69,7 @@ function createPriceAndTax(menuOption) {
     const priceAsNumber = parseFloat(menuOption.Price);
     
     const priceAndTax = document.createElement('div')
-    priceAndTax.className = 'optionText'
+    priceAndTax.className = 'previewPriceAndTax'
     priceAndTax.innerHTML = `
     <p class='optionPricePreview' id='${menuOption.MenuItemOptionSetItemId}'>${priceAsNumber.toFixed(2)}</p>
     <p class='dashCountCell'> - </p>

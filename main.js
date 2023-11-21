@@ -5,7 +5,8 @@ function createWindow()
 {
     const mainWindow = new BrowserWindow({
         width: 1024,
-        height: 768
+        height: 768,
+        minWidth: 750,
     })
     mainWindow.loadFile('src/ui/index.html')
     mainWindow.webContents.openDevTools()
