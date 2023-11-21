@@ -875,15 +875,15 @@ selector svg {
 
 .clock-content {
     background-color: #ffffff;
-    border-radius: 25px;
+    border-radius: 15px;
     overflow: hidden;
     width: 700px;
-    height: 400px;
+    /* height: 400px; */
 }
 
 .clock-header {
     padding: 15px;
-    background-color: #3598dc;
+    background-color: #342f58;
     border-bottom: 1px solid #ccc;
     text-align: center;
 }
@@ -894,11 +894,20 @@ selector svg {
     font-size: 15px;
 }
 
+.timeInput {
+    margin-top: 5px;
+    border: solid 1px #a9a9a9;
+    border-radius: 5px;
+}
+
 .clock-footer {
-    padding: 15px;
+    padding: 0 15px 15px 15px;
     border-bottom: none;
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 
 .clock-body {
@@ -927,8 +936,15 @@ selector svg {
 }
 
 .clockBtn-save {
-    background: #36c6d3;
+    background: #4000ff;
     color: white;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.clockBtn-save:hover {
+    background: #7a4ffc;
 }
 
 .clockBtn-save-disabled {
@@ -942,11 +958,26 @@ selector svg {
 .clockBtn-green {
     background: green;
     color: white;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.clockBtn-green:hover {
+    background: #42b842;
 }
 
 .clockBtn-red {
-    background: red;
+    background: #ff0000;
     color: white;
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.clockBtn-red:hover {
+    background: rgb(254, 58, 58);
 }
 
 .clockBtn-availability-enabled {
@@ -964,7 +995,6 @@ selector svg {
 .clockTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
 .clockTableHeader,
@@ -976,6 +1006,10 @@ selector svg {
 
 .clockTableHeader {
     background-color: #f2f2f2;
+}
+
+.clockTBody {
+    margin-top: 10px
 }
 
 .clockBtn-unsetButton {

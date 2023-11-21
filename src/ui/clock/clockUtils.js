@@ -64,6 +64,7 @@ function createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id) 
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
+    clockTbody.className = 'clockTBody';
     createTableHeaders(clockThead, ['Day', 'Open', 'Close']);
 
     if (data.MenuItems) { // checks if 'data' is section or item
@@ -88,6 +89,7 @@ function createInputCell(parentRow, text) {
     const cell = createAndAppend(parentRow, 'td');
     const timeInput = createAndAppend(cell, 'input');
     timeInput.type = 'time';
+    timeInput.className = 'timeInput';
     timeInput.value = text;
 }
 
