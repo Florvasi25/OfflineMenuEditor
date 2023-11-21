@@ -33,6 +33,11 @@ function createSelectOsModalContainer(itemRow) {
     
     popupModal.appendChild(selectOsModal)
 
+    const existingOsModal = document.querySelector('.osModalContainer')
+    if (existingOsModal) {
+        existingOsModal.remove()
+    }
+
     return selectOsModal
 }
 

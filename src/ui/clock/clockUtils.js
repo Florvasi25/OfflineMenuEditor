@@ -45,8 +45,8 @@ function createClockBody() {
     const clockHeaderDiv = createAndAppend(clockContentDiv, 'div', 'clock-header');
     const clockTitle = createAndAppend(clockHeaderDiv, 'h5', 'clock-title');
     addTextContent(clockTitle, 'Menu Section Hours');
-    const clockCloseIcon = createAndAppend(clockHeaderDiv, 'span', 'clockBtn-close');
-    clockCloseIcon.innerHTML = '&times;';
+    const clockCloseIcon = createAndAppend(clockHeaderDiv, 'div', 'clockBtn-close');
+    clockCloseIcon.innerHTML = 'X';
     clockCloseIcon.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
@@ -64,6 +64,7 @@ function createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id) 
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
+    clockTbody.className = 'clockTBody';
     createTableHeaders(clockThead, ['Day', 'Open', 'Close']);
 
     if (data.MenuItems) { // checks if 'data' is section or item
@@ -88,6 +89,7 @@ function createInputCell(parentRow, text) {
     const cell = createAndAppend(parentRow, 'td');
     const timeInput = createAndAppend(cell, 'input');
     timeInput.type = 'time';
+    timeInput.className = 'timeInput';
     timeInput.value = text;
 }
 

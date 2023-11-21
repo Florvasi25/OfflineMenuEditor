@@ -109,13 +109,15 @@ function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
     changeItemClockIcon(itemRow, id);
 }
 
-function changeItemClockIcon(itemRow, itemId){
+function changeItemClockIcon(itemRow, itemId) {
     var item = getItem(jsonData, itemId);
-    const clockButtonImg = itemRow.querySelector('.sectionButton.clockButton .sectionButtonImg');
-    if (item?.DailySpecialHours?.length > 1)
-    {
-        clockButtonImg.src = '../../assets/greenClockIcon.svg';
-    }else {clockButtonImg.src = '../../assets/clockIcon.svg';}
+    const clockButton = itemRow.querySelector('.sectionButton.clockButton');
+
+    if (item?.DailySpecialHours?.length > 1) {
+        clockButton.style.backgroundColor = '#80d66f';
+    } else {
+        clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
+    }
 }
 
 function getItem(jsonData, itemId) {

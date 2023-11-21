@@ -44,14 +44,18 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         }
     });
 }
-function changeSectionClockIcon(sectionRow, sectionId){
+
+function changeSectionClockIcon(sectionRow, sectionId) {
     var section = getSection(jsonData, sectionId);
-    const clockButtonImg = sectionRow.querySelector('.sectionButton.clockButton .sectionButtonImg');
-    if (compareDailySpecialHours(section) && section?.MenuItems?.[0]?.DailySpecialHours?.length > 1)
-    {
-        clockButtonImg.src = '../../assets/greenClockIcon.svg';
-    }else {clockButtonImg.src = '../../assets/clockIcon.svg';}
+    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
+
+    if (compareDailySpecialHours(section) && section?.MenuItems?.[0]?.DailySpecialHours?.length > 1) {
+        clockButton.style.backgroundColor = '#80d66f';
+    } else {
+        clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
+    }
 }
+
 function addSaveChangesButton(parentElement, closeElement, section) {
     const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn');
     addTextContent(clockSaveBtn, 'Save Changes');
@@ -197,11 +201,12 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section,
     });
 }
 
-function resetClockIcons(sectionId){
+function resetClockIcons(sectionId) {
     const sectionRow = document.getElementById(sectionId);
-    const clockButtonImg = sectionRow.querySelector('.sectionButton.clockButton .sectionButtonImg');
-    clockButtonImg.src = '../../assets/clockIcon.svg';
+    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
+    clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
 }
+
 export {
     sectionClockButton,
     createSectionTableRows,
