@@ -46,22 +46,22 @@ main {
     display: none;
     position: fixed;
     top: 0;
-    left: -60%;
+    right: -60%;
     height: 100vh;
     width: 60%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: left 0.3s ease-in-out;
+    transition: right 0.3s ease-in-out;
     z-index: 10;
 }
 
 .osModalContainer.show {
-    left: 0;
+    right: 0;
     overflow-y: auto;
 }
 
 .osModalContainer.hide {
-    left: -60%;
+    right: -60%;
 }
 
 .optionRowsContainer {
@@ -123,7 +123,7 @@ main {
 
 .itemTable {
     width: 100%;
-    margin: 5px 0px;
+    margin-top: 5px;
 }
 
 .itemRow {
@@ -177,7 +177,7 @@ main {
 .osContainer {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: start;
     border-radius: 5px;
     margin: 5px 0px;
 }
@@ -755,7 +755,7 @@ selector svg {
 
 #newSectionBtnContainer {
     display: flex;
-    justify-content: end;
+    justify-content: start;
 }
 
 .sectionAddNew {
@@ -766,18 +766,18 @@ selector svg {
 
 .newItemBtnContainer {
     display: flex;
-    justify-content: end;
+    justify-content: start;
 }
 
 .newOsBtnContainer {
     display: flex;
-    justify-content: end;
+    justify-content: start;
 }
 
 .itemAddNew {
     text-wrap: nowrap;
     padding: 5px;
-    margin: 10px;
+    margin: 10px 0;
 }
 
 .osAddNew {
