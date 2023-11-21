@@ -6,6 +6,8 @@ let groupedOs = {}; // Store the grouped os objects
 
 let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? [];
 
+let progressiveInt = 0;
+
 groupOptionSets()
 
 function setJsonData(data) {
@@ -255,7 +257,8 @@ function updateOptionSetItemsCounterLocalStorage(id, addID) {
 }
 
 function getRandomInt() {
-    return Math.floor(Math.random() * 9999999) + 1;
+    progressiveInt++;
+    return progressiveInt;
 }
 
 function getUniqueRandomInt(localStorageIDs) {
