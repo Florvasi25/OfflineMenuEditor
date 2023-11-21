@@ -34,14 +34,12 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     duplicateButtonImg.src = '../../assets/duplicateIcon.svg'
     duplicateButton.appendChild(duplicateButtonImg)
 
-    //show tooltip on mouseover
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (sectionRow.classList.contains('expanded')) {
             showToolTip(duplicateButton, "You must close this section before duplicating.");
         }
     });
     
-    // Add an event listener to the sectionRow to watch for class changes
     sectionRow.addEventListener('transitionend', () => {
         if (sectionRow.classList.contains('folded')) {
             // Remove the tooltip if the section is folded
@@ -69,7 +67,6 @@ function duplicateSection(sectionRow) {
         const newSectionRow = createSection(section);
 
         document.getElementById('sectionContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
-
         jsonData.MenuSections.splice(sectionIndex+1, 0, section);
         jsonData.MenuSections.forEach((menuSection, index) => {
             menuSection.DisplayOrder = index;
@@ -110,8 +107,8 @@ function newIDs(newSection){
                                     if (optionSetItem) {
                                         const optionSetItemsIds = getLocalStorageOptionSetItemsIDs();
                                         const newOptionSetItemId = getUniqueRandomInt(optionSetItemsIds);
-                                        optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
                                         updateOptionSetItemsCounterLocalStorage(newOptionSetItemId, true);
+                                        optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
                                     }
                                 });
                             }
