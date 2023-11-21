@@ -185,23 +185,16 @@ class List {
     
       
       compareItems(textBoxContent) {
-        // Convert the text box content into an array of lines and trim each line
         const lines = textBoxContent.trim().split('\n').map(line => line.trim());
-        // Create an array of strings in the format "Name;Price" from the JSON MenuItems
         const menuItemsFromJson = this.menuSection.MenuItems.map(item => {
-          // Ensure the name and price are trimmed to avoid whitespace issues
           const name = item.Name.trim();
           const price = item.Price.toString().trim();
           return `${name};${price}`;
         });
-        // Filter the lines that are not found in the menuItemsFromJson array
         const itemsNotInJson = lines.filter(line => {
           if (line === '') return false;
-          // Split the line by semicolon and trim parts to handle extra whitespaces
           const [itemName, itemPrice] = line.split(';').map(part => part.trim());
-          // Reconstruct the line in a normalized format
           const normalizedLine = `${itemName};${itemPrice}`;
-          // Return true if the line (item;price) is not found in the JSON
           return !menuItemsFromJson.includes(normalizedLine);
         });
         const jsonItemsNotInText = menuItemsFromJson.filter(menuItem => {
@@ -209,9 +202,6 @@ class List {
         });
          return { itemsNotInJson, jsonItemsNotInText };
     }
-    
-    
-      
 
     createItems(items, sectionIndex) { 
         for(let i = 0; i < items.length; i++){
@@ -265,9 +255,8 @@ class List {
     deleteItems(jsonItemsNotInText, sectionIndex){
         const itemsToDelete = jsonItemsNotInText.map(itemText => this.trimItems(itemText));
         const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
-
         let itemsToDeleteIds = [];
-    
+
         // Filter the items that need to be deleted and store their ids
         const filteredItems = menuItems.filter(item => {
             const isToDelete = itemsToDelete.some(toDelete => 
@@ -330,7 +319,6 @@ class List {
         this.listElement.style.left = (rect.left + window.scrollX) + 'px';
     }
 
-    //if the user clicks outside the list, it will close.
     handleOutsideClick(event) {
         if (!this.listElement.contains(event.target) && !this.triggerElement.contains(event.target)) {
             this.hideList();

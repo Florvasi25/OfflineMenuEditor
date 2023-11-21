@@ -132,18 +132,22 @@ function setItemId(jsonData) {
 
 function setOptionSetId(jsonData) {
     localStorage.setItem("optionSetIDs", "[]");
-    var itemIDInOS
+    var itemIDInOS;
+    window.optionSetIdMap = {}; // Create a global map to store ID mapping
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
             itemIDInOS = item.MenuItemId;
             for (const optionSet of item.MenuItemOptionSets) {
+                const oldId = optionSet.MenuItemOptionSetId;
+                const newId = getRandomInt();
                 optionSet.MenuItemId = itemIDInOS;
-                optionSet.MenuItemOptionSetId = getRandomInt();
-                updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, true)
+                optionSet.MenuItemOptionSetId = newId;
+                window.optionSetIdMap[oldId] = newId; // Map old ID to new ID
+                updateOptionSetCounterLocalStorage(newId, true);
             }
         }
     }
-    updateLocalStorage()
+    updateLocalStorage();
 }
 
 function setOptionSetItemsId(jsonData) {
@@ -153,13 +157,21 @@ function setOptionSetItemsId(jsonData) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                     optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                    updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true)
+                    // Update NextMenuItemOptionSetId if it's not null
+                    if (optionSetItem.NextMenuItemOptionSetId !== null) {
+                        const newNextId = window.optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
+                        if (newNextId) {
+                            optionSetItem.NextMenuItemOptionSetId = newNextId;
+                        }
+                    }
+                    updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true);
                 }
             }
         }
     }
-    updateLocalStorage()
+    updateLocalStorage();
 }
+
 
 function setSectionDisplayOrder(jsonData) {
     jsonData.MenuSections.forEach((obj, index) => {
