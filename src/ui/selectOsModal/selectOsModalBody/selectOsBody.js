@@ -223,6 +223,13 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
         const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
 
+        if (osRowOptionPreview.classList.contains('expanded')) {
+            let option = osRowOptionPreview.nextElementSibling;
+            if (option.tagName === 'DIV' && option.classList.contains('optionContainer')) {
+                option.remove();
+            }
+        }
+        
         osRowOptionPreview.remove();
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
