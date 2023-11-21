@@ -1017,7 +1017,7 @@ selector svg {
 }
 
 .clockTBody {
-    margin-top: 10px
+    margin-top: 10px;
 }
 
 .clockBtn-unsetButton {
@@ -1116,16 +1116,7 @@ selector svg {
 .cancel-button-list:active {
     background-color: #888;
 }
-/* .arrow {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #ffffff;
-    position: absolute;
-    top: -10px;
-    left: calc(50% - 10px);
-} */
+
 .error-message {
     color: #ff0000;
     background-color: #ffebeb;
@@ -1163,9 +1154,8 @@ selector svg {
     padding: 10px;
     border: 1px solid #888;
     width: 70%;
-    height: 70%;
+    max-height: 70vh;
 }
-
 .selectOsRowHeader {
     display: flex;
     height: auto;
@@ -1211,13 +1201,15 @@ selector svg {
 .selectOsBodyLeft {
     width: 50%;
     margin-right: 10px;
-    overflow-y: scroll;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(70vh - 20px); /* Adjust max height to consider margins */
 }
 
 .selectOsBodyRight {
     width: 50%;
     margin-left: 10px;
-    overflow-y: scroll;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(70vh - 20px); /* Adjust max height to consider margins */
 }
 
 .btnAndSelectOption {
