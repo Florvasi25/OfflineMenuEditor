@@ -45,8 +45,8 @@ function createClockBody() {
     const clockHeaderDiv = createAndAppend(clockContentDiv, 'div', 'clock-header');
     const clockTitle = createAndAppend(clockHeaderDiv, 'h5', 'clock-title');
     addTextContent(clockTitle, 'Menu Section Hours');
-    const clockCloseIcon = createAndAppend(clockHeaderDiv, 'span', 'clockBtn-close');
-    clockCloseIcon.innerHTML = '&times;';
+    const clockCloseIcon = createAndAppend(clockHeaderDiv, 'div', 'clockBtn-close');
+    clockCloseIcon.innerHTML = 'X';
     clockCloseIcon.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');

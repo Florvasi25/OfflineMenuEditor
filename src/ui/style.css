@@ -882,16 +882,18 @@ selector svg {
 }
 
 .clock-header {
-    padding: 15px;
+    padding: 10px 0 15px 0;
     background-color: #342f58;
     border-bottom: 1px solid #ccc;
     text-align: center;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .clock-title {
     color: #ffffff;
     display: inline-block;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .timeInput {
@@ -915,10 +917,16 @@ selector svg {
     text-align: center;
 }
 .clockBtn-close {
-    padding-left: 15px;
     padding-right: 15px;
-    color: black;
+    color: #ffffff;
     cursor: pointer;
+    display: flex;
+    justify-content: end;
+    font-size: 15px;
+}
+
+.clockBtn-close:hover {
+    color: #fb5555;
 }
 
 .clockBtn-closeOsModalBtn {
@@ -1033,10 +1041,11 @@ selector svg {
     opacity: 1;
     visibility: visible;
     transition: opacity 0.4s linear;
-    padding: 15px;
+    padding: 10px;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     position: relative;
+    border-radius: 10px;
 }
 .list.hidden {
     opacity: 0;
@@ -1076,7 +1085,7 @@ selector svg {
 .submit-button-list {
     padding: 8px 12px;
     border-radius: 4px;
-    background-color: #32c5d2;
+    background-color: #342f58;
     border: none;
     color: #ffffff;
     cursor: pointer;
@@ -1084,7 +1093,7 @@ selector svg {
 }
 
 .submit-button-list:hover {
-    background-color: #0056b3;
+    background-color: #7c74b5;
 }
 
 .submit-button-list:active {
@@ -1093,7 +1102,7 @@ selector svg {
 .cancel-button-list {
     padding: 8px 12px;
     border-radius: 4px;
-    color: #666;
+    color: #000000;
     background-color: #e1e5ec;
     border: none;
     cursor: pointer;
@@ -1101,13 +1110,13 @@ selector svg {
 }
 
 .cancel-button-list:hover {
-    background-color: #888;
+    background-color: #ed7171;
 }
 
 .cancel-button-list:active {
     background-color: #888;
 }
-.arrow {
+/* .arrow {
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
@@ -1116,7 +1125,7 @@ selector svg {
     position: absolute;
     top: -10px;
     left: calc(50% - 10px);
-}
+} */
 .error-message {
     color: #ff0000;
     background-color: #ffebeb;
