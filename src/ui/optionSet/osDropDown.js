@@ -1,30 +1,30 @@
 import { createOptionsContainer } from './osOptionsContainer.js'
 
-function createOsDropdown(osRowHeader, menuOs, sectionId, itemId){
+function createOsDropdown(osRowHeader, sectionId, itemId){
     const osDropdownCell = document.createElement('div')
     osDropdownCell.classList.add('osDropdownCell')
 
-    const boxDropdownButton = createOsDropdownButton(osRowHeader, menuOs, sectionId, itemId)
+    const boxDropdownButton = createOsDropdownButton(osRowHeader, sectionId, itemId)
     osDropdownCell.appendChild(boxDropdownButton)
 
     return osDropdownCell
 }
 
-function createOsDropdownButton(osRowHeader, menuOs, sectionId, itemId){
+function createOsDropdownButton(osRowHeader, sectionId, itemId){
     const boxDropdownButton = document.createElement('div')
     boxDropdownButton.classList = 'boxDropdownButton'
     boxDropdownButton.innerHTML = `
     <div class="osDropdownButton"></div>`
 
     boxDropdownButton.addEventListener('click', event => {
-        toggleItemState(osRowHeader, menuOs, sectionId, itemId);
+        toggleOsState(osRowHeader, sectionId, itemId);
         event.stopPropagation();
     });
 
     return boxDropdownButton
 }
 
-function toggleItemState(osRowHeader, menuOs, sectionId, itemId) {
+function toggleOsState(osRowHeader, sectionId, itemId) {
     const expandedClassName = 'expanded';
     const foldedClassName = 'folded';
 
@@ -47,4 +47,7 @@ function toggleItemState(osRowHeader, menuOs, sectionId, itemId) {
     }
 }
 
-export { createOsDropdown }
+export { 
+    createOsDropdown,
+    toggleOsState
+}

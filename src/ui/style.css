@@ -32,6 +32,12 @@ main {
     margin-left: 20px;
 }
 
+.loadAllButton {
+    text-wrap: nowrap;
+    padding: 5px;
+    margin-left: 20px;
+}
+
 /* MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL */
 
 .leftSidebar {

@@ -58,7 +58,7 @@ function createOsRow(menuOs, sectionId, itemId) {
     dropAndName.className = 'dropAndName'
     osRowHeader.appendChild(dropAndName)
 
-    const osDropDown = createOsDropdown(osRowHeader, menuOs, sectionId, itemId)
+    const osDropDown = createOsDropdown(osRowHeader, sectionId, itemId)
     dropAndName.appendChild(osDropDown)
 
     const nameAndOsId = document.createElement('div')

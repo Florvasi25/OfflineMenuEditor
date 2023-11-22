@@ -50,4 +50,7 @@ function toggleItemState(itemRow, sectionId) {
     }
 }
 
-export { createItemDropdown }
+export { 
+    createItemDropdown,
+    toggleItemState
+}

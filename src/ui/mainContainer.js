@@ -9,6 +9,12 @@ import { createSectionButton } from './section/sectionAddNew.js'
 
 import { jsonData } from './context.js';
 
+import { toggleSectionState } from './section/sectionDropDown.js'
+
+import { toggleItemState } from './item/itemDropDown.js'
+
+import { toggleOsState } from './optionSet/osDropDown.js';
+
 //Builds HTML
 function generateHTML(jsonData) {
     const sectionContainer = document.getElementById('sectionContainer');
@@ -24,13 +30,38 @@ function createBtnContainers() {
     const fileOptionsContainer = document.getElementById('fileOptionsContainer')
     const loadJsonButton = createLoadJsonButton()
     const saveButton = createSaveButton()
+
+    const loadAllButton = document.createElement('button')
+    loadAllButton.textContent = 'Expand/Close'
+    loadAllButton.className = 'loadAllButton'
+    loadAllButton.addEventListener('click', () => {
+        changeClasses()
+    })
+
     fileOptionsContainer.appendChild(loadJsonButton)
     fileOptionsContainer.appendChild(saveButton)
+    fileOptionsContainer.appendChild(loadAllButton)
     
     const newSectionBtnContainer = document.getElementById('newSectionBtnContainer')
     const newSectionButton = createSectionButton()
     newSectionBtnContainer.appendChild(newSectionButton)
 }
+
+function changeClasses() {
+    const sectionRow = document.querySelectorAll('.sectionRow')
+    sectionRow.forEach(section => {
+        toggleSectionState(section);       
+        const itemRow = section.nextElementSibling.querySelectorAll('.itemRow')
+        itemRow.forEach(item => {
+            toggleItemState(item, section.id);
+            const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader')
+            osRowHeader.forEach(os => {
+                toggleOsState(os, section.id, item.id);       
+            })
+        })
+    })
+}
+
 
 //After loading the Data it generates the HTML
 generateHTML(jsonData);
