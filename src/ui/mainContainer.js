@@ -48,20 +48,26 @@ function createBtnContainers() {
 }
 
 function changeClasses() {
-    const sectionRow = document.querySelectorAll('.sectionRow')
+    const sectionRow = document.querySelectorAll('.sectionRow');
     sectionRow.forEach(section => {
-        toggleSectionState(section);       
-        const itemRow = section.nextElementSibling.querySelectorAll('.itemRow')
-        itemRow.forEach(item => {
-            toggleItemState(item, section.id);
-            const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader')
-            osRowHeader.forEach(os => {
-                toggleOsState(os, section.id, item.id);       
-            })
-        })
-    })
-}
+        toggleSectionState(section);
 
+        const nextSibling = section.nextElementSibling;
+        if (nextSibling) {
+            const itemRow = nextSibling.querySelectorAll('.itemRow');
+            itemRow.forEach(item => {
+                toggleItemState(item, section.id);
+
+                const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader');
+                if (osRowHeader) {
+                    osRowHeader.forEach(os => {
+                        toggleOsState(os, section.id, item.id);
+                    });
+                }
+            });
+        }
+    });
+}
 
 //After loading the Data it generates the HTML
 generateHTML(jsonData);

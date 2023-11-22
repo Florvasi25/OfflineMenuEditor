@@ -220,6 +220,7 @@ main {
     font-size: 12px;
     padding-top: 10px;
     color: #787777;
+    user-select: text;
 }
 
 .osSelectOptionContainer {

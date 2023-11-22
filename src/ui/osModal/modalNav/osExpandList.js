@@ -32,13 +32,15 @@ function osExpandListButton(osBtnsCell) {
     document.addEventListener('click', function(event) {
         const dropdownContent = document.getElementById('myDropdown');
         const expandListButton = document.querySelector('.expandListButton');
-        
-        const isDropdownShown = dropdownContent.classList.contains('showOsList');
-        const isClickedInsideDropdown = dropdownContent.contains(event.target);
-        const isClickedOnButton = expandListButton.contains(event.target);
-
-        if (isDropdownShown && !isClickedInsideDropdown && !isClickedOnButton) {
-            toggleDropdown();
+    
+        if (dropdownContent) {
+            const isDropdownShown = dropdownContent.classList.contains('showOsList');
+            const isClickedInsideDropdown = dropdownContent.contains(event.target);
+            const isClickedOnButton = expandListButton.contains(event.target);
+    
+            if (isDropdownShown && !isClickedInsideDropdown && !isClickedOnButton) {
+                toggleDropdown();
+            }
         }
     });
     

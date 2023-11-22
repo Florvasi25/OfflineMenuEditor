@@ -5,7 +5,9 @@ import {
     updateOptionSetCounterLocalStorage,
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
-    groupOptionSets
+    groupOptionSets,
+    groupedOs,
+    addItemlessOs
 } from '../context.js';
 
 function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
@@ -70,6 +72,8 @@ function confirmDelete(itemRow, itemButtonsCell, sectionId) {
 }
 
 //Deletes item from UI and LS
+// ... (previous code remains unchanged)
+
 function deleteItem(itemRow, sectionId) {
     const itemId = itemRow.id;
     if (itemRow) {
@@ -79,17 +83,31 @@ function deleteItem(itemRow, sectionId) {
                 item.remove();
             }
         }
-        itemRow.remove(); 
-        const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
+        itemRow.remove();
+        const { itemIndex, sectionIndex } = getItemIndex(sectionId, itemId);
         if (itemIndex !== -1) {
             deleteIDs(itemId, itemIndex, sectionIndex);
-            jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1);
+            const deletedItem = jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1)[0];
             jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
-            groupOptionSets()
+
+            if (
+                deletedItem.MenuItemOptionSets &&
+                deletedItem.MenuItemOptionSets.length > 0 &&
+                deletedItem.MenuItemOptionSets.every(
+                    optionSet => groupedOs[optionSet.groupOsId] &&
+                    groupedOs[optionSet.groupOsId].length === 1
+                )
+            ) {
+                deletedItem.MenuItemOptionSets.forEach(optionSet => {
+                    delete groupedOs[optionSet.groupOsId];
+                    addItemlessOs(optionSet);
+                });
+            }
+
+            groupOptionSets();
             updateLocalStorage();
-            
         }
     }
 }
