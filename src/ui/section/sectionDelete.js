@@ -6,7 +6,9 @@ import {
     updateOptionSetCounterLocalStorage,
     updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
-    groupOptionSets
+    groupOptionSets,
+    groupedOs,
+    addItemlessOs
 } from '../context.js';
 
 function sectionDeleteButton(sectionButtonsCell, sectionRow) {
@@ -72,25 +74,44 @@ function confirmDelete(sectionRow, sectionButtonsCell) {
 function deleteSection(sectionRow) {
     const sectionId = sectionRow.id;
     if (sectionRow) {
-        // Encuentra la sección en jsonData basada en el ID
-        const section = jsonData.MenuSections.find(s => s.MenuSectionId == sectionId);
-        deleteIDs(section);
-        if (sectionRow.classList.contains('expanded')) {
-            let items = sectionRow.nextElementSibling;
-            if (items.tagName === 'DIV' && items.classList.contains('itemTable')) {
-                items.remove();
-            }
-        }
-        sectionRow.remove(); 
         const sectionIndex = getSectionIndex(sectionId);
         if (sectionIndex !== -1) {
+            const section = jsonData.MenuSections[sectionIndex];
+            deleteIDs(section)
+            const deletedItems = section.MenuItems;
+
+            const removedOptionSets = {};
+
+            deletedItems.forEach((deletedItem) => {
+                if (deletedItem.MenuItemOptionSets && deletedItem.MenuItemOptionSets.length > 0) {
+                    deletedItem.MenuItemOptionSets.forEach((optionSet) => {
+                        if (groupedOs[optionSet.groupOsId]) {
+                            if (groupedOs[optionSet.groupOsId].length === 1) {
+                                delete groupedOs[optionSet.groupOsId];
+                                removedOptionSets[optionSet.groupOsId] = optionSet;
+                            } else {
+                                groupedOs[optionSet.groupOsId] = groupedOs[optionSet.groupOsId].filter(
+                                    (os) => os !== optionSet
+                                );
+                            }
+                        }
+                    });
+                }
+            });
+
             jsonData.MenuSections.splice(sectionIndex, 1);
             jsonData.MenuSections.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
-            groupOptionSets()
+
+            Object.values(removedOptionSets).forEach((optionSet) => {
+                addItemlessOs(optionSet);
+            });
+
+            groupOptionSets();
             updateLocalStorage();
         }
+        sectionRow.remove();
     }
 }
 
