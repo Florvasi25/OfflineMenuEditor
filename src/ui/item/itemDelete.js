@@ -24,7 +24,6 @@ function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
     });
 }
 
-
 //Creates a popup to confirm the deletion of the item
 function confirmDelete(itemRow, itemButtonsCell, sectionId) {
     const popup = document.createElement("div");
@@ -72,8 +71,6 @@ function confirmDelete(itemRow, itemButtonsCell, sectionId) {
 }
 
 //Deletes item from UI and LS
-// ... (previous code remains unchanged)
-
 function deleteItem(itemRow, sectionId) {
     const itemId = itemRow.id;
     if (itemRow) {
@@ -92,19 +89,26 @@ function deleteItem(itemRow, sectionId) {
                 obj.DisplayOrder = index;
             });
 
-            if (
-                deletedItem.MenuItemOptionSets &&
-                deletedItem.MenuItemOptionSets.length > 0 &&
-                deletedItem.MenuItemOptionSets.every(
-                    optionSet => groupedOs[optionSet.groupOsId] &&
-                    groupedOs[optionSet.groupOsId].length === 1
-                )
-            ) {
-                deletedItem.MenuItemOptionSets.forEach(optionSet => {
-                    delete groupedOs[optionSet.groupOsId];
-                    addItemlessOs(optionSet);
+            const removedOptionSets = {};
+
+            if (deletedItem.MenuItemOptionSets && deletedItem.MenuItemOptionSets.length > 0) {
+                deletedItem.MenuItemOptionSets.forEach((optionSet) => {
+                    if (groupedOs[optionSet.groupOsId]) {
+                        if (groupedOs[optionSet.groupOsId].length === 1) {
+                            delete groupedOs[optionSet.groupOsId];
+                            removedOptionSets[optionSet.groupOsId] = optionSet;
+                        } else {
+                            groupedOs[optionSet.groupOsId] = groupedOs[optionSet.groupOsId].filter(
+                                (os) => os !== optionSet
+                            );
+                        }
+                    }
                 });
             }
+
+            Object.values(removedOptionSets).forEach((optionSet) => {
+                addItemlessOs(optionSet);
+            });
 
             groupOptionSets();
             updateLocalStorage();
