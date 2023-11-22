@@ -78,6 +78,12 @@ function deleteSection(sectionRow) {
         if (sectionIndex !== -1) {
             const section = jsonData.MenuSections[sectionIndex];
             deleteIDs(section)
+            if (sectionRow.classList.contains('expanded')) {
+                let items = sectionRow.nextElementSibling;
+                if (items.tagName === 'DIV' && items.classList.contains('itemTable')) {
+                    items.remove();
+                }
+            }
             const deletedItems = section.MenuItems;
 
             const removedOptionSets = {};
