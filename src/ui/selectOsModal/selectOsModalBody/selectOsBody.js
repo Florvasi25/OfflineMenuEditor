@@ -287,7 +287,11 @@ function createSelectOsRow(menuOs) {
 function createSelectOsNameHeader(menuOs) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'selectOsNameHeader'
-    osNameHeader.textContent = menuOs.Name
+    if (menuOs.Name == null || menuOs.Name == '') {
+        osNameHeader.textContent = 'Empty'
+    } else {
+        osNameHeader.textContent = menuOs.Name
+    }
 
     return osNameHeader
 }

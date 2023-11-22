@@ -42,6 +42,15 @@ function createOsName(menuOs) {
                 osNameHeader.forEach(os => {
                     os.textContent = menuOs.Name;
                 })
+                if (menuOs.Name == null || menuOs.Name == '') {
+                    osNameHeader.forEach(os => {
+                        os.textContent = 'Empty';
+                    })                
+                } else {
+                    osNameHeader.forEach(os => {
+                        os.textContent = menuOs.Name;
+                    })                
+                }
             }
         } else if (e.key === 'Escape') {
             osName.textContent = originalName;

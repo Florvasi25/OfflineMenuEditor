@@ -80,7 +80,11 @@ function createOsRow(menuOs, sectionId, itemId) {
 function createOsNameHeader(menuOs) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
-    osNameHeader.textContent = menuOs.Name
+    if (menuOs.Name == null || menuOs.Name == '') {
+        osNameHeader.textContent = 'Empty'
+    } else {
+        osNameHeader.textContent = menuOs.Name
+    }
     osNameHeader.id = menuOs.MenuItemOptionSetId
     osNameHeader.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
