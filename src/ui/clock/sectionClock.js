@@ -41,6 +41,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
+            clockButton.style.backgroundColor = 'yellow';
         }
     });
 }
@@ -71,14 +72,12 @@ function addSaveChangesButton(parentElement, closeElement, section) {
 function createSectionTableRows(parentElement, menuSection) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
     const areDailySpecialHoursSame = compareDailySpecialHours(menuSection);
-    console.log("Comparación: ", areDailySpecialHoursSame);
     const timesMapping = {};
 
     // If all DailySpecialHours are the same for all MenuItems, then take the DailySpecialHours data 
-    if (areDailySpecialHoursSame && 
-        menuSection.MenuItems.length > 0 && 
-        menuSection.MenuItems[0].DailySpecialHours) 
-        { menuSection.MenuItems[0].DailySpecialHours.forEach(time => {
+    if ( areDailySpecialHoursSame && menuSection.MenuItems.length > 0 && menuSection.MenuItems[0].DailySpecialHours ) 
+        { 
+            menuSection.MenuItems[0].DailySpecialHours.forEach(time => {
             timesMapping[time.dayOfWeek] = {
                 start: time.StartTime,
                 close: time.CloseTime
