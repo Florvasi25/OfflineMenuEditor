@@ -9,7 +9,8 @@ import {
     createClockTable,
     createInputCell,
     dayMappingToName,
-    processSaveChanges
+    processSaveChanges,
+    removeTimetable
 } from './clockUtils.js'
 
 import {
@@ -31,14 +32,13 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         const clockBodyDiv = clockElements.clockBodyDiv;
         const clockFooterDiv = clockElements.clockFooterDiv;
         
-        //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const section = getSection(jsonData, sectionId);    
         const availabilityContainer = createAndAppend(clockFooterDiv, 'div', 'availability-container');
         const actionButtonsContainer = createAndAppend(clockFooterDiv, 'div', 'action-buttons');
         if(compareDailySpecialHours(section)) {
             addSectionAvailabilityButton(availabilityContainer, section);
             const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
-            addRemoveButton(actionButtonsContainer);
+            addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
             createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
         } else {
             showErrorMessage(clockBodyDiv);
@@ -65,9 +65,25 @@ function addSaveChangesButton(parentElement) {
     return clockSaveBtn;
  }
 
- function addRemoveButton(parentElement) {
+ function addRemoveButton(clockModalDiv, parentElement, jsonData, sectionId, section) {
     const clockRemoveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'removeBtn');
     addTextContent(clockRemoveBtn, 'Remove');
+    if (section.MenuItems[0]) {
+        clockRemoveBtn.classList.remove('removeBtn-disabled');
+        clockRemoveBtn.classList.add('removeBtn');
+    } 
+    else { 
+        clockRemoveBtn.classList.remove('removeBtn');
+        clockRemoveBtn.classList.add('removeBtn-disabled'); 
+    }
+    clockRemoveBtn.addEventListener('click', () => {
+        if (clockRemoveBtn.classList.contains('removeBtn-disabled')) { return; }
+        if(removeTimetable(jsonData, sectionId)) { 
+            clockModalDiv.style.display = 'none'; 
+            resetSectionClockIcons(sectionId);
+        }
+    });
+
 }
 
 function createSectionTableRows(parentElement, menuSection) {
@@ -198,15 +214,15 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         }
         const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
         addSectionAvailabilityButton(availabilityContainer, section);
-        addRemoveButton(actionButtonsContainer);
+        addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
         createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
         const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
         processSaveChanges(tableRows, section, sectionId, clockFooterDiv);
-        resetClockIcons(sectionId);
+        resetSectionClockIcons(sectionId);
     });
 }
 
-function resetClockIcons(sectionId) {
+function resetSectionClockIcons(sectionId) {
     const sectionRow = document.getElementById(sectionId);
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
     clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color

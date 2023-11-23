@@ -167,18 +167,18 @@ class List {
         }
     
         if (duplicatedItem) {
-            this.textAreaGroupItems.style.display = 'none'; // Hide the text area
+            this.textAreaGroupItems.style.display = 'none'; 
             this.errorMessage.textContent = `Duplicated item: "${duplicatedItem}", delete it manually and try again.`;
-            this.errorMessage.style.display = 'block'; // Show the error message
-            this.errorMessage.style.width = '100%'; // Make the error message full width
-            this.errorMessage.style.height = '100px'; // Set a fixed height or calculate the height of the text area
-            this.errorMessage.style.overflow = 'hidden'; // Prevent scrolling
-            this.errorMessage.classList.add('full-size-error'); // Add class for full-size error styling if needed
+            this.errorMessage.style.display = 'block'; 
+            this.errorMessage.style.width = '100%'; 
+            this.errorMessage.style.height = '100px'; 
+            this.errorMessage.style.overflow = 'hidden'; 
+            this.errorMessage.classList.add('full-size-error'); 
             return false;
         } else {
-            this.textAreaGroupItems.style.display = 'block'; // Show the text area when there are no duplicates
-            this.errorMessage.style.display = 'none'; // Hide the error message
-            this.errorMessage.classList.remove('full-size-error'); // Remove the full-size error styling
+            this.textAreaGroupItems.style.display = 'block'; 
+            this.errorMessage.style.display = 'none'; 
+            this.errorMessage.classList.remove('full-size-error');
         }
         return true;
     }
