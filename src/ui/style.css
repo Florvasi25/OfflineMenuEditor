@@ -776,6 +776,7 @@ selector svg {
 .closeBtnRow {
     display: flex;
     justify-content: end;
+    margin-bottom: 15px;
 }
 
 .closeOsModalBtn:hover {
@@ -1216,7 +1217,7 @@ selector svg {
     margin: 15% auto;
     padding: 10px;
     border: 1px solid #888;
-    width: 70%;
+    width: 80vw;
     height: 70vh;
 }
 .selectOsRowHeader {
@@ -1270,14 +1271,23 @@ selector svg {
     width: 50%;
     margin-right: 10px;
     overflow-y: auto;
-    max-height: calc(70vh - 20px); /* Adjust max height to consider margins */
+    max-height: calc(70vh - 30px); /* Adjust max height to consider margins */
+}
+
+.osInThisItem {
+    height: 30px;
+    background-color: #bebccb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }
 
 .selectOsBodyRight {
     width: 50%;
     margin-left: 10px;
     overflow-y: auto;
-    max-height: calc(70vh - 20px); /* Adjust max height to consider margins */
+    max-height: calc(70vh - 30px); /* Adjust max height to consider margins */
 }
 
 .btnAndSelectOption {

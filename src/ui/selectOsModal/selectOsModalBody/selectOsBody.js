@@ -96,6 +96,12 @@ function createSelectOsBodyRight(itemRowId) {
     selectOsBodyRight.className = 'selectOsBodyRight';
     selectOsBodyRight.classList.add('selectOsContainer')
 
+    const osInThisItem = document.createElement('div')
+    osInThisItem.className = 'osInThisItem'
+    osInThisItem.textContent = 'OS in this item:'
+
+    selectOsBodyRight.appendChild(osInThisItem)
+
     const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
 
     foundItem.MenuItemOptionSets.forEach((menuOs, index) => {
