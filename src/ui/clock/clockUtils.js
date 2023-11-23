@@ -182,7 +182,6 @@ function removeTimetable(jsonData, sectionId) {
             item.DailySpecialHours = [];
         }
     }
-    console.log('DailySpecialHours removed for section ' + targetSection.Name);
     return true;
 }
 

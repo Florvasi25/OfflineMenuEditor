@@ -81,6 +81,7 @@ function addSaveChangesButton(parentElement) {
         if(removeTimetable(jsonData, sectionId)) { 
             clockModalDiv.style.display = 'none'; 
             resetSectionClockIcons(sectionId);
+            resetItemsClockIcons(sectionId);
         }
     });
 
@@ -219,6 +220,7 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
         processSaveChanges(tableRows, section, sectionId, clockFooterDiv);
         resetSectionClockIcons(sectionId);
+        resetItemsClockIcons(sectionId);
     });
 }
 
@@ -226,6 +228,21 @@ function resetSectionClockIcons(sectionId) {
     const sectionRow = document.getElementById(sectionId);
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
     clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
+}
+
+function resetItemsClockIcons(sectionId) {
+    const sectionRow = document.getElementById(sectionId);
+
+    if( sectionRow.className === "sectionRow draggable expanded" || 
+            sectionRow.className === "sectionRow draggable unavailable expanded"){
+
+        const itemTable = sectionRow.nextElementSibling; 
+        const itemRows = itemTable.getElementsByClassName('itemRow');
+        for (const itemRow of itemRows) {
+            const clockButton = itemRow.querySelector('.sectionButton.clockButton');
+            clockButton.style.backgroundColor = '';
+        }
+    }
 }
 
 export {
