@@ -70,9 +70,14 @@ function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSave
 
     if (data.MenuItems) { // checks if 'data' is section or item
         createSectionTableRows(clockTbody, data);
-        if (data.MenuItems[0]) {clockSaveBtn.classList.add('clockBtn-save');} 
-        else { clockSaveBtn.classList.add('clockBtn-save-disabled');
-    }
+        if (data.MenuItems[0]) {
+            clockSaveBtn.classList.remove('clockBtn-save-disabled');
+            clockSaveBtn.classList.add('clockBtn-save');
+        } 
+        else { 
+            clockSaveBtn.classList.remove('clockBtn-save');
+            clockSaveBtn.classList.add('clockBtn-save-disabled');
+        }
     } else { createItemTableRows(clockTbody, data); }
     
     clockSaveBtn.addEventListener('click', () => { 
@@ -161,6 +166,26 @@ function calculatePeriod(StartTime, CloseTime) {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
+function removeTimetable(jsonData, sectionId) {
+    const targetSection = jsonData.MenuSections.find(section => section.MenuSectionId === sectionId);
+
+    if (!targetSection) {
+        console.log('Section with id ' + sectionId + ' not found.');
+        return false;
+    }
+    if (!targetSection.MenuItems || !Array.isArray(targetSection.MenuItems)) {
+        console.log('No MenuItems found in section ' + sectionId);
+        return false;
+    }
+    for (let item of targetSection.MenuItems) {
+        if (item.DailySpecialHours && Array.isArray(item.DailySpecialHours) && item.DailySpecialHours.length > 0) {
+            item.DailySpecialHours = [];
+        }
+    }
+    console.log('DailySpecialHours removed for section ' + targetSection.Name);
+    return true;
+}
+
 export {
     createAndAppend,
     addTextContent,
@@ -171,5 +196,6 @@ export {
     processSaveChanges,
     calculatePeriod,
     dayMappingToName,
-    invertedDayMapping
+    invertedDayMapping,
+    removeTimetable
 }
