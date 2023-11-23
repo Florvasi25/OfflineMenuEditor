@@ -29,11 +29,10 @@ function itemClockButton(itemButtonsCell, itemId) {
         const clockTitle = clockElements.clockTitle;
         const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
         addTextContent(clockSaveBtn, 'Save Changes');
-        clockSaveBtn.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
         addTextContent(clockTitle, 'Menu Item Hours');
-        //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
+       
         const item = getItem(jsonData, itemId); 
-        createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, item, itemId);
+        createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, item, itemId);
     });
 }
 

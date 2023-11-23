@@ -939,7 +939,7 @@ selector svg {
     text-align: center;
     position: relative;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column; 
     align-items: center;
 }
 
@@ -960,6 +960,7 @@ selector svg {
     color: #fb5555;
 }
 
+
 .clockBtn-closeOsModalBtn {
     position: absolute;
     top: 10px;
@@ -968,22 +969,53 @@ selector svg {
     cursor: pointer;
 }
 
+.availability-container {
+    margin-bottom: 10px; /* Add space below the "Section Availability" button */
+}
+
+.action-buttons {
+    display: flex; /* Align buttons horizontally */
+    gap: 10px; /* Space between buttons */
+}
+
 .clockBtn {
-    padding: 10px 20px;
+    padding: 10px 20px; /* Adjust padding if needed to match the size */
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s;
+}
+
+.action-buttons .clockBtn {
+    width: 150px; 
+    height: 40px; 
+    padding: 10px 20px; 
+    box-sizing: border-box; 
     margin: 5px;
     cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s;
 }
 
 .clockBtn-save {
     background: #4000ff;
     color: white;
-    font-size: 14px;
-    border: 1px solid;
-    border-radius: 5px;
 }
 
 .clockBtn-save:hover {
     background: #7a4ffc;
+}
+
+.removeBtn {
+    background-color: #ff0000;
+    color: white;
+}
+
+.removeBtn:hover {
+    opacity: 0.7;
 }
 
 .clockBtn-save-disabled {
