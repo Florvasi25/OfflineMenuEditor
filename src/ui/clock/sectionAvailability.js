@@ -17,7 +17,7 @@ import {
 let clockSectionAvailabilityBtn;
 
 function addSectionAvailabilityButton(clockFooterDiv, section) {
-    clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-availability');
+    clockSectionAvailabilityBtn =createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'availabilityBtn');
     
     if (section.MenuSectionAvailability.AvailabilityMode == 1){
         addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
@@ -31,6 +31,7 @@ function addSectionAvailabilityButton(clockFooterDiv, section) {
         if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
             clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
             clockSectionAvailabilityBtn.classList.add('clockBtn-red');
+            addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');  
         } else {
             clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
             clockSectionAvailabilityBtn.classList.add('clockBtn-green');

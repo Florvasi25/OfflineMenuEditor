@@ -60,21 +60,28 @@ function createClockBody() {
     };
 }
 
-function createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id) {
+function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id) {
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
     clockTbody.className = 'clockTBody';
     createTableHeaders(clockThead, ['Day', 'Open', 'Close']);
+    const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
 
     if (data.MenuItems) { // checks if 'data' is section or item
         createSectionTableRows(clockTbody, data);
-    } else {
-        createItemTableRows(clockTbody, data);
+        if (data.MenuItems[0]) {clockSaveBtn.classList.add('clockBtn-save');} 
+        else { clockSaveBtn.classList.add('clockBtn-save-disabled');
     }
-    clockSaveBtn.addEventListener('click', () => {
-        setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data);
+    } else { createItemTableRows(clockTbody, data); }
+    
+    clockSaveBtn.addEventListener('click', () => { 
+        if (!allTimesAreDefault(tableRows)) { 
+            setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data);
+            clockModalDiv.style.display = 'none';
+        }
     });
+
 }
 
 function createTableHeaders(parentElement, headers) {
@@ -93,25 +100,45 @@ function createInputCell(parentRow, text) {
     timeInput.value = text;
 }
 
-//loops through the table and gets the time table data.
-function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data) {
-    // Loop through the rows of the table body
-    const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
+// Function to check if all times are the default values in the entire table
+function allTimesAreDefault(tableRows) {
+    let allDefaults = true;
+    for (const row of tableRows) {
+        const StartTime = row.cells[1].querySelector('input').value;
+        const CloseTime = row.cells[2].querySelector('input').value;
+        if (StartTime !== '01:00' || CloseTime !== '00:00') {
+            allDefaults = false;
+            break;
+        }
+    }
+    return allDefaults;
+}
+
+// Function to process and save changes based on the time table
+function processSaveChanges(tableRows, data, id, clockFooterDiv) {
     for (const row of tableRows) {
         const cells = row.cells;
         const dayName = cells[0].innerText;
-        const dayOfWeek = invertedDayMapping[dayName]; // get the corresponding number for the day
+        const dayOfWeek = invertedDayMapping[dayName];
         const StartTime = cells[1].querySelector('input').value;
-        const CloseTime = cells[2].querySelector('input').value;    
-        let Period = calculatePeriod(StartTime, CloseTime)
+        const CloseTime = cells[2].querySelector('input').value;
+        const Period = calculatePeriod(StartTime, CloseTime);
+
         if (data.MenuItems) {
-            storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); //for sections
+            storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
             availabilityTimes(id, clockFooterDiv);
         } else {
-            storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id); // for items
+            storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
         }
     }
 }
+
+// Original function refactored to use the separate concerns
+function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data) {
+    const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
+    processSaveChanges(tableRows, data, id, clockFooterDiv);
+}
+
 
 function calculatePeriod(StartTime, CloseTime) {
     const [startHours, startMinutes] = StartTime.split(':').map(Number);
@@ -141,6 +168,7 @@ export {
     createClockTable,
     createInputCell,
     setupSaveChanges,
+    processSaveChanges,
     calculatePeriod,
     dayMappingToName,
     invertedDayMapping

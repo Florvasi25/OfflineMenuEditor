@@ -9,7 +9,7 @@ import {
     createClockTable,
     createInputCell,
     dayMappingToName,
-    setupSaveChanges
+    processSaveChanges
 } from './clockUtils.js'
 
 import {
@@ -33,14 +33,16 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         
         //const clockSaveBtn = clockBodyDiv.parentElement.querySelector('.clockBtn-save');  
         const section = getSection(jsonData, sectionId);    
-
+        const availabilityContainer = createAndAppend(clockFooterDiv, 'div', 'availability-container');
+        const actionButtonsContainer = createAndAppend(clockFooterDiv, 'div', 'action-buttons');
         if(compareDailySpecialHours(section)) {
-            const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
-            addSectionAvailabilityButton(clockFooterDiv, section);
-            createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
+            addSectionAvailabilityButton(availabilityContainer, section);
+            const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
+            addRemoveButton(actionButtonsContainer);
+            createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
         } else {
             showErrorMessage(clockBodyDiv);
-            appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
+            appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
             clockButton.style.backgroundColor = 'yellow';
         }
     });
@@ -57,17 +59,16 @@ function changeSectionClockIcon(sectionRow, sectionId) {
     }
 }
 
-function addSaveChangesButton(parentElement, closeElement, section) {
-    const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn');
+function addSaveChangesButton(parentElement) {
+    const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'clockBtn-save');
     addTextContent(clockSaveBtn, 'Save Changes');
-    if (section.MenuItems[0]) {
-        clockSaveBtn.classList.add('clockBtn-save');
-        clockSaveBtn.addEventListener('click', () => { closeElement.style.display = 'none'; });
-    } else {
-        clockSaveBtn.classList.add('clockBtn-save-disabled');
-    }
     return clockSaveBtn;
  }
+
+ function addRemoveButton(parentElement) {
+    const clockRemoveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'removeBtn');
+    addTextContent(clockRemoveBtn, 'Remove');
+}
 
 function createSectionTableRows(parentElement, menuSection) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
@@ -183,19 +184,24 @@ function showErrorMessage(parentElement) {
     errorMsgElement.textContent = errorMessage;
 }
 
-function appendUnsetButton(clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId) {
+function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId) {
     const unsetButton = createAndAppend(clockFooterDiv, 'button');
     unsetButton.textContent = "Unset - Click to reset";
     unsetButton.classList.add('clockBtn-unsetButton');
 
     unsetButton.addEventListener('click', function() {
+        event.stopPropagation();
         unsetButton.remove();
         const errorMsgElement = document.querySelector('.error-message-class');
-        if (errorMsgElement) errorMsgElement.remove();
-        const clockSaveBtn = addSaveChangesButton(clockFooterDiv, clockModalDiv, section);
-        addSectionAvailabilityButton(clockFooterDiv, section);
-        createClockTable(clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
-        setupSaveChanges(clockBodyDiv, clockFooterDiv, sectionId, section);
+        if (errorMsgElement) {
+            errorMsgElement.remove();
+        }
+        const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
+        addSectionAvailabilityButton(availabilityContainer, section);
+        addRemoveButton(actionButtonsContainer);
+        createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
+        const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
+        processSaveChanges(tableRows, section, sectionId, clockFooterDiv);
         resetClockIcons(sectionId);
     });
 }
