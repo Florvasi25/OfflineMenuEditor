@@ -10,7 +10,7 @@ import {
     createInputCell,
     dayMappingToName,
     processSaveChanges,
-    removeTimetable
+    removeSectionTimetable
 } from './clockUtils.js'
 
 import {
@@ -78,7 +78,7 @@ function addSaveChangesButton(parentElement) {
     }
     clockRemoveBtn.addEventListener('click', () => {
         if (clockRemoveBtn.classList.contains('removeBtn-disabled')) { return; }
-        if(removeTimetable(jsonData, sectionId)) { 
+        if(removeSectionTimetable(jsonData, sectionId)) { 
             clockModalDiv.style.display = 'none'; 
             resetSectionClockIcons(sectionId);
             resetItemsClockIcons(sectionId);
