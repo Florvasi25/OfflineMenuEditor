@@ -1217,7 +1217,7 @@ selector svg {
     padding: 10px;
     border: 1px solid #888;
     width: 70%;
-    max-height: 70vh;
+    height: 70vh;
 }
 .selectOsRowHeader {
     display: flex;
@@ -1259,6 +1259,11 @@ selector svg {
 .selectOsModalBody {
     display: flex;
     height: 95%;
+}
+
+#searchInput {
+    width: -webkit-fill-available;
+    padding: 5px;
 }
 
 .selectOsBodyLeft {

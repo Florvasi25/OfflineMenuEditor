@@ -47,6 +47,9 @@ function createSelectOsBodyLeft(itemRowId) {
 
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
+    const searchInput = searchOs(selectOsBodyLeft)
+    selectOsBodyLeft.appendChild(searchInput)
+
     filteredGroup.forEach(os => {
         const selectOsRowHeader = createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId)
 
@@ -131,7 +134,7 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
                 option.remove();
             }
         }
-        
+
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyLeft.querySelectorAll(".selectOsRowHeader"));
@@ -152,7 +155,7 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
 
         newOs.MenuItemId = foundItem.MenuItemId
 
-        const optionSetsIds =  getLocalStorageOptionSetIDs();
+        const optionSetsIds = getLocalStorageOptionSetIDs();
         const newOptionSetId = getUniqueRandomInt(optionSetsIds);
         newOs.MenuItemOptionSetId = newOptionSetId;
 
@@ -261,7 +264,7 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
                 option.remove();
             }
         }
-        
+
         osRowOptionPreview.remove();
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
@@ -286,6 +289,39 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
     selectOsRowHeader.appendChild(btnAndSelectOption)
 
     return selectOsRowHeader
+}
+
+function searchOs(selectOsBodyLeft) {
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search for OS...';
+    searchInput.id = 'searchInput';
+
+    // Add event listener for input
+    searchInput.addEventListener('input', function () {
+        const searchText = searchInput.value.toLowerCase();
+        const selectOsRowHeaders = selectOsBodyLeft.querySelectorAll('.selectOsRowHeader');
+        let visibleRowCounter = 0;
+
+        selectOsRowHeaders.forEach(selectOsRowHeader => {
+            const text = selectOsRowHeader.querySelector('.selectOsNameHeader').textContent.toLowerCase();
+            if (text.includes(searchText)) {
+                selectOsRowHeader.style.display = 'flex';
+                if (visibleRowCounter % 2 === 0) {
+                    selectOsRowHeader.classList.remove('even');
+                    selectOsRowHeader.classList.add('odd');
+                } else {
+                    selectOsRowHeader.classList.remove('odd');
+                    selectOsRowHeader.classList.add('even');
+                }
+                visibleRowCounter++;
+            } else {
+                selectOsRowHeader.style.display = 'none';
+            }
+        });
+    });
+    
+    return searchInput;
 }
 
 function createSelectOsRow(menuOs) {
