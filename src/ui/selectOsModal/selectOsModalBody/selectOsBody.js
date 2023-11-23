@@ -107,6 +107,13 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
     const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
 
     addBtn.addEventListener('click', () => {
+        if (selectOsRowHeader.classList.contains('expanded')) {
+            let option = selectOsRowHeader.nextElementSibling;
+            if (option.tagName == 'DIV' && option.classList.contains('osOptionContainer')) {
+                option.remove();
+            }
+        }
+        
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyLeft.querySelectorAll(".selectOsRowHeader"));
@@ -196,6 +203,13 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
     deleteBtn.textContent = '-'
 
     deleteBtn.addEventListener('click', () => {
+        if (selectOsRowHeader.classList.contains('expanded')) {
+            let option = selectOsRowHeader.nextElementSibling;
+            if (option.tagName == 'DIV' && option.classList.contains('osOptionContainer')) {
+                option.remove();
+            }
+        }
+
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
         const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
