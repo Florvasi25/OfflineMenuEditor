@@ -59,6 +59,24 @@ function createSelectOsBodyLeft(itemRowId) {
         selectOsBodyLeft.appendChild(selectOsRowHeader)
     })
 
+    const rows = Array.from(selectOsBodyLeft.querySelectorAll('.selectOsRowHeader'));
+
+    rows.sort((a, b) => {
+        const nameA = a.querySelector('.selectOsNameHeader').textContent.toUpperCase();
+        const nameB = b.querySelector('.selectOsNameHeader').textContent.toUpperCase();
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+        return 0;
+    });
+
+    rows.forEach(row => {
+        selectOsBodyLeft.appendChild(row);
+    });
+
     selectOsBodyLeft.childNodes.forEach((selectOsRowHeader, index) => {
         if (index % 2 === 0) {
             selectOsRowHeader.classList.add('odd');
