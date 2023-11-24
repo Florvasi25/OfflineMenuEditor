@@ -1,7 +1,8 @@
 {
-  "name": "ome-electron",
+  "name": "offline-menu-editor",
+  "productName": "Offline Menu Editor",
   "version": "1.0.0",
-  "description": "to make menus",
+  "description": "To build/edit menus in a more efficient way",
   "main": "main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -9,7 +10,7 @@
     "make": "electron-forge make"
   },
   "keywords": [],
-  "author": "flor",
+  "author": "F&F",
   "license": "ISC",
   "devDependencies": {
     "@electron-forge/cli": "^6.4.2",
