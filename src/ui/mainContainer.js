@@ -31,37 +31,84 @@ function createBtnContainers() {
     const loadJsonButton = createLoadJsonButton()
     const saveButton = createSaveButton()
 
-    const loadAllButton = document.createElement('button')
-    loadAllButton.textContent = 'Expand/Close'
-    loadAllButton.className = 'loadAllButton'
-    loadAllButton.addEventListener('click', () => {
-        changeClasses()
-    })
+    const expandAllButton = createExpandAllButton()
+    const closeAllButton = createCloseAllButton()
 
     fileOptionsContainer.appendChild(loadJsonButton)
     fileOptionsContainer.appendChild(saveButton)
-    fileOptionsContainer.appendChild(loadAllButton)
+    fileOptionsContainer.appendChild(expandAllButton)
+    fileOptionsContainer.appendChild(closeAllButton)
     
     const newSectionBtnContainer = document.getElementById('newSectionBtnContainer')
     const newSectionButton = createSectionButton()
     newSectionBtnContainer.appendChild(newSectionButton)
 }
 
-function changeClasses() {
+function createExpandAllButton() {
+    const expandAllButton = document.createElement('button')
+    expandAllButton.textContent = 'Expand All'
+    expandAllButton.className = 'expandAllButton'
+    expandAllButton.addEventListener('click', () => {
+        handleExpandAll()
+    })
+
+    return expandAllButton
+}
+
+function handleExpandAll() {
     const sectionRow = document.querySelectorAll('.sectionRow');
     sectionRow.forEach(section => {
-        toggleSectionState(section);
-
-        const nextSibling = section.nextElementSibling;
-        if (nextSibling) {
-            const itemRow = nextSibling.querySelectorAll('.itemRow');
+        if (section.classList.contains('folded')) {
+            toggleSectionState(section);
+        }
+        const itemRow = section.nextElementSibling.querySelectorAll('.itemRow');
+        if (itemRow) {
             itemRow.forEach(item => {
-                toggleItemState(item, section.id);
-
+                if (item.classList.contains('folded')) {
+                    toggleItemState(item, section.id);
+                }
                 const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader');
                 if (osRowHeader) {
                     osRowHeader.forEach(os => {
-                        toggleOsState(os, section.id, item.id);
+                        if (os.classList.contains('folded')) {
+                            toggleOsState(os, section.id, item.id);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+function createCloseAllButton() {
+    const closeAllButton = document.createElement('button')
+    closeAllButton.textContent = 'Close All'
+    closeAllButton.className = 'closeAllButton'
+    closeAllButton.addEventListener('click', () => {
+        handleCloseAll()
+    })
+
+    return closeAllButton
+}
+
+function handleCloseAll() {
+    const sectionRow = document.querySelectorAll('.sectionRow');
+    sectionRow.forEach(section => {
+        if (section.classList.contains('expanded')) {
+            toggleSectionState(section);
+        }
+        const itemRow = section.nextElementSibling.querySelectorAll('.itemRow');
+        if (itemRow) {
+            itemRow.forEach(item => {
+                if (item.classList.contains('expanded')) {
+                    toggleItemState(item, section.id);
+                }
+                const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader');
+                if (osRowHeader) {
+                    osRowHeader.forEach(os => {
+                        if (os.classList.contains('expanded')) {
+                            toggleOsState(os, section.id, item.id);
+                        }
                     });
                 }
             });
