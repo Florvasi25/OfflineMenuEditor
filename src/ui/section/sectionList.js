@@ -277,6 +277,12 @@ class List {
             itemsToDeleteIds.forEach(MenuItemId => {
                 const itemRowToDelete = itemRows.find((p) => p.id === MenuItemId.toString());
                 if (itemRowToDelete) {
+                    if (itemRowToDelete.classList.contains('expanded')) {
+                        let item = itemRowToDelete.nextElementSibling;
+                        if (item.tagName === 'DIV' && item.classList.contains('osTable')) {
+                            item.remove();
+                        }
+                    }
                     itemRowToDelete.remove();
                 }
             });
