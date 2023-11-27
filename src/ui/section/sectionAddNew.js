@@ -13,7 +13,6 @@ function createSectionButton() {
     newSectionButton.className = 'sectionAddNew'
     newSectionButton.textContent = 'New Section'
 
-    //Add Section
     newSectionButton.addEventListener('click', () => {
 
         const sectionIDs = getLocalStorageSectionIDs();
