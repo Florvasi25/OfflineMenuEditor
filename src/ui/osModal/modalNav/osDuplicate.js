@@ -33,6 +33,7 @@ function duplicateOs(menuOs) {
 
     newOs.MenuItemOptionSetId = newOsId;
     newOs.PublicId = crypto.randomUUID();
+    newOs.groupOsId = null
 
     newOs.Name += "_copy"
 

@@ -1,12 +1,16 @@
 module.exports = {
   packagerConfig: {
     asar: true,
+    icon: '/Users/florv/Documents/FLIPDISH/OME/Electron/OfflineMenuEditor/assets/FlipdishIcon',
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        iconUrl: 'https://github.com/FranciscoAndreoli/OfflineMenuEditor/blob/FlorBranch/assets/FlipdishIcon.ico',
+        setupIcon: '/Users/florv/Documents/FLIPDISH/OME/Electron/OfflineMenuEditor/assets/FlipdishIcon.ico'
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -14,7 +18,11 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          icon: '/Users/florv/Documents/FLIPDISH/OME/Electron/OfflineMenuEditor/assets/FlipdishIcon',
+        }
+      },
     },
     {
       name: '@electron-forge/maker-rpm',

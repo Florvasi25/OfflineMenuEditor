@@ -7,6 +7,7 @@ function createWindow()
         width: 1024,
         height: 768,
         minWidth: 750,
+        icon: `${__dirname}/assets/FlipdishIcon.ico`,
     })
     mainWindow.loadFile('src/ui/index.html')
     mainWindow.webContents.openDevTools()
