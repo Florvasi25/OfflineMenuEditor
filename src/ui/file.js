@@ -52,6 +52,11 @@ function createLoadJsonButton() {
             }
         };
 
+        const existingOsModal = document.querySelector('.osModalContainer')
+        if (existingOsModal) {
+            existingOsModal.remove()
+        }
+
         if (!file) return;
         reader.readAsText(file);
     });
