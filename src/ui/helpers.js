@@ -14,4 +14,4 @@ function addTextContent(element, text) {
     element.textContent = text;
 }
 
-export { createAndAppend,  addTextContent }
+export { createAndAppend,  addTextContent, createElementWithClasses }

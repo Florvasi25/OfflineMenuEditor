@@ -166,7 +166,7 @@ function calculatePeriod(StartTime, CloseTime) {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
-function removeTimetable(jsonData, sectionId) {
+function removeSectionTimetable(jsonData, sectionId) {
     const targetSection = jsonData.MenuSections.find(section => section.MenuSectionId === sectionId);
 
     if (!targetSection) {
@@ -182,7 +182,17 @@ function removeTimetable(jsonData, sectionId) {
             item.DailySpecialHours = [];
         }
     }
-    console.log('DailySpecialHours removed for section ' + targetSection.Name);
+    return true;
+}
+
+function removeItemTimetable(item) {
+    if (!item) {
+        console.log('item with name ' + item.Name + ' not found.');
+        return false;
+    }
+    if (item.DailySpecialHours && Array.isArray(item.DailySpecialHours) && item.DailySpecialHours.length > 0) {
+        item.DailySpecialHours = [];
+    }
     return true;
 }
 
@@ -197,5 +207,6 @@ export {
     calculatePeriod,
     dayMappingToName,
     invertedDayMapping,
-    removeTimetable
+    removeSectionTimetable,
+    removeItemTimetable
 }

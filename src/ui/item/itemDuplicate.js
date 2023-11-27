@@ -39,7 +39,6 @@ function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer,
         }
     });
 
-    // Add an event listener to the sectionRow to watch for class changes
     itemRow.addEventListener('transitionend', () => {
         if (itemRow.classList.contains('folded')) {
             // Remove the tooltip if the section is folded
@@ -97,8 +96,8 @@ function newIDs(newItem){
                         if (optionSetItem) {
                             const optionSetItemsIds = getLocalStorageOptionSetItemsIDs();
                             const newOptionSetItemId = getUniqueRandomInt(optionSetItemsIds);
-                            optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
                             updateOptionSetItemsCounterLocalStorage(newOptionSetItemId, true);
+                            optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
                         }
                     });
                 }

@@ -8,7 +8,8 @@ import {
     createClockBody,
     createClockTable,
     createInputCell,
-    dayMappingToName
+    dayMappingToName,
+    removeItemTimetable
 } from './clockUtils.js'
 
 import {
@@ -27,12 +28,14 @@ function itemClockButton(itemButtonsCell, itemId) {
         const clockFooterDiv = clockElements.clockFooterDiv;
         const clockBodyDiv = clockElements.clockBodyDiv;
         const clockTitle = clockElements.clockTitle;
-        const clockSaveBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'clockBtn-save');
+        const actionButtonsContainer = createAndAppend(clockFooterDiv, 'div', 'action-buttons');
+        const clockSaveBtn = createAndAppend(actionButtonsContainer, 'button', 'clockBtn', 'clockBtn-save');
         addTextContent(clockSaveBtn, 'Save Changes');
         addTextContent(clockTitle, 'Menu Item Hours');
        
         const item = getItem(jsonData, itemId); 
         createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, item, itemId);
+        addRemoveButton(clockModalDiv, actionButtonsContainer, item, itemId);
     });
 }
 
@@ -106,6 +109,30 @@ function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
     })})
     updateLocalStorage();
     changeItemClockIcon(itemRow, id);
+}
+
+
+function addRemoveButton(clockModalDiv, parentElement, item, itemId) {
+    const clockRemoveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'removeBtn');
+    addTextContent(clockRemoveBtn, 'Remove');
+    const itemRow = document.getElementById(itemId);
+    if (item.DailySpecialHours?.length > 1) {
+        clockRemoveBtn.classList.remove('removeBtn-disabled');
+        clockRemoveBtn.classList.add('removeBtn');
+    } 
+    else { 
+        clockRemoveBtn.classList.remove('removeBtn');
+        clockRemoveBtn.classList.add('removeBtn-disabled'); 
+    }
+
+    clockRemoveBtn.addEventListener('click', () => {
+        if (clockRemoveBtn.classList.contains('removeBtn-disabled')) { return; }
+        if(removeItemTimetable(item)) { 
+            clockModalDiv.style.display = 'none'; 
+            changeItemClockIcon(itemRow, itemId)
+        }
+    });
+
 }
 
 function changeItemClockIcon(itemRow, itemId) {
