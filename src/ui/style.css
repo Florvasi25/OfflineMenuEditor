@@ -73,6 +73,7 @@ main {
 .optionRowsContainer {
     padding: 15px;
     padding-top: 10px;
+    flex-grow: 1;
 }
 
 .newOptionBtnContainer {
@@ -86,6 +87,24 @@ main {
     margin: 0 15px 0 0;
 }
 
+/*OPTION SET LIST - OPTION SET LIST - OPTION SET LIST */
+
+.sectionButton.optionSetListButton {
+    margin-left: auto;
+    margin-right: 45px;
+    transition: background-color 0.3s ease;
+}
+
+.optionSetListButton:hover{
+    background-color: #b1b1b1;
+}
+
+.optionSetList{
+   position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    display: none;
+}
 /* SECTION - SECTION - SECTION - SECTION - SECTION - SECTION - SECTION */
 
 .sectionTable {
@@ -1116,9 +1135,12 @@ selector svg {
     padding: 10px;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    position: relative;
+    position: fixed;
+    z-index: 1000;
     border-radius: 10px;
 }
+
+
 .list.hidden {
     opacity: 0;
     visibility: hidden;
