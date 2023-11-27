@@ -89,6 +89,8 @@ function deleteItem(itemRow, sectionId) {
                 obj.DisplayOrder = index;
             });
 
+            console.log('deletedItem', deletedItem);
+
             const removedOptionSets = {};
 
             if (deletedItem.MenuItemOptionSets && deletedItem.MenuItemOptionSets.length > 0) {

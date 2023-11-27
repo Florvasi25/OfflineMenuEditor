@@ -1,18 +1,14 @@
 import {
     jsonData,
     getSectionIndex,
-    updateCounterLocalStorage,
     updateLocalStorage,
-    setSectionDisplayOrder,
     updateItemCounterLocalStorage,
-    updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
     getLocalStorageItemIDs,
-    getLocalStorageOptionSetItemsIDs,
-    getLocalStorageOptionSetIDs,
-    getLocalStorageSectionIDs,
     getUniqueRandomInt,
-    getSectionRow
+    getSectionRow,
+    groupOptionSets,
+    groupedOs,
+    addItemlessOs
 } from '../context.js';
 
 import {
@@ -256,6 +252,7 @@ class List {
         const itemsToDelete = jsonItemsNotInText.map(itemText => this.trimItems(itemText));
         const menuItems = jsonData.MenuSections[sectionIndex].MenuItems;
         let itemsToDeleteIds = [];
+        let itemDOM = []
 
         // Filter the items that need to be deleted and store their ids
         const filteredItems = menuItems.filter(item => {
@@ -263,14 +260,18 @@ class List {
                 toDelete.itemName === item.Name && toDelete.itemPrice === item.Price
             );
             if (isToDelete) {
+                itemDOM.push(item)
                 itemsToDeleteIds.push(item.MenuItemId);
             }
             return !isToDelete;
         });
+
         jsonData.MenuSections[sectionIndex].MenuItems = filteredItems;
+
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((item, index) => {
             item.DisplayOrder = index;
         });
+
         if( this.sectionRow.className === "sectionRow draggable expanded") {
             const itemRows = Array.from(document.getElementsByClassName('itemRow'));
             itemsToDeleteIds.forEach(MenuItemId => {
@@ -280,6 +281,31 @@ class List {
                 }
             });
         }
+        
+        const removedOptionSets = {};
+
+        itemDOM.forEach(item => {
+            if (item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0) {
+                item.MenuItemOptionSets.forEach((optionSet) => {
+                    if (groupedOs[optionSet.groupOsId]) {
+                        if (groupedOs[optionSet.groupOsId].length === 1) {
+                            delete groupedOs[optionSet.groupOsId];
+                            removedOptionSets[optionSet.groupOsId] = optionSet;
+                        } else {
+                            groupedOs[optionSet.groupOsId] = groupedOs[optionSet.groupOsId].filter(
+                                (os) => os !== optionSet
+                            );
+                        }
+                    }
+                });
+            }
+        })
+
+        Object.values(removedOptionSets).forEach((optionSet) => {
+            addItemlessOs(optionSet);
+        });
+
+        groupOptionSets();
         updateLocalStorage();
     }
 
