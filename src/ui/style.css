@@ -19,6 +19,9 @@ main {
 #fileOptionsContainer {
     display: flex;
     margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #342f58;
+    padding: 15px 10px;
 }
 
 #loadJsonButton {
@@ -210,7 +213,7 @@ main {
     flex-direction: column;
     align-items: start;
     border-radius: 5px;
-    margin-top: 5px;
+    margin: 5px 0;
 }
 
 .dropAndName {
