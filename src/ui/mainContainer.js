@@ -97,22 +97,6 @@ function handleCloseAll() {
         if (section.classList.contains('expanded')) {
             toggleSectionState(section);
         }
-        const itemRow = section.nextElementSibling.querySelectorAll('.itemRow');
-        if (itemRow) {
-            itemRow.forEach(item => {
-                if (item.classList.contains('expanded')) {
-                    toggleItemState(item, section.id);
-                }
-                const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader');
-                if (osRowHeader) {
-                    osRowHeader.forEach(os => {
-                        if (os.classList.contains('expanded')) {
-                            toggleOsState(os, section.id, item.id);
-                        }
-                    });
-                }
-            });
-        }
     });
 }
 
