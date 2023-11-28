@@ -9,7 +9,7 @@ import {
 import { createOsModalContainer } from "../modalContainer.js";
 
 
-function osNewButton(osBtnsCell, menuOs) {
+function osNewButton(osBtnsCell) {
     const newOsButton = document.createElement('button');
     newOsButton.classList.add('sectionButton')
     newOsButton.classList.add('newOsButton')

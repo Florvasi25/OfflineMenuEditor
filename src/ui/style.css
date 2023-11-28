@@ -1358,6 +1358,15 @@ selector svg {
     margin-bottom: 5px;
 }
 
+.addNewOsButton {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    align-items: center;
+    margin-left: 5px;
+}
+
 .osEditButtonImg {
     width: 25px;
 }

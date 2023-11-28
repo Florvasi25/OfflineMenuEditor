@@ -12,7 +12,7 @@ function createOsBtnsCell(menuOs) {
 
     osExpandListButton(osBtnsCell)
     
-    osNewButton(osBtnsCell, menuOs)
+    osNewButton(osBtnsCell)
 
     osDeleteButton(osBtnsCell, menuOs)
 
