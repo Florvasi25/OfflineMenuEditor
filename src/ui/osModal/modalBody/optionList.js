@@ -21,7 +21,6 @@ class OptionSetList {
         this.listElement = null;
         this.isVisible = false;
         this.parentElement = parentElement; //optionsBodyContainer
-
         this.initialize();
     }
 
@@ -33,8 +32,28 @@ class OptionSetList {
             } else {
                 this.toggleListVisibility();
             }
+            //this.osModalContainer = this.parentElement.parentElement;
         });
+    
+        window.addEventListener('resize', this.handleWindowResize.bind(this));
+
+        /*if(this.osModalContainer != null){
+            this.osModalContainer.addEventListener('scroll', this.handleContainerScroll.bind(this));
+        }*/
+            
     }
+
+    handleWindowResize() {
+        if (this.isVisible) {
+            this.positionList(); // Reposition the list when the window is resized
+        }
+    }
+    
+    /*handleContainerScroll() {
+        if (this.isVisible) {
+            this.positionList(); // Reposition the list when the container is scrolled
+        }
+    }*/
 
     createList() {
 
