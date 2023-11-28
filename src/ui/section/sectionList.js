@@ -97,25 +97,44 @@ class List {
 
         this.submitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            if(this.validateItemsFormat(this.textAreaGroupItems.value) && 
-                this.checkDuplicatedItems(this.textAreaGroupItems.value)){
-                const { itemsNotInJson , jsonItemsNotInText } = this.compareItems(this.textAreaGroupItems.value);
-                const sectionIndex = getSectionIndex(this.menuSection.MenuSectionId);
-                if(itemsNotInJson && itemsNotInJson.length > 0){
-                    this.createItems(itemsNotInJson, sectionIndex);
-                }
-                if(jsonItemsNotInText && jsonItemsNotInText.length > 0){
-                    this.deleteItems(jsonItemsNotInText, sectionIndex);
-                }
-                this.hideList();
-            }else{
-                this.errorMessage.style.display = 'block';
-                this.textAreaGroupItems.classList.add('error');
-            }
+            this.handleSubmitButtonClick(e)
         });
+
         return list;
     }
     
+    handleSubmitButtonClick(event) {
+        event.preventDefault();
+        if (this.validateInput()) {
+            this.processInput();
+        } else {
+            this.showErrorMessage();
+        }
+    }
+
+    validateInput() {
+        return this.validateItemsFormat(this.textAreaGroupItems.value) && 
+               this.checkDuplicatedItems(this.textAreaGroupItems.value);
+    }
+
+    processInput() {
+        const { itemsNotInJson, jsonItemsNotInText } = this.compareItems(this.textAreaGroupItems.value);
+        const sectionIndex = getSectionIndex(this.menuSection.MenuSectionId);
+
+        if (itemsNotInJson && itemsNotInJson.length > 0) {
+            this.createItems(itemsNotInJson, sectionIndex);
+        }
+        if (jsonItemsNotInText && jsonItemsNotInText.length > 0) {
+            this.deleteItems(jsonItemsNotInText, sectionIndex);
+        }
+        this.hideList();
+    }
+
+    showErrorMessage() {
+        this.errorMessage.style.display = 'block';
+        this.textAreaGroupItems.classList.add('error');
+    }
+
     getItems() {
         if (this.menuSection.MenuItems.length === 0) {
             return 'Empty;0.00';
@@ -340,6 +359,7 @@ class List {
     hideList() {
         if (this.listElement) {
             this.listElement.style.display = 'none';
+            this.listElement.classList.add('hidden');
         }
         document.removeEventListener('click', this.handleOutsideClick.bind(this), true);
     }
