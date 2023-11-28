@@ -4,22 +4,23 @@ import {
     createElementWithClasses
 } from '../../helpers.js';
 
-function createOptionSetListButton() {
+function createOptionSetListButton(optionsBodyContainer) {
     const listButton = createElementWithClasses('button', 'sectionButton', 'optionSetListButton');
     const listButtonImg = createElementWithClasses('img', 'sectionButtonImg');
     listButtonImg.src = '../../assets/listIcon.svg';
     listButton.appendChild(listButtonImg);
 
-    new OptionSetList(listButton);
+    new OptionSetList(listButton, optionsBodyContainer);
 
     return listButton;
 }
 
 class OptionSetList {
-    constructor(triggerElement) {
+    constructor(triggerElement, parentElement) {
         this.triggerElement = triggerElement;
         this.listElement = null;
         this.isVisible = false;
+        this.parentElement = parentElement; //optionsBodyContainer
 
         this.initialize();
     }
@@ -36,15 +37,8 @@ class OptionSetList {
     }
 
     createList() {
-        const rect = this.triggerElement.getBoundingClientRect();
-        const top = rect.bottom + window.scrollY; 
-        const right = window.innerWidth - rect.right; 
 
-        this.listElement = createAndAppend(document.body, 'div', 'list');
-        
-        this.listElement.style.top = `${top}px`;
-        this.listElement.style.right = `${right}px`;
-
+        this.listElement = createAndAppend(this.parentElement, 'div', 'list');
         const arrow = createAndAppend(this.listElement, 'div', 'arrow');
         const listTitle = createAndAppend(this.listElement, 'h3', 'list-title');
         addTextContent(listTitle, 'Modify group of items');
@@ -81,13 +75,57 @@ class OptionSetList {
         this.submitButton.addEventListener('click', (e) => {
             e.preventDefault();
         });
+
+        this.submitButton.addEventListener('click', (e) => 
+        {
+            e.preventDefault();
+            this.handleSubmitButtonClick(e)
+        });
+    }
+
+    handleSubmitButtonClick(event) {
+        event.preventDefault();
+        if (this.validateInput()) {
+            this.processInput();
+        } else {
+            this.showErrorMessage();
+        }
+    }
+
+    validateInput() {
+        console.log("ProcessInput");
+        /*return this.validateItemsFormat(this.textAreaGroupItems.value) && 
+               this.checkDuplicatedItems(this.textAreaGroupItems.value);*/
+    }
+
+    processInput() {
+        console.log("ProcessInput");
+        /*const { itemsNotInJson, jsonItemsNotInText } = this.compareItems(this.textAreaGroupItems.value);
+        const optionSetIndex = getOptionSetIndex(this.menuSection.MenuSectionId);
+
+        if (itemsNotInJson && itemsNotInJson.length > 0) {
+            this.createItems(itemsNotInJson, optionSetIndex);
+        }
+        if (jsonItemsNotInText && jsonItemsNotInText.length > 0) {
+            this.deleteItems(jsonItemsNotInText, optionSetIndex);
+        }
+        this.hideList();*/
+    }
+
+    showErrorMessage() {
+        this.errorMessage.style.display = 'block';
+        this.textAreaGroupItems.classList.add('error');
     }
 
     showList() {
         if (this.listElement) {
+
             this.listElement.style.display = 'block';
             this.listElement.classList.remove('hidden');
             this.isVisible = true;
+
+            this.positionList();
+            
         }
     }
 
@@ -97,6 +135,7 @@ class OptionSetList {
             this.listElement.classList.add('hidden');
             this.isVisible = false;
         }
+
     }
 
     toggleListVisibility() {
@@ -106,6 +145,29 @@ class OptionSetList {
             this.showList();
         }
     }
+
+    positionList() {
+        const rect = this.triggerElement.getBoundingClientRect();
+        // Assuming 'this.triggerElement' is inside the scrollable container.
+        const containerScrollTop = this.triggerElement.offsetParent.scrollTop;
+        const containerScrollLeft = this.triggerElement.offsetParent.scrollLeft;
+    
+        // Position the top of the modal just below the trigger element, considering the scroll position
+        const topPosition = rect.top + rect.height + containerScrollTop;
+    
+        // Calculate the left position so the modal aligns with the right side of the trigger element
+        // considering the scroll position
+        const leftPosition = rect.right - this.listElement.offsetWidth + containerScrollLeft;
+    
+        // Ensure the modal doesn't go off the left side of the container
+        const adjustedLeftPosition = Math.max(leftPosition, containerScrollLeft);
+    
+        this.listElement.style.position = 'fixed';
+        this.listElement.style.top = `${topPosition}px`;
+        this.listElement.style.left = `${adjustedLeftPosition}px`;
+    }
+    
+    
 }
 
 export { createOptionSetListButton }

@@ -31,7 +31,7 @@ function createOsModalBody(menuOs) {
     const topButtonsCell = createTopButtonsCell()
     optionsBodyContainer.appendChild(topButtonsCell)
     
-    const optionSetListButton = createOptionSetListButton()
+    const optionSetListButton = createOptionSetListButton(optionsBodyContainer)
     optionsBodyContainer.appendChild(optionSetListButton)
 
     createOptionRow(optionRowsContainer, menuOs)
