@@ -11,6 +11,8 @@ import { createOsNameCell } from '../osModal/modalNav/osName.js'
 
 import { createSelectOsModalContainer } from '../selectOsModal/selectOsModalContainer.js'
 
+import { osNewButton } from '../osModal/modalNav/osAddNew.js'
+
 function createOsContainer(itemRow, sectionId, itemId) {
     const osTable = document.createElement('div')
     osTable.className = 'osTable'
@@ -125,7 +127,7 @@ function addNewOs(itemRow) {
     newOsBtnContainer.className = 'newOsBtnContainer'
 
     const osEditButton = document.createElement('button')
-    osEditButton. className = 'osEditButton'
+    osEditButton.className = 'osEditButton'
     osEditButton.id = itemRow.id
 
     const editButtonImg = document.createElement('img')
@@ -143,8 +145,10 @@ function addNewOs(itemRow) {
             selectOsModalContainer.style.opacity = 1;
         }, 10);
     });
-
+    
     newOsBtnContainer.appendChild(osEditButton)
+    const addNewOsButton = osNewButton(newOsBtnContainer)
+    addNewOsButton.className = 'addNewOsButton'
 
     return newOsBtnContainer
 }
