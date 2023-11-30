@@ -10,7 +10,7 @@ function createOptionSetListButton(optionsBodyContainer) {
     listButtonImg.src = '../../assets/listIcon.svg';
     listButton.appendChild(listButtonImg);
 
-    new OptionSetList(listButton, optionsBodyContainer);
+    new OptionSetList(listButton, listButton);
 
     return listButton;
 }
@@ -181,7 +181,7 @@ class OptionSetList {
         // Ensure the modal doesn't go off the left side of the container
         const adjustedLeftPosition = Math.max(leftPosition, containerScrollLeft);
     
-        this.listElement.style.position = 'fixed';
+        //this.listElement.style.position = 'fixed';
         this.listElement.style.top = `${topPosition}px`;
         this.listElement.style.left = `${adjustedLeftPosition}px`;
     }

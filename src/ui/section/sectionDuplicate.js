@@ -12,7 +12,11 @@ import {
     getLocalStorageOptionSetIDs,
     getLocalStorageSectionIDs,
     getUniqueRandomInt,
-    groupOptionSets
+    groupOptionSets,
+    setOptionSetId, 
+    setOptionSetItemsId,
+    setOptionSetIdForSection,
+    setOptionSetItemsIdForSection
 } from '../context.js';
 
 import { createSection } from './sectionContainer.js'
@@ -62,7 +66,7 @@ function duplicateSection(sectionRow) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));
 
-        const section = newIDs(newSection);
+        const section = newIDs(newSection, originalSection.MenuSectionId);
 
         const newSectionRow = createSection(section);
 
@@ -77,7 +81,7 @@ function duplicateSection(sectionRow) {
     }
 }
 
-function newIDs(newSection){
+function newIDs(newSection, sectionId){
     const sectionIDs = getLocalStorageSectionIDs();
     const newSectionId = getUniqueRandomInt(sectionIDs);
     newSection.MenuSectionId = newSectionId;
@@ -92,28 +96,12 @@ function newIDs(newSection){
                 item.MenuItemId = newItemId;
                 item.MenuSectionId = newSectionId;
                 updateItemCounterLocalStorage(newItemId, true);
-
-                if (item.MenuItemOptionSets) {
-                    item.MenuItemOptionSets.forEach(optionSet => {
-                        if (optionSet) {
-                            const optionSetIds = getLocalStorageOptionSetIDs();
-                            const newOptionSetId = getUniqueRandomInt(optionSetIds);
-                            optionSet.MenuItemOptionSetId = newOptionSetId;
-                            optionSet.MenuItemId = newItemId
-                            updateOptionSetCounterLocalStorage(newOptionSetId, true);
-
-                            if (optionSet.MenuItemOptionSetItems) {
-                                optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
-                                    if (optionSetItem) {
-                                        const optionSetItemsIds = getLocalStorageOptionSetItemsIDs();
-                                        const newOptionSetItemId = getUniqueRandomInt(optionSetItemsIds);
-                                        updateOptionSetItemsCounterLocalStorage(newOptionSetItemId, true);
-                                        optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
-                                    }
-                                });
-                            }
-                        }
-                    });
+                if( item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0)
+                {
+                    //setOptionSetId(jsonData);
+                    let map = setOptionSetIdForSection(sectionId);
+                    setOptionSetItemsIdForSection(sectionId, map);
+                    //setOptionSetItemsId(jsonData);
                 }
             }
         });

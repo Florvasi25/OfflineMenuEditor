@@ -102,6 +102,12 @@ main {
     margin-left: auto;
     margin-right: 45px;
     transition: background-color 0.3s ease;
+    display: inline-block;
+    position: relative;
+
+    pointer-events: none; 
+    opacity: 0.5; 
+    cursor: default;
 }
 
 .optionSetListButton:hover{
@@ -1144,9 +1150,14 @@ selector svg {
     padding: 10px;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    position: fixed;
+    /*position: fixed;*/
     z-index: 1000;
     border-radius: 10px;
+    position: absolute;
+    top: 100%; /* This places it just below the button */
+    left: 0; /* Aligns it to the left of the button */
+    /* Set width or other properties as needed */
+    display: block;
 }
 
 

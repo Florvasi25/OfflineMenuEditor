@@ -165,7 +165,6 @@ function setOptionSetItemsId(jsonData) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                     optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-
                     
                     if (optionSetItem.NextMenuItemOptionSetId !== null) {
                         const newNextId = window.optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
@@ -182,6 +181,56 @@ function setOptionSetItemsId(jsonData) {
     updateLocalStorage();
 }
 
+
+function setOptionSetIdForSection(sectionId) {
+    var itemIDInOS;
+    var optionSetIdMap = {}; // Local map to store ID mapping
+
+    for (const section of jsonData.MenuSections) {
+        if (section.MenuSectionId == sectionId) {
+            for (const item of section.MenuItems) {
+                itemIDInOS = item.MenuItemId;
+                for (const optionSet of item.MenuItemOptionSets) {
+                    const oldId = optionSet.MenuItemOptionSetId;
+                    const newId = getRandomInt();
+
+                    optionSet.MenuItemId = itemIDInOS;
+                    optionSet.MenuItemOptionSetId = newId;
+
+                    optionSetIdMap[oldId] = newId; // Map old ID to new ID in the local map
+
+                    updateOptionSetCounterLocalStorage(newId, true);
+                }
+            }
+        }
+    }
+    updateLocalStorage();
+    return optionSetIdMap; // Return the map
+}
+
+function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
+    for (const section of jsonData.MenuSections) {
+        if (section.MenuSectionId == sectionId) {
+            for (const item of section.MenuItems) {
+                for (const optionSet of item.MenuItemOptionSets) {
+                    for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
+                        optionSetItem.MenuItemOptionSetItemId = getRandomInt();
+                        
+                        if (optionSetItem.NextMenuItemOptionSetId !== null) {
+                            const newNextId = optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
+                            if (newNextId) {
+                                optionSetItem.NextMenuItemOptionSetId = newNextId;
+                            }
+                        }
+    
+                        updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true);
+                    }
+                }
+            }
+        }
+    }
+    updateLocalStorage();
+}
 
 
 function setSectionDisplayOrder(jsonData) {
@@ -367,5 +416,7 @@ export {
     addItemlessOs,
     deleteItemlessOs,
     updateItemlessLocalStorage,
-    getSectionRow
+    getSectionRow,
+    setOptionSetIdForSection,
+    setOptionSetItemsIdForSection
 }

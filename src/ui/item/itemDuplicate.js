@@ -11,6 +11,8 @@ import {
     setSectionDisplayOrder,
     getUniqueRandomInt,
     groupOptionSets,
+    setOptionSetIdForSection,
+    setOptionSetItemsIdForSection
 } from '../context.js';
 
 import { createItem } from './itemContainer.js'
@@ -61,7 +63,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
     if (itemIndex !== -1) {
         const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
         const newItem = JSON.parse(JSON.stringify(originalItem));
-        const item = newIDs(newItem);
+        const item = newIDs(newItem, sectionId);
         const newItemRow = createItem(item, sectionId, itemContainer);
         
         itemContainer.insertBefore(newItemRow, itemRow.nextSibling);
@@ -76,33 +78,15 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
     }
 }
 
-function newIDs(newItem){
+function newIDs(newItem, sectionId){
     const itemIds = getLocalStorageItemIDs();
     const newItemId = getUniqueRandomInt(itemIds);
     newItem.MenuItemId = newItemId;
     newItem.PublicId = crypto.randomUUID();
-
-    if (newItem.MenuItemOptionSets) {
-        newItem.MenuItemOptionSets.forEach(optionSet => {
-            if (optionSet) {
-                const optionSetIds = getLocalStorageOptionSetIDs();
-                const newOptionSetId = getUniqueRandomInt(optionSetIds);
-                optionSet.MenuItemOptionSetId = newOptionSetId;
-                optionSet.MenuItemId = newItemId;
-                updateOptionSetCounterLocalStorage(newOptionSetId, true);
-
-                if (optionSet.MenuItemOptionSetItems) {
-                    optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
-                        if (optionSetItem) {
-                            const optionSetItemsIds = getLocalStorageOptionSetItemsIDs();
-                            const newOptionSetItemId = getUniqueRandomInt(optionSetItemsIds);
-                            updateOptionSetItemsCounterLocalStorage(newOptionSetItemId, true);
-                            optionSetItem.MenuItemOptionSetItemId = newOptionSetItemId; 
-                        }
-                    });
-                }
-            }
-        });
+    if( newItem.MenuItemOptionSets && newItem.MenuItemOptionSets.length > 0)
+    {
+        let map = setOptionSetIdForSection(sectionId);
+        setOptionSetItemsIdForSection(sectionId, map);
     }
 
     updateItemCounterLocalStorage(newItemId, true);
