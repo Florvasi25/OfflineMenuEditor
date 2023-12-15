@@ -42,6 +42,9 @@ function createItemName(itemRow, menuItem, sectionId) {
     });
 
     itemName.addEventListener('click', () => {
+        if (itemName.textContent == "Empty") {
+            itemName.textContent = ""
+        }
         itemName.classList.add('sectionClicked')
     })
 
