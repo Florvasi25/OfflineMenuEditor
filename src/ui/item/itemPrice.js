@@ -44,6 +44,9 @@ function createItemPrice(itemRow, menuItem, sectionId) {
     });
 
     itemPrice.addEventListener('click', () => {
+        if (itemPrice.textContent == "0.00") {
+            itemPrice.textContent = ""
+        }
         itemPrice.classList.add('sectionClicked');
     });
 

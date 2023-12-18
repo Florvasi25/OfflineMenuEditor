@@ -148,6 +148,8 @@ main {
 
 .sectionClicked {
     background-color: #ffffff;
+    display: flex;
+    align-items: center;
     padding: 2px;
 }
 
@@ -668,6 +670,7 @@ selector svg {
 
 .optionPriceCell {
     border: solid 1px #ffffff;
+    width: 50px;
     flex-grow: 0;
     padding: 5px;
     display: flex;
@@ -678,6 +681,11 @@ selector svg {
 .optionPrice {
     font-size: 12px;
     padding: 0 5px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */

@@ -62,6 +62,9 @@ function createOptionPrice(menuOption, menuOs) {
     });
 
     optionPrice.addEventListener('click', () => {
+        if (optionPrice.textContent == "0.00") {
+            optionPrice.textContent = ""
+        }
         optionPrice.classList.add('sectionClicked');
     });
 
