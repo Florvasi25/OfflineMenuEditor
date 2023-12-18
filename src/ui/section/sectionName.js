@@ -20,9 +20,9 @@ function createSectionName(sectionRow, menuSection) {
     const sectionName = document.createElement('p');
     sectionName.classList.add('sectionName');
     sectionName.contentEditable = true;
-    sectionName.textContent = menuSection.Name;
+    sectionName.textContent = menuSection.Name.toUpperCase();
 
-    let originalName = menuSection.Name;
+    let originalName = menuSection.Name.toUpperCase();
 
     sectionName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -51,7 +51,7 @@ function createSectionName(sectionRow, menuSection) {
 //Updates Name
 function updateName(sectionId, sectionName) {
     const sectionIndex = getSectionIndex(sectionId);
-    jsonData.MenuSections[sectionIndex].Name = sectionName;
+    jsonData.MenuSections[sectionIndex].Name = sectionName.toUpperCase();
 
     updateLocalStorage()
 }
