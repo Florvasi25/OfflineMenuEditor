@@ -98,20 +98,9 @@ main {
 
 /*OPTION SET LIST - OPTION SET LIST - OPTION SET LIST */
 
-.sectionButton.optionSetListButton {
-    margin-left: auto;
-    margin-right: 45px;
-    transition: background-color 0.3s ease;
-    display: inline-block;
+.optionsBodyContainer { 
     position: relative;
 
-    pointer-events: none; 
-    opacity: 0.5; 
-    cursor: default;
-}
-
-.optionSetListButton:hover{
-    background-color: #b1b1b1;
 }
 
 .optionSetList{

@@ -112,4 +112,4 @@ function updatePreview(indexOfOption, menuOs) {
     }
 }
 
-export { optionDeleteButton }
+export { optionDeleteButton, deleteOption }
