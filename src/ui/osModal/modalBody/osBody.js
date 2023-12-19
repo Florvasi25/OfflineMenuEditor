@@ -21,7 +21,7 @@ import { createOptionButton } from './optionAddNew.js'
 
 import { createOptionSetListButton } from './optionList.js'
 
-function createOsModalBody(menuOs) {
+function createOsModalBody(menuOs, sectionId, itemId) {
     const optionsBodyContainer = document.createElement('div')
     optionsBodyContainer.className = 'optionsBodyContainer'
     const optionRowsContainer = document.createElement('div')
@@ -30,12 +30,12 @@ function createOsModalBody(menuOs) {
 
     const topButtonsCell = createTopButtonsCell()
     optionsBodyContainer.appendChild(topButtonsCell)
-    
-    const optionSetListButton = createOptionSetListButton(optionsBodyContainer)
-    optionsBodyContainer.appendChild(optionSetListButton)
 
     createOptionRow(optionRowsContainer, menuOs)
     setDragListeners(optionRowsContainer, menuOs)
+
+    const optionSetListButton = createOptionSetListButton(menuOs, optionRowsContainer)
+    optionsBodyContainer.appendChild(optionSetListButton)
     
     optionsBodyContainer.appendChild(optionRowsContainer)
     

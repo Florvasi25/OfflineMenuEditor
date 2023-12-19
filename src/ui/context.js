@@ -326,6 +326,9 @@ function getSectionRow(menuSectionId){
     return sectionRow;
 }
 
+function getMenuSection(jsonData, menuSectionId){
+    return jsonData.MenuSections.find(section => section.MenuSectionId.toString() === menuSectionId) || null;
+}
 function getGroupOsKey(os) {
     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
     const osLength = MenuItemOptionSetItems.length;
@@ -356,7 +359,6 @@ function groupOptionSets() {
             });
         });
     });
-    console.log('groupedOs', groupedOs);
     updateLocalStorage();
 }
 
@@ -417,6 +419,7 @@ export {
     deleteItemlessOs,
     updateItemlessLocalStorage,
     getSectionRow,
+    getMenuSection,
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection
 }

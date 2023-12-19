@@ -122,4 +122,4 @@ function updatePreview(menuOs, emptyOptionJson) {
     }
 }
 
-export { createOptionButton };
+export { createOptionButton, updatePreview };
