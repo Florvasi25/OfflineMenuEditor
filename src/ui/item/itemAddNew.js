@@ -9,6 +9,10 @@ import {
     getSectionIndex,
 } from '../context.js';
 
+import {
+    toggleItemState
+} from './itemDropDown.js'
+
 function createItemButton(itemContainer, sectionId) {
     const newItemButton = document.createElement('button')
     newItemButton.className = 'itemAddNew'
@@ -65,8 +69,9 @@ function CreateItem(itemContainer, item, sectionIndex, sectionId, newId){
     let itemRow = createItem(item, sectionId, itemContainer)
     
     itemContainer.appendChild(itemRow);
-
+    
     jsonData.MenuSections[sectionIndex].MenuItems.push(item)
+    toggleItemState(itemRow, sectionId)
 
     updateLocalStorage()
     updateItemCounterLocalStorage(newId, true);

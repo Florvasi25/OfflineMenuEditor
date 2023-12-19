@@ -8,6 +8,8 @@ import {
     getUniqueRandomInt,
 } from '../context.js';
 
+import { toggleSectionState } from "./sectionDropDown.js";
+
 function createSectionButton() {
     const newSectionButton = document.createElement('button')
     newSectionButton.className = 'sectionAddNew'
@@ -46,6 +48,8 @@ function createSectionButton() {
         document.getElementById('sectionContainer').appendChild(sectionRow);
     
         jsonData.MenuSections.push(emptySectionJson)
+        toggleSectionState(sectionRow);
+
         updateLocalStorage()
         updateCounterLocalStorage(newId, true);
     
