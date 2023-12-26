@@ -971,13 +971,15 @@ selector svg {
     padding: 15px;
     text-align: center;
 }
+
 .clockBtn-close {
-    padding-right: 15px;
+    position: absolute; 
     color: #ffffff;
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
     cursor: pointer;
-    display: flex;
-    justify-content: end;
-    font-size: 15px;
+    padding: 5px;
 }
 
 .clockBtn-close:hover {
@@ -1126,6 +1128,80 @@ selector svg {
     margin-top: 15px;
     padding: 15px 25px;
     width: auto;
+}
+
+/*DROPDOWNMENU CLOCK - DROPDOWNMENU CLOCK - DROPDOWNMENU CLOCK - DROPDOWNMENU CLOCK*/
+.dropdownmenucollapsed {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdownmenu-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    right: 0; 
+    top: 100%; 
+}
+
+
+  .showdropdownmenu {
+    display: block;
+  }
+
+
+  .radio-option-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.radio-button {
+    margin-right: 5px; 
+}
+
+.radio-option-label {
+    flex-grow: 1;
+    word-wrap: break-word;
+    font-size: 12px;
+}
+
+  .buttondropdownmenucollapsed {
+    background-color: #342f58;
+    color: white; 
+    font-weight: bold; 
+    border: none; 
+    padding: 5px 10px; 
+    font-size: 14px; 
+    cursor: pointer; 
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-right: 10px; 
+}
+
+.clock-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-top {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    position: relative; 
+}
+
+.header-bottom {
+    width: 100%; 
+    display: flex;
+    justify-content: flex-end; 
 }
 
 /*SECTION LIST - SECTION LIST - SECTION LIST*/

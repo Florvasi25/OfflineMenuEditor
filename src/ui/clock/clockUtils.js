@@ -17,6 +17,10 @@ import {
     addTextContent
 }  from '../helpers.js';
 
+import {
+    createDropDownMenu
+}  from './collapsedTime.js';
+
 const dayMappingToName = {
     0: 'Sunday',
     1: 'Monday',
@@ -43,13 +47,16 @@ function createClockBody() {
     const clockDialogDiv = createAndAppend(clockModalDiv, 'div', 'clock-dialog');
     const clockContentDiv = createAndAppend(clockDialogDiv, 'div', 'clock-content');
     const clockHeaderDiv = createAndAppend(clockContentDiv, 'div', 'clock-header');
-    const clockTitle = createAndAppend(clockHeaderDiv, 'h5', 'clock-title');
+    const clockHeaderTopDiv = createAndAppend(clockHeaderDiv, 'div', 'header-top');
+    const clockHeaderBottomDiv = createAndAppend(clockHeaderDiv, 'div', 'header-bottom');
+    const clockTitle = createAndAppend(clockHeaderTopDiv, 'h5', 'clock-title');
     addTextContent(clockTitle, 'Menu Section Hours');
-    const clockCloseIcon = createAndAppend(clockHeaderDiv, 'div', 'clockBtn-close');
+    const clockCloseIcon = createAndAppend(clockHeaderTopDiv, 'div', 'clockBtn-close');
     clockCloseIcon.innerHTML = 'X';
     clockCloseIcon.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
+    const dropdownMenu = createDropDownMenu(clockHeaderBottomDiv);
     clockModalDiv.style.display = 'block';
     
     return {
