@@ -22,7 +22,7 @@ function createOptionPrice(menuOption, menuOs) {
     const optionPrice = document.createElement('p');
     optionPrice.classList.add('optionPrice');
     optionPrice.contentEditable = true;
-    
+
     const priceAsNumber = parseFloat(menuOption.Price);
     optionPrice.textContent = isNaN(priceAsNumber) ? '' : priceAsNumber.toFixed(2);
 
@@ -31,15 +31,24 @@ function createOptionPrice(menuOption, menuOs) {
     optionPrice.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
+            let enteredPrice = optionPrice.textContent.trim();
+            const regex = /^\d+(\.\d{1,})?$/; // Updated regex to allow one or more decimals
+    
+            if (regex.test(enteredPrice)) {
+                // Ensure only two decimals are kept
+                const roundedPrice = parseFloat(enteredPrice).toFixed(2);
+                optionPrice.textContent = roundedPrice;
+            } else {
+                // Reset to original price if format is incorrect
+                optionPrice.textContent = originalPrice.toFixed(2);
+            }
             originalPrice = parseFloat(optionPrice.textContent);
-            optionPrice.blur();
     
             const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
                 option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
-            )
-
+            );
             updatePrice(indexOfOption, menuOs, optionPrice.textContent);
-            
+    
             if (groupedOs[menuOs.groupOsId]) {
                 const optionsIds = groupedOs[menuOs.groupOsId].map(
                     os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
@@ -47,14 +56,17 @@ function createOptionPrice(menuOption, menuOs) {
                 const optionPricePreviewArray = Array.from(document.getElementsByClassName('optionPricePreview'));
                 const optionPricePreview = optionPricePreviewArray.filter(p => optionsIds.includes(p.id));
                 optionPricePreview.forEach(os => {
-                    os.textContent = menuOption.Price.toFixed(2)
-                })
+                    os.textContent = parseFloat(optionPrice.textContent).toFixed(2);
+                });
             }
+    
+            optionPrice.blur();
         } else if (e.key === 'Escape') {
             optionPrice.textContent = originalPrice.toFixed(2);
             optionPrice.blur();
         }
     });
+    
 
     optionPrice.addEventListener('blur', () => {
         optionPrice.textContent = originalPrice.toFixed(2);
@@ -62,17 +74,43 @@ function createOptionPrice(menuOption, menuOs) {
     });
 
     optionPrice.addEventListener('click', () => {
-        if (optionPrice.textContent == "0.00") {
-            optionPrice.textContent = ""
+        if (optionPrice.textContent == '0.00') {
+            optionPrice.textContent = '';
         }
         optionPrice.classList.add('sectionClicked');
     });
 
     optionPrice.addEventListener('input', () => {
-        const newPrice = optionPrice.textContent;
-        const removeCharacters = newPrice.replace(/[^\d.]/g, '');
-        optionPrice.textContent = removeCharacters;
+        let newPrice = optionPrice.textContent;
+    
+        // Remove any characters that are not numbers or a dot after the first number
+        newPrice = newPrice.replace(/[^\d.]/g, '');
+    
+        // Check if the new price starts with a dot or doesn't start with a number
+        if (newPrice.startsWith('.') || !/^\d/.test(newPrice)) {
+            newPrice = '';
+        }
+    
+        // Check if there is more than one dot in the input
+        const dotIndex = newPrice.indexOf('.');
+        if (dotIndex !== -1) {
+            const afterDot = newPrice.substr(dotIndex + 1);
+            if (afterDot.includes('.')) {
+                // Remove additional dots after the first one
+                newPrice = newPrice.slice(0, dotIndex + afterDot.indexOf('.') + 1);
+            }
+        }
+    
+        optionPrice.textContent = newPrice;
     });
+    
+    
+    
+    
+    
+    
+    
+    
 
     return optionPrice;
 }
