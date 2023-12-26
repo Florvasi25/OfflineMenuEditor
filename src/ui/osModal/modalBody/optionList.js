@@ -51,7 +51,11 @@ class OptionSetList {
     }
 
     initialize() {
-        this.triggerElement.addEventListener('click', () => {
+        this.triggerElement.addEventListener('click', () => {    
+            if (document.activeElement === this.textAreaGroupItems) {
+                return;
+            }
+    
             if (!this.listElement) {
                 this.createList();
                 this.showList();
@@ -59,8 +63,6 @@ class OptionSetList {
                 this.toggleListVisibility();
             }
         });
-
-            
     }
 
     createList() {
@@ -110,6 +112,7 @@ class OptionSetList {
         this.textAreaGroupItems.addEventListener('click', (e) => {
             e.stopPropagation(); 
         });
+
     }
 
     getItems() {
@@ -347,7 +350,7 @@ class OptionSetList {
             this.textAreaGroupItems.value = this.getItems();
             this.isVisible = true;
         }
-        document.addEventListener('click', this.handleOutsideClick.bind(this), true);
+        
     }
 
     hideList() {
@@ -357,7 +360,7 @@ class OptionSetList {
             this.clearErrorMessage();
             this.isVisible = false;
         }
-        document.removeEventListener('click', this.handleOutsideClick.bind(this), true);
+
     }
 
     toggleListVisibility() {
@@ -377,13 +380,6 @@ class OptionSetList {
             this.textAreaGroupItems.style.display = 'block';
         }
     }
-
-    handleOutsideClick(event) {
-        if (!this.listElement.contains(event.target) && !this.triggerElement.contains(event.target)) {
-            this.hideList();
-        }
-    }
-    
 }
 
 export { createOptionSetListButton }

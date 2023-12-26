@@ -35,7 +35,7 @@ function createOsModalBody(menuOs, sectionId, itemId) {
     setDragListeners(optionRowsContainer, menuOs)
 
     const optionSetListButton = createOptionSetListButton(menuOs, optionRowsContainer)
-    optionsBodyContainer.appendChild(optionSetListButton)
+    topButtonsCell.appendChild(optionSetListButton)
     
     optionsBodyContainer.appendChild(optionRowsContainer)
     
