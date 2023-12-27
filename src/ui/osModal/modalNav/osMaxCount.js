@@ -44,8 +44,15 @@ function createMaxCount(menuOs) {
             e.preventDefault();
             const newMaxOsCount = maxCount.textContent.trim();
 
+            const optionsArray = Array.from(document.getElementsByClassName('optionRow'));
+            const optionsLength = optionsArray.length;
+
             if (newMaxOsCount === '' || isNaN(newMaxOsCount) || parseInt(newMaxOsCount) === 0) {
                 showToolTip(maxCount, 'MaxCount cannot be Empty or 0');
+                maxCount.textContent = originalName; // Revert back to the original number
+                return;
+            } else if (parseInt(newMaxOsCount) > optionsLength) {
+                showToolTip(maxCount, 'MaxCount cannot be greater than the length of Options');
                 maxCount.textContent = originalName; // Revert back to the original number
                 return;
             } else {
@@ -86,6 +93,14 @@ function createMaxCount(menuOs) {
 
 // Updates MaxCount
 function updateMaxCount(menuOs, osMaxCount) {
+    const optionsArray = Array.from(document.getElementsByClassName('optionRow'));
+    const optionsLength = optionsArray.length;
+
+    if (parseInt(osMaxCount) > optionsLength) {
+        showToolTip(maxCount, 'MaxCount cannot be greater than the length of Options');
+        return;
+    }
+
     if (groupedOs[menuOs.groupOsId]) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.MaxSelectCount = osMaxCount

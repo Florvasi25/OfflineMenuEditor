@@ -20,7 +20,18 @@ function showToolTip(element, message) {
     element.addEventListener('mouseleave', () => {
         tooltip.style.display = 'none';
     });
+
+    const tooltipTimer = setTimeout(() => {
+        tooltip.style.display = 'none';
+    }, 2000);
+
+    // Clear the timeout if the user hovers over the tooltip before it disappears
+    tooltip.addEventListener('mouseenter', () => {
+        clearTimeout(tooltipTimer);
+    });
 }
+
+
 
 function removeToolTip(element) {
     const tooltip = element.querySelector('.tooltip');
