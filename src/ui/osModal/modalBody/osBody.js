@@ -21,7 +21,7 @@ import { createOptionButton } from './optionAddNew.js'
 
 import { createOptionSetListButton } from './optionList.js'
 
-function createOsModalBody(menuOs, sectionId, itemId) {
+function createOsModalBody(menuOs) {
     const optionsBodyContainer = document.createElement('div')
     optionsBodyContainer.className = 'optionsBodyContainer'
     const optionRowsContainer = document.createElement('div')
