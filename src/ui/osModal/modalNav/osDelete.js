@@ -125,4 +125,7 @@ function updatePreview(osIds) {
     });
 }
 
-export { osDeleteButton }
+export { 
+    osDeleteButton,
+    deleteOs
+}

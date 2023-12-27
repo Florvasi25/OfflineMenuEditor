@@ -8,6 +8,10 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js';
 
+import {
+    deleteOs
+} from '../modalNav/osDelete.js'
+
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
@@ -97,6 +101,11 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
     }
 
     setColorOfRows(optionRowsContainer)
+
+    // Check if there are no more options in menuOs
+    if (menuOs.MenuItemOptionSetItems.length === 0) {
+        deleteOs(menuOs); // Call deleteOs function
+    }
 }
 
 function updatePreview(indexOfOption, menuOs) {
