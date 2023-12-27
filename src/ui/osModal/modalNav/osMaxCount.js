@@ -56,7 +56,14 @@ function createMaxCount(menuOs) {
             maxCount.blur();
             updateMaxCount(menuOs, newMaxOsCount);
 
-            // Rest of your logic...
+            if (groupedOs[menuOs.groupOsId]) {
+                const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+                const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
+                const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));
+                maxSelectCount.forEach(os => {
+                    os.textContent = menuOs.MaxSelectCount
+                })
+            }
         } else if (e.key === 'Escape') {
             maxCount.textContent = originalName;
             maxCount.blur();
@@ -76,6 +83,7 @@ function createMaxCount(menuOs) {
 
     return maxCount;
 }
+
 // Updates MaxCount
 function updateMaxCount(menuOs, osMaxCount) {
     if (groupedOs[menuOs.groupOsId]) {
