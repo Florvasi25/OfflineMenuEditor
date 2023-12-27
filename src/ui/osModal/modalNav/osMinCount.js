@@ -6,6 +6,11 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js'
 
+import {
+    showToolTip,
+    removeToolTip
+} from '../../toolTip.js'
+
 function createMinCountCell(menuOs) {
     //Name Cell
     const minCountCell = document.createElement('div');
@@ -30,6 +35,17 @@ function createMinCount(menuOs) {
     minCount.textContent = menuOs.MinSelectCount;
 
     let originalMinCount = menuOs.MinSelectCount;
+
+    minCount.addEventListener('input', (e) => {
+        let inputValue = e.target.textContent.trim();
+        const regex = /^\d*$/; // Regular expression to match only digits
+
+        if (!regex.test(inputValue)) {
+            e.target.textContent = originalMinCount; // Revert to the original value if non-numeric input is entered
+        } else {
+            originalMinCount = inputValue;
+        }
+    });
 
     minCount.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
