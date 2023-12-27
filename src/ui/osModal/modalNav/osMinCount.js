@@ -36,24 +36,32 @@ function createMinCount(menuOs) {
 
     let originalMinCount = menuOs.MinSelectCount;
 
-    minCount.addEventListener('input', (e) => {
-        let inputValue = e.target.textContent.trim();
-        const regex = /^\d*$/; // Regular expression to match only digits
-
-        if (!regex.test(inputValue)) {
-            e.target.textContent = originalMinCount; // Revert to the original value if non-numeric input is entered
-        } else {
-            originalMinCount = inputValue;
-        }
-    });
-
     minCount.addEventListener('keydown', (e) => {
+        const inputKey = e.key;
+        const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
         if (e.key === 'Enter') {
             e.preventDefault();
-            const newMinOsCount = minCount.textContent;
-            originalMinCount = newMinOsCount;
-            minCount.blur();
+            const newMinOsCount = minCount.textContent.trim();
+            // originalMinCount = newMinOsCount;
 
+            const optionsArray = Array.from(document.getElementsByClassName('optionRow'));
+            const optionsLength = optionsArray.length;
+
+            if (newMinOsCount === '' || isNaN(newMinOsCount)) {
+                showToolTip(minCount, 'MinCount cannot be Empty');
+                minCount.textContent = originalMinCount; // Revert back to the original number
+                return;
+            } else if (parseInt(newMinOsCount) > optionsLength) {
+                showToolTip(minCount, 'MinCount cannot be greater than the length of Options');
+                minCount.textContent = originalMinCount; // Revert back to the original number
+                return;
+            } else {
+                removeToolTip(minCount);
+                originalMinCount = newMinOsCount; // Update the original number
+            }
+
+            minCount.blur();
             updateMinCount(menuOs, newMinOsCount);
 
             if (groupedOs[menuOs.groupOsId]) {
@@ -67,6 +75,8 @@ function createMinCount(menuOs) {
         } else if (e.key === 'Escape') {
             minCount.textContent = originalMinCount;
             minCount.blur();
+        } else if (!allowedKeys.includes(inputKey) && inputKey !== 'Backspace' && inputKey !== 'Delete' && inputKey !== 'ArrowLeft' && inputKey !== 'ArrowRight') {
+            e.preventDefault(); // Prevent typing characters other than numbers
         }
     });
 

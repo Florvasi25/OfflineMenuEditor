@@ -34,7 +34,7 @@ function createMaxCount(menuOs) {
     maxCount.contentEditable = true;
     maxCount.textContent = menuOs.MaxSelectCount;
 
-    let originalName = menuOs.MaxSelectCount;
+    let originalMaxCount = menuOs.MaxSelectCount;
 
     maxCount.addEventListener('keydown', (e) => {
         const inputKey = e.key;
@@ -49,15 +49,15 @@ function createMaxCount(menuOs) {
 
             if (newMaxOsCount === '' || isNaN(newMaxOsCount) || parseInt(newMaxOsCount) === 0) {
                 showToolTip(maxCount, 'MaxCount cannot be Empty or 0');
-                maxCount.textContent = originalName; // Revert back to the original number
+                maxCount.textContent = originalMaxCount; // Revert back to the original number
                 return;
             } else if (parseInt(newMaxOsCount) > optionsLength) {
                 showToolTip(maxCount, 'MaxCount cannot be greater than the length of Options');
-                maxCount.textContent = originalName; // Revert back to the original number
+                maxCount.textContent = originalMaxCount; // Revert back to the original number
                 return;
             } else {
                 removeToolTip(maxCount);
-                originalName = newMaxOsCount; // Update the original number
+                originalMaxCount = newMaxOsCount; // Update the original number
             }
 
             maxCount.blur();
@@ -72,7 +72,7 @@ function createMaxCount(menuOs) {
                 })
             }
         } else if (e.key === 'Escape') {
-            maxCount.textContent = originalName;
+            maxCount.textContent = originalMaxCount;
             maxCount.blur();
         } else if (!allowedKeys.includes(inputKey) && inputKey !== 'Backspace' && inputKey !== 'Delete' && inputKey !== 'ArrowLeft' && inputKey !== 'ArrowRight') {
             e.preventDefault(); // Prevent typing characters other than numbers
@@ -80,7 +80,7 @@ function createMaxCount(menuOs) {
     });
 
     maxCount.addEventListener('blur', () => {
-        maxCount.textContent = originalName;
+        maxCount.textContent = originalMaxCount;
         maxCount.classList.remove('sectionClicked');
     });
 
@@ -93,22 +93,14 @@ function createMaxCount(menuOs) {
 
 // Updates MaxCount
 function updateMaxCount(menuOs, osMaxCount) {
-    const optionsArray = Array.from(document.getElementsByClassName('optionRow'));
-    const optionsLength = optionsArray.length;
-
-    if (parseInt(osMaxCount) > optionsLength) {
-        showToolTip(maxCount, 'MaxCount cannot be greater than the length of Options');
-        return;
-    }
-
     if (groupedOs[menuOs.groupOsId]) {
         groupedOs[menuOs.groupOsId].forEach(os => {
-            os.MaxSelectCount = osMaxCount
+            os.MaxSelectCount = Number(osMaxCount)
         })
         groupOptionSets()
         updateLocalStorage()
     } else if (itemlessOs.includes(menuOs)){
-        menuOs.MaxSelectCount = osMaxCount
+        menuOs.MaxSelectCount = Number(osMaxCount)
         updateItemlessLocalStorage();
     }
 }

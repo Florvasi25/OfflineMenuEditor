@@ -26,7 +26,7 @@ function showToolTip(element, message) {
     }, 2000);
 
     // Clear the timeout if the user hovers over the tooltip before it disappears
-    tooltip.addEventListener('mouseenter', () => {
+    element.addEventListener('mouseenter', () => {
         clearTimeout(tooltipTimer);
     });
 }
