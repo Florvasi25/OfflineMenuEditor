@@ -59,7 +59,6 @@ function createOptionPrice(menuOption, menuOs) {
                     os.textContent = parseFloat(optionPrice.textContent).toFixed(2);
                 });
             }
-    
             optionPrice.blur();
         } else if (e.key === 'Escape') {
             optionPrice.textContent = originalPrice.toFixed(2);
@@ -103,14 +102,6 @@ function createOptionPrice(menuOption, menuOs) {
     
         optionPrice.textContent = newPrice;
     });
-    
-    
-    
-    
-    
-    
-    
-    
 
     return optionPrice;
 }
