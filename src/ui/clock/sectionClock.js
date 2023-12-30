@@ -2,7 +2,12 @@ import {
     jsonData, 
     getRandomInt, 
     updateLocalStorage,
+    getSectionIndex
 } from '../context.js'
+
+import {
+    removeAvailabilityTimes
+} from './sectionAvailability.js'
 
 import {
     createClockBody,
@@ -12,6 +17,12 @@ import {
     processSaveChanges,
     removeSectionTimetable
 } from './clockUtils.js'
+
+import {
+    createDropDownMenu,
+    getAvailabilityMode,
+    blockTimeTable
+} from './collapsedTime.js'
 
 import {
     createAndAppend,  
@@ -27,22 +38,26 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
     clockButtonImg.src = '../../assets/clockIcon.svg';
    
     clockButton.addEventListener('click', () => {
-        const clockElements = createClockBody();
+        const section = getSection(jsonData, sectionId);  
+        const sectionIndex = getSectionIndex(sectionId);
+        const clockElements = createClockBody(sectionId, sectionIndex);
         const clockModalDiv = clockElements.clockModalDiv;
         const clockBodyDiv = clockElements.clockBodyDiv;
         const clockFooterDiv = clockElements.clockFooterDiv;
-        
-        const section = getSection(jsonData, sectionId);    
+        const clockHeaderBottomDiv = clockElements.clockHeaderBottomDiv;
+          
         const availabilityContainer = createAndAppend(clockFooterDiv, 'div', 'availability-container');
         const actionButtonsContainer = createAndAppend(clockFooterDiv, 'div', 'action-buttons');
+
         if(compareDailySpecialHours(section)) {
+            createDropDownMenu(clockHeaderBottomDiv, sectionIndex);
             addSectionAvailabilityButton(availabilityContainer, section);
             const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
             addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
-            createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
+            createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId, sectionIndex);
         } else {
             showErrorMessage(clockBodyDiv);
-            appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId);
+            appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex);
             clockButton.style.backgroundColor = 'yellow';
         }
     });
@@ -80,6 +95,7 @@ function addSaveChangesButton(parentElement) {
         if (clockRemoveBtn.classList.contains('removeBtn-disabled')) { return; }
         if(removeSectionTimetable(jsonData, sectionId)) { 
             clockModalDiv.style.display = 'none'; 
+            removeAvailabilityTimes(sectionId);
             resetSectionClockIcons(sectionId);
             resetItemsClockIcons(sectionId);
         }
@@ -87,11 +103,12 @@ function addSaveChangesButton(parentElement) {
 
 }
 
-function createSectionTableRows(parentElement, menuSection) {
+function createSectionTableRows(parentElement, menuSection, sectionIndex) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
     const areDailySpecialHoursSame = compareDailySpecialHours(menuSection);
     const timesMapping = {};
 
+    const availabilityMode = getAvailabilityMode(sectionIndex);
     // If all DailySpecialHours are the same for all MenuItems, then take the DailySpecialHours data 
     if ( areDailySpecialHoursSame && menuSection.MenuItems.length > 0 && menuSection.MenuItems[0].DailySpecialHours ) 
         { 
@@ -123,6 +140,10 @@ function createSectionTableRows(parentElement, menuSection) {
             }
         });
     });
+
+    if(availabilityMode == 0 || availabilityMode == 2){
+        blockTimeTable();
+    }
 }
 
 // Store the data in an object and push it to the jsonData local storage
@@ -201,7 +222,7 @@ function showErrorMessage(parentElement) {
     errorMsgElement.textContent = errorMessage;
 }
 
-function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, section, sectionId) {
+function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex) {
     const unsetButton = createAndAppend(clockFooterDiv, 'button');
     unsetButton.textContent = "Unset - Click to reset";
     unsetButton.classList.add('clockBtn-unsetButton');
@@ -216,7 +237,9 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
         addSectionAvailabilityButton(availabilityContainer, section);
         addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
-        createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId);
+        createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId, sectionIndex);
+        createDropDownMenu(clockHeaderBottomDiv, sectionIndex);
+
         const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
         processSaveChanges(tableRows, section, sectionId, clockFooterDiv);
         resetSectionClockIcons(sectionId);
@@ -227,7 +250,7 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
 function resetSectionClockIcons(sectionId) {
     const sectionRow = document.getElementById(sectionId);
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
-    clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
+    clockButton.style.backgroundColor = ''; 
 }
 
 function resetItemsClockIcons(sectionId) {

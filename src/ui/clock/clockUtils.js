@@ -41,9 +41,10 @@ const invertedDayMapping = {
     'Saturday': 6
 };
 
-function createClockBody() {
+function createClockBody(sectionId) {
     const clockModalDiv = createAndAppend(document.body, 'div', 'clockModal');
     clockModalDiv.id = 'clockModalID';
+    clockModalDiv.setAttribute('sectionidclock', sectionId);
     const clockDialogDiv = createAndAppend(clockModalDiv, 'div', 'clock-dialog');
     const clockContentDiv = createAndAppend(clockDialogDiv, 'div', 'clock-content');
     const clockHeaderDiv = createAndAppend(clockContentDiv, 'div', 'clock-header');
@@ -56,18 +57,18 @@ function createClockBody() {
     clockCloseIcon.addEventListener('click', () => {clockModalDiv.style.display = 'none';});
     const clockBodyDiv = createAndAppend(clockContentDiv, 'div', 'clock-body');
     const clockFooterDiv = createAndAppend(clockContentDiv, 'div', 'clock-footer');
-    const dropdownMenu = createDropDownMenu(clockHeaderBottomDiv);
     clockModalDiv.style.display = 'block';
     
     return {
         clockModalDiv : clockModalDiv,
+        clockHeaderBottomDiv : clockHeaderBottomDiv,
         clockBodyDiv: clockBodyDiv,
         clockTitle: clockTitle,
         clockFooterDiv : clockFooterDiv
     };
 }
 
-function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id) {
+function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, data, id, sectionIndex) {
     const clockTable = createAndAppend(clockBodyDiv, 'table', 'clockTable');
     const clockThead = createAndAppend(clockTable, 'thead');
     const clockTbody = createAndAppend(clockTable, 'tbody');
@@ -76,7 +77,7 @@ function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSave
     const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
 
     if (data.MenuItems) { // checks if 'data' is section or item
-        createSectionTableRows(clockTbody, data);
+        createSectionTableRows(clockTbody, data, sectionIndex);
         if (data.MenuItems[0]) {
             clockSaveBtn.classList.remove('clockBtn-save-disabled');
             clockSaveBtn.classList.add('clockBtn-save');
@@ -88,10 +89,10 @@ function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSave
     } else { createItemTableRows(clockTbody, data); }
     
     clockSaveBtn.addEventListener('click', () => { 
-        if (!allTimesAreDefault(tableRows)) { 
-            setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data);
+        /*if (!allTimesAreDefault(tableRows)) { */
+            setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data, sectionIndex);
             clockModalDiv.style.display = 'none';
-        }
+        //}
     });
 
 }
@@ -113,7 +114,7 @@ function createInputCell(parentRow, text) {
 }
 
 // Function to check if all times are the default values in the entire table
-function allTimesAreDefault(tableRows) {
+/*function allTimesAreDefault(tableRows) {
     let allDefaults = true;
     for (const row of tableRows) {
         const StartTime = row.cells[1].querySelector('input').value;
@@ -124,10 +125,10 @@ function allTimesAreDefault(tableRows) {
         }
     }
     return allDefaults;
-}
+}*/
 
 // Function to process and save changes based on the time table
-function processSaveChanges(tableRows, data, id, clockFooterDiv) {
+function processSaveChanges(tableRows, data, id, clockFooterDiv, sectionIndex) {
     for (const row of tableRows) {
         const cells = row.cells;
         const dayName = cells[0].innerText;
@@ -138,17 +139,20 @@ function processSaveChanges(tableRows, data, id, clockFooterDiv) {
 
         if (data.MenuItems) {
             storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
-            availabilityTimes(id, clockFooterDiv);
         } else {
             storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
         }
     }
+    if(data.MenuItems){ 
+        availabilityTimes(id, clockFooterDiv, sectionIndex);
+    }
+    
 }
 
 // Original function refactored to use the separate concerns
-function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data) {
+function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data, sectionIndex) {
     const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
-    processSaveChanges(tableRows, data, id, clockFooterDiv);
+    processSaveChanges(tableRows, data, id, clockFooterDiv, sectionIndex);
 }
 
 

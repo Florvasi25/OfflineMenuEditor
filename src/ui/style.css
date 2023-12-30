@@ -1093,6 +1093,13 @@ selector svg {
     background: rgb(254, 58, 58);
 }
 
+.availabilityBtn.clockBtn-disabled {
+    background-color: grey;
+    color: darkgrey; 
+    cursor: not-allowed; 
+    opacity: 0.5;
+}
+
 .clockBtn-availability-enabled {
     background: #36c6d3;
     color: white;

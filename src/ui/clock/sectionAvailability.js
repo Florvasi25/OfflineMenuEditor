@@ -14,62 +14,77 @@ import {
     addTextContent
 }  from '../helpers.js';
 
+import {
+    getAvailabilityMode
+}  from './collapsedTime.js';
+
 let clockSectionAvailabilityBtn;
 
 function addSectionAvailabilityButton(clockFooterDiv, section) {
-    clockSectionAvailabilityBtn =createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'availabilityBtn');
+    clockSectionAvailabilityBtn = createAndAppend(clockFooterDiv, 'button', 'clockBtn', 'availabilityBtn');
     
-    if (section.MenuSectionAvailability.AvailabilityMode == 1){
-        addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');
-        clockSectionAvailabilityBtn.classList.add('clockBtn-green'); 
+    if (section.MenuSectionAvailability.AvailabilityMode == 1 || section.MenuSectionAvailability.AvailabilityMode == 3){
+        enableSectionAvailabilityBtn();
+        unlockAvailabilityBtn();  
     } else {
-        addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');
-        clockSectionAvailabilityBtn.classList.add('clockBtn-red'); 
+        disableSectionAvailabilityBtn(); 
+        blockAvailabilityBtn();
     }
 
     clockSectionAvailabilityBtn.addEventListener('click', () => {
         if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
-            clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
-            clockSectionAvailabilityBtn.classList.add('clockBtn-red');
-            addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled');  
+            disableSectionAvailabilityBtn();  
         } else {
-            clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
-            clockSectionAvailabilityBtn.classList.add('clockBtn-green');
-            addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');  
+            enableSectionAvailabilityBtn();  
         }
     });
 }
-function availabilityTimes(sectionId, clockFooterDiv){
-    if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green')) {
-        storeAvailabilityTimes(sectionId, clockFooterDiv);
-        console.log("Se almacena");
+function availabilityTimes(sectionId, clockFooterDiv, sectionIndex){
+    const availabilityMode = getAvailabilityMode(sectionIndex);
+    if (clockSectionAvailabilityBtn.classList.contains('clockBtn-green') ) {
+        storeAvailabilityTimes(sectionId, clockFooterDiv, availabilityMode);
     }else{
-        deleteAvailiabilityTimes(sectionId)
-        console.log("Se borra");
+        deleteAvailabilityTimes(sectionId, availabilityMode)
     }
 }
 
-function storeAvailabilityTimes(sectionId, clockFooterDiv)
+function storeAvailabilityTimes(sectionId, clockFooterDiv, availabilityMode)
 {
  jsonData.MenuSections.forEach(MenuSection => {
     if (sectionId == MenuSection.MenuSectionId) {
-        MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
+        /*if(availabilityMode == 0 || availabilityMode == 2){
+            MenuSection.MenuSectionAvailability.AvailabilityMode = 1;
+        }*/
         MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
         getTableSchedule(clockFooterDiv, sectionId);
     }})
 }
 
-function deleteAvailiabilityTimes(sectionId)
+function deleteAvailabilityTimes(sectionId, availabilityMode)
 {
     jsonData.MenuSections.forEach(MenuSection => {
         if (sectionId == MenuSection.MenuSectionId) {
-            MenuSection.MenuSectionAvailability.AvailabilityMode = 0;
+            if(availabilityMode == 1 || availabilityMode == 3){
+                MenuSection.MenuSectionAvailability.AvailabilityMode = 0;
+            }
             MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
             if (MenuSection.MenuSectionAvailability.AvailableTimes) {
                 MenuSection.MenuSectionAvailability.AvailableTimes = [];
                 updateLocalStorage();
             }
         }})
+}
+
+function removeAvailabilityTimes(sectionId){
+jsonData.MenuSections.forEach(MenuSection => {
+    if (sectionId == MenuSection.MenuSectionId) {
+        MenuSection.MenuSectionAvailability.AvailabilityMode = 0;
+        MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
+        if (MenuSection.MenuSectionAvailability.AvailableTimes) {
+            MenuSection.MenuSectionAvailability.AvailableTimes = [];
+            updateLocalStorage();
+        }
+    }})
 }
 
 function getTableSchedule(clockFooterDiv, id) {
@@ -121,7 +136,41 @@ function storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, secti
     });
 }
 
+function enableSectionAvailabilityBtn(){
+    clockSectionAvailabilityBtn.classList.remove('clockBtn-red');
+    clockSectionAvailabilityBtn.classList.add('clockBtn-green');
+    addTextContent(clockSectionAvailabilityBtn, 'Section Availability Enabled');  
+}
+
+function disableSectionAvailabilityBtn(){
+    clockSectionAvailabilityBtn.classList.remove('clockBtn-green');
+    clockSectionAvailabilityBtn.classList.add('clockBtn-red');
+    addTextContent(clockSectionAvailabilityBtn, 'Section Availability Disabled'); 
+}
+
+function blockAvailabilityBtn(){
+    //const btn = getAvailabilityBtn();
+    clockSectionAvailabilityBtn.disabled = true; 
+    clockSectionAvailabilityBtn.classList.add('clockBtn-disabled');
+}
+
+function unlockAvailabilityBtn(){
+    //const btn = getAvailabilityBtn();
+    clockSectionAvailabilityBtn.disabled = false; 
+    clockSectionAvailabilityBtn.classList.remove('clockBtn-disabled');
+    //btn.classList.add('clockBtn-red');
+}
+function getAvailabilityBtn(){
+    return document.querySelector('.availabilityBtn');
+}
+
 export{
     addSectionAvailabilityButton,
-    availabilityTimes
+    availabilityTimes,
+    deleteAvailabilityTimes,
+    removeAvailabilityTimes,
+    enableSectionAvailabilityBtn,
+    disableSectionAvailabilityBtn,
+    unlockAvailabilityBtn,
+    blockAvailabilityBtn
 }
