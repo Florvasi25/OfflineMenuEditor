@@ -1,8 +1,10 @@
+import { jsonData } from "../../context.js";
+
 function createOsModalFooter(menuOs) {
     const osModalFooter = document.createElement('div');
     osModalFooter.className = 'osModalFooter';
 
-    const searchItemOrSectionInput = searchItemOrSection();
+    const searchItemOrSectionInput = searchItemOrSection(menuOs);
     const searchResultsList = document.createElement('ul');
     searchResultsList.className = 'searchResults';
     osModalFooter.appendChild(searchItemOrSectionInput);
@@ -11,7 +13,7 @@ function createOsModalFooter(menuOs) {
     return osModalFooter;
 }
 
-function searchItemOrSection() {
+function searchItemOrSection(menuOs) {
     const searchItemOrSectionInput = document.createElement('input');
     searchItemOrSectionInput.type = 'text';
     searchItemOrSectionInput.placeholder = 'Search for OS...';
@@ -20,26 +22,31 @@ function searchItemOrSection() {
     // Add event listener for input
     searchItemOrSectionInput.addEventListener('input', function () {
         const searchText = searchItemOrSectionInput.value.toLowerCase();
-        const itemNameCells = document.querySelectorAll('.itemNameCell');
         const searchResultsList = document.querySelector('.searchResults');
         searchResultsList.innerHTML = '';
 
         let visibleRowCounter = 0;
 
-        itemNameCells.forEach(itemNameCell => {
-            const itemName = itemNameCell.querySelector('.itemName').textContent.toLowerCase();
-            
-            if (itemName.includes(searchText)) {
-                const listItem = document.createElement('li');
-                listItem.textContent = itemNameCell.querySelector('.itemName').textContent;
-                searchResultsList.appendChild(listItem);
-                visibleRowCounter++;
-            }
-        });
+        if (searchText.trim() !== '') { // Check if search text is not empty
+            jsonData.MenuSections.forEach(section => {
+                section.MenuItems.forEach(item => {
+                    const itemName = item.Name.toLowerCase();
+                    
+                    if (itemName.includes(searchText)) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = item.Name;
+                        searchResultsList.appendChild(listItem);
+                        visibleRowCounter++;
+                    }
+                });
+            });
 
-        // Show/hide the search results list
-        if (visibleRowCounter > 0) {
-            searchResultsList.style.display = 'block';
+            // Show/hide the search results list
+            if (visibleRowCounter > 0) {
+                searchResultsList.style.display = 'block';
+            } else {
+                searchResultsList.style.display = 'none';
+            }
         } else {
             searchResultsList.style.display = 'none';
         }
