@@ -28,6 +28,7 @@ function searchItemOrSection(menuOs) {
         let visibleRowCounter = 0;
 
         if (searchText.trim() !== '') { // Check if search text is not empty
+            // Search in MenuItems
             jsonData.MenuSections.forEach(section => {
                 section.MenuItems.forEach(item => {
                     const itemName = item.Name.toLowerCase();
@@ -39,6 +40,17 @@ function searchItemOrSection(menuOs) {
                         visibleRowCounter++;
                     }
                 });
+            });
+
+            // Search in MenuSections Name
+            jsonData.MenuSections.forEach(section => {
+                const sectionName = section.Name.toLowerCase();
+                if (sectionName.includes(searchText)) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = section.Name;
+                    searchResultsList.appendChild(listItem);
+                    visibleRowCounter++;
+                }
             });
 
             // Show/hide the search results list
