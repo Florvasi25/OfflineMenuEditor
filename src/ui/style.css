@@ -1392,7 +1392,7 @@ selector svg {
     height: 95%;
 }
 
-#searchInput {
+#searchOsInput {
     width: -webkit-fill-available;
     padding: 5px;
 }

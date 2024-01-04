@@ -47,8 +47,8 @@ function createSelectOsBodyLeft(itemRowId) {
 
     const filteredGroup = Object.values(filteredMainArrays).flatMap(group => group[0]);
 
-    const searchInput = searchOs(selectOsBodyLeft)
-    selectOsBodyLeft.appendChild(searchInput)
+    const searchOsInput = searchOs(selectOsBodyLeft)
+    selectOsBodyLeft.appendChild(searchOsInput)
 
     filteredGroup.forEach(os => {
         const selectOsRowHeader = createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId)
@@ -298,14 +298,14 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 }
 
 function searchOs(selectOsBodyLeft) {
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search for OS...';
-    searchInput.id = 'searchInput';
+    const searchOsInput = document.createElement('input');
+    searchOsInput.type = 'text';
+    searchOsInput.placeholder = 'Search for OS...';
+    searchOsInput.id = 'searchOsInput';
 
     // Add event listener for input
-    searchInput.addEventListener('input', function () {
-        const searchText = searchInput.value.toLowerCase();
+    searchOsInput.addEventListener('input', function () {
+        const searchText = searchOsInput.value.toLowerCase();
         const selectOsRowHeaders = selectOsBodyLeft.querySelectorAll('.selectOsRowHeader');
         let visibleRowCounter = 0;
 
@@ -327,7 +327,7 @@ function searchOs(selectOsBodyLeft) {
         });
     });
     
-    return searchInput;
+    return searchOsInput;
 }
 
 function createSelectOsRow(menuOs) {
