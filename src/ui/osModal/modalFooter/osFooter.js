@@ -106,27 +106,38 @@ function createShowOs(menuOs) {
         }
     });
 
-    const filteredMenuItems = jsonData.MenuSections
-        .flatMap(i => i.MenuItems)
-        .filter(item => {
+    const sectionsWithFilteredItems = {};
+
+    jsonData.MenuSections.forEach(section => {
+        const filteredItems = section.MenuItems.filter(item => {
             return item.MenuItemOptionSets.some(os => {
                 return menuItemsWithMatchingGroupOs.includes(os.MenuItemOptionSetId);
             });
         });
 
-    console.log('MenuItems with matching groupOsId:', filteredMenuItems);
-
-    // Generate a list of filteredMenuItems
-    const itemList = document.createElement('ul');
-    itemList.className = 'filteredMenuItemsList';
-    filteredMenuItems.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.textContent = item.Name; // Adjust to the appropriate property containing the item name
-        itemList.appendChild(listItem);
+        if (filteredItems.length > 0) {
+            sectionsWithFilteredItems[section.Name] = {
+                items: filteredItems,
+                count: filteredItems.length,
+                total: section.MenuItems.length
+            };
+        }
     });
 
-    // Append the list to the showOs div
-    showOs.appendChild(itemList);
+    // Loop through sections and filtered items to create the structure
+    for (const [sectionName, { items, count, total }] of Object.entries(sectionsWithFilteredItems)) {
+        const sectionHeader = document.createElement('h4');
+        sectionHeader.textContent = `${sectionName} (${count}/${total})`;
+        showOs.appendChild(sectionHeader);
+
+        const itemList = document.createElement('ul');
+        items.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = item.Name; // Adjust to the appropriate property containing the item name
+            itemList.appendChild(listItem);
+        });
+        showOs.appendChild(itemList);
+    }
 
     return showOs;
 }
