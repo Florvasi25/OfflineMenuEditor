@@ -19,8 +19,8 @@ function createOsModalFooter(menuOs) {
 function searchItemOrSection(menuOs) {
     const searchItemOrSectionInput = document.createElement('input');
     searchItemOrSectionInput.type = 'text';
-    searchItemOrSectionInput.placeholder = 'Search for Item or Section';
-    searchItemOrSectionInput.id = 'searchItemOrSectionInput';
+    searchItemOrSectionInput.placeholder = 'Search for Items or Sections';
+    searchItemOrSectionInput.id = 'searchOsInput';
 
     // Add event listener for input
     searchItemOrSectionInput.addEventListener('input', function () {
@@ -37,8 +37,8 @@ function searchItemOrSection(menuOs) {
                     const itemName = item.Name.toLowerCase();
                     
                     if (itemName.includes(searchText)) {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = item.Name;
+                        const listedItem = document.createElement('li');
+                        listedItem.textContent = item.Name;
 
                         const addButton = document.createElement('button');
                         addButton.textContent = '+';
@@ -47,9 +47,9 @@ function searchItemOrSection(menuOs) {
                             console.log('Button clicked for item:', item.Name);
                         });
 
-                        listItem.appendChild(addButton);
-                        listItem.classList.add('menu-item-background');
-                        searchResultsList.appendChild(listItem);
+                        listedItem.appendChild(addButton);
+                        listedItem.classList.add('menu-item-background');
+                        searchResultsList.appendChild(listedItem);
                         visibleRowCounter++;
                     }
                 });
@@ -59,8 +59,8 @@ function searchItemOrSection(menuOs) {
             jsonData.MenuSections.forEach(section => {
                 const sectionName = section.Name.toLowerCase();
                 if (sectionName.includes(searchText)) {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = section.Name;
+                    const listedItem = document.createElement('li');
+                    listedItem.textContent = section.Name;
 
                     const addButton = document.createElement('button');
                     addButton.textContent = '+';
@@ -69,9 +69,9 @@ function searchItemOrSection(menuOs) {
                         console.log('Button clicked for section:', section.Name);
                     });
 
-                    listItem.appendChild(addButton);
-                    listItem.classList.add('menu-section-background');
-                    searchResultsList.appendChild(listItem);
+                    listedItem.appendChild(addButton);
+                    listedItem.classList.add('menu-section-background');
+                    searchResultsList.appendChild(listedItem);
                     visibleRowCounter++;
                 }
             });
@@ -126,15 +126,18 @@ function createShowOs(menuOs) {
 
     // Loop through sections and filtered items to create the structure
     for (const [sectionName, { items, count, total }] of Object.entries(sectionsWithFilteredItems)) {
-        const sectionHeader = document.createElement('h4');
+        const sectionHeader = document.createElement('p');
+        sectionHeader.className = 'sectionHeader';
         sectionHeader.textContent = `${sectionName} (${count}/${total})`;
         showOs.appendChild(sectionHeader);
 
         const itemList = document.createElement('ul');
+        itemList.className = 'itemList';
         items.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = item.Name; // Adjust to the appropriate property containing the item name
-            itemList.appendChild(listItem);
+            const listedItem = document.createElement('li');
+            listedItem.className = 'listedItem'
+            listedItem.textContent = item.Name;
+            itemList.appendChild(listedItem);
         });
         showOs.appendChild(itemList);
     }

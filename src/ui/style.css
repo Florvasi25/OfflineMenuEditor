@@ -1567,3 +1567,27 @@ selector svg {
 .menu-section-background {
     background-color: lightblue;
 }
+
+.osModalFooter {
+    padding: 15px
+}
+
+.listedItem {
+    list-style: none;
+}
+
+.itemList {
+    padding-top: 5px;
+    padding-left: 25px;
+}
+
+.sectionHeader {
+    height: 35px;
+    margin-top: 10px;
+    padding-left: 10px;
+    background-color: #342f58;
+    color: #ffffff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
