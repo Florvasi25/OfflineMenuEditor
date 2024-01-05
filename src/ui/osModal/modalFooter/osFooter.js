@@ -16,7 +16,7 @@ function createOsModalFooter(menuOs) {
 function searchItemOrSection(menuOs) {
     const searchItemOrSectionInput = document.createElement('input');
     searchItemOrSectionInput.type = 'text';
-    searchItemOrSectionInput.placeholder = 'Search for OS...';
+    searchItemOrSectionInput.placeholder = 'Search for Item or Section';
     searchItemOrSectionInput.id = 'searchItemOrSectionInput';
 
     // Add event listener for input
