@@ -10,6 +10,9 @@ function createOsModalFooter(menuOs) {
     osModalFooter.appendChild(searchItemOrSectionInput);
     osModalFooter.appendChild(searchResultsList);
 
+    const showOs = createShowOs(menuOs);
+    osModalFooter.appendChild(showOs);
+
     return osModalFooter;
 }
 
@@ -85,6 +88,47 @@ function searchItemOrSection(menuOs) {
     });
 
     return searchItemOrSectionInput;
+}
+
+function createShowOs(menuOs) {
+    const showOs = document.createElement('div');
+    showOs.className = 'showOs';
+
+    const menuItemsWithMatchingGroupOs = [];
+
+    const menuItemOptionSets = jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .flatMap(i => i.MenuItemOptionSets);
+
+    menuItemOptionSets.forEach(os => {
+        if (os.groupOsId === menuOs.groupOsId) {
+            menuItemsWithMatchingGroupOs.push(os.MenuItemOptionSetId);
+        }
+    });
+
+    const filteredMenuItems = jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .filter(item => {
+            return item.MenuItemOptionSets.some(os => {
+                return menuItemsWithMatchingGroupOs.includes(os.MenuItemOptionSetId);
+            });
+        });
+
+    console.log('MenuItems with matching groupOsId:', filteredMenuItems);
+
+    // Generate a list of filteredMenuItems
+    const itemList = document.createElement('ul');
+    itemList.className = 'filteredMenuItemsList';
+    filteredMenuItems.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = item.Name; // Adjust to the appropriate property containing the item name
+        itemList.appendChild(listItem);
+    });
+
+    // Append the list to the showOs div
+    showOs.appendChild(itemList);
+
+    return showOs;
 }
 
 export { createOsModalFooter };
