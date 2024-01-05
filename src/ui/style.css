@@ -1559,3 +1559,11 @@ selector svg {
     display: flex;
     align-items: center;
 }
+
+.menu-item-background {
+    background-color: yellow;
+}
+
+.menu-section-background {
+    background-color: lightblue;
+}

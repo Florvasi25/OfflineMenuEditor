@@ -27,7 +27,7 @@ function searchItemOrSection(menuOs) {
 
         let visibleRowCounter = 0;
 
-        if (searchText.trim() !== '') { // Check if search text is not empty
+        if (searchText.trim() !== '') { 
             // Search in MenuItems
             jsonData.MenuSections.forEach(section => {
                 section.MenuItems.forEach(item => {
@@ -36,6 +36,16 @@ function searchItemOrSection(menuOs) {
                     if (itemName.includes(searchText)) {
                         const listItem = document.createElement('li');
                         listItem.textContent = item.Name;
+
+                        const addButton = document.createElement('button');
+                        addButton.textContent = '+';
+                        addButton.classList.add('add-button');
+                        addButton.addEventListener('click', function() {
+                            console.log('Button clicked for item:', item.Name);
+                        });
+
+                        listItem.appendChild(addButton);
+                        listItem.classList.add('menu-item-background');
                         searchResultsList.appendChild(listItem);
                         visibleRowCounter++;
                     }
@@ -48,6 +58,16 @@ function searchItemOrSection(menuOs) {
                 if (sectionName.includes(searchText)) {
                     const listItem = document.createElement('li');
                     listItem.textContent = section.Name;
+
+                    const addButton = document.createElement('button');
+                    addButton.textContent = '+';
+                    addButton.classList.add('add-button');
+                    addButton.addEventListener('click', function() {
+                        console.log('Button clicked for section:', section.Name);
+                    });
+
+                    listItem.appendChild(addButton);
+                    listItem.classList.add('menu-section-background');
                     searchResultsList.appendChild(listItem);
                     visibleRowCounter++;
                 }
