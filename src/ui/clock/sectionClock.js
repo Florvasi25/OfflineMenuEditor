@@ -241,7 +241,7 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         createDropDownMenu(clockHeaderBottomDiv, sectionIndex);
 
         const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
-        processSaveChanges(tableRows, section, sectionId, clockFooterDiv);
+        processSaveChanges(tableRows, section, sectionId, clockFooterDiv, sectionIndex);
         resetSectionClockIcons(sectionId);
         resetItemsClockIcons(sectionId);
     });
