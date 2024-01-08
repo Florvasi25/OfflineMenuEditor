@@ -228,6 +228,8 @@ main {
     color: #ffffff;
     cursor: pointer;
     font-size: 14px;
+    transition: opacity 0.3s ease;
+
 }
 
 .osNameHeader:hover {
@@ -408,6 +410,7 @@ main {
     border-bottom: 2px solid #555;
     transition: transform 0.1s linear;
     cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
 .sectionDropdownButton:hover {
@@ -443,6 +446,7 @@ main {
     border-bottom: 2px solid #ffffff;
     transition: transform 0.1s linear;
     cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
 .osDropdownButton:hover {
@@ -738,6 +742,7 @@ selector svg {
     width: 35px;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .confirmDeleteBtn:hover {
@@ -774,6 +779,7 @@ selector svg {
 
 .hiddenSection {
     background-color: #7289c1;
+    transition: background-color 0.3s ease;
 }
 
 .hiddenSection:hover {
@@ -807,6 +813,7 @@ selector svg {
     display: flex;
     justify-content: end;
     margin-bottom: 15px;
+    transition: color 0.3s ease;
 }
 
 .closeOsModalBtn:hover {
@@ -852,6 +859,7 @@ selector svg {
 
 .newOsButton {
     background-color: #cdcdcd;
+    transition: background-color 0.3s ease;
 }
 
 .newOsButton:hover {
@@ -862,6 +870,7 @@ selector svg {
 
 .maxLengthButton {
     background-color: #cdcdcd;
+    transition: background-color 0.3s ease;
 }
 
 .maxLengthButton:hover {
@@ -988,6 +997,7 @@ selector svg {
     transform: translateY(-50%); 
     cursor: pointer;
     padding: 5px;
+    transition: color 0.3s ease;
 }
 
 .clockBtn-close:hover {
@@ -1038,6 +1048,7 @@ selector svg {
 .clockBtn-save {
     background: #4000ff;
     color: white;
+    transition: background-color 0.3s ease;
 }
 
 .clockBtn-save:hover {
@@ -1054,6 +1065,7 @@ selector svg {
     font-weight: 500;
     border: 1px solid #b0b0b0;
     cursor: not-allowed !important;
+    transition: opacity 0.3s ease;
 }
 
 .removeBtn:hover {
@@ -1074,10 +1086,11 @@ selector svg {
     font-size: 14px;
     border: 1px solid;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .clockBtn-green:hover {
-    background: #42b842;
+    background-color: #42b842;
 }
 
 .clockBtn-red {
@@ -1087,10 +1100,11 @@ selector svg {
     border: 1px solid;
     border-radius: 5px;
     width: fit-content;
+    transition: background-color 0.3s ease;
 }
 
 .clockBtn-red:hover {
-    background: rgb(254, 58, 58);
+    background-color: rgb(254, 58, 58);
 }
 
 .availabilityBtn.clockBtn-disabled {
@@ -1435,6 +1449,7 @@ selector svg {
     border: #787777 1px solid;
     border-radius: 5px;
     font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .addOrDeleteBtn:hover {
@@ -1480,6 +1495,7 @@ selector svg {
     cursor: pointer;
     display: flex;
     justify-content: center;
+    transition: background-color 0.3s ease;
 }
 
 .expandListButton:hover {
@@ -1502,6 +1518,7 @@ selector svg {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    transition: background-color 0.3s ease;
 }
 
 .dropdown-content a:hover {
@@ -1541,6 +1558,7 @@ selector svg {
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .osListRowHeader:hover {
@@ -1580,9 +1598,10 @@ selector svg {
     padding-left: 10px;
     margin-top: 5px;
     border-radius: 5px;
+    justify-content: space-between;
 }
 
-.itemList {
+.itemListContainer {
     padding-top: 5px;
     padding-left: 10px;
     flex-direction: column;
@@ -1597,4 +1616,21 @@ selector svg {
     border-radius: 5px;
     display: flex;
     align-items: center;
+}
+
+.addBtn {
+    margin-right: 5px;
+    width: 30px;
+    height: 25px;
+    background-color: #cfcfcf;
+    color: #4c4c4c;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.addBtn:hover {
+    background-color: #47f744;
+    color: #202020;
 }

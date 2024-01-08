@@ -1,4 +1,4 @@
-import { 
+import {
     jsonData,
     deleteItemlessOs,
     getLocalStorageOptionSetIDs,
@@ -6,17 +6,17 @@ import {
     getLocalStorageOptionSetItemsIDs,
     groupOptionSets,
     updateLocalStorage
- } from "../../context.js";
+} from "../../context.js";
 
- import {
+import {
     createOsRow
- } from '../../optionSet/osHeaderContainer.js'
+} from '../../optionSet/osHeaderContainer.js'
 
 function createOsModalFooter(menuOs) {
     const osModalFooter = document.createElement('div');
     osModalFooter.className = 'osModalFooter';
 
-    const searchItemOrSectionInput = searchItemOrSection(menuOs, osModalFooter);
+    const searchItemOrSectionInput = searchItemOrSection(osModalFooter);
     const searchResultsList = document.createElement('ul');
     searchResultsList.className = 'searchResults';
     osModalFooter.appendChild(searchItemOrSectionInput);
@@ -28,7 +28,7 @@ function createOsModalFooter(menuOs) {
     return osModalFooter;
 }
 
-function searchItemOrSection(menuOs, osModalFooter) {
+function searchItemOrSection(osModalFooter) {
     const searchItemOrSectionInput = document.createElement('input');
     searchItemOrSectionInput.type = 'text';
     searchItemOrSectionInput.placeholder = 'Search for Items or Sections';
@@ -140,9 +140,9 @@ function createShowOs(menuOs) {
 
             const itemName = document.createElement('p')
             itemName.textContent = item.Name;
-   
+
             listedItem.appendChild(itemName);
-            
+
             // Highlight the listedItem if it belongs to the filtered section
             if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
                 listedItem.style.backgroundColor = '#8ef274';
@@ -161,13 +161,17 @@ function createShowOs(menuOs) {
 }
 
 function createAddButton(menuOs, menuItemId) {
-    const addBtn = document.createElement('button')
-    addBtn.className = 'addOrDeleteBtn'
-    addBtn.textContent = '+'
+    const addBtn = document.createElement('button');
+    addBtn.className = 'addBtn';
+    addBtn.textContent = '+';
 
-    const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == menuItemId)
+    const foundItem = jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .find(i => i.MenuItemId == menuItemId);
 
-    addBtn.addEventListener('click', () => {
+    addBtn.addEventListener('click', (event) => {
+        event.target.parentElement.style.backgroundColor = '#8ef274';
+        event.target.style.display = 'none';
 
         const newOs = JSON.parse(JSON.stringify(menuOs));
 
