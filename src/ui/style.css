@@ -1574,11 +1574,17 @@ selector svg {
 
 .listedItem {
     list-style: none;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
 }
 
 .itemList {
     padding-top: 5px;
-    padding-left: 25px;
+    padding-left: 10px;
     flex-direction: column;
 }
 

@@ -105,23 +105,34 @@ function createShowOs(menuOs) {
         }
     });
 
-    // Loop through sections and filtered items to create the structure
-    for (const [sectionName, { items, count, total }] of Object.entries(sectionsWithFilteredItems)) {
+    // Loop through sections and all items to create the structure
+    jsonData.MenuSections.forEach(section => {
+        const sectionName = section.Name;
+        const allItems = section.MenuItems;
+
         const sectionHeader = document.createElement('p');
         sectionHeader.className = 'sectionHeader';
-        sectionHeader.textContent = `${sectionName} (${count}/${total})`;
+        sectionHeader.textContent = `${sectionName} (${sectionsWithFilteredItems[sectionName]?.count || 0}/${section.MenuItems.length})`;
         showOs.appendChild(sectionHeader);
 
         const itemList = document.createElement('ul');
         itemList.className = 'itemList';
-        items.forEach(item => {
+
+        allItems.forEach(item => {
             const listedItem = document.createElement('li');
-            listedItem.className = 'listedItem'
+            listedItem.className = 'listedItem';
             listedItem.textContent = item.Name;
+
+            // Highlight the listedItem if it belongs to the filtered section
+            if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
+                listedItem.style.backgroundColor = '#8ef274';
+            }
+
             itemList.appendChild(listedItem);
         });
+
         showOs.appendChild(itemList);
-    }
+    });
 
     return showOs;
 }
