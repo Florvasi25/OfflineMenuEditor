@@ -4,7 +4,7 @@ function createOsModalFooter(menuOs) {
     const osModalFooter = document.createElement('div');
     osModalFooter.className = 'osModalFooter';
 
-    const searchItemOrSectionInput = searchItemOrSection(menuOs);
+    const searchItemOrSectionInput = searchItemOrSection(menuOs, osModalFooter);
     const searchResultsList = document.createElement('ul');
     searchResultsList.className = 'searchResults';
     osModalFooter.appendChild(searchItemOrSectionInput);
@@ -16,7 +16,7 @@ function createOsModalFooter(menuOs) {
     return osModalFooter;
 }
 
-function searchItemOrSection(menuOs) {
+function searchItemOrSection(menuOs, osModalFooter) {
     const searchItemOrSectionInput = document.createElement('input');
     searchItemOrSectionInput.type = 'text';
     searchItemOrSectionInput.placeholder = 'Search for Items or Sections';
@@ -25,66 +25,47 @@ function searchItemOrSection(menuOs) {
     // Add event listener for input
     searchItemOrSectionInput.addEventListener('input', function () {
         const searchText = searchItemOrSectionInput.value.toLowerCase();
-        const searchResultsList = document.querySelector('.searchResults');
-        searchResultsList.innerHTML = '';
+        const showOs = osModalFooter.querySelector('.showOs');
+        const sections = showOs.querySelectorAll('.sectionHeader');
+        const itemList = showOs.querySelectorAll('.itemList');
 
-        let visibleRowCounter = 0;
+        sections.forEach(section => {
+            const sectionName = section.textContent.toLowerCase();
+            const itemsList = section.nextElementSibling;
 
-        if (searchText.trim() !== '') { 
-            // Search in MenuItems
-            jsonData.MenuSections.forEach(section => {
-                section.MenuItems.forEach(item => {
-                    const itemName = item.Name.toLowerCase();
-                    
-                    if (itemName.includes(searchText)) {
-                        const listedItem = document.createElement('li');
-                        listedItem.textContent = item.Name;
+            // Check if section name matches the search text
+            const sectionMatches = sectionName.includes(searchText);
 
-                        const addButton = document.createElement('button');
-                        addButton.textContent = '+';
-                        addButton.classList.add('add-button');
-                        addButton.addEventListener('click', function() {
-                            console.log('Button clicked for item:', item.Name);
-                        });
+            // Show/hide section based on the match
+            section.style.display = sectionMatches || searchText === '' ? 'flex' : 'none';
 
-                        listedItem.appendChild(addButton);
-                        listedItem.classList.add('menu-item-background');
-                        searchResultsList.appendChild(listedItem);
-                        visibleRowCounter++;
-                    }
+            // If the section matches or no search text, show all its items
+            if (sectionMatches || searchText === '') {
+                itemsList.style.display = 'flex';
+                const items = itemsList.querySelectorAll('.listedItem');
+                items.forEach(item => {
+                    item.style.display = 'flex';
                 });
-            });
+                return;
+            }
 
-            // Search in MenuSections Name
-            jsonData.MenuSections.forEach(section => {
-                const sectionName = section.Name.toLowerCase();
-                if (sectionName.includes(searchText)) {
-                    const listedItem = document.createElement('li');
-                    listedItem.textContent = section.Name;
+            // Otherwise, filter the items within the section
+            const items = itemsList.querySelectorAll('.listedItem');
+            let hasMatchingItem = false;
 
-                    const addButton = document.createElement('button');
-                    addButton.textContent = '+';
-                    addButton.classList.add('add-button');
-                    addButton.addEventListener('click', function() {
-                        console.log('Button clicked for section:', section.Name);
-                    });
-
-                    listedItem.appendChild(addButton);
-                    listedItem.classList.add('menu-section-background');
-                    searchResultsList.appendChild(listedItem);
-                    visibleRowCounter++;
+            items.forEach(item => {
+                const itemName = item.textContent.toLowerCase();
+                const itemMatches = itemName.includes(searchText);
+                item.style.display = itemMatches ? 'flex' : 'none';
+                if (itemMatches) {
+                    hasMatchingItem = true;
+                    section.style.display = 'flex'; // Show the section header
                 }
             });
 
-            // Show/hide the search results list
-            if (visibleRowCounter > 0) {
-                searchResultsList.style.display = 'block';
-            } else {
-                searchResultsList.style.display = 'none';
-            }
-        } else {
-            searchResultsList.style.display = 'none';
-        }
+            // Show/hide items list based on item match
+            itemsList.style.display = hasMatchingItem ? 'flex' : 'none';
+        });
     });
 
     return searchItemOrSectionInput;

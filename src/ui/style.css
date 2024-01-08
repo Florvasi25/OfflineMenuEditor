@@ -1579,6 +1579,7 @@ selector svg {
 .itemList {
     padding-top: 5px;
     padding-left: 25px;
+    flex-direction: column;
 }
 
 .sectionHeader {
