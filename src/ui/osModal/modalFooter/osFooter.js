@@ -136,6 +136,7 @@ function createShowOs(menuOs) {
         allItems.forEach(item => {
             const listedItem = document.createElement('li');
             listedItem.className = 'listedItem';
+            listedItem.id = item.MenuItemId;
 
             const itemName = document.createElement('p')
             itemName.textContent = item.Name;
@@ -146,7 +147,7 @@ function createShowOs(menuOs) {
             if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
                 listedItem.style.backgroundColor = '#8ef274';
             } else {
-                const addButton = createAddButton(menuOs)
+                const addButton = createAddButton(menuOs, item.MenuItemId)
                 listedItem.appendChild(addButton);
             }
 
@@ -159,12 +160,12 @@ function createShowOs(menuOs) {
     return showOs;
 }
 
-function createAddButton(menuOs) {
+function createAddButton(menuOs, menuItemId) {
     const addBtn = document.createElement('button')
     addBtn.className = 'addOrDeleteBtn'
     addBtn.textContent = '+'
 
-    const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == menuOs.MenuItemId)
+    const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == menuItemId)
 
     addBtn.addEventListener('click', () => {
 
@@ -192,7 +193,9 @@ function createAddButton(menuOs) {
         const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
 
         const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
-        osContainerPreview.appendChild(newOptionRow);
+        if (osContainerPreview) {
+            osContainerPreview.appendChild(newOptionRow);
+        }
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
 
