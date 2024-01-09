@@ -174,8 +174,9 @@ function createAddButton(menuOs, menuItemId) {
         .find(i => i.MenuItemId == menuItemId);
 
     addBtn.addEventListener('click', (event) => {
-        event.target.parentElement.style.backgroundColor = '#8ef274';
-        event.target.style.display = 'none';
+        const targetParent = event.target.parentElement;
+        targetParent.style.backgroundColor = '#8ef274';
+        addBtn.style.display = 'none';
 
         const newOs = JSON.parse(JSON.stringify(menuOs));
 
@@ -217,6 +218,9 @@ function createAddButton(menuOs, menuItemId) {
             }
         });
 
+        const removeBtn = createRemoveButton(menuOs, menuItemId);
+        targetParent.appendChild(removeBtn);
+
         groupOptionSets()
         updateLocalStorage()
     })
@@ -235,8 +239,9 @@ function createRemoveButton(menuOs, menuItemId) {
 
 
     deleteBtn.addEventListener('click', (event) => {
-        event.target.parentElement.style.backgroundColor = '#ffffff';
-        event.target.style.display = 'none';
+        const targetParent = event.target.parentElement;
+        targetParent.style.backgroundColor = '#ffffff';
+        deleteBtn.style.display = 'none';
 
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
 
@@ -269,6 +274,9 @@ function createRemoveButton(menuOs, menuItemId) {
                 osRowHeaderPreview.classList.add('even');
             }
         });
+
+        const addBtn = createAddButton(menuOs, menuItemId);
+        targetParent.appendChild(addBtn);
 
         groupOptionSets()
         updateLocalStorage()
