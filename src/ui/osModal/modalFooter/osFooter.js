@@ -5,7 +5,9 @@ import {
     getUniqueRandomInt,
     getLocalStorageOptionSetItemsIDs,
     groupOptionSets,
-    updateLocalStorage
+    updateLocalStorage,
+    groupedOs,
+    addItemlessOs
 } from "../../context.js";
 
 import {
@@ -146,9 +148,11 @@ function createShowOs(menuOs) {
             // Highlight the listedItem if it belongs to the filtered section
             if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
                 listedItem.style.backgroundColor = '#8ef274';
+                const removeBtn = createRemoveButton(menuOs, item.MenuItemId)
+                listedItem.appendChild(removeBtn)
             } else {
-                const addButton = createAddButton(menuOs, item.MenuItemId)
-                listedItem.appendChild(addButton);
+                const addBtn = createAddButton(menuOs, item.MenuItemId)
+                listedItem.appendChild(addBtn);
             }
 
             itemListContainer.appendChild(listedItem);
@@ -218,6 +222,59 @@ function createAddButton(menuOs, menuItemId) {
     })
 
     return addBtn
+}
+
+function createRemoveButton(menuOs, menuItemId) {
+    const deleteBtn = document.createElement('button')
+    deleteBtn.className = 'addOrDeleteBtn'
+    deleteBtn.textContent = '-'
+
+    const foundItem = jsonData.MenuSections
+    .flatMap(i => i.MenuItems)
+    .find(i => i.MenuItemId == menuItemId);
+
+
+    deleteBtn.addEventListener('click', (event) => {
+        event.target.parentElement.style.backgroundColor = '#ffffff';
+        event.target.style.display = 'none';
+
+        foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
+
+        if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
+            delete groupedOs[menuOs.groupOsId];
+            addItemlessOs(menuOs);
+        }
+
+        const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
+        const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
+
+        if (osRowOptionPreview) {
+            if (osRowOptionPreview.classList.contains('expanded')) {
+                let option = osRowOptionPreview.nextElementSibling;
+                if (option.tagName === 'DIV' && option.classList.contains('optionContainer')) {
+                    option.remove();
+                }
+            }
+            osRowOptionPreview.remove();
+        }
+
+        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+
+        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+            if (index % 2 === 0) {
+                osRowHeaderPreview.classList.remove('even');
+                osRowHeaderPreview.classList.add('odd');
+            } else {
+                osRowHeaderPreview.classList.remove('odd');
+                osRowHeaderPreview.classList.add('even');
+            }
+        });
+
+        groupOptionSets()
+        updateLocalStorage()
+    })
+
+    return deleteBtn
 }
 
 export { createOsModalFooter };
