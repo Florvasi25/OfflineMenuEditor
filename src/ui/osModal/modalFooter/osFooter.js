@@ -237,8 +237,12 @@ function createRemoveButton(menuOs, menuItemId) {
     .flatMap(i => i.MenuItems)
     .find(i => i.MenuItemId == menuItemId);
 
-
+    
     deleteBtn.addEventListener('click', (event) => {
+        const correctGroup = Array.from(foundItem.MenuItemOptionSets.flatMap( i => i.groupOsId)).filter(i => i == menuOs.groupOsId);
+
+        const correctOs = Array.from(foundItem.MenuItemOptionSets).find(i => i.groupOsId == correctGroup);
+
         const targetParent = event.target.parentElement;
         targetParent.style.backgroundColor = '#ffffff';
         deleteBtn.style.display = 'none';
@@ -249,9 +253,10 @@ function createRemoveButton(menuOs, menuItemId) {
             delete groupedOs[menuOs.groupOsId];
             addItemlessOs(menuOs);
         }
-
+    
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
-        const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
+        const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == correctOs.MenuItemOptionSetId);
+        console.log(osRowOptionPreview);
 
         if (osRowOptionPreview) {
             if (osRowOptionPreview.classList.contains('expanded')) {
