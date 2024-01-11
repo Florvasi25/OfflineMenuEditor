@@ -10,7 +10,7 @@ function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('div');
     itemButtonsCell.classList = "sectionButtonsCell"
 
-    itemClockButton(itemButtonsCell, itemRow.id)
+    itemClockButton(itemButtonsCell, itemRow.id, sectionId)
     
     itemDeleteButton(itemButtonsCell, itemRow, sectionId)
 

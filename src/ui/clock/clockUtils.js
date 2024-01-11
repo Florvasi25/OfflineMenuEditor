@@ -89,10 +89,9 @@ function createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSave
     } else { createItemTableRows(clockTbody, data); }
     
     clockSaveBtn.addEventListener('click', () => { 
-        /*if (!allTimesAreDefault(tableRows)) { */
-            setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data, sectionIndex);
-            clockModalDiv.style.display = 'none';
-        //}
+        setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data, sectionIndex);
+        clockModalDiv.style.display = 'none';
+        
     });
 
 }
@@ -132,15 +131,15 @@ function processSaveChanges(tableRows, data, id, clockFooterDiv, sectionIndex) {
     for (const row of tableRows) {
         const cells = row.cells;
         const dayName = cells[0].innerText;
-        const dayOfWeek = invertedDayMapping[dayName];
+        const DayOfWeek = invertedDayMapping[dayName];
         const StartTime = cells[1].querySelector('input').value;
         const CloseTime = cells[2].querySelector('input').value;
         const Period = calculatePeriod(StartTime, CloseTime);
 
         if (data.MenuItems) {
-            storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
+            storeSectionTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, id);
         } else {
-            storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
+            storeItemTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, id);
         }
     }
     if(data.MenuItems){ 
@@ -149,7 +148,7 @@ function processSaveChanges(tableRows, data, id, clockFooterDiv, sectionIndex) {
     
 }
 
-// Original function refactored to use the separate concerns
+
 function setupSaveChanges(clockBodyDiv, clockFooterDiv, id, data, sectionIndex) {
     const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
     processSaveChanges(tableRows, data, id, clockFooterDiv, sectionIndex);
@@ -175,6 +174,30 @@ function calculatePeriod(StartTime, CloseTime) {
     const minutes = Math.floor((diffInMs % 3600000) / 60000); // divide by number of milliseconds in a minute
 
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
+
+function checkCloseTimeKey(dailySpecialHours){
+    dailySpecialHours.forEach(entry => {
+        if (!entry.hasOwnProperty('CloseTime')) {
+            entry.CloseTime = addTimeStrings(entry.StartTime, entry.Period);
+        }
+    });
+}
+
+function addTimeStrings(startTime, duration) {
+    const start = startTime.split(':').map(Number);
+    const dur = duration.split(':').map(Number);
+
+    const hours = start[0] + dur[0];
+    const minutes = start[1] + dur[1];
+    const seconds = start[2] + dur[2];
+
+    const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+    const finalHours = Math.floor(totalSeconds / 3600);
+    const finalMinutes = Math.floor((totalSeconds % 3600) / 60);
+    const finalSeconds = totalSeconds % 60;
+
+    return [finalHours, finalMinutes, finalSeconds].map(unit => unit.toString().padStart(2, '0')).join(':');
 }
 
 function removeSectionTimetable(jsonData, sectionId) {
@@ -219,5 +242,6 @@ export {
     dayMappingToName,
     invertedDayMapping,
     removeSectionTimetable,
-    removeItemTimetable
+    removeItemTimetable,
+    checkCloseTimeKey
 }

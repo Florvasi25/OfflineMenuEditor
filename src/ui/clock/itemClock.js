@@ -1,7 +1,8 @@
 import { 
     jsonData, 
     getRandomInt,
-    updateLocalStorage
+    updateLocalStorage,
+    getSectionRow
 } from '../context.js'
 
 import {
@@ -9,16 +10,21 @@ import {
     createClockTable,
     createInputCell,
     dayMappingToName,
-    removeItemTimetable
+    removeItemTimetable,
+    checkCloseTimeKey
 } from './clockUtils.js'
 
+import {
+    changeSectionClockIconToYellow,
+    changeSectionClockIcon
+} from './sectionClock.js'
 import {
     createAndAppend,  
     addTextContent
 }  from '../helpers.js';
 
 
-function itemClockButton(itemButtonsCell, itemId) {
+function itemClockButton(itemButtonsCell, itemId, sectionId) {
     const clockButton = createAndAppend(itemButtonsCell, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
@@ -35,15 +41,16 @@ function itemClockButton(itemButtonsCell, itemId) {
        
         const item = getItem(jsonData, itemId); 
         createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, item, itemId);
-        addRemoveButton(clockModalDiv, actionButtonsContainer, item, itemId);
+        addRemoveButton(clockModalDiv, actionButtonsContainer, item, itemId, sectionId);
     });
 }
 
 function createItemTableRows(parentElement, item) {
     const dayOrder = [1, 2, 3, 4, 5, 6, 0];
     const timesMapping = {};
+    checkCloseTimeKey(item.DailySpecialHours)
     item.DailySpecialHours.forEach(time => {
-        timesMapping[time.dayOfWeek] = {
+        timesMapping[time.DayOfWeek] = {
             start: time.StartTime,
             close: time.CloseTime
         };
@@ -75,18 +82,20 @@ function createItemTableRows(parentElement, item) {
 }
 
 // Store the data in an object and push it to the jsonData local storage
-function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
+function storeItemTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, id) {
     const itemRow = document.getElementById(id);
+    var sectionOfItem;
     jsonData.MenuSections.forEach(section => {
         section.MenuItems.forEach(item => {
             if(item.MenuItemId == id) {
+                sectionOfItem = section;
                 if(!item.DailySpecialHours) {
                     item.DailySpecialHours = [];
                 }   
-                // Remove any object from DailySpecialHours that has the same dayOfWeek 
+                // Remove any object from DailySpecialHours that has the same DayOfWeek 
                 // as the object we are pushing, to avoid duplicated objects.
                 item.DailySpecialHours = 
-                    item.DailySpecialHours.filter(time => time.dayOfWeek !== dayOfWeek);    
+                    item.DailySpecialHours.filter(time => time.DayOfWeek !== DayOfWeek);    
                 // If it's the first object, get a random ID,
                 // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in DailySpecialHours, 
                 // determines the highest value using Math.max, and adds +1. 
@@ -96,7 +105,7 @@ function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
                 // Create the new time object
                 const newTime = {
                     BusinessHoursPeriodId: Id,
-                    dayOfWeek,
+                    DayOfWeek,
                     StartTime,
                     CloseTime,
                     Period,
@@ -107,12 +116,14 @@ function storeItemTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id) {
                 item.DailySpecialHours.push(newTime);
             }
     })})
+    const sectionRow = getSectionRow(sectionOfItem.MenuSectionId);
     updateLocalStorage();
     changeItemClockIcon(itemRow, id);
+    changeSectionClockIconToYellow(sectionRow, sectionOfItem);
 }
 
 
-function addRemoveButton(clockModalDiv, parentElement, item, itemId) {
+function addRemoveButton(clockModalDiv, parentElement, item, itemId, sectionId) {
     const clockRemoveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'removeBtn');
     addTextContent(clockRemoveBtn, 'Remove');
     const itemRow = document.getElementById(itemId);
@@ -128,8 +139,10 @@ function addRemoveButton(clockModalDiv, parentElement, item, itemId) {
     clockRemoveBtn.addEventListener('click', () => {
         if (clockRemoveBtn.classList.contains('removeBtn-disabled')) { return; }
         if(removeItemTimetable(item)) { 
+            const sectionRow = getSectionRow(sectionId);
             clockModalDiv.style.display = 'none'; 
             changeItemClockIcon(itemRow, itemId)
+            changeSectionClockIcon(sectionRow, sectionId);
         }
     });
 

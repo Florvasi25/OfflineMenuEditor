@@ -94,25 +94,25 @@ function getTableSchedule(clockFooterDiv, id) {
     for (const row of tableRows) {
         const cells = row.cells;
         const dayName = cells[0].innerText;
-        const dayOfWeek = invertedDayMapping[dayName]; // get the corresponding number for the day
+        const DayOfWeek = invertedDayMapping[dayName]; // get the corresponding number for the day
         const StartTime = cells[1].querySelector('input').value;
         const CloseTime = cells[2].querySelector('input').value;
         let Period = calculatePeriod(StartTime, CloseTime)
 
-        storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, id);
+        storeBikeTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, id);
     }
 }
 
-function storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
+function storeBikeTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, sectionId) {
     jsonData.MenuSections.forEach(MenuSection => {
         if (sectionId == MenuSection.MenuSectionId) {
             if(!MenuSection.MenuSectionAvailability.AvailableTimes) {
                 MenuSection.MenuSectionAvailability.AvailableTimes = [];
             }
-            // Remove any object from AvailableTimes that has the same dayOfWeek 
+            // Remove any object from AvailableTimes that has the same DayOfWeek 
             // as the object we are pushing, to avoid duplicated objects.
             MenuSection.MenuSectionAvailability.AvailableTimes = 
-                MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.dayOfWeek !== dayOfWeek);            
+                MenuSection.MenuSectionAvailability.AvailableTimes.filter(time => time.DayOfWeek !== DayOfWeek);            
             // If it's the first object, get a random ID,
             // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in AvailableTimes, 
             // determines the highest value using Math.max, and adds +1. 
@@ -122,7 +122,7 @@ function storeBikeTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, secti
             // Create the new time object
             const newTime = {
                 BusinessHoursPeriodId: Id,
-                dayOfWeek,
+                DayOfWeek,
                 StartTime,
                 CloseTime,
                 Period,
