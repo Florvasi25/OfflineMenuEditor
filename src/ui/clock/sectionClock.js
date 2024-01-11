@@ -71,7 +71,7 @@ function changeSectionClockIcon(sectionRow, sectionId) {
     if (compareDailySpecialHours(section) && section?.MenuItems?.[0]?.DailySpecialHours?.length > 1) {
         changeSectionClockIconColor(sectionRow, '#80d66f');
     } else {
-        changeSectionClockIconColor(sectionRow, '#FFFF00');
+        changeSectionClockIconColor(sectionRow, '');
     }
 }
 
