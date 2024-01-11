@@ -27,7 +27,7 @@ function createAddButton(menuOs, menuItemId) {
 
     addBtn.addEventListener('click', (event) => {
         const targetParent = event.target.parentElement;
-        targetParent.style.backgroundColor = '#8ef274';
+        targetParent.style.backgroundColor = '#a2f5c0';
         addBtn.style.display = 'none';
 
         const newOs = JSON.parse(JSON.stringify(menuOs));

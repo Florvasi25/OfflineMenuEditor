@@ -60,7 +60,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex);
-            clockButton.style.backgroundColor = 'yellow';
+            clockButton.style.backgroundColor = '#ffee00';
         }
     });
 }
@@ -77,7 +77,7 @@ function changeSectionClockIcon(sectionRow, sectionId) {
 
 function changeSectionClockIconToYellow(sectionRow, section) {
     if (!compareDailySpecialHours(section)) {
-        changeSectionClockIconColor(sectionRow, '#FFFF00');
+        changeSectionClockIconColor(sectionRow, '#ffee00');
     }else{
         changeSectionClockIconColor(sectionRow, '#80d66f');
     }
