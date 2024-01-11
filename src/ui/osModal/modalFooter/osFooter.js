@@ -221,7 +221,12 @@ function createAddButton(menuOs, menuItemId) {
         const removeBtn = createRemoveButton(menuOs, menuItemId);
         targetParent.appendChild(removeBtn);
 
-        groupOptionSets()
+        if (!groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId] = [newOs];
+        } else {
+            groupedOs[menuOs.groupOsId].push(newOs)
+        }
+
         updateLocalStorage()
     })
 
@@ -230,33 +235,28 @@ function createAddButton(menuOs, menuItemId) {
 
 function createRemoveButton(menuOs, menuItemId) {
     const deleteBtn = document.createElement('button')
-    deleteBtn.className = 'addOrDeleteBtn'
+    deleteBtn.className = 'deleteBtn'
     deleteBtn.textContent = '-'
 
     const foundItem = jsonData.MenuSections
     .flatMap(i => i.MenuItems)
     .find(i => i.MenuItemId == menuItemId);
-
     
     deleteBtn.addEventListener('click', (event) => {
-        const correctGroup = Array.from(foundItem.MenuItemOptionSets.flatMap( i => i.groupOsId)).filter(i => i == menuOs.groupOsId);
-
-        const correctOs = Array.from(foundItem.MenuItemOptionSets).find(i => i.groupOsId == correctGroup);
+        const correctOs = Array.from(foundItem.MenuItemOptionSets).find(i => i.groupOsId == menuOs.groupOsId);
 
         const targetParent = event.target.parentElement;
         targetParent.style.backgroundColor = '#ffffff';
         deleteBtn.style.display = 'none';
 
-        foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
+        console.log(correctOs);
+        console.log(groupedOs[correctOs.groupOsId]);
+        console.log(groupedOs[correctOs.groupOsId].indexOf(menuOs));
 
-        if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
-            delete groupedOs[menuOs.groupOsId];
-            addItemlessOs(menuOs);
-        }
+        foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(correctOs), 1)
     
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
         const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == correctOs.MenuItemOptionSetId);
-        console.log(osRowOptionPreview);
 
         if (osRowOptionPreview) {
             if (osRowOptionPreview.classList.contains('expanded')) {
@@ -282,11 +282,18 @@ function createRemoveButton(menuOs, menuItemId) {
 
         const addBtn = createAddButton(menuOs, menuItemId);
         targetParent.appendChild(addBtn);
-
-        groupOptionSets()
+        
+        if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
+            delete groupedOs[menuOs.groupOsId];
+            addItemlessOs(menuOs);
+        } else if (groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId].splice(groupedOs[menuOs.groupOsId].indexOf(menuOs), 1)
+        }
+        
         updateLocalStorage()
     })
-
+    
+    console.log(groupedOs);
     return deleteBtn
 }
 
