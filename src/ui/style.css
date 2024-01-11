@@ -1634,3 +1634,20 @@ selector svg {
     background-color: #47f744;
     color: #202020;
 }
+
+.deleteBtn {
+    margin-right: 5px;
+    width: 30px;
+    height: 25px;
+    background-color: #cfcfcf;
+    color: #4c4c4c;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.deleteBtn:hover {
+    background-color: #f74444;
+    color: #202020;
+}

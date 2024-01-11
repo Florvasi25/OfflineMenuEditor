@@ -5,7 +5,9 @@ import {
     getUniqueRandomInt,
     getLocalStorageOptionSetItemsIDs,
     groupOptionSets,
-    updateLocalStorage
+    updateLocalStorage,
+    groupedOs,
+    addItemlessOs
 } from "../../context.js";
 
 import {
@@ -146,9 +148,11 @@ function createShowOs(menuOs) {
             // Highlight the listedItem if it belongs to the filtered section
             if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
                 listedItem.style.backgroundColor = '#8ef274';
+                const removeBtn = createRemoveButton(menuOs, item.MenuItemId)
+                listedItem.appendChild(removeBtn)
             } else {
-                const addButton = createAddButton(menuOs, item.MenuItemId)
-                listedItem.appendChild(addButton);
+                const addBtn = createAddButton(menuOs, item.MenuItemId)
+                listedItem.appendChild(addBtn);
             }
 
             itemListContainer.appendChild(listedItem);
@@ -170,8 +174,9 @@ function createAddButton(menuOs, menuItemId) {
         .find(i => i.MenuItemId == menuItemId);
 
     addBtn.addEventListener('click', (event) => {
-        event.target.parentElement.style.backgroundColor = '#8ef274';
-        event.target.style.display = 'none';
+        const targetParent = event.target.parentElement;
+        targetParent.style.backgroundColor = '#8ef274';
+        addBtn.style.display = 'none';
 
         const newOs = JSON.parse(JSON.stringify(menuOs));
 
@@ -213,11 +218,83 @@ function createAddButton(menuOs, menuItemId) {
             }
         });
 
-        groupOptionSets()
+        const removeBtn = createRemoveButton(menuOs, menuItemId);
+        targetParent.appendChild(removeBtn);
+
+        if (!groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId] = [newOs];
+        } else {
+            groupedOs[menuOs.groupOsId].push(newOs)
+        }
+
         updateLocalStorage()
     })
 
     return addBtn
+}
+
+function createRemoveButton(menuOs, menuItemId) {
+    const deleteBtn = document.createElement('button')
+    deleteBtn.className = 'deleteBtn'
+    deleteBtn.textContent = '-'
+
+    const foundItem = jsonData.MenuSections
+    .flatMap(i => i.MenuItems)
+    .find(i => i.MenuItemId == menuItemId);
+    
+    deleteBtn.addEventListener('click', (event) => {
+        const correctOs = Array.from(foundItem.MenuItemOptionSets).find(i => i.groupOsId == menuOs.groupOsId);
+
+        const targetParent = event.target.parentElement;
+        targetParent.style.backgroundColor = '#ffffff';
+        deleteBtn.style.display = 'none';
+
+        console.log(correctOs);
+        console.log(groupedOs[correctOs.groupOsId]);
+        console.log(groupedOs[correctOs.groupOsId].indexOf(menuOs));
+
+        foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(correctOs), 1)
+    
+        const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
+        const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == correctOs.MenuItemOptionSetId);
+
+        if (osRowOptionPreview) {
+            if (osRowOptionPreview.classList.contains('expanded')) {
+                let option = osRowOptionPreview.nextElementSibling;
+                if (option.tagName === 'DIV' && option.classList.contains('optionContainer')) {
+                    option.remove();
+                }
+            }
+            osRowOptionPreview.remove();
+        }
+
+        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+
+        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+            if (index % 2 === 0) {
+                osRowHeaderPreview.classList.remove('even');
+                osRowHeaderPreview.classList.add('odd');
+            } else {
+                osRowHeaderPreview.classList.remove('odd');
+                osRowHeaderPreview.classList.add('even');
+            }
+        });
+
+        const addBtn = createAddButton(menuOs, menuItemId);
+        targetParent.appendChild(addBtn);
+        
+        if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
+            delete groupedOs[menuOs.groupOsId];
+            addItemlessOs(menuOs);
+        } else if (groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId].splice(groupedOs[menuOs.groupOsId].indexOf(menuOs), 1)
+        }
+        
+        updateLocalStorage()
+    })
+    
+    console.log(groupedOs);
+    return deleteBtn
 }
 
 export { createOsModalFooter };
