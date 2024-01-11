@@ -26,7 +26,12 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     const optionMoM = document.createElement('p');
     optionMoM.classList.add('optionMoM');
     optionMoM.contentEditable = true;
-    optionMoM.textContent = menuOption.NextMenuItemOptionSetId;
+
+    if (menuOption.NextMenuItemOptionSetId == null) {
+        optionMoM.textContent = 'Empty'
+    } else {
+        optionMoM.textContent = menuOption.NextMenuItemOptionSetId;
+    }
 
     let originalMoM = menuOption.NextMenuItemOptionSetId;
 
@@ -45,7 +50,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 // Show tooltip if the entered value doesn't exist
                 showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this item');
                 return;
-            }
+            } 
 
             // If the entered value exists or is '-1', update the value and remove tooltip
             updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
@@ -66,12 +71,19 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     });
 
     optionMoM.addEventListener('blur', () => {
-        optionMoM.textContent = originalMoM;
-        optionMoM.classList.remove('sectionClicked')
+        if (optionMoM.textContent.trim() === "") {
+            optionMoM.textContent = "Empty";
+        } else {
+            optionMoM.textContent = originalMoM;
+        }
+        optionMoM.classList.remove('sectionClicked');
     });
 
     optionMoM.addEventListener('click', () => {
         optionMoM.classList.add('sectionClicked')
+        if (optionMoM.textContent == "Empty") {
+            optionMoM.textContent = "";
+        }
     })
 
     optionMoM.addEventListener('input', () => {
