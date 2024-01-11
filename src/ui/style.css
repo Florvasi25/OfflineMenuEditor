@@ -1651,3 +1651,8 @@ selector svg {
     background-color: #f74444;
     color: #202020;
 }
+
+.filteredItemsCountContainer {
+    display: flex;
+    margin-left: 5px;
+}
