@@ -15,7 +15,8 @@ import {
     createInputCell,
     dayMappingToName,
     processSaveChanges,
-    removeSectionTimetable
+    removeSectionTimetable,
+    checkCloseTimeKey
 } from './clockUtils.js'
 
 import {
@@ -55,6 +56,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
             const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
             addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
             createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId, sectionIndex);
+            if(section.MenuItems?.[0]?.DailySpecialHours?.length > 1){ clockButton.style.backgroundColor = '#80D66F'; }
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex);
@@ -65,13 +67,25 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
 
 function changeSectionClockIcon(sectionRow, sectionId) {
     var section = getSection(jsonData, sectionId);
-    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
 
     if (compareDailySpecialHours(section) && section?.MenuItems?.[0]?.DailySpecialHours?.length > 1) {
-        clockButton.style.backgroundColor = '#80d66f';
+        changeSectionClockIconColor(sectionRow, '#80d66f');
     } else {
-        clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
+        changeSectionClockIconColor(sectionRow, '#FFFF00');
     }
+}
+
+function changeSectionClockIconToYellow(sectionRow, section) {
+    if (!compareDailySpecialHours(section)) {
+        changeSectionClockIconColor(sectionRow, '#FFFF00');
+    }else{
+        changeSectionClockIconColor(sectionRow, '#80d66f');
+    }
+}
+
+function changeSectionClockIconColor(sectionRow, color){
+    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
+    clockButton.style.backgroundColor = color;
 }
 
 function addSaveChangesButton(parentElement) {
@@ -109,11 +123,14 @@ function createSectionTableRows(parentElement, menuSection, sectionIndex) {
     const timesMapping = {};
 
     const availabilityMode = getAvailabilityMode(sectionIndex);
+
+    
     // If all DailySpecialHours are the same for all MenuItems, then take the DailySpecialHours data 
     if ( areDailySpecialHoursSame && menuSection.MenuItems.length > 0 && menuSection.MenuItems[0].DailySpecialHours ) 
         { 
+            checkCloseTimeKey(menuSection.MenuItems[0].DailySpecialHours);
             menuSection.MenuItems[0].DailySpecialHours.forEach(time => {
-            timesMapping[time.dayOfWeek] = {
+            timesMapping[time.DayOfWeek] = {
                 start: time.StartTime,
                 close: time.CloseTime
             };
@@ -147,7 +164,7 @@ function createSectionTableRows(parentElement, menuSection, sectionIndex) {
 }
 
 // Store the data in an object and push it to the jsonData local storage
-function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, sectionId) {
+function storeSectionTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, sectionId) {
     const sectionRow = document.getElementById(sectionId);
     jsonData.MenuSections.forEach(MenuSection => {
         if (sectionId == MenuSection.MenuSectionId) {
@@ -156,10 +173,10 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
                 if(!MenuItem.DailySpecialHours) {
                     MenuItem.DailySpecialHours = [];
                 }
-                // Remove any object from DailySpecialHours that has the same dayOfWeek 
+                // Remove any object from DailySpecialHours that has the same DayOfWeek 
                 // as the object we are pushing, to avoid duplicated objects.
                 MenuItem.DailySpecialHours = 
-                    MenuItem.DailySpecialHours.filter(time => time.dayOfWeek !== dayOfWeek);
+                    MenuItem.DailySpecialHours.filter(time => time.DayOfWeek !== DayOfWeek);
 
                 // If it's the first object, get a random ID,
                 // Otherwise, it maps through all the BusinessHoursPeriodIds of the objects in DailySpecialHours, 
@@ -170,7 +187,7 @@ function storeSectionTimeTableInJson(dayOfWeek, StartTime, CloseTime, Period, se
                 // Create the new time object
                 const newTime = {
                     BusinessHoursPeriodId: Id,
-                    dayOfWeek,
+                    DayOfWeek,
                     StartTime,
                     CloseTime,
                     Period,
@@ -197,7 +214,7 @@ function getSection(jsonData, sectionId) {
 
 function compareDailySpecialHours(menuSection) {
     if (!menuSection?.MenuItems || menuSection?.MenuItems?.length <= 1) {
-        return true; // if there's only one or no items, then they are inherently the same
+        return true; // if there's only one or no items, then they are the same
     }
     const baseHours = menuSection.MenuItems[0].DailySpecialHours;
     for (let i = 1; i < menuSection.MenuItems.length; i++) {
@@ -207,8 +224,8 @@ function compareDailySpecialHours(menuSection) {
         }
         for (let j = 0; j < baseHours.length; j++) {
             if (baseHours[j].StartTime !== currentHours[j].StartTime ||
-                baseHours[j].Period !== currentHours[j].Period ||
-                baseHours[j].StartTimeEarly !== currentHours[j].StartTimeEarly) {
+                baseHours[j].Period !== currentHours[j].Period /*||
+               baseHours[j].StartTimeEarly !== currentHours[j].StartTimeEarly*/) {
                 return false; // if any of the properties don't match, then they're not the same
             }
         }
@@ -244,6 +261,8 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         processSaveChanges(tableRows, section, sectionId, clockFooterDiv, sectionIndex);
         resetSectionClockIcons(sectionId);
         resetItemsClockIcons(sectionId);
+
+        clockModalDiv.style.display = 'none';
     });
 }
 
@@ -273,5 +292,7 @@ export {
     createSectionTableRows,
     storeSectionTimeTableInJson,
     compareDailySpecialHours,
-    changeSectionClockIcon
+    changeSectionClockIcon,
+    changeSectionClockIconColor,
+    changeSectionClockIconToYellow
 } 

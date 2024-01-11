@@ -6,4 +6,4 @@ venv
 out/
 TEST.json
 updated_data.json
-dist
+dist.vs/

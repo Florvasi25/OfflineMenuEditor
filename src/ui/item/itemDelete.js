@@ -1,6 +1,7 @@
 import {
     jsonData,
     getItemIndex,
+    getSectionRow,
     updateItemCounterLocalStorage,
     updateOptionSetCounterLocalStorage,
     updateOptionSetItemsCounterLocalStorage,
@@ -9,6 +10,9 @@ import {
     groupedOs,
     addItemlessOs
 } from '../context.js';
+
+import { changeSectionClockIconColor } from '../clock/sectionClock.js';
+
 
 function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
     const deleteButton = document.createElement('button');
@@ -82,14 +86,13 @@ function deleteItem(itemRow, sectionId) {
         }
         itemRow.remove();
         const { itemIndex, sectionIndex } = getItemIndex(sectionId, itemId);
+        const sectionRow = getSectionRow(sectionId);
         if (itemIndex !== -1) {
             deleteIDs(itemId, itemIndex, sectionIndex);
             const deletedItem = jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1)[0];
             jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             });
-
-            console.log('deletedItem', deletedItem);
 
             const removedOptionSets = {};
 
@@ -111,7 +114,9 @@ function deleteItem(itemRow, sectionId) {
             Object.values(removedOptionSets).forEach((optionSet) => {
                 addItemlessOs(optionSet);
             });
-
+            if(jsonData.MenuSections[sectionIndex].MenuItems.length == 0){ 
+                changeSectionClockIconColor(sectionRow, '')
+            }
             groupOptionSets();
             updateLocalStorage();
         }
