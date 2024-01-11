@@ -63,10 +63,11 @@ function createRemoveButton(menuOs, menuItemId) {
         const addBtn = createAddButton(menuOs, menuItemId);
         targetParent.appendChild(addBtn);
         
-        if (groupedOs[correctOs.groupOsId] && groupedOs[correctOs.groupOsId].length === 1) {
-            delete groupedOs[correctOs.groupOsId];
-            addItemlessOs(correctOs);
+        if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
+            delete groupedOs[menuOs.groupOsId];
+            addItemlessOs(menuOs);
         } else if (groupedOs[correctOs.groupOsId]) {
+            console.log(groupedOs[correctOs.groupOsId].indexOf(correctOs));
             groupedOs[correctOs.groupOsId].splice(groupedOs[correctOs.groupOsId].indexOf(correctOs), 1)
         }
         

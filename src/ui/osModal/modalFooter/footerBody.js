@@ -78,7 +78,7 @@ function createShowOsContainer(menuOs) {
 
             // Highlight the listedItem if it belongs to the filtered section
             if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
-                listedItem.style.backgroundColor = '#8ef274';
+                listedItem.style.backgroundColor = '#a2f5c0';
                 const removeBtn = createRemoveButton(menuOs, item.MenuItemId)
                 listedItem.appendChild(removeBtn)
             } else {

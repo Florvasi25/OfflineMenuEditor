@@ -32,7 +32,8 @@ function createAddButton(menuOs, menuItemId) {
 
         const newOs = JSON.parse(JSON.stringify(menuOs));
 
-        deleteItemlessOs(menuOs)
+        console.log(newOs.MenuItemOptionSetId);
+        deleteItemlessOs(newOs)
 
         newOs.MenuItemId = foundItem.MenuItemId
 

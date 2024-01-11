@@ -1244,16 +1244,13 @@ selector svg {
     padding: 10px;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    /*position: fixed;*/
     z-index: 1000;
     border-radius: 10px;
     position: absolute;
-    top: 100%; /* This places it just below the button */
     left: 0; /* Aligns it to the left of the button */
-    /* Set width or other properties as needed */
-    display: block;
+    top: 45px;
+    margin-left: 15px;
 }
-
 
 .list.hidden {
     opacity: 0;
@@ -1655,4 +1652,13 @@ selector svg {
 .filteredItemsCountContainer {
     display: flex;
     margin-left: 5px;
+}
+
+.topButtonsCell {
+    padding: 10px 15px 0 15px;
+}
+
+.optionSetListButton {
+    height: 30px;
+    width: 30px;
 }
