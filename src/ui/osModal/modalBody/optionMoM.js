@@ -29,6 +29,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
 
     if (menuOption.NextMenuItemOptionSetId == null) {
         optionMoM.textContent = 'Empty'
+        optionMoM.style = 'color: #a3a3a3;'
     } else {
         optionMoM.textContent = menuOption.NextMenuItemOptionSetId;
     }
@@ -38,26 +39,29 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     optionMoM.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            const newOptionMoM = optionMoM.textContent;
-
-            // Check if the entered value exists in the MenuItemOptionSetId list
-            const menuItemOptionSetIds = jsonData.MenuSections.flatMap(i => i.MenuItems)
-                .flatMap(i => i.MenuItemOptionSets)
-                .map(optionSet => optionSet.MenuItemOptionSetId);
-
-            // Allow '-1' as a valid value
-            if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM))) {
-                // Show tooltip if the entered value doesn't exist
-                showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this item');
-                return;
-            } 
-
-            // If the entered value exists or is '-1', update the value and remove tooltip
+            const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
+    
+            // If the entered value is not empty, check its validity
+            if (newOptionMoM !== "") {
+                // Check if the entered value exists in the MenuItemOptionSetId list
+                const menuItemOptionSetIds = jsonData.MenuSections.flatMap(i => i.MenuItems)
+                    .flatMap(i => i.MenuItemOptionSets)
+                    .map(optionSet => optionSet.MenuItemOptionSetId);
+    
+                // Allow '-1' as a valid value
+                if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM))) {
+                    // Show tooltip if the entered value doesn't exist
+                    showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this item');
+                    return;
+                } 
+            }
+    
+            // If the entered value exists, update the value and remove tooltip
             updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
             originalMoM = newOptionMoM;
             optionMoM.blur();
             removeToolTip(optionMoM);
-
+    
             // Update the preview if available
             const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview')); 
             const optionMoMPreview = optionMoMPreviewArray.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
@@ -73,6 +77,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     optionMoM.addEventListener('blur', () => {
         if (optionMoM.textContent.trim() === "") {
             optionMoM.textContent = "Empty";
+            optionMoM.style = 'color: #a3a3a3;'
         } else {
             optionMoM.textContent = originalMoM;
         }
@@ -83,6 +88,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
         optionMoM.classList.add('sectionClicked')
         if (optionMoM.textContent == "Empty") {
             optionMoM.textContent = "";
+            optionMoM.style = 'color: #000000;'
         }
     })
 
