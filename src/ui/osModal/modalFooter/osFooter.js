@@ -128,7 +128,7 @@ function createShowOs(menuOs) {
         sectionHeader.className = 'sectionHeader';
 
         if (section.MenuItems.length !== 0) {
-            sectionHeader.textContent = `${sectionName} (${sectionsWithFilteredItems[sectionName]?.count || 0}/${section.MenuItems.length})`;
+            sectionHeader.innerHTML = `<p>${sectionName}</p> (<p class="filteredItemsCount" id=${section.MenuSectionId}>${sectionsWithFilteredItems[sectionName]?.count || 0}</p>/<p>${section.MenuItems.length}</p>)`;
             showOs.appendChild(sectionHeader);
         }
 
@@ -218,6 +218,14 @@ function createAddButton(menuOs, menuItemId) {
             }
         });
 
+        const filteredItemsCountArray = Array.from(document.getElementsByClassName('filteredItemsCount'));
+        const filteredItemsCount = filteredItemsCountArray.find((p) => p.id == foundItem.MenuSectionId);
+        
+        if (filteredItemsCount) {
+            const currentCount = parseInt(filteredItemsCount.textContent) || 0;
+            filteredItemsCount.textContent = currentCount + 1;
+        }
+
         const removeBtn = createRemoveButton(menuOs, menuItemId);
         targetParent.appendChild(removeBtn);
 
@@ -249,10 +257,6 @@ function createRemoveButton(menuOs, menuItemId) {
         targetParent.style.backgroundColor = '#ffffff';
         deleteBtn.style.display = 'none';
 
-        console.log(correctOs);
-        console.log(groupedOs[correctOs.groupOsId]);
-        console.log(groupedOs[correctOs.groupOsId].indexOf(menuOs));
-
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(correctOs), 1)
     
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
@@ -280,20 +284,27 @@ function createRemoveButton(menuOs, menuItemId) {
             }
         });
 
+        const filteredItemsCountArray = Array.from(document.getElementsByClassName('filteredItemsCount'));
+        const filteredItemsCount = filteredItemsCountArray.find((p) => p.id == foundItem.MenuSectionId);
+        
+        if (filteredItemsCount) {
+            const currentCount = parseInt(filteredItemsCount.textContent) || 0;
+            filteredItemsCount.textContent = currentCount - 1;
+        }
+
         const addBtn = createAddButton(menuOs, menuItemId);
         targetParent.appendChild(addBtn);
         
-        if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
-            delete groupedOs[menuOs.groupOsId];
-            addItemlessOs(menuOs);
-        } else if (groupedOs[menuOs.groupOsId]) {
-            groupedOs[menuOs.groupOsId].splice(groupedOs[menuOs.groupOsId].indexOf(menuOs), 1)
+        if (groupedOs[correctOs.groupOsId] && groupedOs[correctOs.groupOsId].length === 1) {
+            delete groupedOs[correctOs.groupOsId];
+            addItemlessOs(correctOs);
+        } else if (groupedOs[correctOs.groupOsId]) {
+            groupedOs[correctOs.groupOsId].splice(groupedOs[correctOs.groupOsId].indexOf(correctOs), 1)
         }
         
         updateLocalStorage()
     })
     
-    console.log(groupedOs);
     return deleteBtn
 }
 
