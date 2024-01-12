@@ -60,7 +60,7 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex);
-            clockButton.style.backgroundColor = 'yellow';
+            clockButton.style.backgroundColor = '#ffee00';
         }
     });
 }
