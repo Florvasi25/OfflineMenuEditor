@@ -17,9 +17,7 @@ import {
     addTextContent
 }  from '../helpers.js';
 
-import {
-    createDropDownMenu
-}  from './collapsedTime.js';
+
 
 const dayMappingToName = {
     0: 'Sunday',

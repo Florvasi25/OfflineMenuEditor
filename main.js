@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu} = require("electron")
+const { app, BrowserWindow, Menu, shell} = require("electron")
 if (require('electron-squirrel-startup')) return;
 require('electron-reload')(__dirname)
 function createWindow()
@@ -23,7 +23,10 @@ function createWindow()
             ]
         },
         {
-            label: "About"
+            label: "About",
+            click(){
+                shell.openExternal('https://github.com/Florvasi25/OfflineMenuEditor')
+            }
         }
     ])
     Menu.setApplicationMenu(menu)

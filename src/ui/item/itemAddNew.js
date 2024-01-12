@@ -7,11 +7,16 @@ import {
     getLocalStorageItemIDs,
     getUniqueRandomInt,
     getSectionIndex,
+    getSectionRow
 } from '../context.js';
 
 import {
     toggleItemState
 } from './itemDropDown.js'
+
+import {
+    getsectionClockColor
+} from '../clock/sectionClock.js'
 
 function createItemButton(itemContainer, sectionId) {
     const newItemButton = document.createElement('button')
@@ -24,6 +29,7 @@ function createItemButton(itemContainer, sectionId) {
         const itemIDs = getLocalStorageItemIDs();
         const newId = getUniqueRandomInt(itemIDs);
         const sectionIndex = getSectionIndex(sectionId);
+        const sectionRow = getSectionRow(sectionId);
     
         const emptyItemJson = {
             MenuId: jsonData.MenuId,
@@ -58,23 +64,49 @@ function createItemButton(itemContainer, sectionId) {
             ExternalImageUrl: null
         };
         
-        CreateItem(itemContainer, emptyItemJson, sectionIndex, sectionId, newId)
+        CreateItem(itemContainer, emptyItemJson, sectionIndex, sectionId, newId, sectionRow)
     });
 
     return newItemButton
 }
 
-function CreateItem(itemContainer, item, sectionIndex, sectionId, newId){
+function CreateItem(itemContainer, item, sectionIndex, sectionId, newId, sectionRow){
 
     let itemRow = createItem(item, sectionId, itemContainer)
     
     itemContainer.appendChild(itemRow);
     
+    if(getsectionClockColor(sectionRow) == 'rgb(128, 214, 111)'){
+
+        let lastMenuItemIndex = jsonData.MenuSections[sectionIndex].MenuItems.length - 1;
+
+        let itemDailyHours = jsonData.MenuSections[sectionIndex].MenuItems[lastMenuItemIndex].DailySpecialHours;
+
+        let itemDailySpecialHours = modifyBusinessHoursPeriodIds(itemDailyHours)
+
+        item.DailySpecialHours = itemDailySpecialHours;
+        setClockIcon(itemRow);
+    }
+        
     jsonData.MenuSections[sectionIndex].MenuItems.push(item)
     toggleItemState(itemRow, sectionId)
 
     updateLocalStorage()
     updateItemCounterLocalStorage(newId, true);
+}
+
+function modifyBusinessHoursPeriodIds(itemDailyHours) {
+    for (let item of itemDailyHours) {
+
+        item.BusinessHoursPeriodId += 1;
+    }
+    return itemDailyHours;
+}
+
+function setClockIcon(itemRow){
+    const clockButton = itemRow.querySelector('.sectionButton.clockButton');
+
+    clockButton.style.backgroundColor = '#80d66f';
 }
 
 export { createItemButton, CreateItem }

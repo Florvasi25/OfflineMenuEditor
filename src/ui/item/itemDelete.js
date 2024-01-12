@@ -11,7 +11,7 @@ import {
     addItemlessOs
 } from '../context.js';
 
-import { changeSectionClockIconColor } from '../clock/sectionClock.js';
+import { changeSectionClockIconColor, changeSectionClockIcon } from '../clock/sectionClock.js';
 
 
 function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
@@ -114,9 +114,14 @@ function deleteItem(itemRow, sectionId) {
             Object.values(removedOptionSets).forEach((optionSet) => {
                 addItemlessOs(optionSet);
             });
+
             if(jsonData.MenuSections[sectionIndex].MenuItems.length == 0){ 
                 changeSectionClockIconColor(sectionRow, '')
-            }
+            } else if (jsonData.MenuSections[sectionIndex].MenuItems.length == 1 && 
+                            jsonData.MenuSections[sectionIndex].MenuItems[0].DailySpecialHours.length > 0){
+                changeSectionClockIconColor(sectionRow, '#80d66f')                    
+            }else{ changeSectionClockIcon(sectionRow, sectionId) }
+
             groupOptionSets();
             updateLocalStorage();
         }

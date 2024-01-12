@@ -65,29 +65,6 @@ function sectionClockButton(sectionButtonsCell, sectionId) {
     });
 }
 
-function changeSectionClockIcon(sectionRow, sectionId) {
-    var section = getSection(jsonData, sectionId);
-
-    if (compareDailySpecialHours(section) && section?.MenuItems?.[0]?.DailySpecialHours?.length > 1) {
-        changeSectionClockIconColor(sectionRow, '#80d66f');
-    } else {
-        changeSectionClockIconColor(sectionRow, '');
-    }
-}
-
-function changeSectionClockIconToYellow(sectionRow, section) {
-    if (!compareDailySpecialHours(section)) {
-        changeSectionClockIconColor(sectionRow, '#FFFF00');
-    }else{
-        changeSectionClockIconColor(sectionRow, '#80d66f');
-    }
-}
-
-function changeSectionClockIconColor(sectionRow, color){
-    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
-    clockButton.style.backgroundColor = color;
-}
-
 function addSaveChangesButton(parentElement) {
     const clockSaveBtn = createAndAppend(parentElement, 'button', 'clockBtn', 'clockBtn-save');
     addTextContent(clockSaveBtn, 'Save Changes');
@@ -266,6 +243,29 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
     });
 }
 
+function changeSectionClockIcon(sectionRow, sectionId) {
+    var section = getSection(jsonData, sectionId);
+    var compareHours = compareDailySpecialHours(section);
+    if (compareHours && section?.MenuItems?.[0]?.DailySpecialHours?.length > 0) {
+        changeSectionClockIconColor(sectionRow, '#80d66f');
+    }else if (!compareHours && section?.MenuItems?.[0]?.DailySpecialHours?.length > 0){
+        changeSectionClockIconColor(sectionRow, '#FFFF00');
+    } else {
+        changeSectionClockIconColor(sectionRow, '');
+    }
+}
+
+function changeSectionClockIconColor(sectionRow, color){
+    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
+    clockButton.style.backgroundColor = color;
+}
+
+function getsectionClockColor(sectionRow){
+    const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
+    console.log("Color: ", clockButton.style.backgroundColor);
+    return clockButton.style.backgroundColor;
+    
+}
 function resetSectionClockIcons(sectionId) {
     const sectionRow = document.getElementById(sectionId);
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
@@ -294,5 +294,5 @@ export {
     compareDailySpecialHours,
     changeSectionClockIcon,
     changeSectionClockIconColor,
-    changeSectionClockIconToYellow
+    getsectionClockColor
 } 

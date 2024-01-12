@@ -15,7 +15,6 @@ import {
 } from './clockUtils.js'
 
 import {
-    changeSectionClockIconToYellow,
     changeSectionClockIcon
 } from './sectionClock.js'
 import {
@@ -119,7 +118,7 @@ function storeItemTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, id) {
     const sectionRow = getSectionRow(sectionOfItem.MenuSectionId);
     updateLocalStorage();
     changeItemClockIcon(itemRow, id);
-    changeSectionClockIconToYellow(sectionRow, sectionOfItem);
+    changeSectionClockIcon(sectionRow, sectionOfItem.MenuSectionId);
 }
 
 
@@ -158,6 +157,7 @@ function changeItemClockIcon(itemRow, itemId) {
         clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
     }
 }
+
 
 function getItem(jsonData, itemId) {
     if (!jsonData || !jsonData.MenuSections) return null;
