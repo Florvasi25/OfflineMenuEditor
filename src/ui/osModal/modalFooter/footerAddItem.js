@@ -6,7 +6,7 @@ import {
     getLocalStorageOptionSetItemsIDs,
     updateLocalStorage,
     groupedOs,
-    getRandomInt,
+    itemlessOs,
 } from "../../context.js";
 
 import {
@@ -31,22 +31,25 @@ function createAddButton(menuOs, menuItemId) {
         targetParent.style.backgroundColor = '#a2f5c0';
         addBtn.style.display = 'none';
 
-        const newOs = JSON.parse(JSON.stringify(menuOs));
+        let newOs = {};
+        if (itemlessOs.includes(menuOs)) {
+            newOs = menuOs;
+            deleteItemlessOs(newOs);
+        } else {
+            newOs = JSON.parse(JSON.stringify(menuOs));
 
-        deleteItemlessOs(newOs)
+            const optionSetsIds = getLocalStorageOptionSetIDs();
+            const newOptionSetId = getUniqueRandomInt(optionSetsIds);
+            newOs.MenuItemOptionSetId = newOptionSetId;
+
+            newOs.MenuItemOptionSetItems.forEach(option => {
+                const optionIds = getLocalStorageOptionSetItemsIDs();
+                const newOptionId = getUniqueRandomInt(optionIds);
+                option.MenuItemOptionSetItemId = newOptionId
+            })
+        }
 
         newOs.MenuItemId = foundItem.MenuItemId
-
-        const optionSetsIds = getLocalStorageOptionSetIDs();
-        const newOptionSetId = getUniqueRandomInt(optionSetsIds);
-        newOs.MenuItemOptionSetId = newOptionSetId;
-
-        newOs.MenuItemOptionSetItems.forEach(option => {
-            const optionIds = getLocalStorageOptionSetItemsIDs();
-            const newOptionId = getUniqueRandomInt(optionIds);
-            option.MenuItemOptionSetItemId = newOptionId
-        })
-
         newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
 
         foundItem.MenuItemOptionSets.push(newOs)

@@ -77,11 +77,6 @@ function updateName(menuOs, osName) {
             os.Name = osName
         })
         // groupOptionSets()
-        // if (!groupedOs[menuOs.groupOsId]) {
-        //     groupedOs[menuOs.groupOsId] = [menuOs];
-        // } else {
-        //     groupedOs[menuOs.groupOsId].push(menuOs)
-        // }
         updateLocalStorage()
     } else if (itemlessOs.includes(menuOs)){
         menuOs.Name = osName;
