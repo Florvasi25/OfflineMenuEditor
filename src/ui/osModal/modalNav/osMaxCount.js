@@ -68,7 +68,7 @@ function createMaxCount(menuOs) {
                 const maxSelectCountArray = Array.from(document.getElementsByClassName('maxSelectCount'));
                 const maxSelectCount = maxSelectCountArray.filter(p => optionSetIds.includes(p.id));
                 maxSelectCount.forEach(os => {
-                    os.textContent = menuOs.MaxSelectCount
+                    os.textContent = newMaxOsCount
                 })
             }
         } else if (e.key === 'Escape') {

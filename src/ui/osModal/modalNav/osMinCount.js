@@ -69,7 +69,7 @@ function createMinCount(menuOs) {
                 const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
                 const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));
                 minSelectCount.forEach(os => {
-                    os.textContent = menuOs.MinSelectCount
+                    os.textContent = newMinOsCount
                 })
             }
         } else if (e.key === 'Escape') {
@@ -98,7 +98,7 @@ function updateMinCount(menuOs, osMinCount) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.MinSelectCount = Number(osMinCount)
         })
-        groupOptionSets()
+        // groupOptionSets()
         updateLocalStorage()
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MinSelectCount = Number(osMinCount)
