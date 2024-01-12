@@ -67,7 +67,8 @@ function osNewButton(osBtnsCell) {
             MinPrice: 0,
             MenuItemId: null,
             MenuItemOptionSetMetadata: [],
-            ExternalImageUrl: null
+            ExternalImageUrl: null,
+            groupOsId: `group${getRandomInt()}`
         };
 
         const existingOsModal = document.querySelector('.osModalContainer')

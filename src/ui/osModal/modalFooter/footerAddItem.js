@@ -6,6 +6,7 @@ import {
     getLocalStorageOptionSetItemsIDs,
     updateLocalStorage,
     groupedOs,
+    getRandomInt,
 } from "../../context.js";
 
 import {
@@ -32,7 +33,6 @@ function createAddButton(menuOs, menuItemId) {
 
         const newOs = JSON.parse(JSON.stringify(menuOs));
 
-        console.log(newOs.MenuItemOptionSetId);
         deleteItemlessOs(newOs)
 
         newOs.MenuItemId = foundItem.MenuItemId
@@ -83,13 +83,17 @@ function createAddButton(menuOs, menuItemId) {
         targetParent.appendChild(removeBtn);
 
         if (!groupedOs[menuOs.groupOsId]) {
+            console.log('removed from itemless');
             groupedOs[menuOs.groupOsId] = [newOs];
         } else {
+            console.log('added to the group');
             groupedOs[menuOs.groupOsId].push(newOs)
         }
 
         updateLocalStorage()
+        console.log("groupedOs", groupedOs);
     })
+    
 
     return addBtn
 }

@@ -40,15 +40,15 @@ function createOsName(menuOs) {
                 const osNameHeaderArray = Array.from(document.getElementsByClassName('osNameHeader'));
                 const osNameHeader = osNameHeaderArray.filter(p => optionSetIds.includes(p.id));
                 osNameHeader.forEach(os => {
-                    os.textContent = menuOs.Name;
+                    os.textContent = newOsName;
                 })
-                if (menuOs.Name == null || menuOs.Name == '') {
+                if (newOsName == null || newOsName == '') {
                     osNameHeader.forEach(os => {
                         os.textContent = 'Empty';
                     })                
                 } else {
                     osNameHeader.forEach(os => {
-                        os.textContent = menuOs.Name;
+                        os.textContent = newOsName;
                     })                
                 }
             }
@@ -76,7 +76,12 @@ function updateName(menuOs, osName) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.Name = osName
         })
-        groupOptionSets()
+        // groupOptionSets()
+        // if (!groupedOs[menuOs.groupOsId]) {
+        //     groupedOs[menuOs.groupOsId] = [menuOs];
+        // } else {
+        //     groupedOs[menuOs.groupOsId].push(menuOs)
+        // }
         updateLocalStorage()
     } else if (itemlessOs.includes(menuOs)){
         menuOs.Name = osName;

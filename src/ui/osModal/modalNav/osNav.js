@@ -18,7 +18,7 @@ function createOsModalNav(menuOs) {
     osModalNav.appendChild(selectOptionContainer)
 
     const optionSetId = document.createElement('p')
-    optionSetId.textContent = menuOs.MenuItemOptionSetId
+    optionSetId.textContent = menuOs.MenuItemOptionSetId + " ------ " + menuOs.groupOsId
     optionSetId.className = 'optionSetId'
     osModalNav.appendChild(optionSetId)
     

@@ -97,7 +97,7 @@ function updateMaxCount(menuOs, osMaxCount) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.MaxSelectCount = Number(osMaxCount)
         })
-        groupOptionSets()
+        // groupOptionSets()
         updateLocalStorage()
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MaxSelectCount = Number(osMaxCount)
