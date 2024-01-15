@@ -26,29 +26,47 @@ function createSectionName(sectionRow, menuSection) {
     const sectionName = document.createElement('p');
     sectionName.classList.add('sectionName');
     sectionName.contentEditable = true;
+    sectionName.textContent = menuSection.Name.toUpperCase();
+    if (sectionName.textContent == "EMPTY") {
+        sectionName.style.color = "#a9a9a9";
+    }
 
-    sectionName.textContent = menuSection.Name ? menuSection.Name.toUpperCase() : '';
-
-    let originalName = menuSection.Name ? menuSection.Name.toUpperCase() : '';
+    let originalName = menuSection.Name.toUpperCase();
 
     sectionName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
+            if (sectionName.textContent == "" || sectionName.textContent == null) {
+                sectionName.textContent = "EMPTY"
+                sectionName.style.color = "#a9a9a9";
+            }
             updateName(sectionRow.id, sectionName.textContent);
             originalName = sectionName.textContent.toUpperCase()
             sectionName.blur();
         } else if (e.key === 'Escape') {
-            sectionName.textContent = originalName;
+            if (sectionName.textContent == "" || sectionName.textContent == null) {
+                sectionName.textContent = "EMPTY"
+                sectionName.style.color = "#a9a9a9";
+            } else {
+                sectionName.textContent = originalName;
+            }
             sectionName.blur();
         }
     });
 
     sectionName.addEventListener('blur', () => {
         sectionName.textContent = originalName;
+        if (sectionName.textContent == "EMPTY") {
+            sectionName.style.color = "#a9a9a9";
+        }
         sectionName.classList.remove('sectionClicked')
     });
 
     sectionName.addEventListener('click', () => {
+        if (sectionName.textContent == "EMPTY") {
+            sectionName.textContent = ""
+        }
+        sectionName.style.color = "#000000";
         sectionName.classList.add('sectionClicked')
     })
 

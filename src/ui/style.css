@@ -137,10 +137,7 @@ main {
 
 .sectionClicked {
     background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-}
+left: 50px;}
 
 .sectionDropdownCell {
     width: 25px;

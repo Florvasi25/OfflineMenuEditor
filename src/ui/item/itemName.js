@@ -21,23 +21,38 @@ function createItemName(itemRow, menuItem, sectionId) {
     itemName.classList.add('itemName');
     itemName.contentEditable = true;
     itemName.textContent = menuItem.Name;
+    if (itemName.textContent == "Empty") {
+        itemName.style.color = "#a9a9a9";
+    }
 
     let originalName = menuItem.Name;
 
     itemName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
+            if (itemName.textContent == "" || itemName.textContent == null) {
+                itemName.textContent = "Empty"
+                itemName.style.color = "#a9a9a9";
+            }
             updateName(itemRow.id, itemName.textContent, sectionId);
             originalName = itemName.textContent;
             itemName.blur();
         } else if (e.key === 'Escape') {
-            itemName.textContent = originalName;
+            if (itemName.textContent == "" || itemName.textContent == null) {
+                itemName.textContent = "Empty"
+                itemName.style.color = "#a9a9a9";
+            } else {
+                itemName.textContent = originalName;
+            }
             itemName.blur();
         }
     });
 
     itemName.addEventListener('blur', () => {
         itemName.textContent = originalName;
+        if (itemName.textContent == "Empty") {
+            itemName.style.color = "#a9a9a9";
+        }
         itemName.classList.remove('sectionClicked')
     });
 
@@ -45,6 +60,7 @@ function createItemName(itemRow, menuItem, sectionId) {
         if (itemName.textContent == "Empty") {
             itemName.textContent = ""
         }
+        itemName.style.color = "#000000";
         itemName.classList.add('sectionClicked')
     })
 
