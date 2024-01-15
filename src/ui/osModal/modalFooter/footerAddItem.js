@@ -87,18 +87,14 @@ function createAddButton(menuOs, menuItemId) {
         targetParent.appendChild(removeBtn);
 
         if (!groupedOs[menuOs.groupOsId]) {
-            console.log('removed from itemless');
             groupedOs[menuOs.groupOsId] = [newOs];
         } else {
-            console.log('added to the group');
             groupedOs[menuOs.groupOsId].push(newOs)
         }
 
         updateLocalStorage()
-        console.log("groupedOs", groupedOs);
     })
     
-
     return addBtn
 }
 

@@ -84,6 +84,4 @@ function updateName(menuOs, osName) {
     }
 }
 
-
-
 export { createOsNameCell }

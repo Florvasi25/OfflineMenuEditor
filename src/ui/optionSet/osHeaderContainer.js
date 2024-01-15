@@ -92,18 +92,6 @@ function createOsNameHeader(menuOs, sectionId, itemId) {
     }
     osNameHeader.id = menuOs.MenuItemOptionSetId
 
-    // const newOs = JSON.parse(JSON.stringify(menuOs));
-
-    // const optionSetsIds = getLocalStorageOptionSetIDs();
-    // const newOptionSetId = getUniqueRandomInt(optionSetsIds);
-    // newOs.MenuItemOptionSetId = newOptionSetId;
-
-    // newOs.MenuItemOptionSetItems.forEach(option => {
-    //     const optionIds = getLocalStorageOptionSetItemsIDs();
-    //     const newOptionId = getUniqueRandomInt(optionIds);
-    //     option.MenuItemOptionSetItemId = newOptionId
-    // })
-
     osNameHeader.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
         if (existingOsModal) {

@@ -82,7 +82,6 @@ function setDragListeners(optionRowsContainer, menuOs) {
         } else if (itemlessOs.includes(menuOs)){
             if(indexOfOption !== indexNewPosition) {
                 const optionToMove = menuOs.MenuItemOptionSetItems.splice(indexOfOption, 1)[0];
-                console.log('optionToMove', optionToMove);
                 menuOs.MenuItemOptionSetItems.splice(indexNewPosition, 0, optionToMove);
                 menuOs.MenuItemOptionSetItems.forEach((obj, index) => {
                     obj.DisplayOrder = index;
