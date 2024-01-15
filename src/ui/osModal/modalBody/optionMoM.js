@@ -71,8 +71,12 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview')); 
             const optionMoMPreview = optionMoMPreviewArray.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
             if (optionMoMPreview) {
-                optionMoMPreview.textContent = newOptionMoM;
-            }
+                if (newOptionMoM == "") {
+                    optionMoMPreview.textContent = "null"
+                } else {
+                    optionMoMPreview.textContent = newOptionMoM;
+                }
+            } 
         } else if (e.key === 'Escape') {
             optionMoM.blur();
         }
