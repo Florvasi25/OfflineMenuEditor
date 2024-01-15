@@ -36,6 +36,12 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
 
     let originalMoM = menuOption.NextMenuItemOptionSetId;
 
+    const foundItem = jsonData.MenuSections
+    .flatMap(i => i.MenuItems)
+    .find(i => i.MenuItemId == menuOs.MenuItemId);
+
+    const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
+
     optionMoM.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -43,18 +49,17 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     
             // If the entered value is not empty, check its validity
             if (newOptionMoM !== "") {
-                // Check if the entered value exists in the MenuItemOptionSetId list
-                const menuItemOptionSetIds = jsonData.MenuSections.flatMap(i => i.MenuItems)
-                    .flatMap(i => i.MenuItemOptionSets)
-                    .map(optionSet => optionSet.MenuItemOptionSetId);
     
                 // Allow '-1' as a valid value
                 if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM))) {
                     // Show tooltip if the entered value doesn't exist
                     showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this item');
                     return;
-                } 
-            }
+                } else if (newOptionMoM == menuOs.MenuItemOptionSetId) {
+                    showToolTip(optionMoMCell, 'The MenuItemOptionSetId is the same as the current OS');
+                    return;
+                }
+            } 
     
             // If the entered value exists, update the value and remove tooltip
             updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
@@ -69,18 +74,19 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 optionMoMPreview.textContent = newOptionMoM;
             }
         } else if (e.key === 'Escape') {
-            optionMoM.textContent = originalMoM;
             optionMoM.blur();
         }
     });
 
     optionMoM.addEventListener('blur', () => {
-        if (optionMoM.textContent.trim() === "") {
+        const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
+        if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId) {
             optionMoM.textContent = "Empty";
             optionMoM.style = 'color: #a3a3a3;'
         } else {
             optionMoM.textContent = originalMoM;
         }
+
         optionMoM.classList.remove('sectionClicked');
     });
 
