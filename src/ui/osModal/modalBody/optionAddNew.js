@@ -53,6 +53,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         OptionSetItemMetadata: [],
         ExternalImageUrl: null,
     };
+    
     const groupOsId = menuOs.groupOsId;
 
     if (groupedOs[groupOsId]) {

@@ -51,6 +51,7 @@ function createAddButton(menuOs, menuItemId) {
 
         newOs.MenuItemId = foundItem.MenuItemId
         newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+        newOs.NextMenuItemOptionSetId = null
 
         foundItem.MenuItemOptionSets.push(newOs)
 

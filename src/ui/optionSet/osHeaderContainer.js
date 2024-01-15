@@ -1,6 +1,9 @@
 import { 
     jsonData,
     getItemIndex,
+    getLocalStorageOptionSetIDs,
+    getUniqueRandomInt,
+    getLocalStorageOptionSetItemsIDs
 } from '../context.js'
 
 import { createOsDropdown } from './osDropDown.js'
@@ -88,6 +91,19 @@ function createOsNameHeader(menuOs, sectionId, itemId) {
         osNameHeader.textContent = menuOs.Name
     }
     osNameHeader.id = menuOs.MenuItemOptionSetId
+
+    // const newOs = JSON.parse(JSON.stringify(menuOs));
+
+    // const optionSetsIds = getLocalStorageOptionSetIDs();
+    // const newOptionSetId = getUniqueRandomInt(optionSetsIds);
+    // newOs.MenuItemOptionSetId = newOptionSetId;
+
+    // newOs.MenuItemOptionSetItems.forEach(option => {
+    //     const optionIds = getLocalStorageOptionSetItemsIDs();
+    //     const newOptionId = getUniqueRandomInt(optionIds);
+    //     option.MenuItemOptionSetItemId = newOptionId
+    // })
+
     osNameHeader.addEventListener('click', () => {
         const existingOsModal = document.querySelector('.osModalContainer')
         if (existingOsModal) {

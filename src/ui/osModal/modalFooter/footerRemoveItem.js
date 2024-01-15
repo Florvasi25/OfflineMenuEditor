@@ -9,6 +9,10 @@ import {
     createAddButton
 } from './footerAddItem.js'
 
+import {
+    createOsModalContainer
+} from '../../osModal/modalContainer.js'
+
 function createRemoveButton(menuOs, menuItemId) {
     const deleteBtn = document.createElement('button')
     deleteBtn.className = 'deleteBtn'
@@ -67,8 +71,23 @@ function createRemoveButton(menuOs, menuItemId) {
             delete groupedOs[menuOs.groupOsId];
             addItemlessOs(menuOs);
         } else if (groupedOs[correctOs.groupOsId]) {
-            console.log(groupedOs[correctOs.groupOsId].indexOf(correctOs));
             groupedOs[correctOs.groupOsId].splice(groupedOs[correctOs.groupOsId].indexOf(correctOs), 1)
+
+            if (correctOs == menuOs) {
+                const nextMenuOs = groupedOs[menuOs.groupOsId][0];
+
+                const nextFoundItem = jsonData.MenuSections
+                .flatMap(i => i.MenuItems)
+                .find(i => i.MenuItemId == nextMenuOs.MenuItemId);
+
+                const existingOsModal = document.querySelector('.osModalContainer')
+                if (existingOsModal) {
+                    existingOsModal.remove()
+                }
+                const osModalContainer = createOsModalContainer(nextMenuOs, nextFoundItem.MenuSectionId, nextMenuOs.MenuItemId)
+                osModalContainer.style.display = 'block';
+                osModalContainer.classList.add('show');
+            }
         }
         
         updateLocalStorage()
