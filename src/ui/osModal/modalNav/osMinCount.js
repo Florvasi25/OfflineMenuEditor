@@ -56,7 +56,11 @@ function createMinCount(menuOs) {
                 showToolTip(minCount, 'MinCount cannot be greater than the length of Options');
                 minCount.textContent = originalMinCount; // Revert back to the original number
                 return;
-            } else {
+            } else if (parseInt(newMinOsCount) > menuOs.MaxSelectCount) { 
+                showToolTip(minCount, 'MinCount cannot be greater than MaxCount');
+                minCount.textContent = originalMinCount; // Revert back to the original number
+                return;
+            }else {
                 removeToolTip(minCount);
                 originalMinCount = newMinOsCount; // Update the original number
             }
