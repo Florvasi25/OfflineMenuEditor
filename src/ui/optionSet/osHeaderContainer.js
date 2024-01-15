@@ -109,7 +109,7 @@ function createOsNameHeader(menuOs, sectionId, itemId) {
 
 function createOptionSetIdPreview(menuOs) {
     const optionSetIdPreview = document.createElement('p')
-    optionSetIdPreview.textContent = menuOs.MenuItemOptionSetId + " ------ " + menuOs.groupOsId
+    optionSetIdPreview.textContent = menuOs.MenuItemOptionSetId
     optionSetIdPreview.className = 'optionSetIdPreview'
 
     return optionSetIdPreview

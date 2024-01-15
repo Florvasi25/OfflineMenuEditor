@@ -46,12 +46,12 @@ function createAddButton(menuOs, menuItemId) {
                 const optionIds = getLocalStorageOptionSetItemsIDs();
                 const newOptionId = getUniqueRandomInt(optionIds);
                 option.MenuItemOptionSetItemId = newOptionId
+                option.NextMenuItemOptionSetId = null
             })
         }
 
         newOs.MenuItemId = foundItem.MenuItemId
         newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-        newOs.NextMenuItemOptionSetId = null
 
         foundItem.MenuItemOptionSets.push(newOs)
 
