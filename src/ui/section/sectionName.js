@@ -12,8 +12,8 @@ function createSectionNameCell(sectionRow, menuSection) {
     const sectionName = createSectionName(sectionRow, menuSection)
     sectionNameCell.appendChild(sectionName);
     
-    if (menuSection.Name && menuSection.Name.trim() !== '') {
-        const sectionIndex = getSectionIndex(sectionRow.id);
+    const sectionIndex = getSectionIndex(sectionRow.id);
+    if (sectionIndex != -1) {
         jsonData.MenuSections[sectionIndex].Name = menuSection.Name.toUpperCase();
         updateLocalStorage()
     }

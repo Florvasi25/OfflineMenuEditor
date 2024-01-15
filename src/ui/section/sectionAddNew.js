@@ -22,7 +22,7 @@ function createSectionButton() {
     
         const emptySectionJson = {
             MenuSectionId: newId,
-            Name: null,
+            Name: "EMPTY",
             Description: null,
             DisplayOrder: jsonData.MenuSections.length,
             MenuItems: [],
