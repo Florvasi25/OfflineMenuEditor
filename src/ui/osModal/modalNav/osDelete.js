@@ -5,7 +5,8 @@ import {
     jsonData,
     groupOptionSets,
     itemlessOs,
-    updateItemlessLocalStorage
+    updateItemlessLocalStorage,
+    closeOsModalContainer
 } from '../../context.js';
 
 function osDeleteButton(osBtnsCell, menuOs) {
@@ -85,16 +86,7 @@ function deleteOs(menuOs) {
         updateItemlessLocalStorage();
     }
 
-    const existingOsModal = document.querySelector('.osModalContainer')
-    if (existingOsModal) {
-        existingOsModal.classList.remove('show');
-        existingOsModal.classList.add('hide');
-        setTimeout(() => {
-            existingOsModal.style.display = 'none';
-            existingOsModal.classList.remove('hide');
-            existingOsModal.remove()
-        }, 300);
-    }
+    closeOsModalContainer()
 }
 
 function updatePreview(osIds) {

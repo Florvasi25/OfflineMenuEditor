@@ -1,3 +1,5 @@
+import { closeOsModalContainerQuick } from '../context.js'
+
 import { createSelectOsModalNav } from '../selectOsModal/selectOsModalNav/selectOsNav.js'
 
 import { createSelectOsModalBody } from '../selectOsModal/selectOsModalBody/selectOsBody.js'
@@ -33,10 +35,7 @@ function createSelectOsModalContainer(itemRow) {
     
     popupModal.appendChild(selectOsModal)
 
-    const existingOsModal = document.querySelector('.osModalContainer')
-    if (existingOsModal) {
-        existingOsModal.remove()
-    }
+    closeOsModalContainerQuick()
 
     return selectOsModal
 }

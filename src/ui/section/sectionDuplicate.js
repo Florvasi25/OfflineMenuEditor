@@ -5,18 +5,13 @@ import {
     updateLocalStorage,
     setSectionDisplayOrder,
     updateItemCounterLocalStorage,
-    updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
     getLocalStorageItemIDs,
-    getLocalStorageOptionSetItemsIDs,
-    getLocalStorageOptionSetIDs,
     getLocalStorageSectionIDs,
     getUniqueRandomInt,
     groupOptionSets,
-    setOptionSetId, 
-    setOptionSetItemsId,
     setOptionSetIdForSection,
-    setOptionSetItemsIdForSection
+    setOptionSetItemsIdForSection,
+    closeOsModalContainer
 } from '../context.js';
 
 import { createSection } from './sectionContainer.js'
@@ -53,6 +48,8 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     
     duplicateButton.addEventListener('click', () => {
         if (sectionRow.classList.contains('expanded')) return;
+        
+        closeOsModalContainer()
 
         duplicateSection(sectionRow);
         setSectionDisplayOrder(jsonData);

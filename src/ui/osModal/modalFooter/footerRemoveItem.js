@@ -2,7 +2,8 @@ import {
     jsonData,
     updateLocalStorage,
     groupedOs,
-    addItemlessOs
+    addItemlessOs,
+    closeOsModalContainerQuick
 } from "../../context.js";
 
 import {
@@ -87,10 +88,8 @@ function createRemoveButton(menuOs, menuItemId) {
                 .flatMap(i => i.MenuItems)
                 .find(i => i.MenuItemId == nextMenuOs.MenuItemId);
 
-                const existingOsModal = document.querySelector('.osModalContainer')
-                if (existingOsModal) {
-                    existingOsModal.remove()
-                }
+                closeOsModalContainerQuick()
+
                 const osModalContainer = createOsModalContainer(nextMenuOs, nextFoundItem.MenuSectionId, nextMenuOs.MenuItemId)
                 osModalContainer.style.display = 'block';
                 osModalContainer.classList.add('show');

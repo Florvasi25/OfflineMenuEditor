@@ -1,9 +1,7 @@
 import { 
     jsonData,
     getItemIndex,
-    getLocalStorageOptionSetIDs,
-    getUniqueRandomInt,
-    getLocalStorageOptionSetItemsIDs
+    closeOsModalContainerQuick
 } from '../context.js'
 
 import { createOsDropdown } from './osDropDown.js'
@@ -93,10 +91,8 @@ function createOsNameHeader(menuOs, sectionId, itemId) {
     osNameHeader.id = menuOs.MenuItemOptionSetId
 
     osNameHeader.addEventListener('click', () => {
-        const existingOsModal = document.querySelector('.osModalContainer')
-        if (existingOsModal) {
-            existingOsModal.remove()
-        }
+        closeOsModalContainerQuick()
+
         const osModalContainer = createOsModalContainer(menuOs, sectionId, itemId)
         osModalContainer.style.display = 'block';
         setTimeout(() => {

@@ -385,6 +385,26 @@ function setColorOfRows(optionRowsContainer) {
     });
 }
 
+function closeOsModalContainer() {
+    const existingOsModal = document.querySelector('.osModalContainer')
+    if (existingOsModal) {
+        existingOsModal.classList.remove('show');
+        existingOsModal.classList.add('hide');
+        setTimeout(() => {
+            existingOsModal.style.display = 'none';
+            existingOsModal.classList.remove('hide');
+            existingOsModal.remove()
+        }, 300);
+    }
+}
+
+function closeOsModalContainerQuick() {
+    const existingOsModal = document.querySelector('.osModalContainer')
+    if (existingOsModal) {
+        existingOsModal.remove()
+    }
+}
+
 export {
     jsonData,
     groupedOs,
@@ -421,5 +441,7 @@ export {
     getSectionRow,
     getMenuSection,
     setOptionSetIdForSection,
-    setOptionSetItemsIdForSection
+    setOptionSetItemsIdForSection,
+    closeOsModalContainer,
+    closeOsModalContainerQuick
 }

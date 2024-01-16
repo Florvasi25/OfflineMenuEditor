@@ -6,7 +6,8 @@ import {
     setItemId,
     setSectionDisplayOrder,
     setOptionSetId,
-    setOptionSetItemsId
+    setOptionSetItemsId,
+    closeOsModalContainer
 } from './context.js';
 
 import { generateHTML } from './mainContainer.js'
@@ -52,10 +53,7 @@ function createLoadJsonButton() {
             }
         };
 
-        const existingOsModal = document.querySelector('.osModalContainer')
-        if (existingOsModal) {
-            existingOsModal.remove()
-        }
+        closeOsModalContainer()
 
         if (!file) return;
         reader.readAsText(file);

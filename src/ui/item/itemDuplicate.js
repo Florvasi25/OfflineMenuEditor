@@ -3,16 +3,13 @@ import {
     getItemIndex,
     updateItemCounterLocalStorage,
     updateLocalStorage,
-    updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
     getLocalStorageItemIDs,
-    getLocalStorageOptionSetIDs,
-    getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
     getUniqueRandomInt,
     groupOptionSets,
     setOptionSetIdForSection,
-    setOptionSetItemsIdForSection
+    setOptionSetItemsIdForSection,
+    closeOsModalContainer
 } from '../context.js';
 
 import { createItem } from './itemContainer.js'
@@ -50,6 +47,8 @@ function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer,
     
     duplicateButton.addEventListener('click', () => {
         if (itemRow.classList.contains('expanded')) return;
+
+        closeOsModalContainer()
 
         duplicateItem(itemRow, sectionId, itemRow.id, itemContainer, menuItem);
         setSectionDisplayOrder(jsonData);

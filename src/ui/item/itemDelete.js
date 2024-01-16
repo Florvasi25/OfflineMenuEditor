@@ -8,7 +8,8 @@ import {
     updateLocalStorage,
     groupOptionSets,
     groupedOs,
-    addItemlessOs
+    addItemlessOs,
+    closeOsModalContainer
 } from '../context.js';
 
 import { changeSectionClockIconColor, changeSectionClockIcon } from '../clock/sectionClock.js';
@@ -46,6 +47,9 @@ function confirmDelete(itemRow, itemButtonsCell, sectionId) {
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
         deleteItem(itemRow, sectionId);
+
+        closeOsModalContainer()
+
         popup.remove();
     });
 

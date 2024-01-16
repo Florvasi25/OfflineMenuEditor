@@ -3,7 +3,8 @@ import {
     getLocalStorageOptionSetIDs,
     getRandomInt,
     addItemlessOs,
-    getUniqueRandomInt
+    getUniqueRandomInt,
+    closeOsModalContainerQuick
 } from '../../context.js';
 
 import { createOsModalContainer } from "../modalContainer.js";
@@ -71,10 +72,8 @@ function osNewButton(osBtnsCell) {
             groupOsId: `group${getRandomInt()}`
         };
 
-        const existingOsModal = document.querySelector('.osModalContainer')
-        if (existingOsModal) {
-            existingOsModal.remove()
-        }
+        closeOsModalContainerQuick()
+
         const osModalContainer = createOsModalContainer(emptyOsJson)
         osModalContainer.style.display = 'block';
         setTimeout(() => {

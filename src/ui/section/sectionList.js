@@ -8,7 +8,8 @@ import {
     getSectionRow,
     groupOptionSets,
     groupedOs,
-    addItemlessOs
+    addItemlessOs,
+    closeOsModalContainer
 } from '../context.js';
 
 import {
@@ -97,6 +98,9 @@ class List {
 
         this.submitButton.addEventListener('click', (e) => {
             e.preventDefault();
+
+            closeOsModalContainer()
+            
             this.handleSubmitButtonClick(e)
         });
 

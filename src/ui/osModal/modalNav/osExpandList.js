@@ -1,6 +1,7 @@
 import {
     itemlessOs,
-    groupedOs
+    groupedOs,
+    closeOsModalContainerQuick
 } from '../../context.js'
 
 import {
@@ -91,10 +92,8 @@ function createOsRow(os) {
     osListRowHeader.appendChild(osSelectOptionList)
 
     osListRowHeader.addEventListener('click', () => {
-        const existingOsModal = document.querySelector('.osModalContainer')
-        if (existingOsModal) {
-            existingOsModal.remove()
-        }
+        closeOsModalContainerQuick()
+
         const osModalContainer = createOsModalContainer(os)
         osModalContainer.style.display = 'block';
         setTimeout(() => {

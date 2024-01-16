@@ -8,7 +8,8 @@ import {
     updateLocalStorage,
     groupOptionSets,
     groupedOs,
-    addItemlessOs
+    addItemlessOs,
+    closeOsModalContainer
 } from '../context.js';
 
 function sectionDeleteButton(sectionButtonsCell, sectionRow) {
@@ -42,6 +43,9 @@ function confirmDelete(sectionRow, sectionButtonsCell) {
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
         deleteSection(sectionRow);
+        
+        closeOsModalContainer()
+        
         popup.remove();
     });
 

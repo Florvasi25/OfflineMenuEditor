@@ -3,7 +3,8 @@ import {
     getLocalStorageOptionSetIDs,
     getUniqueRandomInt,
     updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage
+    updateOptionSetItemsCounterLocalStorage,
+    closeOsModalContainerQuick
 } from '../../context.js';
 
 import { createOsModalContainer } from "../modalContainer.js";
@@ -39,10 +40,7 @@ function duplicateOs(menuOs) {
 
     addItemlessOs(newOs)
 
-    const existingOsModal = document.querySelector('.osModalContainer')
-    if (existingOsModal) {
-        existingOsModal.remove()
-    }
+    closeOsModalContainerQuick()
 
     const openOsModalContainer = createOsModalContainer(newOs)
     openOsModalContainer.style.display = 'block';
