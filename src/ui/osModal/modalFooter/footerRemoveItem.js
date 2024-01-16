@@ -70,6 +70,17 @@ function createRemoveButton(menuOs, menuItemId) {
         if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
             delete groupedOs[menuOs.groupOsId];
             addItemlessOs(menuOs);
+            const optionMoMArray = Array.from(document.getElementsByClassName('optionMoM'))
+            optionMoMArray.forEach((optionMoM) => {
+                console.log(optionMoM.textContent);
+                if (optionMoM.textContent !== "Empty") {
+                    console.log('diferente de Empty');
+                    optionMoM.textContent = 'Empty';
+                    optionMoM.style = 'color: #a3a3a3;'
+                } else {
+                    console.log('igual de Empty');
+                }
+            })
         } else if (groupedOs[correctOs.groupOsId]) {
             groupedOs[correctOs.groupOsId].splice(groupedOs[correctOs.groupOsId].indexOf(correctOs), 1)
 

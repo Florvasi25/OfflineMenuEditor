@@ -36,14 +36,14 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
 
     let originalMoM = menuOption.NextMenuItemOptionSetId;
 
-    const foundItem = jsonData.MenuSections
-    .flatMap(i => i.MenuItems)
-    .find(i => i.MenuItemId == menuOs.MenuItemId);
-
-    const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
 
     optionMoM.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
+            const foundItem = jsonData.MenuSections
+            .flatMap(i => i.MenuItems)
+            .find(i => i.MenuItemId == menuOs.MenuItemId);
+            console.log(foundItem);
+            const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
             e.preventDefault();
             const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
     
@@ -69,7 +69,9 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     
             // Update the preview if available
             const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview')); 
+            console.log(optionMoMPreviewArray);
             const optionMoMPreview = optionMoMPreviewArray.find((p) => p.id == menuOption.MenuItemOptionSetItemId)
+            console.log(optionMoMPreview);
             if (optionMoMPreview) {
                 if (newOptionMoM == "") {
                     optionMoMPreview.textContent = "null"
@@ -83,6 +85,10 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     });
 
     optionMoM.addEventListener('blur', () => {
+        const foundItem = jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .find(i => i.MenuItemId == menuOs.MenuItemId);
+        const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
         const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
         if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId) {
             optionMoM.textContent = "Empty";

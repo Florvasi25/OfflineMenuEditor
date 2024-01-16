@@ -35,6 +35,14 @@ function createAddButton(menuOs, menuItemId) {
         if (itemlessOs.includes(menuOs)) {
             newOs = menuOs;
             deleteItemlessOs(newOs);
+
+            newOs.MenuItemOptionSetItems.forEach(option => {
+                const optionIds = getLocalStorageOptionSetItemsIDs();
+                const newOptionId = getUniqueRandomInt(optionIds);
+                option.MenuItemOptionSetItemId = newOptionId
+                option.NextMenuItemOptionSetId = null
+            })
+            
         } else {
             newOs = JSON.parse(JSON.stringify(menuOs));
 
