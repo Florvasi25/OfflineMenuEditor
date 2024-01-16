@@ -72,13 +72,9 @@ function createRemoveButton(menuOs, menuItemId) {
             addItemlessOs(menuOs);
             const optionMoMArray = Array.from(document.getElementsByClassName('optionMoM'))
             optionMoMArray.forEach((optionMoM) => {
-                console.log(optionMoM.textContent);
                 if (optionMoM.textContent !== "Empty") {
-                    console.log('diferente de Empty');
                     optionMoM.textContent = 'Empty';
                     optionMoM.style = 'color: #a3a3a3;'
-                } else {
-                    console.log('igual de Empty');
                 }
             })
         } else if (groupedOs[correctOs.groupOsId]) {
