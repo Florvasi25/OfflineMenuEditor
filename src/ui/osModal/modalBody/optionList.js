@@ -126,41 +126,45 @@ class OptionSetList {
 
     handleSubmitButtonClick(event) {
         event.preventDefault();
-        if (this.validateInput()) {
-            this.processInput();
+        const itemLines = this.splitTextBox(this.textAreaGroupItems.value);
+
+        if (this.validateInput(itemLines)) {
+            this.processInput(itemLines);
             this.hideList()
         } else {
             this.showErrorMessage();
         }
     }
 
-    validateInput() {
-        return this.validateItemsFormat(this.textAreaGroupItems.value) && 
-               this.checkDuplicatedItems(this.textAreaGroupItems.value);
+    validateInput(itemLines) {
+        return this.validateItemsFormat(itemLines) && 
+               this.checkDuplicatedItems(itemLines);
     }
 
-    processInput() {
-        const { itemsNotInJson, jsonItemsNotInText } = this.compareItems(this.textAreaGroupItems.value);
+    processInput(itemLines) {
+        const { itemsNotInJson, jsonItemsNotInText } = this.compareItems(itemLines);
 
         if (itemsNotInJson && itemsNotInJson.length > 0) {
-            this.createItems(itemsNotInJson, this.optionSet);
+            this.createItems(itemsNotInJson, this.optionSet, itemLines);
+            
         }
         if (jsonItemsNotInText && jsonItemsNotInText.length > 0) {
             this.deleteItems(jsonItemsNotInText, this.optionSet, this.optionRowsContainer);
         }
+        
         this.hideList();
     }
     
-    validateItemsFormat(textBoxContent) {
+    validateItemsFormat(itemLines) {
         this.errorMessage.style.display = 'none';
         this.textAreaGroupItems.classList.remove('error');
         // Trim the input to remove leading and trailing whitespace
-        const trimmedInput = textBoxContent.trim();
+        //const trimmedInput = textBoxContent.trim();   
         // Split the trimmed input into lines and filter out empty lines
-        const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
+        //const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
         // RegExp to validate the item format: "ItemName;price"
         const itemRegExp = new RegExp(/^.+;\d+(\.\d+)?$/);
-        for (let line of lines) { 
+        for (let line of itemLines) { 
           if (!itemRegExp.test(line)) {
             this.errorMessage.textContent = 'Invalid input';
             this.errorMessage.style.display = 'block';
@@ -171,32 +175,32 @@ class OptionSetList {
         return true;
       }
 
-      compareItems(textBoxContent) {
-        const lines = textBoxContent.trim().split('\n').map(line => line.trim());
+      compareItems(itemLines) { 
+        //const lines = textBoxContent.trim().split('\n').map(line => line.trim());
         const menuItemsFromJson = this.optionSet.MenuItemOptionSetItems.map(item => {
           const name = item.Name.trim();
           const price = item.Price.toString().trim();
           return `${name};${price}`;
         });
-        const itemsNotInJson = lines.filter(line => {
+        const itemsNotInJson = itemLines.filter(line => {
           if (line === '') return false;
           const [itemName, itemPrice] = line.split(';').map(part => part.trim());
           const normalizedLine = `${itemName};${itemPrice}`;
           return !menuItemsFromJson.includes(normalizedLine);
         });
         const jsonItemsNotInText = menuItemsFromJson.filter(menuItem => {
-            return !lines.includes(menuItem);
+            return !itemLines.includes(menuItem);
         });
          return { itemsNotInJson, jsonItemsNotInText };
     }
 
-      checkDuplicatedItems(textBoxContent) {
-        const trimmedInput = textBoxContent.trim();
-        const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
+      checkDuplicatedItems(itemLines) { 
+        //const trimmedInput = textBoxContent.trim(); 
+        //const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
         const itemsSeen = {};
         let duplicatedItem = '';
     
-        for (let line of lines) {
+        for (let line of itemLines) {
             let [itemName, itemPrice] = line.split(';');
             let itemKey = `${itemName.toLowerCase().trim()};${itemPrice.trim()}`; 
             if (itemsSeen[itemKey]) {
@@ -224,7 +228,7 @@ class OptionSetList {
         return true;
     }
 
-    createItems(items, menuOs) { 
+    createItems(items, menuOs, itemLines) { 
         for(let i = 0; i < items.length; i++){
             const { itemName, itemPrice } = this.trimItems(items[i]);
             
@@ -239,7 +243,7 @@ class OptionSetList {
                 TaxValue: 0,
                 TaxRateName: null,
                 IsAvailable: true,
-                DisplayOrder: menuOs.MenuItemOptionSetItems.length,
+                DisplayOrder: 0,
                 IsDeleted: false,
                 Tags: [],
                 NextMenuItemOptionSetId: null,
@@ -263,7 +267,9 @@ class OptionSetList {
                     emptyOptionCopy.MenuItemOptionSetItemId = newOptionId;
         
                     os.MenuItemOptionSetItems.push(emptyOptionCopy);
-        
+                    this.updateDisplayOrder(itemLines)
+                    this.sortItemsByDisplayOrder();
+
                     if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
                         const optionRow = createOption(
                             this.optionRowsContainer,
@@ -289,7 +295,9 @@ class OptionSetList {
                 menuOs.MenuItemOptionSetItems.push(
                     emptyOptionJson
                 );
-        
+                this.updateDisplayOrder(itemLines)
+                this.sortItemsByDisplayOrder();    
+
                 const optionRow = createOption(
                     this.optionRowsContainer,
                     menuOs,
@@ -325,6 +333,33 @@ class OptionSetList {
             }
         }
     }
+
+    updateDisplayOrder(itemLines) {
+        const existingItems = this.optionSet.MenuItemOptionSetItems;
+    
+        const existingItemsMap = {};
+        existingItems.forEach(item => {
+            const normalizedItem = `${item.Name};${item.Price}`;
+            existingItemsMap[normalizedItem] = item;
+        });
+    
+        for (let i = 0; i < itemLines.length; i++) {
+            const line = this.trimItems(itemLines[i]);
+            const itemName = line.itemName;
+            const itemPrice = line.itemPrice;
+            const normalizedLine = `${itemName};${itemPrice}`;
+    
+            if (normalizedLine in existingItemsMap) {
+                const existingItem = existingItemsMap[normalizedLine];
+                existingItem.DisplayOrder = i;
+            }
+        }
+    }
+    
+    sortItemsByDisplayOrder() {
+        this.optionSet.MenuItemOptionSetItems.sort((a, b) => a.DisplayOrder - b.DisplayOrder);
+    }
+
     trimItems(item){
         let parts = item.split(';');
         let trimmedItemName = parts[0].trim();
@@ -336,7 +371,11 @@ class OptionSetList {
         };
         
     }
-      
+    splitTextBox(textBoxContent){
+        const trimmedInput = textBoxContent.trim(); 
+        const lines = trimmedInput.split('\n').filter(line => line.trim() !== '');
+        return lines;
+    }
     showErrorMessage() {
         this.errorMessage.style.display = 'block';
         this.textAreaGroupItems.classList.add('error');
