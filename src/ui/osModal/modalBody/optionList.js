@@ -17,16 +17,16 @@ import {
 } from '../../context.js';
 
 import {
-    updatePreview
-} from './optionAddNew.js';
-
-import {
     createOption
 } from './osBody.js';
 
 import {
     deleteOption
 } from './optionDelete.js';
+
+import{
+    createOptionRow
+} from '../../optionSet/osOptionsContainer.js'
 
 function createOptionSetListButton(menuOs, optionRowsContainer) {
     const listButton = createElementWithClasses('button', 'sectionButton', 'optionSetListButton');
@@ -270,16 +270,12 @@ class OptionSetList {
                     this.updateDisplayOrder(itemLines)
                     this.sortItemsByDisplayOrder();
 
-                    if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
-                        const optionRow = createOption(
-                            this.optionRowsContainer,
-                            menuOs,
-                            emptyOptionCopy
-                        );
-                        this.optionRowsContainer.appendChild(optionRow);
-                    }
+                    /*if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
+                        this.removeOSItemRows(this.optionRowsContainer);
+                        this.createItemRows(menuOs, this.optionRowsContainer);
+                    }*/
         
-                    updatePreview(os, emptyOptionCopy);
+                    this.updatePreview(os);
                 });
         
                 groupOptionSets();
@@ -295,23 +291,33 @@ class OptionSetList {
                 menuOs.MenuItemOptionSetItems.push(
                     emptyOptionJson
                 );
-                this.updateDisplayOrder(itemLines)
+                this.updateDisplayOrder(itemLines) 
                 this.sortItemsByDisplayOrder();    
-
-                const optionRow = createOption(
+                
+                /*this.removeOSItemRows(this.optionRowsContainer);
+                this.createItemRows(menuOs, this.optionRowsContainer);   */ 
+                /*const optionRow = createOption(
                     this.optionRowsContainer,
                     menuOs,
                     emptyOptionJson
                 );
-                this.optionRowsContainer.appendChild(optionRow);
-        
+                this.optionRowsContainer.appendChild(optionRow);*/
                 updateItemlessLocalStorage();
             } else {
                 console.warn("Warn: No option set found");
             }
-        
-            setColorOfRows(this.optionRowsContainer);
+            //setColorOfRows(this.optionRowsContainer);
         }
+        this.removeOSItemRows(this.optionRowsContainer);
+        this.createItemRows(menuOs, this.optionRowsContainer);
+        setColorOfRows(this.optionRowsContainer);
+    }
+
+    createItemRows(menuOs, optionRowsContainer){
+        menuOs.MenuItemOptionSetItems.forEach((menuOption) => {
+            const optionRow = createOption(optionRowsContainer, menuOs, menuOption)
+            optionRowsContainer.appendChild(optionRow);
+        });
     }
 
     deleteItems(items, menuOs, optionRowsContainer){
@@ -325,6 +331,31 @@ class OptionSetList {
         }
 
     }
+
+    removeOSItemRows(container){
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+    }
+
+    updatePreview(menuOs){
+        const optionContainerPreviewArray = Array.from(
+            document.getElementsByClassName("optionContainer")
+        );
+        const optionContainerPreview = optionContainerPreviewArray.find(
+            p => p.id == menuOs.MenuItemOptionSetId
+        );
+    
+        if (optionContainerPreview) {
+            this.removeOSItemRows(optionContainerPreview);
+            menuOs.MenuItemOptionSetItems.forEach((menuOption) => {
+                const newOptionRow = createOptionRow(menuOption);
+                optionContainerPreview.appendChild(newOptionRow);
+            });
+            
+        }
+    }
+
     findOptionSetItem(menuOs, itemName, itemPrice ){
         const osItems = menuOs.MenuItemOptionSetItems;
         for(let i = 0; i < osItems.length; i++){
