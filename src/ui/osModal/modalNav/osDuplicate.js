@@ -4,7 +4,8 @@ import {
     getUniqueRandomInt,
     updateOptionSetCounterLocalStorage,
     updateOptionSetItemsCounterLocalStorage,
-    closeOsModalContainerQuick
+    closeOsModalContainerQuick,
+    getRandomInt
 } from '../../context.js';
 
 import { createOsModalContainer } from "../modalContainer.js";
@@ -35,6 +36,9 @@ function duplicateOs(menuOs) {
     newOs.MenuItemOptionSetId = newOsId;
     newOs.PublicId = crypto.randomUUID();
     newOs.groupOsId = null
+    newOs.MenuItemId = null
+    newOs.groupOsId = `group${getRandomInt()}`
+
 
     newOs.Name += "_copy"
 

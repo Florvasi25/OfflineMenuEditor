@@ -70,6 +70,7 @@ function createRemoveButton(menuOs, menuItemId) {
         
         if (groupedOs[menuOs.groupOsId] && groupedOs[menuOs.groupOsId].length === 1) {
             delete groupedOs[menuOs.groupOsId];
+            menuOs.MenuItemId = null
             addItemlessOs(menuOs);
             const optionMoMArray = Array.from(document.getElementsByClassName('optionMoM'))
             optionMoMArray.forEach((optionMoM) => {
