@@ -262,7 +262,6 @@ function changeSectionClockIconColor(sectionRow, color){
 
 function getsectionClockColor(sectionRow){
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
-    console.log("Color: ", clockButton.style.backgroundColor);
     return clockButton.style.backgroundColor;
     
 }

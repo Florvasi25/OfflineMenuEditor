@@ -174,28 +174,41 @@ function calculatePeriod(StartTime, CloseTime) {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
-function checkCloseTimeKey(dailySpecialHours){
-    dailySpecialHours.forEach(entry => {
-        if (!entry.hasOwnProperty('CloseTime')) {
-            entry.CloseTime = addTimeStrings(entry.StartTime, entry.Period);
-        }
-    });
+function calculateTimeDuration(startTime, duration) {
+    // Split the times and convert to numbers, default seconds to 0 if not provided
+    const startParts = startTime.split(':').map(Number);
+    const durationParts = duration.split(':').map(Number);
+
+    let hours = startParts[0] + durationParts[0];
+    let minutes = startParts[1] + durationParts[1];
+    let seconds = (startParts[2] || 0) + (durationParts[2] || 0);
+
+    // Normalize the time
+    minutes += Math.floor(seconds / 60);
+    hours += Math.floor(minutes / 60);
+    minutes %= 60;
+    hours %= 24;
+
+    return { hours, minutes };
 }
 
-function addTimeStrings(startTime, duration) {
-    const start = startTime.split(':').map(Number);
-    const dur = duration.split(':').map(Number);
+function formatTime({ hours, minutes }) {
+    // Convert to strings and pad with zeroes if necessary
+    return [hours, minutes].map(unit => unit.toString().padStart(2, '0')).join(':');
+}
 
-    const hours = start[0] + dur[0];
-    const minutes = start[1] + dur[1];
-    const seconds = start[2] + dur[2];
+function addCloseTime(entry) {
+    // Check if CloseTime is already in correct format or if it's missing
+    if (!entry.CloseTime || entry.CloseTime.split(':').length < 3) {
+        const timeDuration = calculateTimeDuration(entry.StartTime, entry.Period);
+        entry.CloseTime = formatTime(timeDuration);
+    }
+}
 
-    const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
-    const finalHours = Math.floor(totalSeconds / 3600);
-    const finalMinutes = Math.floor((totalSeconds % 3600) / 60);
-    const finalSeconds = totalSeconds % 60;
-
-    return [finalHours, finalMinutes, finalSeconds].map(unit => unit.toString().padStart(2, '0')).join(':');
+function checkCloseTimeKey(dailySpecialHours) {
+    dailySpecialHours.forEach(entry => {
+        addCloseTime(entry);
+    });
 }
 
 function removeSectionTimetable(jsonData, sectionId) {

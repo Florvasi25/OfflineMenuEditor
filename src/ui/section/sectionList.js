@@ -260,15 +260,19 @@ class List {
                 MenuItemMetadata: [],
                 ExternalImageUrl: null
             };
-            if( this.sectionRow.className === "sectionRow draggable expanded") {
+            if( this.sectionRow.className === "sectionRow draggable expanded" || 
+                this.sectionRow.className === "sectionRow draggable unavailable expanded") {
+
                 var itemTable = this.sectionRow.nextElementSibling;
                 var itemContainer = itemTable.querySelector('.itemContainer');
-                CreateItem(itemContainer, emptyItemJson, sectionIndex, this.menuSection.MenuSectionId, newId)
+                CreateItem(itemContainer, emptyItemJson, sectionIndex, this.menuSection.MenuSectionId, newId, this.sectionRow)
+
             }else{
-                jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson)
+                jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson);
+                updateLocalStorage();
+                updateItemCounterLocalStorage(newId, true);
             }
-            updateLocalStorage()
-            updateItemCounterLocalStorage(newId, true);
+            
         }
     }
     deleteItems(jsonItemsNotInText, sectionIndex){
