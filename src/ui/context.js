@@ -32,20 +32,20 @@ function getItemIndex(sectionId, itemId) {
 
     const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
 
-    return {sectionIndex, itemIndex}
+    return { sectionIndex, itemIndex }
 }
 
 function getOsIndex(sectionId, itemId, osId) {
-    const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
+    const { sectionIndex, itemIndex } = getItemIndex(sectionId, itemId);
     const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
 
     const osIndex = menuOs.findIndex(osElement => osElement.MenuItemOptionSetId == osId)
 
-    return {sectionIndex, itemIndex, osIndex}
+    return { sectionIndex, itemIndex, osIndex }
 }
 
 function getOsObject(sectionId, itemId, osId) {
-    const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
+    const { sectionIndex, itemIndex } = getItemIndex(sectionId, itemId);
     const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
 
     const osObject = menuOs.find(osElement => osElement.MenuItemOptionSetId == osId);
@@ -54,12 +54,12 @@ function getOsObject(sectionId, itemId, osId) {
 }
 
 function getOptionIndex(sectionId, itemId, osId, optionId) {
-    const {sectionIndex, itemIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
+    const { sectionIndex, itemIndex, osIndex } = getOsIndex(sectionId, itemId, osId)
     const menuOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems;
 
     const optionIndex = menuOption.findIndex(optionElement => optionElement.MenuItemOptionSetItemId == optionId)
 
-    return {sectionIndex, itemIndex, osIndex, optionIndex}
+    return { sectionIndex, itemIndex, osIndex, optionIndex }
 }
 
 function getOptionObject(sectionId, itemId, osId, optionId) {
@@ -124,7 +124,7 @@ function setItemId(jsonData) {
     var sectionId;
     for (const section of jsonData.MenuSections) {
         sectionId = section.MenuSectionId;
-        for(const item of section.MenuItems) {
+        for (const item of section.MenuItems) {
             let id = getRandomInt()
             item.MenuItemId = id;
             item.MenuSectionId = sectionId;
@@ -167,7 +167,7 @@ function setOptionSetItemsId(jsonData) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                     optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                    
+
                     if (optionSetItem.NextMenuItemOptionSetId !== null) {
                         const newNextId = window.optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
                         if (newNextId) {
@@ -217,14 +217,14 @@ function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
                 for (const optionSet of item.MenuItemOptionSets) {
                     for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                         optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                        
+
                         if (optionSetItem.NextMenuItemOptionSetId !== null) {
                             const newNextId = optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
                             if (newNextId) {
                                 optionSetItem.NextMenuItemOptionSetId = newNextId;
                             }
                         }
-    
+
                         updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true);
                     }
                 }
@@ -253,8 +253,8 @@ function updateItemlessLocalStorage() {
 //Updates sections id LocalStorage.
 //If 'addID' is true, will be added to localStorage. else, will be removed.
 function updateCounterLocalStorage(id, addID) {
-    if(addID) {
-        let existingIDs =  getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
+    if (addID) {
+        let existingIDs = getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
         existingIDs.push(id);
         localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
     } else {
@@ -267,7 +267,7 @@ function updateCounterLocalStorage(id, addID) {
 
 //Updates items id LocalStorage.
 function updateItemCounterLocalStorage(id, addID) {
-    if(addID) {
+    if (addID) {
         let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]"); //array
         existingIDs.push(id);
         localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
@@ -281,8 +281,8 @@ function updateItemCounterLocalStorage(id, addID) {
 
 //Updates OS id in LocalStorage.
 function updateOptionSetCounterLocalStorage(id, addID) {
-    if(addID) {
-        let existingIDs =  getLocalStorageOptionSetIDs();
+    if (addID) {
+        let existingIDs = getLocalStorageOptionSetIDs();
         existingIDs.push(id);
         localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
     } else {
@@ -295,8 +295,8 @@ function updateOptionSetCounterLocalStorage(id, addID) {
 
 //Updates OS items id in LocalStorage.
 function updateOptionSetItemsCounterLocalStorage(id, addID) {
-    if(addID) {
-        let existingIDs =  getLocalStorageOptionSetItemsIDs();
+    if (addID) {
+        let existingIDs = getLocalStorageOptionSetItemsIDs();
         existingIDs.push(id);
         localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
     } else {
@@ -322,13 +322,13 @@ function getUniqueRandomInt(localStorageIDs) {
     return randomNum;
 }
 
-function getSectionRow(menuSectionId){
+function getSectionRow(menuSectionId) {
     const sectionRowsArray = Array.from(document.getElementsByClassName('sectionRow'));
     const sectionRow = sectionRowsArray.find((p) => p.id == menuSectionId.toString())
     return sectionRow;
 }
 
-function getMenuSection(jsonData, menuSectionId){
+function getMenuSection(jsonData, menuSectionId) {
     return jsonData.MenuSections.find(section => section.MenuSectionId.toString() === menuSectionId) || null;
 }
 function getGroupOsKey(os) {
@@ -409,25 +409,47 @@ function closeOsModalContainerQuick() {
 
 function addWarningMoM() {
     const menuOsId = jsonData.MenuSections
-    .flatMap(i => i.MenuItems)
-    .flatMap(i => i.MenuItemOptionSets)
-    .flatMap(i => i.MenuItemOptionSetId);
+        .flatMap(i => i.MenuItems)
+        .flatMap(i => i.MenuItemOptionSets)
+        .flatMap(i => i.MenuItemOptionSetId);
     console.log('menuOsId', menuOsId)
-    
+
     const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview'));
-    const optionMoMPreviewTextArray = optionMoMPreviewArray.flatMap(i => Number(i.textContent));
+    const optionMoMPreviewTextArray = optionMoMPreviewArray.map(i => Number(i.textContent)).filter(value => !isNaN(value));
     console.log('optionMoMPreviewTextArray', optionMoMPreviewTextArray);
-    
-    const removedOsArray = optionMoMPreviewTextArray.filter(textMoM => !isNaN(textMoM));
+
+    const removedOsArray = optionMoMPreviewTextArray.filter(value => !menuOsId.includes(value));
     console.log('removedOsArray', removedOsArray);
+
     if (removedOsArray) {
         removedOsArray.forEach(removedOs => {
             console.log('removedOs', removedOs);
-            const optionMoMPreview = optionMoMPreviewArray.find((p) => p.textContent == removedOs)
+            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === removedOs);
             console.log('optionMoMPreview', optionMoMPreview);
-            optionMoMPreview.style = 'color: red;'
-            showToolTipMoM(optionMoMPreview);
-        }) 
+            if (optionMoMPreview) {
+                optionMoMPreview.style.color = '#ff0000';
+                showToolTipMoM(optionMoMPreview);
+            }
+        });
+    }
+
+    const existingOsArray = optionMoMPreviewTextArray.filter(value => menuOsId.includes(value));
+    console.log('existingOsArray', existingOsArray);
+
+    if (existingOsArray) {
+        existingOsArray.forEach(existingOs => {
+            console.log('existingOs', existingOs);
+            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === existingOs);
+            console.log('optionMoMPreview', optionMoMPreview);
+            if (optionMoMPreview) {
+                optionMoMPreview.style.color = '#000000';
+                const toolTipCollection = document.getElementsByClassName('tooltip')
+                const toolTipArray = Array.from(toolTipCollection)
+                toolTipArray.forEach(toolTip => {
+                    toolTip.remove()
+                })
+            }
+        });
     }
 }
 

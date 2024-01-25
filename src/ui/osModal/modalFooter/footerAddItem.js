@@ -7,6 +7,7 @@ import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
+    addWarningMoM
 } from "../../context.js";
 
 import {
@@ -101,6 +102,7 @@ function createAddButton(menuOs, menuItemId) {
         }
 
         updateLocalStorage()
+        addWarningMoM()
     })
     
     return addBtn

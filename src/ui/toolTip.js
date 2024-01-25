@@ -19,10 +19,12 @@ function showToolTip(element, message) {
     // Hide the tooltip on mouseout
     element.addEventListener('mouseleave', () => {
         tooltip.style.display = 'none';
+        tooltip.remove()
     });
 
     const tooltipTimer = setTimeout(() => {
         tooltip.style.display = 'none';
+        tooltip.remove()
     }, 2000);
 
     // Clear the timeout if the user hovers over the tooltip before it disappears
@@ -30,8 +32,6 @@ function showToolTip(element, message) {
         clearTimeout(tooltipTimer);
     });
 }
-
-
 
 function removeToolTip(element) {
     const tooltip = element.querySelector('.tooltip');
@@ -41,6 +41,8 @@ function removeToolTip(element) {
 }
 
 function showToolTipMoM(element) {
+    
+    // Initially show the tooltip
     let tooltip = element.querySelector('.tooltip');
     
     if (!tooltip) {
@@ -50,13 +52,17 @@ function showToolTipMoM(element) {
     }
     
     tooltip.textContent = 'The MenuItemOptionSetId does not exist in this menu';
+    
+    element.addEventListener('mouseover', () => {
+        const rect = element.getBoundingClientRect();
+        tooltip.style.left = `${rect.right + window.scrollX + 5}px`; // Position to the right of the element
+        tooltip.style.top = `${rect.top + window.scrollY}px`; // Maintain the same vertical position
+        tooltip.style.display = 'block';
+    })
 
-    // Initially show the tooltip
-    const rect = element.getBoundingClientRect();
-
-    tooltip.style.left = `${rect.right + window.scrollX + 5}px`; // Position to the right of the element
-    tooltip.style.top = `${rect.top + window.scrollY}px`; // Maintain the same vertical position
-    tooltip.style.display = 'block';
+    element.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+    });
 }
 
 export { 

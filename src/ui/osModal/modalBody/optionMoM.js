@@ -2,7 +2,8 @@ import {
     jsonData,
     itemlessOs,
     updateLocalStorage,
-    updateItemlessLocalStorage
+    updateItemlessLocalStorage,
+    addWarningMoM
 } from '../../context.js'
 
 import {
@@ -66,7 +67,6 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
                 originalMoM = newOptionMoM;
                 optionMoM.blur();
-                removeToolTip(optionMoM);
         
                 // Update the preview if available
                 const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview')); 
@@ -74,11 +74,13 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 if (optionMoMPreview) {
                     if (newOptionMoM == "") {
                         optionMoMPreview.textContent = "null"
+                        optionMoMPreview.style = 'color: #000000;'
                     } else {
                         optionMoMPreview.textContent = newOptionMoM;
                     }
                 } 
             }
+            addWarningMoM()
         } else if (e.key === 'Escape') {
             optionMoM.blur();
         }
