@@ -1,5 +1,9 @@
 import { createOptionsContainer } from './osOptionsContainer.js'
 
+import { addWarningMoM } from '../context.js'
+import { removeToolTip } from '../toolTip.js'
+
+
 function createOsDropdown(osRowHeader, sectionId, itemId){
     const osDropdownCell = document.createElement('div')
     osDropdownCell.classList.add('osDropdownCell')
@@ -35,6 +39,7 @@ function toggleOsState(osRowHeader, sectionId, itemId) {
         const optionContainer = osRowHeader.nextElementSibling;
         if (optionContainer && optionContainer.classList.contains('optionContainer')) {
             optionContainer.remove(); // Remove the content container
+            removeToolTip()
         }
     } else {
         osRowHeader.classList.remove(foldedClassName);
@@ -43,6 +48,7 @@ function toggleOsState(osRowHeader, sectionId, itemId) {
         const optionContainer = osRowHeader.nextElementSibling;
         if (!optionContainer || !optionContainer.classList.contains('optionContainer')) {
             createOptionsContainer(osRowHeader, sectionId, itemId, osRowHeader.id)
+            addWarningMoM()
         }
     }
 }

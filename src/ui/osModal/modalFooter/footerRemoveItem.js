@@ -98,6 +98,7 @@ function createRemoveButton(menuOs, menuItemId) {
         }
         
         updateLocalStorage()
+        showToolTipMoM()
     })
     
     return deleteBtn

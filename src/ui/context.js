@@ -1,5 +1,7 @@
 import { emptyMenu } from './emptyMenu.js'
 
+import { removeToolTip, showToolTipMoM } from './toolTip.js'
+
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
 let groupedOs = {}; // Store the grouped os objects
@@ -405,6 +407,30 @@ function closeOsModalContainerQuick() {
     }
 }
 
+function addWarningMoM() {
+    const menuOsId = jsonData.MenuSections
+    .flatMap(i => i.MenuItems)
+    .flatMap(i => i.MenuItemOptionSets)
+    .flatMap(i => i.MenuItemOptionSetId);
+    console.log('menuOsId', menuOsId)
+    
+    const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview'));
+    const optionMoMPreviewTextArray = optionMoMPreviewArray.flatMap(i => Number(i.textContent));
+    console.log('optionMoMPreviewTextArray', optionMoMPreviewTextArray);
+    
+    const removedOsArray = optionMoMPreviewTextArray.filter(textMoM => !isNaN(textMoM));
+    console.log('removedOsArray', removedOsArray);
+    if (removedOsArray) {
+        removedOsArray.forEach(removedOs => {
+            console.log('removedOs', removedOs);
+            const optionMoMPreview = optionMoMPreviewArray.find((p) => p.textContent == removedOs)
+            console.log('optionMoMPreview', optionMoMPreview);
+            optionMoMPreview.style = 'color: red;'
+            showToolTipMoM(optionMoMPreview);
+        }) 
+    }
+}
+
 export {
     jsonData,
     groupedOs,
@@ -443,5 +469,6 @@ export {
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
     closeOsModalContainer,
-    closeOsModalContainerQuick
+    closeOsModalContainerQuick,
+    addWarningMoM
 }

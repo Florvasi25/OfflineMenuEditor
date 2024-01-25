@@ -40,7 +40,27 @@ function removeToolTip(element) {
     }
 }
 
+function showToolTipMoM(element) {
+    let tooltip = element.querySelector('.tooltip');
+    
+    if (!tooltip) {
+        tooltip = document.createElement('span');
+        tooltip.classList.add('tooltip');
+        document.body.appendChild(tooltip); // Append the tooltip to the body
+    }
+    
+    tooltip.textContent = 'The MenuItemOptionSetId does not exist in this menu';
+
+    // Initially show the tooltip
+    const rect = element.getBoundingClientRect();
+
+    tooltip.style.left = `${rect.right + window.scrollX + 5}px`; // Position to the right of the element
+    tooltip.style.top = `${rect.top + window.scrollY}px`; // Maintain the same vertical position
+    tooltip.style.display = 'block';
+}
+
 export { 
     showToolTip,
-    removeToolTip
+    removeToolTip,
+    showToolTipMoM
 }

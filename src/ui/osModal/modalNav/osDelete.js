@@ -6,8 +6,13 @@ import {
     groupOptionSets,
     itemlessOs,
     updateItemlessLocalStorage,
-    closeOsModalContainer
+    closeOsModalContainer,
+    addWarningMoM
 } from '../../context.js';
+
+import {
+    showToolTip
+} from '../../toolTip.js';
 
 function osDeleteButton(osBtnsCell, menuOs) {
     const deleteButton = document.createElement('button');
@@ -38,6 +43,7 @@ function confirmDelete(menuOs, osBtnsCell) {
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
         deleteOs(menuOs);
+        addWarningMoM()
         popup.remove();
     });
 
