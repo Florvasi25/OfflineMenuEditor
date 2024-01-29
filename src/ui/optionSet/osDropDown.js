@@ -1,8 +1,6 @@
 import { createOptionsContainer } from './osOptionsContainer.js'
 
 import { addWarningMoM } from '../context.js'
-import { removeToolTip } from '../toolTip.js'
-
 
 function createOsDropdown(osRowHeader, sectionId, itemId){
     const osDropdownCell = document.createElement('div')

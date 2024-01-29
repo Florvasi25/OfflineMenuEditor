@@ -33,13 +33,6 @@ function showToolTip(element, message) {
     });
 }
 
-function removeToolTip(element) {
-    const tooltip = element.querySelector('.tooltip');
-    if (tooltip) {
-        tooltip.remove(); // Remove the tooltip element from the DOM
-    }
-}
-
 function showToolTipMoM(element, message) {
     let tooltip = element.querySelector('.tooltip');
     
@@ -78,6 +71,5 @@ function showToolTipMoM(element, message) {
 
 export { 
     showToolTip,
-    removeToolTip,
     showToolTipMoM
 }

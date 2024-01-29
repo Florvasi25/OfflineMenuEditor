@@ -6,10 +6,7 @@ import {
     addWarningMoM
 } from '../../context.js'
 
-import {
-    showToolTip,
-    removeToolTip
-} from '../../toolTip.js'
+import { showToolTip } from '../../toolTip.js'
 
 function createOptionMoMCell(menuOption, menuOs) {
     //MoM Cell
@@ -40,7 +37,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     optionMoM.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             if (itemlessOs.includes(menuOs)) {
-                showToolTip(optionMoMCell, 'This OS does not belong to an item');
+                showToolTip(optionMoMCell, 'This OS does not belong to an Item');
                 return
             } else {
                 const foundItem = jsonData.MenuSections
@@ -55,7 +52,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                     // Allow '-1' as a valid value
                     if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM))) {
                         // Show tooltip if the entered value doesn't exist
-                        showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this item');
+                        showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this Item');
                         return;
                     } else if (newOptionMoM == menuOs.MenuItemOptionSetId) {
                         showToolTip(optionMoMCell, 'The MenuItemOptionSetId is the same as the current OS');

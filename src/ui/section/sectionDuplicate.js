@@ -16,10 +16,7 @@ import {
 
 import { createSection } from './sectionContainer.js'
 
-import { 
-    showToolTip,
-    removeToolTip
-} from '../toolTip.js'
+import { showToolTip } from '../toolTip.js'
 
 import { changeSectionClockIcon } from '../clock/sectionClock.js'
 
@@ -35,14 +32,7 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
 
     duplicateButtonImg.addEventListener('mouseover', () => {
         if (sectionRow.classList.contains('expanded')) {
-            showToolTip(duplicateButton, "You must close this section before duplicating.");
-        }
-    });
-    
-    sectionRow.addEventListener('transitionend', () => {
-        if (sectionRow.classList.contains('folded')) {
-            // Remove the tooltip if the section is folded
-            removeToolTip(duplicateButton);
+            showToolTip(duplicateButton, "You must close this Section before duplicating");
         }
     });
     

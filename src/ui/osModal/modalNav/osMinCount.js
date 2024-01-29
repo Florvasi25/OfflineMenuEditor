@@ -6,10 +6,7 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js'
 
-import {
-    showToolTip,
-    removeToolTip
-} from '../../toolTip.js'
+import { showToolTip } from '../../toolTip.js'
 
 function createMinCountCell(menuOs) {
     //Name Cell
@@ -61,7 +58,6 @@ function createMinCount(menuOs) {
                 minCount.textContent = originalMinCount; // Revert back to the original number
                 return;
             }else {
-                removeToolTip(minCount);
                 originalMinCount = newMinOsCount; // Update the original number
             }
 

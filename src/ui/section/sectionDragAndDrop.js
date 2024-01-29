@@ -5,10 +5,7 @@ import {
     getDragAfterElement,
 } from '../context.js';
 
-import { 
-    showToolTip,
-    removeToolTip
-} from '../toolTip.js'
+import { showToolTip } from '../toolTip.js'
 
 function createSectionDragCell(sectionRow) {
     const sectionDragCell = document.createElement('div')
@@ -28,18 +25,10 @@ function createSectionDragCell(sectionRow) {
 
     sectionDragImg.addEventListener('mouseover', (e) => {
         if (sectionRow.classList.contains('expanded')) {
-            showToolTip(sectionDragCell, "You must close all sections before moving it.");
+            showToolTip(sectionDragCell, "You must close all Sections before moving it");
         }
         e.stopPropagation();
     })
-
-    // Add an event listener to the sectionRow to watch for class changes
-    sectionRow.addEventListener('transitionend', () => {
-        if (sectionRow.classList.contains('folded')) {
-            // Remove the tooltip if the section is folded
-            removeToolTip(sectionDragCell);
-        }
-    });
 
     sectionDragImg.addEventListener('dragend', () => {
         if (sectionRow.classList.contains('expanded')) return;

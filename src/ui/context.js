@@ -1,7 +1,5 @@
 import { emptyMenu } from './emptyMenu.js'
 
-import { removeToolTip, showToolTipMoM, showToolTip } from './toolTip.js'
-
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
 let groupedOs = {}; // Store the grouped os objects
