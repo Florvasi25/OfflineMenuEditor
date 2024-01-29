@@ -3,6 +3,10 @@ import {
     getOsIndex, 
 } from '../context.js'
 
+import {
+    showToolTipMoM
+} from '../toolTip.js'
+
 function createOptionsContainer(osRowOption, sectionId, itemId, osId) {
     const optionContainer = document.createElement('div');
     optionContainer.classList.add('optionContainer');
@@ -45,12 +49,40 @@ function createOptionRow(menuOption) {
 function createNameAndMoM(menuOption) {
     const nameAndMoM = document.createElement('div')
     nameAndMoM.className = 'previewNameAndMoM'
-    nameAndMoM.innerHTML = `
-    <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>
-    <div class='dashAndMoM'>
-        <p class='dashCountCell'> - </p>
-        <p class='optionMoMPreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.NextMenuItemOptionSetId}</p>
-    </div>`
+
+    const optionNamePreview = document.createElement('p')
+    optionNamePreview.className = 'optionNamePreview'
+    optionNamePreview.id = menuOption.MenuItemOptionSetItemId
+    optionNamePreview.textContent = menuOption.Name
+
+    const dashAndMoM = document.createElement('div')
+    dashAndMoM.className = 'dashAndMoM'
+    
+    const dashCountCell = document.createElement('p')
+    dashCountCell.className = 'dashCountCell'
+    dashCountCell.textContent = ' - '
+    
+    const optionMoMPreview = document.createElement('p')
+    optionMoMPreview.classList.add('optionMoMPreview')
+    optionMoMPreview.classList.add('notwarning')
+    optionMoMPreview.id = menuOption.MenuItemOptionSetItemId
+    optionMoMPreview.textContent = menuOption.NextMenuItemOptionSetId
+    if (optionMoMPreview.textContent == "") {
+        optionMoMPreview.textContent = "null"
+    }
+
+    dashAndMoM.appendChild(dashCountCell)
+    dashAndMoM.appendChild(optionMoMPreview)
+
+    nameAndMoM.appendChild(optionNamePreview)
+    nameAndMoM.appendChild(dashAndMoM)
+
+    dashAndMoM.addEventListener('mouseover', () => {
+        if (optionMoMPreview.classList.contains('warning')) {
+            console.log('warning');
+            showToolTipMoM(optionMoMPreview, "The MenuItemOptionSetId no longer exists in this Menu");
+        }
+    });
 
     return nameAndMoM
 }

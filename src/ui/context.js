@@ -1,6 +1,6 @@
 import { emptyMenu } from './emptyMenu.js'
 
-import { removeToolTip, showToolTipMoM } from './toolTip.js'
+import { removeToolTip, showToolTipMoM, showToolTip } from './toolTip.js'
 
 let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
 
@@ -428,29 +428,28 @@ function addWarningMoM() {
             console.log('optionMoMPreview', optionMoMPreview);
             if (optionMoMPreview) {
                 optionMoMPreview.style.color = '#ff0000';
-                showToolTipMoM(optionMoMPreview);
+                if (optionMoMPreview.classList.contains('notwarning')) {
+                    optionMoMPreview.classList.remove('notwarning');
+                    optionMoMPreview.classList.add('warning');
+                }
             }
         });
     }
 
-    const existingOsArray = optionMoMPreviewTextArray.filter(value => menuOsId.includes(value));
+    const existingOsArray = optionMoMPreviewTextArray.filter(value => menuOsId.includes(value) || value === -1 || value === "null");
     console.log('existingOsArray', existingOsArray);
-
-    if (existingOsArray) {
+    
+    if (existingOsArray.length > 0) {
         existingOsArray.forEach(existingOs => {
-            console.log('existingOs', existingOs);
-            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === existingOs);
-            console.log('optionMoMPreview', optionMoMPreview);
+            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === existingOs || p.textContent === "null");
             if (optionMoMPreview) {
+                optionMoMPreview.classList.remove('warning');
+                optionMoMPreview.classList.add('notwarning');
                 optionMoMPreview.style.color = '#000000';
-                const toolTipCollection = document.getElementsByClassName('tooltip')
-                const toolTipArray = Array.from(toolTipCollection)
-                toolTipArray.forEach(toolTip => {
-                    toolTip.remove()
-                })
             }
         });
     }
+    
 }
 
 export {

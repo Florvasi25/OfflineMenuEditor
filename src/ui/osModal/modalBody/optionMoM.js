@@ -74,7 +74,12 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 if (optionMoMPreview) {
                     if (newOptionMoM == "") {
                         optionMoMPreview.textContent = "null"
-                        optionMoMPreview.style = 'color: #000000;'
+                        optionMoMPreview.style.color = '#000000';
+                        const toolTipCollection = document.getElementsByClassName('tooltip')
+                        const toolTipArray = Array.from(toolTipCollection)
+                        toolTipArray.forEach(toolTip => {
+                            toolTip.remove()
+                        })
                     } else {
                         optionMoMPreview.textContent = newOptionMoM;
                     }

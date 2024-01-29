@@ -39,7 +39,6 @@ function toggleOsState(osRowHeader, sectionId, itemId) {
         const optionContainer = osRowHeader.nextElementSibling;
         if (optionContainer && optionContainer.classList.contains('optionContainer')) {
             optionContainer.remove(); // Remove the content container
-            removeToolTip()
         }
     } else {
         osRowHeader.classList.remove(foldedClassName);
