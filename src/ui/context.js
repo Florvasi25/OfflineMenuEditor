@@ -84,41 +84,18 @@ function getDragAfterElement(container, y) {
     }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
-function getLocalStorageSectionIDs() {
-    const existingSectionIDs = JSON.parse(localStorage.getItem("sectionIDs") || "[]");
-    return existingSectionIDs;
-}
-
-function getLocalStorageItemIDs() {
-    const existingItemIDs = JSON.parse(localStorage.getItem("itemIDs") || "[]");
-    return existingItemIDs;
-}
-
-function getLocalStorageOptionSetIDs() {
-    const existingoptionSetIDs = JSON.parse(localStorage.getItem("optionSetIDs") || "[]");
-    return existingoptionSetIDs;
-}
-
-function getLocalStorageOptionSetItemsIDs() {
-    const existingoptionSetItemsIDs = JSON.parse(localStorage.getItem("optionSetItemsIDs") || "[]");
-    return existingoptionSetItemsIDs;
-}
-
 //set sectionID for entire json file
 function setSectionId(jsonData) {
-    localStorage.setItem("sectionIDs", "[]");
     for (const section of jsonData.MenuSections) {
         let id = getRandomInt()
         section.MenuSectionId = id;
         section.MenuSectionAvailability.MenuSectionId = id;
-        updateCounterLocalStorage(id, true)
     }
     updateLocalStorage()
 }
 
 //set itemID for entire json file
 function setItemId(jsonData) {
-    localStorage.setItem("itemIDs", "[]");
     var sectionId;
     for (const section of jsonData.MenuSections) {
         sectionId = section.MenuSectionId;
@@ -126,14 +103,12 @@ function setItemId(jsonData) {
             let id = getRandomInt()
             item.MenuItemId = id;
             item.MenuSectionId = sectionId;
-            updateItemCounterLocalStorage(id, true)
         }
     }
     updateLocalStorage()
 }
 
 function setOptionSetId(jsonData) {
-    localStorage.setItem("optionSetIDs", "[]");
     var itemIDInOS;
     window.optionSetIdMap = {}; // Create a global map to store ID mapping
 
@@ -148,8 +123,6 @@ function setOptionSetId(jsonData) {
                 optionSet.MenuItemOptionSetId = newId;
 
                 window.optionSetIdMap[oldId] = newId; // Map old ID to new ID
-
-                updateOptionSetCounterLocalStorage(newId, true);
             }
         }
     }
@@ -158,8 +131,6 @@ function setOptionSetId(jsonData) {
 
 
 function setOptionSetItemsId(jsonData) {
-    localStorage.setItem("optionSetItemsIDs", "[]");
-
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
             for (const optionSet of item.MenuItemOptionSets) {
@@ -172,8 +143,6 @@ function setOptionSetItemsId(jsonData) {
                             optionSetItem.NextMenuItemOptionSetId = newNextId;
                         }
                     }
-
-                    updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true);
                 }
             }
         }
@@ -198,8 +167,6 @@ function setOptionSetIdForSection(sectionId) {
                     optionSet.MenuItemOptionSetId = newId;
 
                     optionSetIdMap[oldId] = newId; // Map old ID to new ID in the local map
-
-                    updateOptionSetCounterLocalStorage(newId, true);
                 }
             }
         }
@@ -222,8 +189,6 @@ function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
                                 optionSetItem.NextMenuItemOptionSetId = newNextId;
                             }
                         }
-
-                        updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, true);
                     }
                 }
             }
@@ -248,77 +213,12 @@ function updateItemlessLocalStorage() {
     localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
 }
 
-//Updates sections id LocalStorage.
-//If 'addID' is true, will be added to localStorage. else, will be removed.
-function updateCounterLocalStorage(id, addID) {
-    if (addID) {
-        let existingIDs = getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]"); //array
-        existingIDs.push(id);
-        localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
-    } else {
-        let existingIDs = getLocalStorageSectionIDs();//JSON.parse(localStorage.getItem("sectionIDs") || "[]");
-        const indexID = existingIDs.indexOf(Number(id));
-        existingIDs.splice(indexID, 1);
-        localStorage.setItem("sectionIDs", JSON.stringify(existingIDs));
-    }
-}
-
-//Updates items id LocalStorage.
-function updateItemCounterLocalStorage(id, addID) {
-    if (addID) {
-        let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]"); //array
-        existingIDs.push(id);
-        localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
-    } else {
-        let existingIDs = getLocalStorageItemIDs(); //JSON.parse(localStorage.getItem("itemIDs") || "[]");
-        const indexID = existingIDs.indexOf(Number(id));
-        existingIDs.splice(indexID, 1);
-        localStorage.setItem("itemIDs", JSON.stringify(existingIDs));
-    }
-}
-
-//Updates OS id in LocalStorage.
-function updateOptionSetCounterLocalStorage(id, addID) {
-    if (addID) {
-        let existingIDs = getLocalStorageOptionSetIDs();
-        existingIDs.push(id);
-        localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
-    } else {
-        let existingIDs = getLocalStorageOptionSetIDs();
-        const indexID = existingIDs.indexOf(Number(id));
-        existingIDs.splice(indexID, 1);
-        localStorage.setItem("optionSetIDs", JSON.stringify(existingIDs));
-    }
-}
-
-//Updates OS items id in LocalStorage.
-function updateOptionSetItemsCounterLocalStorage(id, addID) {
-    if (addID) {
-        let existingIDs = getLocalStorageOptionSetItemsIDs();
-        existingIDs.push(id);
-        localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
-    } else {
-        let existingIDs = getLocalStorageOptionSetItemsIDs();
-        const indexID = existingIDs.indexOf(Number(id));
-        existingIDs.splice(indexID, 1);
-        localStorage.setItem("optionSetItemsIDs", JSON.stringify(existingIDs));
-    }
-}
-
 function getRandomInt() {
     progressiveInt++;
     localStorage.setItem('lastProgressiveInt', progressiveInt);
     return progressiveInt;
 }
 
-function getUniqueRandomInt(localStorageIDs) {
-    let randomNum = getRandomInt();
-
-    while (localStorageIDs.includes(randomNum)) {
-        randomNum = getRandomInt();
-    }
-    return randomNum;
-}
 
 function getSectionRow(menuSectionId) {
     const sectionRowsArray = Array.from(document.getElementsByClassName('sectionRow'));
@@ -449,20 +349,11 @@ export {
     groupedOs,
     itemlessOs,
     getSectionIndex,
-    updateCounterLocalStorage,
-    updateItemCounterLocalStorage,
     updateLocalStorage,
     setOptionSetId,
-    updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
-    getLocalStorageItemIDs,
-    getLocalStorageSectionIDs,
-    getLocalStorageOptionSetIDs,
-    getLocalStorageOptionSetItemsIDs,
     setJsonData,
     setSectionId,
     setOptionSetItemsId,
-    getUniqueRandomInt,
     getRandomInt,
     setSectionDisplayOrder,
     getItemIndex,

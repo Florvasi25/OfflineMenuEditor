@@ -1,9 +1,7 @@
 import {
     jsonData,
     deleteItemlessOs,
-    getLocalStorageOptionSetIDs,
-    getUniqueRandomInt,
-    getLocalStorageOptionSetItemsIDs,
+    getRandomInt,
     updateLocalStorage,
     groupedOs,
     itemlessOs,
@@ -38,21 +36,17 @@ function createAddButton(menuOs, menuItemId) {
             deleteItemlessOs(newOs);
 
             newOs.MenuItemOptionSetItems.forEach(option => {
-                const optionIds = getLocalStorageOptionSetItemsIDs();
-                const newOptionId = getUniqueRandomInt(optionIds);
+                const newOptionId = getRandomInt();
                 option.MenuItemOptionSetItemId = newOptionId
                 option.NextMenuItemOptionSetId = null
             })
         } else {
             newOs = JSON.parse(JSON.stringify(menuOs));
-            
-            const optionSetsIds = getLocalStorageOptionSetIDs();
-            const newOptionSetId = getUniqueRandomInt(optionSetsIds);
+            const newOptionSetId = getRandomInt();
             newOs.MenuItemOptionSetId = newOptionSetId;
 
             newOs.MenuItemOptionSetItems.forEach(option => {
-                const optionIds = getLocalStorageOptionSetItemsIDs();
-                const newOptionId = getUniqueRandomInt(optionIds);
+                const newOptionId = getRandomInt();
                 option.MenuItemOptionSetItemId = newOptionId
                 option.NextMenuItemOptionSetId = null
             })

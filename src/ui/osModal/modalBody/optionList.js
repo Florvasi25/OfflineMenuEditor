@@ -5,11 +5,9 @@ import {
 } from '../../helpers.js';
 
 import {
-    getLocalStorageOptionSetItemsIDs,
-    getUniqueRandomInt,
+    getRandomInt,
     groupOptionSets,
     updateLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
     groupedOs,
     setColorOfRows,
     itemlessOs,
@@ -259,8 +257,7 @@ class OptionSetList {
         
             if (groupedOs[groupOsId]) {
                 groupedOs[groupOsId].forEach((os) => {
-                    const optionIds = getLocalStorageOptionSetItemsIDs();
-                    const newOptionId = getUniqueRandomInt(optionIds);
+                    const newOptionId = getRandomInt();
                     updateOptionSetItemsCounterLocalStorage(newOptionId, true);
         
                     const emptyOptionCopy = { ...emptyOptionJson };
@@ -282,8 +279,7 @@ class OptionSetList {
                 updateLocalStorage();
         
             } else if (itemlessOs.includes(menuOs)){
-                const optionIds = getLocalStorageOptionSetItemsIDs();
-                const newOptionId = getUniqueRandomInt(optionIds);
+                const newOptionId = getRandomInt();
                 updateOptionSetItemsCounterLocalStorage(newOptionId, true);
         
                 emptyOptionJson.MenuItemOptionSetItemId = newOptionId;

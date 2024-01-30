@@ -1,10 +1,6 @@
 import {
     jsonData,
     getSectionIndex,
-    updateCounterLocalStorage,
-    updateItemCounterLocalStorage,
-    updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
     groupOptionSets,
     groupedOs,
@@ -81,7 +77,6 @@ function deleteSection(sectionRow) {
         const sectionIndex = getSectionIndex(sectionId);
         if (sectionIndex !== -1) {
             const section = jsonData.MenuSections[sectionIndex];
-            deleteIDs(section)
             if (sectionRow.classList.contains('expanded')) {
                 let items = sectionRow.nextElementSibling;
                 if (items.tagName === 'DIV' && items.classList.contains('itemTable')) {
@@ -125,30 +120,7 @@ function deleteSection(sectionRow) {
     }
 }
 
-// delete item ID inside local storage
-function deleteItemLocalStorage(section) {
-    if (section && section.MenuItems) {
-        for (const item of section.MenuItems) {
-            
-            updateItemCounterLocalStorage(item.MenuItemId, false);
-        }
-    }
-}
 
-function deleteIDs(section) {
-    updateCounterLocalStorage(section.MenuSectionId, false);
-    
-    section.MenuItems.forEach(item => {
-        updateItemCounterLocalStorage(item.MenuItemId, false);
 
-        item.MenuItemOptionSets.forEach(optionSet => {
-            updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, false);
-
-            optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
-                updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, false);
-            });
-        });
-    });
-}
 
 export { sectionDeleteButton }

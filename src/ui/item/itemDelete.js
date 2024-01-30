@@ -2,9 +2,6 @@ import {
     jsonData,
     getItemIndex,
     getSectionRow,
-    updateItemCounterLocalStorage,
-    updateOptionSetCounterLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
     groupOptionSets,
     groupedOs,
@@ -92,7 +89,6 @@ function deleteItem(itemRow, sectionId) {
         const { itemIndex, sectionIndex } = getItemIndex(sectionId, itemId);
         const sectionRow = getSectionRow(sectionId);
         if (itemIndex !== -1) {
-            deleteIDs(itemId, itemIndex, sectionIndex);
             const deletedItem = jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex, 1)[0];
             jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
@@ -132,23 +128,6 @@ function deleteItem(itemRow, sectionId) {
     }
 }
 
-function deleteIDs(itemId, itemIndex, sectionIndex) {
-    const item = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];;
-    if (item.MenuItemOptionSets) {
-        item.MenuItemOptionSets.forEach(optionSet => {
-            if (optionSet && optionSet.MenuItemOptionSetId) {
-                updateOptionSetCounterLocalStorage(optionSet.MenuItemOptionSetId, false);
-                if (optionSet.MenuItemOptionSetItems) {
-                    optionSet.MenuItemOptionSetItems.forEach(optionSetItem => {
-                        if (optionSetItem && optionSetItem.MenuItemOptionSetItemId) {
-                            updateOptionSetItemsCounterLocalStorage(optionSetItem.MenuItemOptionSetItemId, false);
-                        }
-                    });
-                }
-            }
-        });
-    }
-    updateItemCounterLocalStorage(itemId, false);
-}
 
-export { itemDeleteButton, deleteIDs }
+
+export { itemDeleteButton }

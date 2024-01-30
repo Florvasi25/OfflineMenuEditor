@@ -1,11 +1,9 @@
 import { createSection } from "./sectionContainer.js";
 
 import {
-    jsonData, 
-    updateCounterLocalStorage,
+    jsonData,
     updateLocalStorage,
-    getLocalStorageSectionIDs,
-    getUniqueRandomInt,
+    getRandomInt,
 } from '../context.js';
 
 import { toggleSectionState } from "./sectionDropDown.js";
@@ -16,9 +14,7 @@ function createSectionButton() {
     newSectionButton.textContent = 'New Section'
 
     newSectionButton.addEventListener('click', () => {
-
-        const sectionIDs = getLocalStorageSectionIDs();
-        const newId = getUniqueRandomInt(sectionIDs);
+        const newId = getRandomInt();
     
         const emptySectionJson = {
             MenuSectionId: newId,
@@ -51,7 +47,6 @@ function createSectionButton() {
         toggleSectionState(sectionRow);
 
         updateLocalStorage()
-        updateCounterLocalStorage(newId, true);
     
     });
 

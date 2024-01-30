@@ -1,11 +1,9 @@
 import { createItem } from "./itemContainer.js";
 
 import {
-    jsonData, 
-    updateItemCounterLocalStorage,
+    jsonData,
     updateLocalStorage,
-    getLocalStorageItemIDs,
-    getUniqueRandomInt,
+    getRandomInt,
     getSectionIndex,
     getSectionRow
 } from '../context.js';
@@ -26,8 +24,7 @@ function createItemButton(itemContainer, sectionId) {
     //Add Section
     newItemButton.addEventListener('click', () => {
 
-        const itemIDs = getLocalStorageItemIDs();
-        const newId = getUniqueRandomInt(itemIDs);
+        const newId = getRandomInt();
         const sectionIndex = getSectionIndex(sectionId);
         const sectionRow = getSectionRow(sectionId);
     
@@ -43,7 +40,7 @@ function createItemButton(itemContainer, sectionId) {
             Alcohol: false,
             CatalogItemId: null,
             Tags: [],
-            PublicId: crypto.randomUUID(),
+            PublicId: "00000000-0000-0000-0000-000000000000",
             IsAvailable: true,
             MenuItemOptionSets: [],
             TaxRate: null,
@@ -92,7 +89,6 @@ function CreateItem(itemContainer, item, sectionIndex, sectionId, newId, section
     toggleItemState(itemRow, sectionId)
 
     updateLocalStorage()
-    updateItemCounterLocalStorage(newId, true);
 }
 
 function modifyBusinessHoursPeriodIds(itemDailyHours) {

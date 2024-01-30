@@ -1,5 +1,4 @@
 import {
-    updateOptionSetItemsCounterLocalStorage,
     updateLocalStorage,
     groupedOs,
     setColorOfRows,
@@ -87,7 +86,6 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
             os.MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
             })
-            updateOptionSetItemsCounterLocalStorage(menuOption.MenuItemOptionSetItems, false);
             groupOptionSets()
             updateLocalStorage();
         })
