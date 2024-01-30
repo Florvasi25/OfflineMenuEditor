@@ -79,7 +79,6 @@ function createNameAndMoM(menuOption) {
 
     dashAndMoM.addEventListener('mouseover', () => {
         if (optionMoMPreview.classList.contains('warning')) {
-            console.log('warning');
             showToolTipMoM(optionMoMPreview, "The MenuItemOptionSetId no longer exists in this Menu");
         }
     });

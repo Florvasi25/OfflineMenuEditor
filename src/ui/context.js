@@ -410,20 +410,16 @@ function addWarningMoM() {
         .flatMap(i => i.MenuItems)
         .flatMap(i => i.MenuItemOptionSets)
         .flatMap(i => i.MenuItemOptionSetId);
-    console.log('menuOsId', menuOsId)
 
     const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview'));
+    
     const optionMoMPreviewTextArray = optionMoMPreviewArray.map(i => Number(i.textContent)).filter(value => !isNaN(value));
-    console.log('optionMoMPreviewTextArray', optionMoMPreviewTextArray);
 
     const removedOsArray = optionMoMPreviewTextArray.filter(value => !menuOsId.includes(value));
-    console.log('removedOsArray', removedOsArray);
 
     if (removedOsArray) {
         removedOsArray.forEach(removedOs => {
-            console.log('removedOs', removedOs);
             const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === removedOs);
-            console.log('optionMoMPreview', optionMoMPreview);
             if (optionMoMPreview) {
                 optionMoMPreview.style.color = '#ff0000';
                 if (optionMoMPreview.classList.contains('notwarning')) {
@@ -435,7 +431,6 @@ function addWarningMoM() {
     }
 
     const existingOsArray = optionMoMPreviewTextArray.filter(value => menuOsId.includes(value) || value === -1 || value === "null");
-    console.log('existingOsArray', existingOsArray);
     
     if (existingOsArray.length > 0) {
         existingOsArray.forEach(existingOs => {

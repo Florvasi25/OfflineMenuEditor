@@ -25,7 +25,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     optionMoM.classList.add('optionMoM');
     optionMoM.contentEditable = true;
 
-    if (menuOption.NextMenuItemOptionSetId == null) {
+    if (menuOption.NextMenuItemOptionSetId == null || menuOption.NextMenuItemOptionSetId == "") {
         optionMoM.textContent = 'Empty'
         optionMoM.style = 'color: #a3a3a3;'
     } else {
@@ -45,7 +45,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 .find(i => i.MenuItemId == menuOs.MenuItemId);
                 const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
                 e.preventDefault();
-                const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
+                const newOptionMoM = optionMoM.textContent
         
                 // If the entered value is not empty, check its validity
                 if (newOptionMoM !== "") {
@@ -59,7 +59,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                         return;
                     }
                 } 
-        
+                
                 // If the entered value exists, update the value and remove tooltip
                 updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
                 originalMoM = newOptionMoM;
@@ -71,16 +71,15 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 if (optionMoMPreview) {
                     if (newOptionMoM == "") {
                         optionMoMPreview.textContent = "null"
-                        optionMoMPreview.style.color = '#000000';
-                        const toolTipCollection = document.getElementsByClassName('tooltip')
-                        const toolTipArray = Array.from(toolTipCollection)
-                        toolTipArray.forEach(toolTip => {
-                            toolTip.remove()
-                        })
                     } else {
                         optionMoMPreview.textContent = newOptionMoM;
                     }
                 } 
+                
+                if (optionMoM.textContent == "" || optionMoM.textContent == "Empty") {
+                    optionMoM.textContent = "Empty";
+                    optionMoM.style = 'color: #a3a3a3;'
+                }
             }
             addWarningMoM()
         } else if (e.key === 'Escape') {
@@ -94,19 +93,23 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             optionMoM.style = 'color: #a3a3a3;'
         } else {
             const foundItem = jsonData.MenuSections
-            .flatMap(i => i.MenuItems)
-            .find(i => i.MenuItemId == menuOs.MenuItemId);
+                .flatMap(i => i.MenuItems)
+                .find(i => i.MenuItemId == menuOs.MenuItemId);
             const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
-            const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
-            if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId) {
-                optionMoM.textContent = "Empty";
-                optionMoM.style = 'color: #a3a3a3;'
-            } else {
-                optionMoM.textContent = originalMoM;
+            const newOptionMoM = optionMoM.textContent
+
+            if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId || newOptionMoM === "" ) {
+                optionMoM.textContent = originalMoM === null ? "Empty" : originalMoM;
+                console.log();
+                if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
+                    optionMoM.textContent = "Empty";
+                    optionMoM.style = 'color: #a3a3a3;'
+                }
             }
         }
         optionMoM.classList.remove('sectionClicked');
     });
+    
 
     optionMoM.addEventListener('click', () => {
         optionMoM.classList.add('sectionClicked')
