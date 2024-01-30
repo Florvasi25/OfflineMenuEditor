@@ -2,10 +2,7 @@ import { createOption } from "./osBody.js";
 
 import {
     jsonData,
-    updateItemCounterLocalStorage,
     updateLocalStorage,
-    getLocalStorageOptionSetItemsIDs,
-    getUniqueRandomInt,
     getRandomInt,
     groupedOs,
     setColorOfRows,
@@ -58,9 +55,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
 
     if (groupedOs[groupOsId]) {
         groupedOs[groupOsId].forEach((os) => {
-            const optionIds = getLocalStorageOptionSetItemsIDs();
-            const newOptionId = getUniqueRandomInt(optionIds);
-            updateItemCounterLocalStorage(newOptionId, true);
+            const newOptionId = getRandomInt();
 
             const emptyOptionCopy = { ...emptyOptionJson };
             emptyOptionCopy.MenuItemOptionSetItemId = newOptionId;
@@ -83,9 +78,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         updateLocalStorage();
 
     } else if (itemlessOs.includes(menuOs)){
-        const optionIds = getLocalStorageOptionSetItemsIDs();
-        const newOptionId = getUniqueRandomInt(optionIds);
-        updateItemCounterLocalStorage(newOptionId, true);
+        const newOptionId = getRandomInt();
 
         emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
 

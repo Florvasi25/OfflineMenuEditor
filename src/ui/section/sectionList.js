@@ -2,9 +2,7 @@ import {
     jsonData,
     getSectionIndex,
     updateLocalStorage,
-    updateItemCounterLocalStorage,
-    getLocalStorageItemIDs,
-    getUniqueRandomInt,
+    getRandomInt,
     getSectionRow,
     groupOptionSets,
     groupedOs,
@@ -225,8 +223,7 @@ class List {
     createItems(items, sectionIndex) { 
         for(let i = 0; i < items.length; i++){
             const { itemName, itemPrice } = this.trimItems(items[i]);
-            const itemIDs = getLocalStorageItemIDs();
-            const newId = getUniqueRandomInt(itemIDs);
+            const newId = getRandomInt();
 
             const emptyItemJson = {
                 MenuId: jsonData.MenuId,
@@ -240,7 +237,7 @@ class List {
                 Alcohol: false,
                 CatalogItemId: null,
                 Tags: [],
-                PublicId: crypto.randomUUID(),
+                PublicId: "00000000-0000-0000-0000-000000000000",
                 IsAvailable: true,
                 MenuItemOptionSets: [],
                 TaxRate: null,
@@ -270,7 +267,6 @@ class List {
             }else{
                 jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson);
                 updateLocalStorage();
-                updateItemCounterLocalStorage(newId, true);
             }
             
         }

@@ -1,13 +1,9 @@
 import {
     jsonData,
     getSectionIndex,
-    updateCounterLocalStorage,
     updateLocalStorage,
     setSectionDisplayOrder,
-    updateItemCounterLocalStorage,
-    getLocalStorageItemIDs,
-    getLocalStorageSectionIDs,
-    getUniqueRandomInt,
+    getRandomInt,
     groupOptionSets,
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
@@ -79,8 +75,7 @@ function duplicateSection(sectionRow) {
 }
 
 function newIDs(newSection, sectionId){
-    const sectionIDs = getLocalStorageSectionIDs();
-    const newSectionId = getUniqueRandomInt(sectionIDs);
+    const newSectionId = getRandomInt();
     newSection.MenuSectionId = newSectionId;
     newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
     newSection.PublicId = crypto.randomUUID();
@@ -88,23 +83,17 @@ function newIDs(newSection, sectionId){
     if (newSection.MenuItems) {
         newSection.MenuItems.forEach(item => {
             if (item) {
-                const itemsIDs = getLocalStorageItemIDs();
-                const newItemId = getUniqueRandomInt(itemsIDs);
+                const newItemId = getRandomInt();
                 item.MenuItemId = newItemId;
                 item.MenuSectionId = newSectionId;
-                updateItemCounterLocalStorage(newItemId, true);
                 if( item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0)
                 {
-                    //setOptionSetId(jsonData);
                     let map = setOptionSetIdForSection(sectionId);
                     setOptionSetItemsIdForSection(sectionId, map);
-                    //setOptionSetItemsId(jsonData);
                 }
             }
         });
     }
-    
-    updateCounterLocalStorage(newSectionId, true);
     return newSection;
 }
 export { sectionDuplicateButton }

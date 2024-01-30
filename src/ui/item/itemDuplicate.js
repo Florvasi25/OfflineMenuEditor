@@ -1,11 +1,9 @@
 import {
     jsonData,
     getItemIndex,
-    updateItemCounterLocalStorage,
     updateLocalStorage,
-    getLocalStorageItemIDs,
     setSectionDisplayOrder,
-    getUniqueRandomInt,
+    getRandomInt,
     groupOptionSets,
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
@@ -53,7 +51,6 @@ function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer,
         duplicateItem(itemRow, sectionId, itemRow.id, itemContainer, menuItem);
         setSectionDisplayOrder(jsonData);
     });
-    
 }
 
 function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
@@ -78,8 +75,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
 }
 
 function newIDs(newItem, sectionId){
-    const itemIds = getLocalStorageItemIDs();
-    const newItemId = getUniqueRandomInt(itemIds);
+    const newItemId = getRandomInt();
     newItem.MenuItemId = newItemId;
     newItem.PublicId = crypto.randomUUID();
     if( newItem.MenuItemOptionSets && newItem.MenuItemOptionSets.length > 0)
@@ -87,8 +83,6 @@ function newIDs(newItem, sectionId){
         let map = setOptionSetIdForSection(sectionId);
         setOptionSetItemsIdForSection(sectionId, map);
     }
-
-    updateItemCounterLocalStorage(newItemId, true);
     return newItem;
 }
 

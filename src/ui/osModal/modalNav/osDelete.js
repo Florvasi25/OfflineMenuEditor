@@ -1,5 +1,4 @@
 import {
-    updateOptionSetCounterLocalStorage,
     updateLocalStorage,
     groupedOs,
     jsonData,
@@ -77,9 +76,8 @@ function deleteOs(menuOs) {
         jsonData.MenuSections.flatMap(i => i.MenuItems).forEach(i => {
             i.MenuItemOptionSets = i.MenuItemOptionSets.filter(os => !osIds.includes(os.MenuItemOptionSetId))
         })
-        updatePreview(osIds.map(p => p.toString()))
-        updateOptionSetCounterLocalStorage(menuOs.MenuItemOptionSets, false);
-        groupOptionSets()
+        updatePreview(osIds.map(p => p.toString()));
+        groupOptionSets();
         updateLocalStorage();
     } else if (itemlessOs.includes(menuOs)){
         itemlessOs.pop(menuOs)

@@ -1,9 +1,7 @@
 import {
     jsonData,
-    getLocalStorageOptionSetIDs,
-    getRandomInt,
     addItemlessOs,
-    getUniqueRandomInt,
+    getRandomInt,
     closeOsModalContainerQuick
 } from '../../context.js';
 
@@ -22,8 +20,7 @@ function osNewButton(osBtnsCell) {
 
     //Add Section
     newOsButton.addEventListener('click', () => {
-        const osIds = getLocalStorageOptionSetIDs();
-        const newOsId = getUniqueRandomInt(osIds);   
+        const newOsId = getRandomInt();   
 
         const emptyOsJson = {
             CatalogItemId: null,

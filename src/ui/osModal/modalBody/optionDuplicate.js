@@ -1,11 +1,8 @@
 import {
     jsonData,
-    updateItemCounterLocalStorage,
     updateLocalStorage,
-    updateOptionSetItemsCounterLocalStorage,
-    getLocalStorageOptionSetItemsIDs,
     setSectionDisplayOrder,
-    getUniqueRandomInt,
+    getRandomInt,
     groupedOs,
     setColorOfRows,
     groupOptionSets,
@@ -46,10 +43,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             const newOption = JSON.parse(JSON.stringify(sourceOption));
             
             // Get new unique ID
-            const optionIds = getLocalStorageOptionSetItemsIDs();
-            const newOptionId = getUniqueRandomInt(optionIds);
-            updateItemCounterLocalStorage(newOptionId, true);
-            updateOptionSetItemsCounterLocalStorage(newOptionId, true);
+            const newOptionId = getRandomInt();
 
             newOption.MenuItemOptionSetItemId = newOptionId;
             newOption.PublicId = crypto.randomUUID();
@@ -76,10 +70,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
         const newOption = JSON.parse(JSON.stringify(sourceOption));
 
         // Get new unique ID
-        const optionIds = getLocalStorageOptionSetItemsIDs();
-        const newOptionId = getUniqueRandomInt(optionIds);
-        updateItemCounterLocalStorage(newOptionId, true);
-        updateOptionSetItemsCounterLocalStorage(newOptionId, true)
+        const newOptionId = getRandomInt();
 
         newOption.MenuItemOptionSetItemId = newOptionId;
         newOption.PublicId = crypto.randomUUID();
