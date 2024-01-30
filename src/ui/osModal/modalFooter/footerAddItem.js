@@ -43,10 +43,9 @@ function createAddButton(menuOs, menuItemId) {
                 option.MenuItemOptionSetItemId = newOptionId
                 option.NextMenuItemOptionSetId = null
             })
-            
         } else {
             newOs = JSON.parse(JSON.stringify(menuOs));
-
+            
             const optionSetsIds = getLocalStorageOptionSetIDs();
             const newOptionSetId = getUniqueRandomInt(optionSetsIds);
             newOs.MenuItemOptionSetId = newOptionSetId;
@@ -70,7 +69,6 @@ function createAddButton(menuOs, menuItemId) {
         const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
         if (osContainerPreview) {
             osContainerPreview.appendChild(newOptionRow);
-            addWarningMoM()
         }
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
@@ -84,7 +82,7 @@ function createAddButton(menuOs, menuItemId) {
                 osRowHeaderPreview.classList.add('even');
             }
         });
-
+        
         const filteredItemsCountArray = Array.from(document.getElementsByClassName('filteredItemsCount'));
         const filteredItemsCount = filteredItemsCountArray.find((p) => p.id == foundItem.MenuSectionId);
         
@@ -92,7 +90,7 @@ function createAddButton(menuOs, menuItemId) {
             const currentCount = parseInt(filteredItemsCount.textContent) || 0;
             filteredItemsCount.textContent = currentCount + 1;
         }
-
+        
         const removeBtn = createRemoveButton(menuOs, menuItemId);
         targetParent.appendChild(removeBtn);
 
@@ -101,7 +99,8 @@ function createAddButton(menuOs, menuItemId) {
         } else {
             groupedOs[menuOs.groupOsId].push(newOs)
         }
-
+        
+        addWarningMoM()
         updateLocalStorage()
     })
     

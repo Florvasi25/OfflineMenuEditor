@@ -412,37 +412,36 @@ function addWarningMoM() {
         .flatMap(i => i.MenuItemOptionSetId);
 
     const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview'));
-    
+
     const optionMoMPreviewTextArray = optionMoMPreviewArray.map(i => Number(i.textContent)).filter(value => !isNaN(value));
 
     const removedOsArray = optionMoMPreviewTextArray.filter(value => !menuOsId.includes(value));
 
-    if (removedOsArray) {
+    if (removedOsArray.length > 0) {
         removedOsArray.forEach(removedOs => {
-            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === removedOs);
-            if (optionMoMPreview) {
+            const optionMoMPreviews = optionMoMPreviewArray.filter((p) => Number(p.textContent) === removedOs);
+            optionMoMPreviews.forEach(optionMoMPreview => {
                 optionMoMPreview.style.color = '#ff0000';
                 if (optionMoMPreview.classList.contains('notwarning')) {
                     optionMoMPreview.classList.remove('notwarning');
                     optionMoMPreview.classList.add('warning');
                 }
-            }
+            });
         });
     }
 
     const existingOsArray = optionMoMPreviewTextArray.filter(value => menuOsId.includes(value) || value === -1 || value === "null");
-    
+
     if (existingOsArray.length > 0) {
         existingOsArray.forEach(existingOs => {
-            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === existingOs || p.textContent === "null");
-            if (optionMoMPreview) {
+            const optionMoMPreviews = optionMoMPreviewArray.filter((p) => Number(p.textContent) === existingOs);
+            optionMoMPreviews.forEach(optionMoMPreview => {
                 optionMoMPreview.classList.remove('warning');
                 optionMoMPreview.classList.add('notwarning');
                 optionMoMPreview.style.color = '#000000';
-            }
+            });
         });
     }
-    
 }
 
 export {
