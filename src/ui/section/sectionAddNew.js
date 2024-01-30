@@ -22,7 +22,6 @@ function createSectionButton() {
             Description: null,
             DisplayOrder: jsonData.MenuSections.length,
             MenuItems: [],
-            PublicId: crypto.randomUUID(),
             IsDeleted: false,
             IsAvailable: true,
             IsHiddenFromUsers: false,

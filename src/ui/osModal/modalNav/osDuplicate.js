@@ -1,7 +1,8 @@
 import {
     addItemlessOs,
     getRandomInt,
-    closeOsModalContainerQuick
+    closeOsModalContainerQuick,
+    removePublicIdFromOSItem
 } from '../../context.js';
 
 import { createOsModalContainer } from "../modalContainer.js";
@@ -27,12 +28,11 @@ function duplicateOs(menuOs) {
     const newOsId = getRandomInt();
 
     newOs.MenuItemOptionSetId = newOsId;
-    newOs.PublicId = crypto.randomUUID();
     newOs.groupOsId = null
     newOs.MenuItemId = null
     newOs.groupOsId = `group${getRandomInt()}`
-
-
+    if(newOs.PublicId){ delete newOs.PublicId; }
+    removePublicIdFromOSItem(newOs)
     newOs.Name += "_copy"
 
     addItemlessOs(newOs)

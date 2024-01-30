@@ -245,7 +245,6 @@ class OptionSetList {
                 IsDeleted: false,
                 Tags: [],
                 NextMenuItemOptionSetId: null,
-                PublicId: crypto.randomUUID(),
                 ImageName: null,
                 ImageUrl: null,
                 CellAspectRatio: 0,
@@ -258,7 +257,6 @@ class OptionSetList {
             if (groupedOs[groupOsId]) {
                 groupedOs[groupOsId].forEach((os) => {
                     const newOptionId = getRandomInt();
-                    updateOptionSetItemsCounterLocalStorage(newOptionId, true);
         
                     const emptyOptionCopy = { ...emptyOptionJson };
                     emptyOptionCopy.MenuItemOptionSetItemId = newOptionId;
@@ -266,12 +264,6 @@ class OptionSetList {
                     os.MenuItemOptionSetItems.push(emptyOptionCopy);
                     this.updateDisplayOrder(itemLines)
                     this.sortItemsByDisplayOrder();
-
-                    /*if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
-                        this.removeOSItemRows(this.optionRowsContainer);
-                        this.createItemRows(menuOs, this.optionRowsContainer);
-                    }*/
-        
                     this.updatePreview(os);
                 });
         
@@ -289,15 +281,6 @@ class OptionSetList {
                 );
                 this.updateDisplayOrder(itemLines) 
                 this.sortItemsByDisplayOrder();    
-                
-                /*this.removeOSItemRows(this.optionRowsContainer);
-                this.createItemRows(menuOs, this.optionRowsContainer);   */ 
-                /*const optionRow = createOption(
-                    this.optionRowsContainer,
-                    menuOs,
-                    emptyOptionJson
-                );
-                this.optionRowsContainer.appendChild(optionRow);*/
                 updateItemlessLocalStorage();
             } else {
                 console.warn("Warn: No option set found");

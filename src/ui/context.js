@@ -162,7 +162,6 @@ function setOptionSetIdForSection(sectionId) {
                 for (const optionSet of item.MenuItemOptionSets) {
                     const oldId = optionSet.MenuItemOptionSetId;
                     const newId = getRandomInt();
-
                     optionSet.MenuItemId = itemIDInOS;
                     optionSet.MenuItemOptionSetId = newId;
 
@@ -182,7 +181,6 @@ function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
                 for (const optionSet of item.MenuItemOptionSets) {
                     for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                         optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-
                         if (optionSetItem.NextMenuItemOptionSetId !== null) {
                             const newNextId = optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
                             if (newNextId) {
@@ -197,7 +195,18 @@ function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
     updateLocalStorage();
 }
 
+function removePublicId(MenuItemOptionSets){
+    MenuItemOptionSets.forEach(( optionSet ) => {
+        if(optionSet.PublicId){ delete optionSet.PublicId;}
+        removePublicIdFromOSItem(optionSet);
+    });
+}
 
+function removePublicIdFromOSItem(optionSet){
+    optionSet.MenuItemOptionSetItems.forEach((optionSetItem) => {
+        if(optionSetItem.PublicId){ delete optionSetItem.PublicId;}
+    });
+}
 function setSectionDisplayOrder(jsonData) {
     jsonData.MenuSections.forEach((obj, index) => {
         obj.DisplayOrder = index;
@@ -375,5 +384,7 @@ export {
     setOptionSetItemsIdForSection,
     closeOsModalContainer,
     closeOsModalContainerQuick,
-    addWarningMoM
+    addWarningMoM,
+    removePublicId,
+    removePublicIdFromOSItem
 }
