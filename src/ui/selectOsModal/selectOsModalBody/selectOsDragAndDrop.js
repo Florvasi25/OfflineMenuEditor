@@ -3,10 +3,7 @@ import {
     getDragAfterElement
 } from '../../context.js';
 
-import {
-    showToolTip,
-    removeToolTip
-} from '../../toolTip.js'
+import { showToolTip } from '../../toolTip.js'
 
 function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
     const osDragCell = document.createElement('div');
@@ -19,18 +16,10 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
 
     osDragImg.addEventListener('mouseover', (e) => {
         if (selectOsRowHeader.classList.contains('expanded')) {
-            showToolTip(osDragCell, "You must close all OS before moving it.");
+            showToolTip(osDragCell, "You must close all OS before moving it");
         }
         e.stopPropagation();
     })
-
-    // Add an event listener to the sectionRow to watch for class changes
-    selectOsRowHeader.addEventListener('transitionend', () => {
-        if (selectOsRowHeader.classList.contains('folded')) {
-            // Remove the tooltip if the section is folded
-            removeToolTip(osDragCell);
-        }
-    });
 
     osDragImg.addEventListener('dragstart', e => {
         const expandedOsInContainer = selectOsRowHeader.parentElement.querySelector('.expanded');

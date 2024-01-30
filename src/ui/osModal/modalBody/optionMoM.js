@@ -2,13 +2,11 @@ import {
     jsonData,
     itemlessOs,
     updateLocalStorage,
-    updateItemlessLocalStorage
+    updateItemlessLocalStorage,
+    addWarningMoM
 } from '../../context.js'
 
-import {
-    showToolTip,
-    removeToolTip
-} from '../../toolTip.js'
+import { showToolTip } from '../../toolTip.js'
 
 function createOptionMoMCell(menuOption, menuOs) {
     //MoM Cell
@@ -27,7 +25,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     optionMoM.classList.add('optionMoM');
     optionMoM.contentEditable = true;
 
-    if (menuOption.NextMenuItemOptionSetId == null) {
+    if (menuOption.NextMenuItemOptionSetId == null || menuOption.NextMenuItemOptionSetId == "") {
         optionMoM.textContent = 'Empty'
         optionMoM.style = 'color: #a3a3a3;'
     } else {
@@ -39,7 +37,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
     optionMoM.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             if (itemlessOs.includes(menuOs)) {
-                showToolTip(optionMoMCell, 'This OS does not belong to an item');
+                showToolTip(optionMoMCell, 'This OS does not belong to an Item');
                 return
             } else {
                 const foundItem = jsonData.MenuSections
@@ -47,26 +45,25 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 .find(i => i.MenuItemId == menuOs.MenuItemId);
                 const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
                 e.preventDefault();
-                const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
+                const newOptionMoM = optionMoM.textContent
         
                 // If the entered value is not empty, check its validity
                 if (newOptionMoM !== "") {
                     // Allow '-1' as a valid value
                     if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM))) {
                         // Show tooltip if the entered value doesn't exist
-                        showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this item');
+                        showToolTip(optionMoMCell, 'The MenuItemOptionSetId does not exist in this Item');
                         return;
                     } else if (newOptionMoM == menuOs.MenuItemOptionSetId) {
                         showToolTip(optionMoMCell, 'The MenuItemOptionSetId is the same as the current OS');
                         return;
                     }
                 } 
-        
+                
                 // If the entered value exists, update the value and remove tooltip
                 updateOptionMoM(menuOption.MenuItemOptionSetItemId, menuOs, newOptionMoM);
                 originalMoM = newOptionMoM;
                 optionMoM.blur();
-                removeToolTip(optionMoM);
         
                 // Update the preview if available
                 const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview')); 
@@ -78,7 +75,13 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                         optionMoMPreview.textContent = newOptionMoM;
                     }
                 } 
+                
+                if (optionMoM.textContent == "" || optionMoM.textContent == "Empty") {
+                    optionMoM.textContent = "Empty";
+                    optionMoM.style = 'color: #a3a3a3;'
+                }
             }
+            addWarningMoM()
         } else if (e.key === 'Escape') {
             optionMoM.blur();
         }
@@ -90,19 +93,23 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             optionMoM.style = 'color: #a3a3a3;'
         } else {
             const foundItem = jsonData.MenuSections
-            .flatMap(i => i.MenuItems)
-            .find(i => i.MenuItemId == menuOs.MenuItemId);
+                .flatMap(i => i.MenuItems)
+                .find(i => i.MenuItemId == menuOs.MenuItemId);
             const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
-            const newOptionMoM = optionMoM.textContent.trim(); // Trim to check if it's empty
-            if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId) {
-                optionMoM.textContent = "Empty";
-                optionMoM.style = 'color: #a3a3a3;'
-            } else {
-                optionMoM.textContent = originalMoM;
+            const newOptionMoM = optionMoM.textContent
+
+            if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId || newOptionMoM === "" ) {
+                optionMoM.textContent = originalMoM === null ? "Empty" : originalMoM;
+                console.log();
+                if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
+                    optionMoM.textContent = "Empty";
+                    optionMoM.style = 'color: #a3a3a3;'
+                }
             }
         }
         optionMoM.classList.remove('sectionClicked');
     });
+    
 
     optionMoM.addEventListener('click', () => {
         optionMoM.classList.add('sectionClicked')

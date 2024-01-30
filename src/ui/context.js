@@ -30,20 +30,20 @@ function getItemIndex(sectionId, itemId) {
 
     const itemIndex = menuItems.findIndex(itemElement => itemElement.MenuItemId == itemId)
 
-    return {sectionIndex, itemIndex}
+    return { sectionIndex, itemIndex }
 }
 
 function getOsIndex(sectionId, itemId, osId) {
-    const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
+    const { sectionIndex, itemIndex } = getItemIndex(sectionId, itemId);
     const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
 
     const osIndex = menuOs.findIndex(osElement => osElement.MenuItemOptionSetId == osId)
 
-    return {sectionIndex, itemIndex, osIndex}
+    return { sectionIndex, itemIndex, osIndex }
 }
 
 function getOsObject(sectionId, itemId, osId) {
-    const {sectionIndex, itemIndex} = getItemIndex(sectionId, itemId);
+    const { sectionIndex, itemIndex } = getItemIndex(sectionId, itemId);
     const menuOs = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
 
     const osObject = menuOs.find(osElement => osElement.MenuItemOptionSetId == osId);
@@ -52,12 +52,12 @@ function getOsObject(sectionId, itemId, osId) {
 }
 
 function getOptionIndex(sectionId, itemId, osId, optionId) {
-    const {sectionIndex, itemIndex, osIndex} = getOsIndex(sectionId, itemId, osId)
+    const { sectionIndex, itemIndex, osIndex } = getOsIndex(sectionId, itemId, osId)
     const menuOption = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets[osIndex].MenuItemOptionSetItems;
 
     const optionIndex = menuOption.findIndex(optionElement => optionElement.MenuItemOptionSetItemId == optionId)
 
-    return {sectionIndex, itemIndex, osIndex, optionIndex}
+    return { sectionIndex, itemIndex, osIndex, optionIndex }
 }
 
 function getOptionObject(sectionId, itemId, osId, optionId) {
@@ -99,7 +99,7 @@ function setItemId(jsonData) {
     var sectionId;
     for (const section of jsonData.MenuSections) {
         sectionId = section.MenuSectionId;
-        for(const item of section.MenuItems) {
+        for (const item of section.MenuItems) {
             let id = getRandomInt()
             item.MenuItemId = id;
             item.MenuSectionId = sectionId;
@@ -136,7 +136,7 @@ function setOptionSetItemsId(jsonData) {
             for (const optionSet of item.MenuItemOptionSets) {
                 for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                     optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                    
+
                     if (optionSetItem.NextMenuItemOptionSetId !== null) {
                         const newNextId = window.optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
                         if (newNextId) {
@@ -182,7 +182,7 @@ function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
                 for (const optionSet of item.MenuItemOptionSets) {
                     for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
                         optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                        
+
                         if (optionSetItem.NextMenuItemOptionSetId !== null) {
                             const newNextId = optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
                             if (newNextId) {
@@ -220,13 +220,13 @@ function getRandomInt() {
 }
 
 
-function getSectionRow(menuSectionId){
+function getSectionRow(menuSectionId) {
     const sectionRowsArray = Array.from(document.getElementsByClassName('sectionRow'));
     const sectionRow = sectionRowsArray.find((p) => p.id == menuSectionId.toString())
     return sectionRow;
 }
 
-function getMenuSection(jsonData, menuSectionId){
+function getMenuSection(jsonData, menuSectionId) {
     return jsonData.MenuSections.find(section => section.MenuSectionId.toString() === menuSectionId) || null;
 }
 function getGroupOsKey(os) {
@@ -305,6 +305,46 @@ function closeOsModalContainerQuick() {
     }
 }
 
+function addWarningMoM() {
+    const menuOsId = jsonData.MenuSections
+        .flatMap(i => i.MenuItems)
+        .flatMap(i => i.MenuItemOptionSets)
+        .flatMap(i => i.MenuItemOptionSetId);
+
+    const optionMoMPreviewArray = Array.from(document.getElementsByClassName('optionMoMPreview'));
+    
+    const optionMoMPreviewTextArray = optionMoMPreviewArray.map(i => Number(i.textContent)).filter(value => !isNaN(value));
+
+    const removedOsArray = optionMoMPreviewTextArray.filter(value => !menuOsId.includes(value));
+
+    if (removedOsArray) {
+        removedOsArray.forEach(removedOs => {
+            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === removedOs);
+            if (optionMoMPreview) {
+                optionMoMPreview.style.color = '#ff0000';
+                if (optionMoMPreview.classList.contains('notwarning')) {
+                    optionMoMPreview.classList.remove('notwarning');
+                    optionMoMPreview.classList.add('warning');
+                }
+            }
+        });
+    }
+
+    const existingOsArray = optionMoMPreviewTextArray.filter(value => menuOsId.includes(value) || value === -1 || value === "null");
+    
+    if (existingOsArray.length > 0) {
+        existingOsArray.forEach(existingOs => {
+            const optionMoMPreview = optionMoMPreviewArray.find((p) => Number(p.textContent) === existingOs || p.textContent === "null");
+            if (optionMoMPreview) {
+                optionMoMPreview.classList.remove('warning');
+                optionMoMPreview.classList.add('notwarning');
+                optionMoMPreview.style.color = '#000000';
+            }
+        });
+    }
+    
+}
+
 export {
     jsonData,
     groupedOs,
@@ -334,5 +374,6 @@ export {
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
     closeOsModalContainer,
-    closeOsModalContainerQuick
+    closeOsModalContainerQuick,
+    addWarningMoM
 }

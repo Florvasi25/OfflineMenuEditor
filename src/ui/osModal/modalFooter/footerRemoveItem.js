@@ -3,7 +3,8 @@ import {
     updateLocalStorage,
     groupedOs,
     addItemlessOs,
-    closeOsModalContainerQuick
+    closeOsModalContainerQuick,
+    addWarningMoM
 } from "../../context.js";
 
 import {
@@ -98,6 +99,7 @@ function createRemoveButton(menuOs, menuItemId) {
         }
         
         updateLocalStorage()
+        addWarningMoM()
     })
     
     return deleteBtn

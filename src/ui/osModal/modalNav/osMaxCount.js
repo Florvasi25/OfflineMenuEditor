@@ -6,10 +6,7 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js'
 
-import { 
-    showToolTip, 
-    removeToolTip 
-} from '../../toolTip.js'
+import { showToolTip } from '../../toolTip.js'
 
 function createMaxCountCell(menuOs) {
     // MaxCount Cell
@@ -56,7 +53,6 @@ function createMaxCount(menuOs) {
                 maxCount.textContent = originalMaxCount; // Revert back to the original number
                 return;
             } else {
-                removeToolTip(maxCount);
                 originalMaxCount = newMaxOsCount; // Update the original number
             }
 

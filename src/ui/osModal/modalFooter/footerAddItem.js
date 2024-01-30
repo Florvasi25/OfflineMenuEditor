@@ -5,6 +5,7 @@ import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
+    addWarningMoM
 } from "../../context.js";
 
 import {
@@ -59,10 +60,11 @@ function createAddButton(menuOs, menuItemId) {
 
         const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
         const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
-
+        
         const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
         if (osContainerPreview) {
             osContainerPreview.appendChild(newOptionRow);
+            addWarningMoM()
         }
 
         const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
