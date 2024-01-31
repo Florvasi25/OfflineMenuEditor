@@ -5,7 +5,7 @@ import { createOsModalBody } from './modalBody/osBody.js'
 import { createOsModalFooter } from './modalFooter/osFooter.js'
 
 function createOsModalContainer(menuOs) {
-    const leftContainer = document.getElementById('leftContainer')
+    const rightContainer = document.getElementById('rightContainer')
     
     const osModalContainer = document.createElement('div')
     osModalContainer.classList = 'osModalContainer'
@@ -30,7 +30,7 @@ function createOsModalContainer(menuOs) {
         }, 300);
     });
 
-    leftContainer.appendChild(osModalContainer)
+    rightContainer.appendChild(osModalContainer)
 
     return osModalContainer
 }

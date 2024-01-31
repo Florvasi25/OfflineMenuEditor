@@ -15,6 +15,8 @@ import { toggleItemState } from './item/itemDropDown.js'
 
 import { toggleOsState } from './optionSet/osDropDown.js';
 
+import { createLeftContainer } from './slots/slotsContainer.js'
+
 //Builds HTML
 function generateHTML(jsonData) {
     const sectionContainer = document.getElementById('sectionContainer');
@@ -103,5 +105,6 @@ function handleCloseAll() {
 //After loading the Data it generates the HTML
 generateHTML(jsonData);
 createBtnContainers()
+createLeftContainer()
 
 export { generateHTML }
