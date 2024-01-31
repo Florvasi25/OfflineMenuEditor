@@ -40,7 +40,6 @@ function createItemButton(itemContainer, sectionId) {
             Alcohol: false,
             CatalogItemId: null,
             Tags: [],
-            PublicId: "00000000-0000-0000-0000-000000000000",
             IsAvailable: true,
             MenuItemOptionSets: [],
             TaxRate: null,

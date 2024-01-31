@@ -46,12 +46,13 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             const newOptionId = getRandomInt();
 
             newOption.MenuItemOptionSetItemId = newOptionId;
-            newOption.PublicId = crypto.randomUUID();
+            if(newOption.PublicId){ delete newOption.PublicId; }
             newOption.Name = menuOption.Name + "_copy"
 
             os.MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
             os.MenuItemOptionSetItems.forEach((obj, index) => {
                 obj.DisplayOrder = index;
+                
             })
 
             if (os.MenuItemOptionSetId === menuOs.MenuItemOptionSetId) {
@@ -73,7 +74,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
         const newOptionId = getRandomInt();
 
         newOption.MenuItemOptionSetItemId = newOptionId;
-        newOption.PublicId = crypto.randomUUID();
+        if(newOption.PublicId){ delete newOption.PublicId; }
 
         menuOs.MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
         menuOs.MenuItemOptionSetItems.forEach((obj, index) => {

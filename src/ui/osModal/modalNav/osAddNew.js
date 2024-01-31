@@ -32,7 +32,6 @@ function osNewButton(osBtnsCell) {
             MinSelectCount: 0,
             MaxSelectCount: 1,
             IsDeleted: false,
-            PublicId: crypto.randomUUID(),
             MenuItemOptionSetItems: [
                 {
                     CatalogItemId: null,
@@ -49,7 +48,6 @@ function osNewButton(osBtnsCell) {
                     IsDeleted: false,
                     Tags: [],
                     NextMenuItemOptionSetId: null,
-                    PublicId: crypto.randomUUID(),
                     ImageName: null,
                     ImageUrl: null,
                     CellAspectRatio: 0,

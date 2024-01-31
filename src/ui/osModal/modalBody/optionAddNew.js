@@ -42,7 +42,6 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         IsDeleted: false,
         Tags: [],
         NextMenuItemOptionSetId: null,
-        PublicId: crypto.randomUUID(),
         ImageName: null,
         ImageUrl: null,
         CellAspectRatio: 0,

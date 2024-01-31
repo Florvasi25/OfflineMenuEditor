@@ -7,7 +7,8 @@ import {
     groupOptionSets,
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
-    closeOsModalContainer
+    closeOsModalContainer,
+    removePublicId
 } from '../context.js';
 
 import { createSection } from './sectionContainer.js'
@@ -68,7 +69,7 @@ function newIDs(newSection, sectionId){
     const newSectionId = getRandomInt();
     newSection.MenuSectionId = newSectionId;
     newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
-    newSection.PublicId = crypto.randomUUID();
+    if(newSection.PublicId){ delete newSection.PublicId; }
 
     if (newSection.MenuItems) {
         newSection.MenuItems.forEach(item => {
@@ -76,8 +77,10 @@ function newIDs(newSection, sectionId){
                 const newItemId = getRandomInt();
                 item.MenuItemId = newItemId;
                 item.MenuSectionId = newSectionId;
+                if( item.PublicId ) { delete item.PublicId}
                 if( item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0)
                 {
+                    removePublicId(item.MenuItemOptionSets);
                     let map = setOptionSetIdForSection(sectionId);
                     setOptionSetItemsIdForSection(sectionId, map);
                 }

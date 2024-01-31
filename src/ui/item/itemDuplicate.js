@@ -7,7 +7,8 @@ import {
     groupOptionSets,
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
-    closeOsModalContainer
+    closeOsModalContainer,
+    removePublicId
 } from '../context.js';
 
 import { createItem } from './itemContainer.js'
@@ -67,9 +68,10 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
 function newIDs(newItem, sectionId){
     const newItemId = getRandomInt();
     newItem.MenuItemId = newItemId;
-    newItem.PublicId = crypto.randomUUID();
+    if(newItem.PublicId) { delete newItem.PublicId;}
     if( newItem.MenuItemOptionSets && newItem.MenuItemOptionSets.length > 0)
     {
+        removePublicId(newItem.MenuItemOptionSets);
         let map = setOptionSetIdForSection(sectionId);
         setOptionSetItemsIdForSection(sectionId, map);
     }
