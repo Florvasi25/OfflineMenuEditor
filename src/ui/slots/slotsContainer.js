@@ -36,6 +36,8 @@ function createSlotsContainer() {
 function createSlotsButtons () {
     const slotsBtnsContainer = document.createElement('div');
     slotsBtnsContainer.className = 'slotsBtnsContainer';
+    slotsBtnsContainer.style.left = '-15vw';
+    slotsBtnsContainer.style.display = 'flex';
 
     const firstSlot = document.createElement('button')
     firstSlot.className = 'slotBtn';
@@ -63,33 +65,35 @@ function toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer) {
     const hideClassName = 'hide';
 
     if (boxLeftMenu.classList.contains(expandedClassName)) {
-        // Collapsing animation
         boxLeftMenu.classList.remove(expandedClassName);
         boxLeftMenu.classList.add(foldedClassName);
 
-        slotsBtnsContainer.classList.remove(showClassName);
-        slotsBtnsContainer.classList.add(hideClassName);
-        leftBtnContainer.classList.remove(showClassName);
-        leftBtnContainer.classList.add(hideClassName);
-
-        leftBtnContainer.style.width = '25px';
-        
         setTimeout(() => {
-            slotsBtnsContainer.style.display = 'none';
-            slotsBtnsContainer.classList.remove(hideClassName);
-            leftBtnContainer.classList.remove(hideClassName);
-        }, 300); 
+            slotsBtnsContainer.classList.remove(showClassName);
+            slotsBtnsContainer.classList.add(hideClassName);
+            
+            leftBtnContainer.classList.remove(showClassName);
+            leftBtnContainer.classList.add(hideClassName);
+        }, 300);
+        
+        slotsBtnsContainer.style.left = '-15vw';
+        leftBtnContainer.style.width = '25px';
+
     } else {
         boxLeftMenu.classList.remove(foldedClassName);
         boxLeftMenu.classList.add(expandedClassName);
-
-        slotsBtnsContainer.style.display = 'flex';
-        leftBtnContainer.style.width = '17vw';
-
+        
         setTimeout(() => {
+            slotsBtnsContainer.classList.remove(hideClassName);
             slotsBtnsContainer.classList.add(showClassName);
+            
+            leftBtnContainer.classList.remove(hideClassName);
             leftBtnContainer.classList.add(showClassName);
         }, 10);
+
+        slotsBtnsContainer.style.display = 'flex';
+        slotsBtnsContainer.style.left = '0';
+        leftBtnContainer.style.width = '17vw';
     }
 }
 

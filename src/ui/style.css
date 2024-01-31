@@ -1713,9 +1713,8 @@ selector svg {
     height: 98vh;
     width: 15%;
     background-color: #342f58;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
     margin-top: 10px;
-    transition: left 0.3s ease-in-out, display 0.3s ease-in-out; /* Updated transition */    
+    transition: left 0.3s ease-in-out;
     z-index: 10;
 }
 
@@ -1727,7 +1726,6 @@ selector svg {
 
 .slotsBtnsContainer.hide {
     left: -15%;
-    display: none;
 }
 
 .slotBtn {
