@@ -41,15 +41,15 @@ function createSlotsButtons () {
 
     const firstSlot = document.createElement('button')
     firstSlot.className = 'slotBtn';
-    firstSlot.textContent = 'First Slot'
+    firstSlot.textContent = '1st Slot'
 
     const secondSlot = document.createElement('button')
     secondSlot.className = 'slotBtn';
-    secondSlot.textContent = 'Second Slot'
+    secondSlot.textContent = '2nd Slot'
 
     const thirdSlot = document.createElement('button')
     thirdSlot.className = 'slotBtn';
-    thirdSlot.textContent = 'Third Slot'
+    thirdSlot.textContent = '3rd Slot'
 
     slotsBtnsContainer.appendChild(firstSlot);
     slotsBtnsContainer.appendChild(secondSlot);
@@ -93,11 +93,8 @@ function toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer) {
 
         slotsBtnsContainer.style.display = 'flex';
         slotsBtnsContainer.style.left = '0';
-        leftBtnContainer.style.width = '17vw';
+        leftBtnContainer.style.width = '17.5vw';
     }
 }
-
-
-
 
 export { createLeftContainer }
