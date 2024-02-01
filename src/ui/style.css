@@ -1815,3 +1815,13 @@ selector svg {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+
+.taxTypeContainer {
+    display: flex;
+}
+
+.taxTypeDropdown {
+    background-color: white;
+    position: fixed;
+    margin-left: 75px;
+}
