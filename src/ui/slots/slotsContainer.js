@@ -36,7 +36,7 @@ function createSlotsContainer() {
 function createSlotsButtons () {
     const slotsBtnsContainer = document.createElement('div');
     slotsBtnsContainer.className = 'slotsBtnsContainer';
-    slotsBtnsContainer.style.left = '-15vw';
+    slotsBtnsContainer.style.left = '-40vw';
     slotsBtnsContainer.style.display = 'flex';
 
     const firstSlot = document.createElement('button')
@@ -76,7 +76,7 @@ function toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer) {
             leftBtnContainer.classList.add(hideClassName);
         }, 300);
         
-        slotsBtnsContainer.style.left = '-15vw';
+        slotsBtnsContainer.style.left = '-40vw';
         leftBtnContainer.style.width = '25px';
 
     } else {

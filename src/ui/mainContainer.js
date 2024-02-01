@@ -17,6 +17,8 @@ import { toggleOsState } from './optionSet/osDropDown.js';
 
 import { createLeftContainer } from './slots/slotsContainer.js'
 
+import { createTaxContainer } from './tax/taxContainer.js';
+
 //Builds HTML
 function generateHTML(jsonData) {
     const sectionContainer = document.getElementById('sectionContainer');
@@ -106,5 +108,6 @@ function handleCloseAll() {
 generateHTML(jsonData);
 createBtnContainers()
 createLeftContainer()
+createTaxContainer()
 
 export { generateHTML }

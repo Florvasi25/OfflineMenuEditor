@@ -1773,7 +1773,6 @@ selector svg {
     display: none;
     position: fixed;
     top: 0;
-    left: -15%;
     height: 98vh;
     width: 15%;
     background-color: #342f58;
@@ -1805,4 +1804,14 @@ selector svg {
 
 .slotBtn:first-child {
     margin-top: 75px;
+}
+
+/* TAX - TAX TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
+
+#taxContainer {
+    background-color: #bec0e3;
+    height: 150px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
