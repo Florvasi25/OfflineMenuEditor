@@ -1,5 +1,8 @@
+import { jsonData } from '../context.js'
+
 function createTaxContainer() {
     const taxContainer = document.getElementById('taxContainer');
+    taxContainer.innerHTML = '';
     taxContainer.className = 'taxContainer';
 
     const taxHeaderContainer = createTaxHeaderContainer()
@@ -26,7 +29,12 @@ function createTaxHeaderContainer() {
     taxHeaderTitle.className = 'taxHeaderTitle';
     taxHeaderTitle.textContent = 'Tax Rates';
 
+    const saveTaxButton = document.createElement('button');
+    saveTaxButton.className = 'saveTaxButton';
+    saveTaxButton.textContent = 'Save Tax';
+
     taxHeaderContainer.appendChild(taxHeaderTitle);
+    taxHeaderContainer.appendChild(saveTaxButton);
 
     return taxHeaderContainer
 }
@@ -52,14 +60,16 @@ function createTaxTypeDropdown() {
     taxTypeDropdown.className = 'taxTypeDropdown';
 
     const defaultOption = document.createElement('p');
-    defaultOption.textContent = 'Excluded';
+
+    // Set default option based on jsonData.TaxType
+    defaultOption.textContent = (jsonData.TaxType == 1) ? 'Excluded' : 'Included';
 
     const dropdownOptions = document.createElement('div');
     dropdownOptions.className = 'dropdownOptions';
     dropdownOptions.style.display = 'none';
 
-    const excludedOption = createDropdownOption('Excluded', 'excluded');
-    const includedOption = createDropdownOption('Included', 'included');
+    const excludedOption = createDropdownOption('Excluded');
+    const includedOption = createDropdownOption('Included');
 
     dropdownOptions.appendChild(excludedOption);
     dropdownOptions.appendChild(includedOption);
@@ -73,11 +83,13 @@ function createTaxTypeDropdown() {
     });
 
     excludedOption.addEventListener('click', () => {
+        jsonData.TaxType = 0; // Update jsonData.TaxType
         defaultOption.textContent = 'Excluded';
         dropdownOptions.style.display = 'none';
     });
 
     includedOption.addEventListener('click', () => {
+        jsonData.TaxType = 1; // Update jsonData.TaxType
         defaultOption.textContent = 'Included';
         dropdownOptions.style.display = 'none';
     });
@@ -85,12 +97,11 @@ function createTaxTypeDropdown() {
     return taxTypeDropdown;
 }
 
-function createDropdownOption(text, value) {
-    const option = document.createElement('p');
-    option.textContent = text;
-    option.value = value;
+function createDropdownOption(taxTypeValue) {
+    const taxType = document.createElement('p');
+    taxType.textContent = taxTypeValue;
 
-    return option;
+    return taxType;
 }
 
 function createDisplayTaxContainer() {

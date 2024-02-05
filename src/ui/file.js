@@ -8,8 +8,9 @@ import {
     setOptionSetId,
     setOptionSetItemsId,
     closeOsModalContainer,
-    addWarningMoM
 } from './context.js';
+
+import { createTaxContainer } from './tax/taxContainer.js'
 
 import { generateHTML } from './mainContainer.js'
 
@@ -47,6 +48,7 @@ function createLoadJsonButton() {
                 setOptionSetId(jsonData);
                 setOptionSetItemsId(jsonData);
                 generateHTML(jsonData);
+                createTaxContainer()
 
                 fileInput.value = ''; // Clear the file input
             } catch (error) {
