@@ -9,7 +9,7 @@ function createTaxContainer(jsonData) {
     
     const taxTypeContainer = createTaxTypeContainer(jsonData)
 
-    const displayTaxContainer = createDisplayTaxContainer()
+    const displayTaxContainer = createDisplayTaxContainer(jsonData)
 
     const addTaxContainer = createAddTaxContainer()
 
@@ -117,7 +117,7 @@ function createDropdownOption(taxTypeValue) {
     return taxType;
 }
 
-function createDisplayTaxContainer() {
+function createDisplayTaxContainer(jsonData) {
     const displayTaxContainer = document.createElement('div');
     displayTaxContainer.className = 'displayTaxContainer';
 
@@ -125,9 +125,54 @@ function createDisplayTaxContainer() {
     displayTaxTitle.className = 'displayTaxTitle';
     displayTaxTitle.textContent = 'Display Tax';
 
-    displayTaxContainer.appendChild(displayTaxTitle);
+    const displayTaxDropdown = createDisplayTaxDropdown(jsonData);
 
-    return displayTaxContainer
+    displayTaxContainer.appendChild(displayTaxTitle);
+    displayTaxContainer.appendChild(displayTaxDropdown);
+
+    return displayTaxContainer;
+}
+
+function createDisplayTaxDropdown(jsonData) {
+    const displayTaxDropdown = document.createElement('div');
+    displayTaxDropdown.className = 'displayTaxDropdown';
+
+    const defaultOption = document.createElement('p');
+
+    // Set default option based on jsonData.DisplayTax
+    defaultOption.textContent = (jsonData.DisplayTax == true) ? 'True' : 'False';
+
+    const dropdownOptions = document.createElement('div');
+    dropdownOptions.className = 'dropdownOptions';
+    dropdownOptions.style.display = 'none';
+
+    const trueOption = createDropdownOption('True');
+    const falseOption = createDropdownOption('False');
+
+    dropdownOptions.appendChild(trueOption);
+    dropdownOptions.appendChild(falseOption);
+
+    displayTaxDropdown.appendChild(defaultOption);
+    displayTaxDropdown.appendChild(dropdownOptions);
+
+    defaultOption.addEventListener('click', () => {
+        dropdownOptions.style.display = (dropdownOptions.style.display === 'none') ? 'block' : 'none';
+        defaultOption.textContent = ''; // Make the box empty when dropdown appears
+    });
+
+    trueOption.addEventListener('click', () => {
+        jsonData.DisplayTax = true; // Update jsonData.DisplayTax
+        defaultOption.textContent = 'True';
+        dropdownOptions.style.display = 'none';
+    });
+
+    falseOption.addEventListener('click', () => {
+        jsonData.DisplayTax = false; // Update jsonData.DisplayTax
+        defaultOption.textContent = 'False';
+        dropdownOptions.style.display = 'none';
+    });
+
+    return displayTaxDropdown;
 }
 
 function createAddTaxContainer() {

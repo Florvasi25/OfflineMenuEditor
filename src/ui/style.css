@@ -1829,3 +1829,13 @@ selector svg {
     position: absolute;
     margin-left: 75px;
 }
+
+.displayTaxContainer {
+    display: flex;
+}
+
+.displayTaxDropdown {
+    background-color: white;
+    position: absolute;
+    margin-left: 95px;
+}
