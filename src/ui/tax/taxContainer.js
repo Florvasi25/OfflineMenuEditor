@@ -1,9 +1,11 @@
+import { updateLocalStorage } from '../context.js';
+
 function createTaxContainer(jsonData) {
     const taxContainer = document.getElementById('taxContainer');
     taxContainer.innerHTML = '';
     taxContainer.className = 'taxContainer';
 
-    const taxHeaderContainer = createTaxHeaderContainer()
+    const taxHeaderContainer = createTaxHeaderContainer(jsonData)
     
     const taxTypeContainer = createTaxTypeContainer(jsonData)
 
@@ -19,7 +21,7 @@ function createTaxContainer(jsonData) {
     return taxContainer
 }
 
-function createTaxHeaderContainer() {
+function createTaxHeaderContainer(jsonData) {
     const taxHeaderContainer = document.createElement('div');
     taxHeaderContainer.className = 'taxHeaderContainer';
 
@@ -33,6 +35,19 @@ function createTaxHeaderContainer() {
 
     taxHeaderContainer.appendChild(taxHeaderTitle);
     taxHeaderContainer.appendChild(saveTaxButton);
+    
+    saveTaxButton.addEventListener('click', () => {
+        const defaultOption = document.querySelector('.taxTypeDropdown p');
+        if (defaultOption.textContent === 'Excluded') {
+            jsonData.TaxType = 1;
+            console.log('TaxType: 1');
+            updateLocalStorage()
+        } else if (defaultOption.textContent === 'Included') {
+            jsonData.TaxType = 0;
+            console.log('TaxType: 0');
+            updateLocalStorage()
+        }
+    });
 
     return taxHeaderContainer
 }
