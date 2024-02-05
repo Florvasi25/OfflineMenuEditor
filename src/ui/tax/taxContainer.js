@@ -1,13 +1,11 @@
-import { jsonData } from '../context.js'
-
-function createTaxContainer() {
+function createTaxContainer(jsonData) {
     const taxContainer = document.getElementById('taxContainer');
     taxContainer.innerHTML = '';
     taxContainer.className = 'taxContainer';
 
     const taxHeaderContainer = createTaxHeaderContainer()
     
-    const taxTypeContainer = createTaxTypeContainer()
+    const taxTypeContainer = createTaxTypeContainer(jsonData)
 
     const displayTaxContainer = createDisplayTaxContainer()
 
@@ -39,7 +37,7 @@ function createTaxHeaderContainer() {
     return taxHeaderContainer
 }
 
-function createTaxTypeContainer() {
+function createTaxTypeContainer(jsonData) {
     const taxTypeContainer = document.createElement('div');
     taxTypeContainer.className = 'taxTypeContainer';
 
@@ -47,7 +45,7 @@ function createTaxTypeContainer() {
     taxTypeTitle.className = 'taxTypeTitle';
     taxTypeTitle.textContent = 'Tax Type';
 
-    const taxTypeDropdown = createTaxTypeDropdown();
+    const taxTypeDropdown = createTaxTypeDropdown(jsonData);
     
     taxTypeContainer.appendChild(taxTypeTitle);
     taxTypeContainer.appendChild(taxTypeDropdown);
@@ -55,7 +53,7 @@ function createTaxTypeContainer() {
     return taxTypeContainer;
 }
 
-function createTaxTypeDropdown() {
+function createTaxTypeDropdown(jsonData) {
     const taxTypeDropdown = document.createElement('div');
     taxTypeDropdown.className = 'taxTypeDropdown';
 

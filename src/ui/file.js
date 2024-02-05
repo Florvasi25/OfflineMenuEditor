@@ -10,9 +10,9 @@ import {
     closeOsModalContainer,
 } from './context.js';
 
-import { createTaxContainer } from './tax/taxContainer.js'
-
 import { generateHTML } from './mainContainer.js'
+
+import { createTaxContainer } from './tax/taxContainer.js'
 
 function createLoadJsonButton() {
     const loadJsonButton = document.createElement('button');
@@ -48,7 +48,7 @@ function createLoadJsonButton() {
                 setOptionSetId(jsonData);
                 setOptionSetItemsId(jsonData);
                 generateHTML(jsonData);
-                createTaxContainer()
+                createTaxContainer(jsonData)
 
                 fileInput.value = ''; // Clear the file input
             } catch (error) {

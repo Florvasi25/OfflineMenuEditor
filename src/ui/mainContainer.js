@@ -107,7 +107,7 @@ function handleCloseAll() {
 //After loading the Data it generates the HTML
 generateHTML(jsonData);
 createBtnContainers()
-// createTaxContainer()
+createTaxContainer(jsonData)
 createLeftContainer()
 
 export { generateHTML }
