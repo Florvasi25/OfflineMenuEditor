@@ -37,16 +37,22 @@ function createTaxHeaderContainer(jsonData) {
     taxHeaderContainer.appendChild(saveTaxButton);
     
     saveTaxButton.addEventListener('click', () => {
-        const defaultOption = document.querySelector('.taxTypeDropdown p');
-        if (defaultOption.textContent === 'Excluded') {
+        const defaultOptionTaxType = document.querySelector('.taxTypeDropdown p');
+        const defaultOptionDisplayTax = document.querySelector('.displayTaxDropdown p');
+
+        if (defaultOptionTaxType.textContent === 'Excluded') {
             jsonData.TaxType = 1;
             console.log('TaxType: 1');
-            updateLocalStorage()
-        } else if (defaultOption.textContent === 'Included') {
+            jsonData.DisplayTax = true;
+            console.log('DisplayTax: true');
+        } else if (defaultOptionTaxType.textContent === 'Included') {
             jsonData.TaxType = 0;
             console.log('TaxType: 0');
-            updateLocalStorage()
         }
+
+        defaultOptionDisplayTax.textContent = jsonData.DisplayTax ? 'True' : 'False';
+
+        updateLocalStorage();
     });
 
     return taxHeaderContainer
@@ -110,13 +116,6 @@ function createTaxTypeDropdown(jsonData) {
     return taxTypeDropdown;
 }
 
-function createDropdownOption(taxTypeValue) {
-    const taxType = document.createElement('p');
-    taxType.textContent = taxTypeValue;
-
-    return taxType;
-}
-
 function createDisplayTaxContainer(jsonData) {
     const displayTaxContainer = document.createElement('div');
     displayTaxContainer.className = 'displayTaxContainer';
@@ -173,6 +172,13 @@ function createDisplayTaxDropdown(jsonData) {
     });
 
     return displayTaxDropdown;
+}
+
+function createDropdownOption(taxTypeValue) {
+    const taxType = document.createElement('p');
+    taxType.textContent = taxTypeValue;
+
+    return taxType;
 }
 
 function createAddTaxContainer() {
