@@ -6,6 +6,8 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createOptionPriceCell(menuOption, menuOs) {
     //Price Cell
     const optionPriceCell = document.createElement('div');
@@ -115,12 +117,12 @@ function updatePrice(indexOfOption, menuOs, optionPrice) {
             groupedOs[menuOs.groupOsId].forEach(os => {
                 os.MenuItemOptionSetItems[indexOfOption].Price = priceAsNumber
             })
-            groupOptionSets()
-            updateLocalStorage()
+            groupOptionSets();
+            updateLocalStorage(slotManagerInstance.currentSlot);
         } else if (itemlessOs.includes(menuOs)){
             const option = menuOs.MenuItemOptionSetItems[indexOfOption]
             option.Price = priceAsNumber
-            updateItemlessLocalStorage();
+            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
         }
     }
 }

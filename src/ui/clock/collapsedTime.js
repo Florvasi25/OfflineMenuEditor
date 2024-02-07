@@ -4,9 +4,7 @@ import {
 }  from '../helpers.js';
 
 import {
-    jsonData, 
-    getRandomInt, 
-    updateLocalStorage,
+    jsonData,
 } from '../context.js'
 
 import {

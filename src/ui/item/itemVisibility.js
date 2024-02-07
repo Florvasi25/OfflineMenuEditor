@@ -4,6 +4,8 @@ import {
     jsonData,
 } from '../context.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function itemVisibilityButton(itemRow, menuItem, itemNameCell, sectionId) {
     const visibilityButton = document.createElement('button');
     visibilityButton.classList.add('sectionButton')
@@ -43,7 +45,7 @@ function SectionAvailability(itemRow, sectionId, itemId) {
 
         itemRow.classList.toggle('unavailable', !isAvailableNew);
 
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 }
 

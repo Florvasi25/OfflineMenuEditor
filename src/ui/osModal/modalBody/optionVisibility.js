@@ -6,6 +6,8 @@ import {
     updateItemlessLocalStorage
 } from "../../context.js";
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function optionVisibilityButton(
     optionButtonsCell,
     optionRow,
@@ -57,7 +59,7 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
                 option.IsAvailable = !option.IsAvailable;
             });
             groupOptionSets();
-            updateLocalStorage();
+            updateLocalStorage(slotManagerInstance.currentSlot);
 
             const optionsIds = groupedOs[menuOs.groupOsId].map(
                 os => os.MenuItemOptionSetItems[indexOfOption].MenuItemOptionSetItemId.toString()
@@ -72,7 +74,7 @@ function SectionAvailability(optionRow, menuOs, menuOption) {
             const option = menuOs.MenuItemOptionSetItems[indexOfOption]
             optionRow.classList.toggle("unavailable", option.IsAvailable);
             option.IsAvailable = !option.IsAvailable;
-            updateItemlessLocalStorage();
+            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
         }
     }
 }

@@ -4,6 +4,8 @@ import {
     getItemIndex,
 } from '../context.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createItemDescCell(itemRow, menuItem, sectionId) {
     //Desc Cell
     const itemDescCell = document.createElement('div');
@@ -38,14 +40,14 @@ function createItemDesc(itemRow, menuItem, sectionId) {
 
     itemDesc.addEventListener('blur', () => {
         itemDesc.textContent = originalDesc;
-        itemDesc.classList.remove('sectionClicked')
+        itemDesc.classList.remove('sectionClicked');
     });
 
     itemDesc.addEventListener('click', () => {
-        itemDesc.classList.add('sectionClicked')
+        itemDesc.classList.add('sectionClicked');
     })
 
-    return itemDesc
+    return itemDesc;
 }
 
 //Updates Desc
@@ -53,7 +55,7 @@ function updateDesc(itemId, itemDesc, sectionId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Description = itemDesc;
 
-    updateLocalStorage()
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 export {

@@ -12,7 +12,7 @@ function createSlotsContainer() {
     boxLeftMenu.className = 'boxLeftMenu';
     boxLeftMenu.classList.add('folded');
     
-    const slotsBtnsContainer = createSlotsButtons ()
+    const slotsBtnsContainer = createSlotsButtons();
 
     const leftBtnContainer = document.createElement('div');
     leftBtnContainer.className = 'leftBtnContainer';
@@ -41,6 +41,7 @@ function createSlotsButtons () {
 
     const firstSlot = document.createElement('button')
     firstSlot.className = 'slotBtn';
+<<<<<<< Updated upstream
     firstSlot.textContent = '1st Slot'
 
     const secondSlot = document.createElement('button')
@@ -50,6 +51,20 @@ function createSlotsButtons () {
     const thirdSlot = document.createElement('button')
     thirdSlot.className = 'slotBtn';
     thirdSlot.textContent = '3rd Slot'
+=======
+    firstSlot.textContent = 'First Slot'
+    firstSlot.id = 'slotButton1';
+
+    const secondSlot = document.createElement('button')
+    secondSlot.className = 'slotBtn';
+    secondSlot.textContent = 'Second Slot'
+    secondSlot.id = 'slotButton2';
+
+    const thirdSlot = document.createElement('button')
+    thirdSlot.className = 'slotBtn';
+    thirdSlot.textContent = 'Third Slot'
+    thirdSlot.id = 'slotButton3';
+>>>>>>> Stashed changes
 
     slotsBtnsContainer.appendChild(firstSlot);
     slotsBtnsContainer.appendChild(secondSlot);

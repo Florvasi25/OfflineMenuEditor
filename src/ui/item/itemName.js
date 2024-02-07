@@ -4,6 +4,8 @@ import {
     getItemIndex,
 } from '../context.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createItemNameCell(itemRow, menuItem, sectionId) {
     //Name Cell
     const itemNameCell = document.createElement('div');
@@ -72,7 +74,7 @@ function updateName(itemId, itemName, sectionId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Name = itemName;
 
-    updateLocalStorage()
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 export { createItemNameCell }

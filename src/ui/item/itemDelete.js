@@ -11,6 +11,7 @@ import {
 
 import { changeSectionClockIconColor, changeSectionClockIcon } from '../clock/sectionClock.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
 
 function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
     const deleteButton = document.createElement('button');
@@ -123,7 +124,7 @@ function deleteItem(itemRow, sectionId) {
             }else{ changeSectionClockIcon(sectionRow, sectionId) }
 
             groupOptionSets();
-            updateLocalStorage();
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     }
 }

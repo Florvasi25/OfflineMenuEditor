@@ -7,6 +7,8 @@ import {
 
 import { showToolTip } from '../toolTip.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createSectionDragCell(sectionRow) {
     const sectionDragCell = document.createElement('div')
     sectionDragCell.className = 'sectionDragCell'
@@ -65,7 +67,7 @@ sectionContainer.addEventListener("dragend", () => {
         jsonData.MenuSections.forEach((obj, indexSection) => {
             obj.DisplayOrder = indexSection;
         });
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 })
 

@@ -13,6 +13,8 @@ import {
     showToolTip
 } from '../../toolTip.js';
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function osDeleteButton(osBtnsCell, menuOs) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
@@ -84,10 +86,10 @@ function deleteOs(menuOs) {
         })
         updatePreview(osIds.map(p => p.toString()));
         groupOptionSets();
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         itemlessOs.pop(menuOs)
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 
     closeOsModalContainer()

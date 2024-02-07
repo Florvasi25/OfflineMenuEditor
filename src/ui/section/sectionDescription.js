@@ -4,6 +4,8 @@ import {
     updateLocalStorage,
 } from '../context.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 //Creates the Cell where all the Desc components should be
 function createSectionDescCell(menuSection, sectionRow) {
     const sectionDescCell = document.createElement('div');
@@ -54,7 +56,7 @@ function updateSectionDesc(sectionId, sectionDesc) {
 
     jsonData.MenuSections[sectionIndex].Description = sectionDesc;
 
-    updateLocalStorage()
+   updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 export { createSectionDescCell }

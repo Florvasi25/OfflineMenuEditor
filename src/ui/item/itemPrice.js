@@ -4,6 +4,8 @@ import {
     getItemIndex,
 } from '../context.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createItemPriceCell(itemRow, menuItem, sectionId) {
     //Price Cell
     const itemPriceCell = document.createElement('div');
@@ -106,7 +108,7 @@ function updatePrice(itemId, itemPrice, sectionId) {
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Price = priceAsNumber;
         jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].ActualPrice = priceAsNumber;
 
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 }
 

@@ -15,6 +15,8 @@ import {
     createOsModalContainer
 } from '../../osModal/modalContainer.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createRemoveButton(menuOs, menuItemId) {
     const deleteBtn = document.createElement('button')
     deleteBtn.className = 'deleteBtn'
@@ -98,8 +100,8 @@ function createRemoveButton(menuOs, menuItemId) {
             }
         }
         
-        updateLocalStorage()
-        addWarningMoM()
+        updateLocalStorage(slotManagerInstance.currentSlot);
+        addWarningMoM();
     })
     
     return deleteBtn

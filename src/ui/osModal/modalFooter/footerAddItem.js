@@ -16,6 +16,8 @@ import {
     createRemoveButton
 } from './footerRemoveItem.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createAddButton(menuOs, menuItemId) {
     const addBtn = document.createElement('button');
     addBtn.className = 'addBtn';
@@ -94,8 +96,8 @@ function createAddButton(menuOs, menuItemId) {
             groupedOs[menuOs.groupOsId].push(newOs)
         }
         
-        addWarningMoM()
-        updateLocalStorage()
+        addWarningMoM();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     })
     
     return addBtn

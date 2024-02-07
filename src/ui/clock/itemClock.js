@@ -22,6 +22,7 @@ import {
     addTextContent
 }  from '../helpers.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
 
 function itemClockButton(itemButtonsCell, itemId, sectionId) {
     const clockButton = createAndAppend(itemButtonsCell, 'button', 'sectionButton', 'clockButton');
@@ -116,7 +117,7 @@ function storeItemTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, id) {
             }
     })})
     const sectionRow = getSectionRow(sectionOfItem.MenuSectionId);
-    updateLocalStorage();
+    updateLocalStorage(slotManagerInstance.currentSlot);
     changeItemClockIcon(itemRow, id);
     changeSectionClockIcon(sectionRow, sectionOfItem.MenuSectionId);
 }

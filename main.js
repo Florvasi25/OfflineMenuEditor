@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, shell} = require("electron")
+
 if (require('electron-squirrel-startup')) return;
 require('electron-reload')(__dirname)
 function createWindow()

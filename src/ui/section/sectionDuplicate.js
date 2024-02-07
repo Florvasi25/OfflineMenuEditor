@@ -17,6 +17,8 @@ import { showToolTip } from '../toolTip.js'
 
 import { changeSectionClockIcon } from '../clock/sectionClock.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
@@ -61,7 +63,7 @@ function duplicateSection(sectionRow) {
         });
         groupOptionSets()
         changeSectionClockIcon(newSectionRow, newSectionRow.id);
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 }
 

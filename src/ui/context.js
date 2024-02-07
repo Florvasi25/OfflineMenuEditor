@@ -1,10 +1,15 @@
 import { emptyMenu } from './emptyMenu.js'
 
-let jsonData = JSON.parse(localStorage.getItem("jsonData")) ?? emptyMenu;
+
+import { slotManagerInstance } from './mainContainer.js';
+
+let jsonData = JSON.parse(localStorage.getItem("jsonDataSlot1")) ?? emptyMenu;
+//localStorage.setItem("jsonDataSlot2", JSON.stringify(emptyMenu));
+//localStorage.setItem("jsonDataSlot3", JSON.stringify(emptyMenu));
 
 let groupedOs = {}; // Store the grouped os objects
 
-let itemlessOs = JSON.parse(localStorage.getItem("itemlessOs")) ?? [];
+let itemlessOs = JSON.parse(localStorage.getItem("itemlessOsSlot1")) ?? [];
 
 let progressiveInt = parseInt(localStorage.getItem('lastProgressiveInt')) || 0;
 
@@ -14,7 +19,7 @@ function setJsonData(data) {
     jsonData = data
     groupOptionSets()
     itemlessOs = []
-    updateItemlessLocalStorage();
+    updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
 }
 
 //Gets Index
@@ -91,7 +96,7 @@ function setSectionId(jsonData) {
         section.MenuSectionId = id;
         section.MenuSectionAvailability.MenuSectionId = id;
     }
-    updateLocalStorage()
+    updateLocalStorage(slotManagerInstance.currentSlot)
 }
 
 //set itemID for entire json file
@@ -105,7 +110,7 @@ function setItemId(jsonData) {
             item.MenuSectionId = sectionId;
         }
     }
-    updateLocalStorage()
+    updateLocalStorage(slotManagerInstance.currentSlot)
 }
 
 function setOptionSetId(jsonData) {
@@ -126,7 +131,7 @@ function setOptionSetId(jsonData) {
             }
         }
     }
-    updateLocalStorage();
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 
@@ -147,7 +152,7 @@ function setOptionSetItemsId(jsonData) {
             }
         }
     }
-    updateLocalStorage();
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 
@@ -170,7 +175,7 @@ function setOptionSetIdForSection(sectionId) {
             }
         }
     }
-    updateLocalStorage();
+    updateLocalStorage(slotManagerInstance.currentSlot);
     return optionSetIdMap; // Return the map
 }
 
@@ -192,7 +197,7 @@ function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
             }
         }
     }
-    updateLocalStorage();
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 function removePublicId(MenuItemOptionSets){
@@ -214,12 +219,12 @@ function setSectionDisplayOrder(jsonData) {
 }
 
 //Updates JSON LocalStorage
-function updateLocalStorage() {
-    localStorage.setItem("jsonData", JSON.stringify(jsonData));
+function updateLocalStorage(currentSlot) {
+    localStorage.setItem(currentSlot, JSON.stringify(jsonData));
 }
 
-function updateItemlessLocalStorage() {
-    localStorage.setItem("itemlessOs", JSON.stringify(itemlessOs));
+function updateItemlessLocalStorage(currentItemlessOs) {
+    localStorage.setItem(currentItemlessOs, JSON.stringify(itemlessOs));
 }
 
 function getRandomInt() {
@@ -268,17 +273,19 @@ function groupOptionSets() {
             });
         });
     });
-    updateLocalStorage();
+    setTimeout(() => {
+    updateLocalStorage(slotManagerInstance.currentSlot);
+    }, 1000);
 }
 
 function addItemlessOs(os) {
     itemlessOs.push(os);
-    updateItemlessLocalStorage();
+    updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
 }
 
 function deleteItemlessOs(os) {
     itemlessOs = itemlessOs.filter(o => o.MenuItemOptionSetId !== os.MenuItemOptionSetId);
-    updateItemlessLocalStorage();
+    updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
 }
 
 function setColorOfRows(optionRowsContainer) {

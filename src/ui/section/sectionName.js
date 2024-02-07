@@ -4,6 +4,8 @@ import {
     jsonData,
 } from '../context.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell
     const sectionNameCell = document.createElement('div');
@@ -15,7 +17,6 @@ function createSectionNameCell(sectionRow, menuSection) {
     const sectionIndex = getSectionIndex(sectionRow.id);
     if (sectionIndex != -1) {
         jsonData.MenuSections[sectionIndex].Name = menuSection.Name.toUpperCase();
-        updateLocalStorage()
     }
 
     return sectionNameCell
@@ -78,7 +79,7 @@ function updateName(sectionId, sectionName) {
     const sectionIndex = getSectionIndex(sectionId);
     jsonData.MenuSections[sectionIndex].Name = sectionName.toUpperCase();
 
-    updateLocalStorage()
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 export { createSectionNameCell }

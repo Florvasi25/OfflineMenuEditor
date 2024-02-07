@@ -6,6 +6,8 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createOsNameCell(menuOs) {
     //Name Cell
     const osNameCell = document.createElement('div');
@@ -76,11 +78,11 @@ function updateName(menuOs, osName) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.Name = osName
         })
-        groupOptionSets()
-        updateLocalStorage()
+        groupOptionSets();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         menuOs.Name = osName;
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 }
 

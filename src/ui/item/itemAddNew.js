@@ -1,5 +1,7 @@
 import { createItem } from "./itemContainer.js";
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 import {
     jsonData,
     updateLocalStorage,
@@ -87,7 +89,7 @@ function CreateItem(itemContainer, item, sectionIndex, sectionId, newId, section
     jsonData.MenuSections[sectionIndex].MenuItems.push(item)
     toggleItemState(itemRow, sectionId)
 
-    updateLocalStorage()
+    updateLocalStorage(slotManagerInstance.currentSlot)
 }
 
 function modifyBusinessHoursPeriodIds(itemDailyHours) {

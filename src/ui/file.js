@@ -10,7 +10,7 @@ import {
     closeOsModalContainer,
 } from './context.js';
 
-import { generateHTML } from './mainContainer.js'
+import { generateHTML, slotManagerInstance } from './mainContainer.js'
 
 import { createTaxContainer } from './tax/taxContainer.js'
 
@@ -41,7 +41,9 @@ function createLoadJsonButton() {
             try {
                 const jsonData = JSON.parse(e.target.result);
                 setJsonData(jsonData);
-                updateLocalStorage();
+                updateLocalStorage(slotManagerInstance.currentSlot);
+                const datas = slotManagerInstance.getJsonData();
+                console.log("Data: ", datas);
                 setSectionId(jsonData);
                 setSectionDisplayOrder(jsonData);
                 setItemId(jsonData);

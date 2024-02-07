@@ -17,6 +17,8 @@ import {
     createOsRow
 } from '../../optionSet/osHeaderContainer.js'
 
+import { slotManagerInstance } from '../../mainContainer.js';
+
 function createSelectOsModalBody(itemRow) {
     const selectOsModalBody = document.createElement('div');
     selectOsModalBody.className = 'selectOsModalBody';
@@ -192,8 +194,8 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
             }
         });
 
-        groupOptionSets()
-        updateLocalStorage()
+        groupOptionSets();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     })
 
     btnAndSelectOption.appendChild(addBtn)
@@ -281,8 +283,8 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
             }
         });
 
-        groupOptionSets()
-        updateLocalStorage()
+        groupOptionSets();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     })
 
     btnAndSelectOption.appendChild(deleteBtn)

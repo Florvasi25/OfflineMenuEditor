@@ -8,6 +8,8 @@ import {
 
 import { showToolTip } from '../../toolTip.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createMaxCountCell(menuOs) {
     // MaxCount Cell
     const maxCountCell = document.createElement('div');
@@ -94,10 +96,10 @@ function updateMaxCount(menuOs, osMaxCount) {
             os.MaxSelectCount = Number(osMaxCount)
         })
         // groupOptionSets()
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MaxSelectCount = Number(osMaxCount)
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 }
 

@@ -7,6 +7,8 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js';
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createOptionDragCell(optionRowsContainer, optionRow) {
     const optionDragCell = document.createElement('div')
     optionDragCell.className = 'sectionDragCell'
@@ -76,8 +78,8 @@ function setDragListeners(optionRowsContainer, menuOs) {
                     updatePreview(optionToMove, afterOption)
 
                 })
-                groupOptionSets()
-                updateLocalStorage()
+                groupOptionSets();
+                updateLocalStorage(slotManagerInstance.currentSlot);
             }
         } else if (itemlessOs.includes(menuOs)){
             if(indexOfOption !== indexNewPosition) {
@@ -87,7 +89,7 @@ function setDragListeners(optionRowsContainer, menuOs) {
                     obj.DisplayOrder = index;
                 })
             }
-            updateItemlessLocalStorage();
+            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
         }
     })
 }

@@ -14,6 +14,8 @@ import { createOption } from './osBody.js'
 
 import { createOptionRow } from '../../optionSet/osOptionsContainer.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function optionDuplicateButton(optionRow, optionRowsContainer, optionButtonsCell, menuOption, menuOs) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
@@ -64,7 +66,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
         })
 
         groupOptionSets()
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         const sourceOption = menuOs.MenuItemOptionSetItems[indexOfOption]
 
@@ -84,7 +86,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
         const newOptionRow = createOption(optionRowsContainer, menuOs, newOption);
         optionRowsContainer.insertBefore(newOptionRow, optionRow.nextSibling);
 
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 
     setColorOfRows(optionRowsContainer)

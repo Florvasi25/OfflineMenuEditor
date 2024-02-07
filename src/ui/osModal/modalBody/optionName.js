@@ -17,6 +17,8 @@ function createOptionNameCell(menuOption, menuOs) {
     return optionNameCell
 }
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 //Handles Name Edits
 function createOptionName(menuOption, menuOs) {
     const optionName = document.createElement('p');
@@ -75,11 +77,11 @@ function updateOptionName(indexOfOption, menuOs, newOptionName) {
         );
 
         groupOptionSets()
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         const option = menuOs.MenuItemOptionSetItems[indexOfOption]
         option.Name = newOptionName
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 }
 

@@ -8,6 +8,8 @@ import {
 
 import { toggleSectionState } from "./sectionDropDown.js";
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createSectionButton() {
     const newSectionButton = document.createElement('button')
     newSectionButton.className = 'sectionAddNew'
@@ -45,7 +47,7 @@ function createSectionButton() {
         jsonData.MenuSections.push(emptySectionJson)
         toggleSectionState(sectionRow);
 
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     
     });
 

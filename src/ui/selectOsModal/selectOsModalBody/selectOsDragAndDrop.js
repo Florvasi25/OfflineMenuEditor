@@ -5,6 +5,8 @@ import {
 
 import { showToolTip } from '../../toolTip.js'
 
+import { slotManagerInstance } from '../../mainContainer.js';
+
 function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
     const osDragCell = document.createElement('div');
     osDragCell.className = 'osDragCell';
@@ -68,7 +70,7 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
                     obj.DisplayOrder = osIndex;
                 })
 
-                updateLocalStorage()
+                updateLocalStorage(slotManagerInstance.currentSlot);
             }
         })
     })

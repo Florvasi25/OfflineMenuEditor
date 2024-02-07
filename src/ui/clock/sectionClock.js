@@ -31,7 +31,10 @@ import {
 }  from '../helpers.js';
 
 import { addSectionAvailabilityButton } from "./sectionAvailability.js";
+
 import { changeItemClockIcon } from "./itemClock.js";
+
+import { slotManagerInstance } from '../mainContainer.js';
 
 function sectionClockButton(sectionButtonsCell, sectionId) {
     const clockButton = createAndAppend(sectionButtonsCell, 'button', 'sectionButton', 'clockButton');
@@ -175,7 +178,7 @@ function storeSectionTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, se
                 MenuItem.DailySpecialHours.push(newTime);
                 if( itemRow != null) {changeItemClockIcon(itemRow, MenuItem.MenuItemId);}
             });
-            updateLocalStorage();
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
     changeSectionClockIcon(sectionRow, sectionId);

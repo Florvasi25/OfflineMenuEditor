@@ -17,6 +17,8 @@ import { showToolTip } from '../toolTip.js'
 
 import { changeItemClockIcon } from '../clock/itemClock.js'
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
@@ -61,7 +63,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         });
         groupOptionSets()
         changeItemClockIcon(newItemRow, newItemRow.id);
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 }
 

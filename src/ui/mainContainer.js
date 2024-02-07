@@ -17,6 +17,8 @@ import { toggleOsState } from './optionSet/osDropDown.js';
 
 import { createLeftContainer } from './slots/slotsContainer.js'
 
+import { SlotManager } from './slots/slotManager.js'
+
 import { createTaxContainer } from './tax/taxContainer.js';
 
 //Builds HTML
@@ -104,10 +106,9 @@ function handleCloseAll() {
     });
 }
 
-//After loading the Data it generates the HTML
-generateHTML(jsonData);
-createBtnContainers()
-createTaxContainer(jsonData)
-createLeftContainer()
+    const slotManagerInstance = new SlotManager();
+    generateHTML(jsonData);
+    createTaxContainer(jsonData)
 
-export { generateHTML }
+export { generateHTML, createBtnContainers, createLeftContainer }
+export { slotManagerInstance }

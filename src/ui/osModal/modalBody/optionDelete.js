@@ -10,6 +10,7 @@ import {
 import {
     deleteOs
 } from '../modalNav/osDelete.js'
+import { slotManagerInstance } from  "../../mainContainer.js";
 
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
     const deleteButton = document.createElement('button');
@@ -87,7 +88,7 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
                 obj.DisplayOrder = index;
             })
             groupOptionSets()
-            updateLocalStorage();
+            updateLocalStorage(slotManagerInstance.currentSlot);
         })
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MenuItemOptionSetItems.splice(indexOfOption, 1)
@@ -95,7 +96,7 @@ function deleteOption(menuOs, menuOption, optionRow, optionRowsContainer) {
             obj.DisplayOrder = index;
         })
 
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 
     setColorOfRows(optionRowsContainer)

@@ -8,6 +8,8 @@ import {
 
 import { showToolTip } from '../../toolTip.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createOptionMoMCell(menuOption, menuOs) {
     //MoM Cell
     const optionMoMCell = document.createElement('div');
@@ -141,9 +143,9 @@ function updateOptionMoM(optionId, menuOs, newOptionMoM) {
     }
         
     if (itemlessOs.includes(menuOs)) {
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     } else {
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 }
 

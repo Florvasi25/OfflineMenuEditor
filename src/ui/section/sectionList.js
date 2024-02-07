@@ -17,6 +17,8 @@ import {
 
 import { CreateItem } from '../item/itemAddNew.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function sectionListButton(sectionButtonsCell, menuSection) {
     const listButton = document.createElement('button');
     listButton.classList.add('sectionButton')
@@ -265,7 +267,7 @@ class List {
 
             }else{
                 jsonData.MenuSections[sectionIndex].MenuItems.push(emptyItemJson);
-                updateLocalStorage();
+                updateLocalStorage(slotManagerInstance.currentSlot);
             }
             
         }
@@ -334,7 +336,7 @@ class List {
         });
 
         groupOptionSets();
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
     }
 
     trimItems(item){

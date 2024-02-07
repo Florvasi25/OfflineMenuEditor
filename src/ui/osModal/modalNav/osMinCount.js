@@ -8,6 +8,8 @@ import {
 
 import { showToolTip } from '../../toolTip.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createMinCountCell(menuOs) {
     //Name Cell
     const minCountCell = document.createElement('div');
@@ -99,10 +101,10 @@ function updateMinCount(menuOs, osMinCount) {
             os.MinSelectCount = Number(osMinCount)
         })
         // groupOptionSets()
-        updateLocalStorage()
+        updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MinSelectCount = Number(osMinCount)
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     }
 }
 

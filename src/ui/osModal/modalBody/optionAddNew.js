@@ -13,6 +13,8 @@ import {
 
 import { createOptionRow } from "../../optionSet/osOptionsContainer.js";
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createOptionButton(optionRowsContainer, menuOs) {
     const newOptionButton = document.createElement("button");
     newOptionButton.className = "optionAddNew";
@@ -74,7 +76,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         });
 
         groupOptionSets();
-        updateLocalStorage();
+        updateLocalStorage(slotManagerInstance.currentSlot);
 
     } else if (itemlessOs.includes(menuOs)){
         const newOptionId = getRandomInt();
@@ -92,7 +94,7 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
         );
         optionRowsContainer.appendChild(optionRow);
 
-        updateItemlessLocalStorage();
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     } else {
         console.warn("Warn: No option set found");
     }

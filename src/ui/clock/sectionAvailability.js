@@ -18,6 +18,8 @@ import {
     getAvailabilityMode
 }  from './collapsedTime.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 let clockSectionAvailabilityBtn;
 
 function addSectionAvailabilityButton(clockFooterDiv, section) {
@@ -70,7 +72,7 @@ function deleteAvailabilityTimes(sectionId, availabilityMode)
             MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
             if (MenuSection.MenuSectionAvailability.AvailableTimes) {
                 MenuSection.MenuSectionAvailability.AvailableTimes = [];
-                updateLocalStorage();
+                updateLocalStorage(slotManagerInstance.currentSlot);
             }
         }})
 }
@@ -82,7 +84,7 @@ jsonData.MenuSections.forEach(MenuSection => {
         MenuSection.MenuSectionAvailability.MenuSectionId = sectionId;
         if (MenuSection.MenuSectionAvailability.AvailableTimes) {
             MenuSection.MenuSectionAvailability.AvailableTimes = [];
-            updateLocalStorage();
+           updateLocalStorage(slotManagerInstance.currentSlot);
         }
     }})
 }
@@ -131,7 +133,7 @@ function storeBikeTimeTableInJson(DayOfWeek, StartTime, CloseTime, Period, secti
             };    
             // Push the new time to the array
             MenuSection.MenuSectionAvailability.AvailableTimes.push(newTime);
-            updateLocalStorage();
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 }

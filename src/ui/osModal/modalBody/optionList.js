@@ -26,6 +26,8 @@ import{
     createOptionRow
 } from '../../optionSet/osOptionsContainer.js'
 
+import { slotManagerInstance } from  "../../mainContainer.js";
+
 function createOptionSetListButton(menuOs, optionRowsContainer) {
     const listButton = createElementWithClasses('button', 'sectionButton', 'optionSetListButton');
     const listButtonImg = createElementWithClasses('img', 'sectionButtonImg');
@@ -268,7 +270,7 @@ class OptionSetList {
                 });
         
                 groupOptionSets();
-                updateLocalStorage();
+                updateLocalStorage(slotManagerInstance.currentSlot);
         
             } else if (itemlessOs.includes(menuOs)){
                 const newOptionId = getRandomInt();
@@ -281,7 +283,7 @@ class OptionSetList {
                 );
                 this.updateDisplayOrder(itemLines) 
                 this.sortItemsByDisplayOrder();    
-                updateItemlessLocalStorage();
+                updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
             } else {
                 console.warn("Warn: No option set found");
             }

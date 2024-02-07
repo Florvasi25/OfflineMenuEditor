@@ -8,6 +8,8 @@ import {
     closeOsModalContainer
 } from '../context.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function sectionDeleteButton(sectionButtonsCell, sectionRow) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
@@ -114,7 +116,7 @@ function deleteSection(sectionRow) {
             });
 
             groupOptionSets();
-            updateLocalStorage();
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
         sectionRow.remove();
     }
