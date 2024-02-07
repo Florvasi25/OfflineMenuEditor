@@ -1,5 +1,7 @@
 import { updateLocalStorage } from '../context.js';
 
+import { showToolTip } from '../toolTip.js';
+
 function createTaxContainer(jsonData) {
     const taxContainer = document.getElementById('taxContainer');
     taxContainer.innerHTML = '';
@@ -79,9 +81,9 @@ function createTaxTypeCheckboxes(jsonData) {
     taxTypeContainer.className = 'taxTypeCheckboxes';
 
     const excludedCheckbox = taxTypeCheckbox('Excluded');
-    excludedCheckbox.className = 'excludedCheckbox';
+    excludedCheckbox.classList.add('excludedCheckbox')
     const includedCheckbox = taxTypeCheckbox('Included');
-    includedCheckbox.className = 'includedCheckbox';
+    includedCheckbox.classList.add('includedCheckbox')
 
     taxTypeContainer.appendChild(excludedCheckbox);
     taxTypeContainer.appendChild(includedCheckbox);
@@ -160,15 +162,15 @@ function createDisplayTaxCheckboxes(jsonData) {
     displayTaxContainer.className = 'displayTaxCheckboxes';
 
     const trueCheckbox = displayTaxCheckbox('True', jsonData.DisplayTax === true);
-    trueCheckbox.className = 'trueCheckbox';
+    trueCheckbox.classList.add('trueCheckbox')
     const falseCheckbox = displayTaxCheckbox('False', jsonData.DisplayTax !== true);
-    falseCheckbox.className = 'falseCheckbox';
+    falseCheckbox.classList.add('falseCheckbox')
 
     displayTaxContainer.appendChild(trueCheckbox);
     displayTaxContainer.appendChild(falseCheckbox);
 
     trueCheckbox.querySelector('input[type="checkbox"]').addEventListener('change', () => {
-        if (trueCheckbox.querySelector('input[type="checkbox"]').checked) {
+        if (trueCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.DisplayTax = true; // Update jsonData.DisplayTax
             falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
             updateLocalStorage()
@@ -176,19 +178,28 @@ function createDisplayTaxCheckboxes(jsonData) {
     });
 
     falseCheckbox.querySelector('input[type="checkbox"]').addEventListener('change', () => {
-        if (falseCheckbox.querySelector('input[type="checkbox"]').checked) {
-            jsonData.DisplayTax = false; // Update jsonData.DisplayTax
-            trueCheckbox.querySelector('input[type="checkbox"]').checked = false;
-            updateLocalStorage()
+        if (falseCheckbox.querySelector('input[type="checkbox"]')) {
+            const excludedCheckbox = document.querySelector('.taxTypeCheckboxes .excludedCheckbox');
+            
+            if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
+                falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
+                showToolTip(falseCheckbox, 'Excluded Tax must always be True');
+                console.log('Excluded');
+            } else {
+                jsonData.DisplayTax = false; // Update jsonData.DisplayTax
+                trueCheckbox.querySelector('input[type="checkbox"]').checked = false;
+                updateLocalStorage()
+            }
+
         }
     });
 
     return displayTaxContainer;
 }
 
-function displayTaxCheckbox(value, checked) {
+function displayTaxCheckbox(displayTaxValue, checked) {
     const checkboxContainer = document.createElement('div');
-    checkboxContainer.className = 'checkboxContainer';
+    checkboxContainer.classList.add('checkboxContainer');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -196,7 +207,7 @@ function displayTaxCheckbox(value, checked) {
 
     const label = document.createElement('label');
     label.className = 'checkboxLabel';
-    label.textContent = value;
+    label.textContent = displayTaxValue;
 
     checkboxContainer.appendChild(checkbox);
     checkboxContainer.appendChild(label);
