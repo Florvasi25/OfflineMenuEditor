@@ -37,8 +37,8 @@ function createTaxHeaderContainer(jsonData) {
     taxHeaderContainer.appendChild(saveTaxButton);
     
     saveTaxButton.addEventListener('click', () => {
-        const defaultOptionTaxType = document.querySelector('.taxTypeDropdown p');
-        const defaultOptionDisplayTax = document.querySelector('.displayTaxDropdown p');
+        const defaultOptionTaxType = document.querySelector('.taxTypeCheckboxes p');
+        const defaultOptionDisplayTax = document.querySelector('.displayTaxCheckboxes p');
 
         if (defaultOptionTaxType.textContent === 'Excluded') {
             jsonData.TaxType = 1;
@@ -66,54 +66,65 @@ function createTaxTypeContainer(jsonData) {
     taxTypeTitle.className = 'taxTypeTitle';
     taxTypeTitle.textContent = 'Tax Type';
 
-    const taxTypeDropdown = createTaxTypeDropdown(jsonData);
+    const taxTypeCheckboxes = createTaxTypeCheckboxes(jsonData);
     
     taxTypeContainer.appendChild(taxTypeTitle);
-    taxTypeContainer.appendChild(taxTypeDropdown);
+    taxTypeContainer.appendChild(taxTypeCheckboxes);
 
     return taxTypeContainer;
 }
 
-function createTaxTypeDropdown(jsonData) {
-    const taxTypeDropdown = document.createElement('div');
-    taxTypeDropdown.className = 'taxTypeDropdown';
+function createTaxTypeCheckboxes(jsonData) {
+    const taxTypeContainer = document.createElement('div');
+    taxTypeContainer.className = 'taxTypeCheckboxes';
 
-    const defaultOption = document.createElement('p');
+    const excludedCheckbox = taxTypeCheckbox('Excluded');
+    const includedCheckbox = taxTypeCheckbox('Included');
 
-    // Set default option based on jsonData.TaxType
-    defaultOption.textContent = (jsonData.TaxType == 1) ? 'Excluded' : 'Included';
+    taxTypeContainer.appendChild(excludedCheckbox);
+    taxTypeContainer.appendChild(includedCheckbox);
 
-    const dropdownOptions = document.createElement('div');
-    dropdownOptions.className = 'dropdownOptions';
-    dropdownOptions.style.display = 'none';
+    // Determine initial checkbox state based on jsonData.TaxType
+    if (jsonData.TaxType === 1) {
+        excludedCheckbox.querySelector('input[type="checkbox"]').checked = true;
+    } else {
+        includedCheckbox.querySelector('input[type="checkbox"]').checked = true;
+    }
 
-    const excludedOption = createDropdownOption('Excluded');
-    const includedOption = createDropdownOption('Included');
-
-    dropdownOptions.appendChild(excludedOption);
-    dropdownOptions.appendChild(includedOption);
-
-    taxTypeDropdown.appendChild(defaultOption);
-    taxTypeDropdown.appendChild(dropdownOptions);
-
-    defaultOption.addEventListener('click', () => {
-        dropdownOptions.style.display = (dropdownOptions.style.display === 'none') ? 'block' : 'none';
-        defaultOption.textContent = ''; // Make the box empty when dropdown appears
+    excludedCheckbox.addEventListener('change', () => {
+        if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
+            jsonData.TaxType = 1; // Update jsonData.TaxType
+            includedCheckbox.querySelector('input[type="checkbox"]').checked = false;
+            updateLocalStorage()
+        }
     });
 
-    excludedOption.addEventListener('click', () => {
-        jsonData.TaxType = 0; // Update jsonData.TaxType
-        defaultOption.textContent = 'Excluded';
-        dropdownOptions.style.display = 'none';
+    includedCheckbox.addEventListener('change', () => {
+        if (includedCheckbox.querySelector('input[type="checkbox"]').checked) {
+            jsonData.TaxType = 0; // Update jsonData.TaxType
+            excludedCheckbox.querySelector('input[type="checkbox"]').checked = false;
+            updateLocalStorage()
+        }
     });
 
-    includedOption.addEventListener('click', () => {
-        jsonData.TaxType = 1; // Update jsonData.TaxType
-        defaultOption.textContent = 'Included';
-        dropdownOptions.style.display = 'none';
-    });
+    return taxTypeContainer;
+}
 
-    return taxTypeDropdown;
+function taxTypeCheckbox(taxTypeValue) {
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.className = 'checkboxContainer';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.className = 'checkboxLabel';
+    label.textContent = taxTypeValue;
+
+    checkboxContainer.appendChild(checkbox);
+    checkboxContainer.appendChild(label);
+
+    return checkboxContainer;
 }
 
 function createDisplayTaxContainer(jsonData) {
@@ -124,61 +135,59 @@ function createDisplayTaxContainer(jsonData) {
     displayTaxTitle.className = 'displayTaxTitle';
     displayTaxTitle.textContent = 'Display Tax';
 
-    const displayTaxDropdown = createDisplayTaxDropdown(jsonData);
+    const displayTaxCheckboxes = createDisplayTaxCheckboxes(jsonData);
 
     displayTaxContainer.appendChild(displayTaxTitle);
-    displayTaxContainer.appendChild(displayTaxDropdown);
+    displayTaxContainer.appendChild(displayTaxCheckboxes);
 
     return displayTaxContainer;
 }
 
-function createDisplayTaxDropdown(jsonData) {
-    const displayTaxDropdown = document.createElement('div');
-    displayTaxDropdown.className = 'displayTaxDropdown';
+function createDisplayTaxCheckboxes(jsonData) {
+    const displayTaxContainer = document.createElement('div');
+    displayTaxContainer.className = 'displayTaxCheckboxes';
 
-    const defaultOption = document.createElement('p');
+    const trueCheckbox = displayTaxCheckbox('True', jsonData.DisplayTax === true);
+    const falseCheckbox = displayTaxCheckbox('False', jsonData.DisplayTax !== true);
 
-    // Set default option based on jsonData.DisplayTax
-    defaultOption.textContent = (jsonData.DisplayTax == true) ? 'True' : 'False';
+    displayTaxContainer.appendChild(trueCheckbox);
+    displayTaxContainer.appendChild(falseCheckbox);
 
-    const dropdownOptions = document.createElement('div');
-    dropdownOptions.className = 'dropdownOptions';
-    dropdownOptions.style.display = 'none';
-
-    const trueOption = createDropdownOption('True');
-    const falseOption = createDropdownOption('False');
-
-    dropdownOptions.appendChild(trueOption);
-    dropdownOptions.appendChild(falseOption);
-
-    displayTaxDropdown.appendChild(defaultOption);
-    displayTaxDropdown.appendChild(dropdownOptions);
-
-    defaultOption.addEventListener('click', () => {
-        dropdownOptions.style.display = (dropdownOptions.style.display === 'none') ? 'block' : 'none';
-        defaultOption.textContent = ''; // Make the box empty when dropdown appears
+    trueCheckbox.querySelector('input[type="checkbox"]').addEventListener('change', () => {
+        if (trueCheckbox.querySelector('input[type="checkbox"]').checked) {
+            jsonData.DisplayTax = true; // Update jsonData.DisplayTax
+            falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
+            updateLocalStorage()
+        }
     });
 
-    trueOption.addEventListener('click', () => {
-        jsonData.DisplayTax = true; // Update jsonData.DisplayTax
-        defaultOption.textContent = 'True';
-        dropdownOptions.style.display = 'none';
+    falseCheckbox.querySelector('input[type="checkbox"]').addEventListener('change', () => {
+        if (falseCheckbox.querySelector('input[type="checkbox"]').checked) {
+            jsonData.DisplayTax = false; // Update jsonData.DisplayTax
+            trueCheckbox.querySelector('input[type="checkbox"]').checked = false;
+            updateLocalStorage()
+        }
     });
 
-    falseOption.addEventListener('click', () => {
-        jsonData.DisplayTax = false; // Update jsonData.DisplayTax
-        defaultOption.textContent = 'False';
-        dropdownOptions.style.display = 'none';
-    });
-
-    return displayTaxDropdown;
+    return displayTaxContainer;
 }
 
-function createDropdownOption(taxTypeValue) {
-    const taxType = document.createElement('p');
-    taxType.textContent = taxTypeValue;
+function displayTaxCheckbox(value, checked) {
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.className = 'checkboxContainer';
 
-    return taxType;
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = checked;
+
+    const label = document.createElement('label');
+    label.className = 'checkboxLabel';
+    label.textContent = value;
+
+    checkboxContainer.appendChild(checkbox);
+    checkboxContainer.appendChild(label);
+
+    return checkboxContainer;
 }
 
 function createAddTaxContainer() {
@@ -191,7 +200,49 @@ function createAddTaxContainer() {
 
     addTaxContainer.appendChild(addTaxButton);
 
-    return addTaxContainer
+    addTaxButton.addEventListener('click', () => {
+        createNewTaxContainer(addTaxContainer)    
+    });
+
+    return addTaxContainer;
+}
+
+function createNewTaxContainer(addTaxContainer) {
+    const newTaxContainer = document.createElement('div');
+    newTaxContainer.className = 'newTaxContainer';
+
+    const taxNameContainer = document.createElement('div');
+    taxNameContainer.className = 'taxNameContainer';
+
+    const taxNameTitle = document.createElement('p');
+    taxNameTitle.className = 'taxNameTitle';
+    taxNameTitle.textContent = 'Tax Name';
+
+    const taxName = document.createElement('p')
+    taxName.contentEditable = true
+    taxName.className = 'taxName'
+
+    taxNameContainer.appendChild(taxNameTitle);
+    taxNameContainer.appendChild(taxName);
+
+    const taxPercentContainer = document.createElement('div');
+    taxPercentContainer.className = 'taxPercentContainer';
+
+    const taxPercentTitle = document.createElement('p');
+    taxPercentTitle.className = 'taxPercentTitle';
+    taxPercentTitle.textContent = 'Tax Percent';
+
+    const taxPercent = document.createElement('p')
+    taxPercent.contentEditable = true
+    taxPercent.className = 'taxPercent'
+
+    taxPercentContainer.appendChild(taxPercentTitle);
+    taxPercentContainer.appendChild(taxPercent);
+
+    newTaxContainer.appendChild(taxNameContainer);
+    newTaxContainer.appendChild(taxPercentContainer);
+
+    addTaxContainer.parentNode.insertBefore(newTaxContainer, addTaxContainer);
 }
 
 export { createTaxContainer }
