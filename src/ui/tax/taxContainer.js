@@ -79,7 +79,9 @@ function createTaxTypeCheckboxes(jsonData) {
     taxTypeContainer.className = 'taxTypeCheckboxes';
 
     const excludedCheckbox = taxTypeCheckbox('Excluded');
+    excludedCheckbox.className = 'excludedCheckbox';
     const includedCheckbox = taxTypeCheckbox('Included');
+    includedCheckbox.className = 'includedCheckbox';
 
     taxTypeContainer.appendChild(excludedCheckbox);
     taxTypeContainer.appendChild(includedCheckbox);
@@ -92,15 +94,25 @@ function createTaxTypeCheckboxes(jsonData) {
     }
 
     excludedCheckbox.addEventListener('change', () => {
-        if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
+        if (excludedCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.TaxType = 1; // Update jsonData.TaxType
             includedCheckbox.querySelector('input[type="checkbox"]').checked = false;
+            
+            const trueCheckbox = document.querySelector('.displayTaxCheckboxes .trueCheckbox');
+            trueCheckbox.querySelector('input[type="checkbox"]').checked = true;
+
+            jsonData.DisplayTax = true;
+
+            const falseCheckbox = document.querySelector('.displayTaxCheckboxes .falseCheckbox');
+            falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
+
+            console.log(trueCheckbox);
             updateLocalStorage()
         }
     });
 
     includedCheckbox.addEventListener('change', () => {
-        if (includedCheckbox.querySelector('input[type="checkbox"]').checked) {
+        if (includedCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.TaxType = 0; // Update jsonData.TaxType
             excludedCheckbox.querySelector('input[type="checkbox"]').checked = false;
             updateLocalStorage()
@@ -148,7 +160,9 @@ function createDisplayTaxCheckboxes(jsonData) {
     displayTaxContainer.className = 'displayTaxCheckboxes';
 
     const trueCheckbox = displayTaxCheckbox('True', jsonData.DisplayTax === true);
+    trueCheckbox.className = 'trueCheckbox';
     const falseCheckbox = displayTaxCheckbox('False', jsonData.DisplayTax !== true);
+    falseCheckbox.className = 'falseCheckbox';
 
     displayTaxContainer.appendChild(trueCheckbox);
     displayTaxContainer.appendChild(falseCheckbox);
