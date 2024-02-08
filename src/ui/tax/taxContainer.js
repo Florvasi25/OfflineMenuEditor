@@ -326,10 +326,12 @@ function createSavedTax(taxRate) {
     const savedTaxName = document.createElement('p')
     savedTaxName.className = 'savedTaxName'
     savedTaxName.textContent = 'Tax Name: ' + taxRate.Name
+    savedTaxName.id = taxRate.TaxRateId
 
     const savedTaxRate = document.createElement('p')
     savedTaxRate.className = 'savedTaxRate'
     savedTaxRate.textContent = 'Tax Percent: ' + taxRate.Rate +'%'
+    savedTaxRate.id = taxRate.TaxRateId
 
     taxNameAndPercent.appendChild(savedTaxName)
     taxNameAndPercent.appendChild(savedTaxRate)
@@ -342,23 +344,138 @@ function createSavedTax(taxRate) {
     editTaxButton.textContent = 'Edit Tax';
     editTaxButton.id = taxRate.TaxRateId
 
-    editTaxButton.addEventListener('click', () => {
-        
-    })
-    
     const removeTaxButton = document.createElement('button');
     removeTaxButton.className = 'removeTaxButton';
     removeTaxButton.textContent = 'Remove Tax';
     removeTaxButton.id = taxRate.TaxRateId
-    
+
+    editTaxButton.addEventListener('click', () => {
+        if (editTaxButton.id == taxRate.TaxRateId) {
+            const editTaxContainer = document.createElement('div');
+            editTaxContainer.className = 'editTaxContainer';
+            editTaxContainer.id = taxRate.TaxRateId
+        
+            const taxNameContainer = document.createElement('div');
+            taxNameContainer.className = 'taxNameContainer';
+        
+            const taxNameTitle = document.createElement('p');
+            taxNameTitle.className = 'taxNameTitle';
+            taxNameTitle.textContent = 'Tax Name';
+        
+            const taxName = document.createElement('p')
+            taxName.contentEditable = true
+            taxName.className = 'taxName'
+            taxName.textContent = taxRate.Name
+        
+            taxNameContainer.appendChild(taxNameTitle);
+            taxNameContainer.appendChild(taxName);
+        
+            const taxPercentContainer = document.createElement('div');
+            taxPercentContainer.className = 'taxPercentContainer';
+        
+            const taxPercentTitle = document.createElement('p');
+            taxPercentTitle.className = 'taxPercentTitle';
+            taxPercentTitle.textContent = 'Tax Percent';
+        
+            const taxPercent = document.createElement('p')
+            taxPercent.contentEditable = true
+            taxPercent.className = 'taxPercent'
+            taxPercent.textContent = taxRate.Rate
+        
+            let previousValue = taxRate.Rate
+        
+            taxPercent.addEventListener('input', function(event) {
+                let enteredValue = taxPercent.textContent.replace(/[^\d.]/g, '');
+                enteredValue = enteredValue.replace(/(\..*)\./g, '$1');
+            
+                taxPercent.textContent = enteredValue;
+            });
+            
+            taxPercent.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    const enteredValue = taxPercent.textContent;
+                    previousValue = enteredValue; 
+                    taxPercent.blur()
+                }
+            });
+            
+            taxPercent.addEventListener('blur', function(event) {
+                if (event.key !== 'Enter') {
+                    taxPercent.textContent = previousValue;
+                }
+            });
+        
+            const saveTaxButton = document.createElement('button');
+            saveTaxButton.className = 'saveTaxButton';
+            saveTaxButton.textContent = 'Save Tax';
+            
+            saveTaxButton.addEventListener('click', () => {
+                if (taxPercent.textContent == "") {
+                    showToolTip(taxPercent, 'Tax Percent cannot be Empty');
+                } else {  
+                    const newSavedTaxContainer = document.createElement('div');
+                    newSavedTaxContainer.className = 'newSavedTaxContainer';
+                    newSavedTaxContainer.id = taxRate.TaxRateId
+                
+                    const newTaxNameAndPercent = document.createElement('div')
+                    newTaxNameAndPercent.className = 'newTaxNameAndPercent'
+                
+                    const newSavedTaxName = document.createElement('p')
+                    newSavedTaxName.className = 'newSavedTaxName'
+                    newSavedTaxName.textContent = 'Tax Name: ' + taxRate.Name
+                    newSavedTaxName.id = taxRate.TaxRateId
+                
+                    const newSavedTaxRate = document.createElement('p')
+                    newSavedTaxRate.className = 'newSavedTaxRate'
+                    newSavedTaxRate.textContent = 'Tax Percent: ' + taxPercent.textContent +'%'
+                    newSavedTaxRate.id = taxRate.TaxRateId
+                
+                    newTaxNameAndPercent.appendChild(newSavedTaxName)
+                    newTaxNameAndPercent.appendChild(newSavedTaxRate)
+                
+                    const newSavedTaxButtons = document.createElement('div')
+                    newSavedTaxButtons.className = 'newSavedTaxButtons'
+                
+                    const newEditTaxButton = document.createElement('button');
+                    newEditTaxButton.className = 'newEditTaxButton';
+                    newEditTaxButton.textContent = 'Edit Tax';
+                    newEditTaxButton.id = taxRate.TaxRateId
+
+                    newSavedTaxButtons.appendChild(newEditTaxButton);
+                    newSavedTaxButtons.appendChild(removeTaxButton);
+                    
+                    newSavedTaxContainer.appendChild(newTaxNameAndPercent);
+                    newSavedTaxContainer.appendChild(newSavedTaxButtons);
+
+                    const taxRateToUpdate = jsonData.TaxRates.find(tax => tax.TaxRateId == taxRate.TaxRateId);
+                    taxRateToUpdate.Rate = parseFloat(taxPercent.textContent);
+                    
+                    updateLocalStorage(slotManagerInstance.currentSlot);
+                    
+                    editTaxContainer.replaceWith(newSavedTaxContainer)
+                }
+            });
+            
+            taxPercentContainer.appendChild(taxPercentTitle);
+            taxPercentContainer.appendChild(taxPercent);
+            taxPercentContainer.appendChild(saveTaxButton);
+            
+            editTaxContainer.appendChild(taxNameContainer);
+            editTaxContainer.appendChild(taxPercentContainer);
+            
+            savedTaxContainer.replaceWith(editTaxContainer)
+        }
+    })
+
     removeTaxButton.addEventListener('click', () => {
         if (removeTaxButton.id == taxRate.TaxRateId) {
             jsonData.TaxRates = jsonData.TaxRates.filter(tax => tax.TaxRateId !== taxRate.TaxRateId);
             updateLocalStorage(slotManagerInstance.currentSlot)
             savedTaxContainer.remove();
+            console.log('hola');
         }
     })
-    
+
     savedTaxButtons.appendChild(editTaxButton);
     savedTaxButtons.appendChild(removeTaxButton);
 
@@ -367,4 +484,5 @@ function createSavedTax(taxRate) {
 
     return savedTaxContainer
 }
+
 export { createTaxContainer }
