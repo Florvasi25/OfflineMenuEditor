@@ -1,6 +1,6 @@
 import { emptyMenu } from '../emptyMenu.js'
-import { jsonData } from '../context.js'
-import { generateHTML, createBtnContainers, createLeftContainer } from '../mainContainer.js';
+import { updateJsonData } from '../context.js'
+import { generateHTML, createBtnContainers, createLeftContainer, createTaxContainer } from '../mainContainer.js';
 
 export class SlotManager {
     constructor() {
@@ -31,8 +31,9 @@ export class SlotManager {
   
     updateWorkspace() {
       let jsonData = this.getJsonData();
-      console.log("SLOT: ", jsonData); 
+      updateJsonData(jsonData);
       generateHTML(jsonData);
+      createTaxContainer(jsonData);
     }
   
     getJsonData() {

@@ -6,6 +6,8 @@ import {
 
 import { showToolTip } from '../toolTip.js';
 
+import { slotManagerInstance } from '../mainContainer.js';
+
 function createTaxContainer(jsonData) {
     const taxContainer = document.getElementById('taxContainer');
     taxContainer.innerHTML = '';
@@ -93,7 +95,7 @@ function createTaxTypeCheckboxes(jsonData) {
             falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
 
             console.log(trueCheckbox);
-            updateLocalStorage()
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 
@@ -101,7 +103,7 @@ function createTaxTypeCheckboxes(jsonData) {
         if (includedCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.TaxType = 0; // Update jsonData.TaxType
             excludedCheckbox.querySelector('input[type="checkbox"]').checked = false;
-            updateLocalStorage()
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 
@@ -157,7 +159,7 @@ function createDisplayTaxCheckboxes(jsonData) {
         if (trueCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.DisplayTax = true; // Update jsonData.DisplayTax
             falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
-            updateLocalStorage()
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 
@@ -172,7 +174,7 @@ function createDisplayTaxCheckboxes(jsonData) {
             } else {
                 jsonData.DisplayTax = false; // Update jsonData.DisplayTax
                 trueCheckbox.querySelector('input[type="checkbox"]').checked = false;
-                updateLocalStorage()
+                updateLocalStorage(slotManagerInstance.currentSlot);
             }
         }
     });
@@ -286,7 +288,7 @@ function createNewTaxContainer(addTaxContainer, jsonData) {
             jsonData.TaxRates.push(newTaxRate);
             console.log('new Tax added');
 
-            updateLocalStorage()
+            updateLocalStorage(slotManagerInstance.currentSlot);
 
             newTaxContainer.remove()
             const savedTax = createSavedTax(newTaxRate)
@@ -352,7 +354,7 @@ function createSavedTax(taxRate) {
     removeTaxButton.addEventListener('click', () => {
         if (removeTaxButton.id == taxRate.TaxRateId) {
             jsonData.TaxRates = jsonData.TaxRates.filter(tax => tax.TaxRateId !== taxRate.TaxRateId);
-            updateLocalStorage()
+            updateLocalStorage(slotManagerInstance.currentSlot)
             savedTaxContainer.remove();
         }
     })

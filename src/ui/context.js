@@ -4,8 +4,6 @@ import { emptyMenu } from './emptyMenu.js'
 import { slotManagerInstance } from './mainContainer.js';
 
 let jsonData = JSON.parse(localStorage.getItem("jsonDataSlot1")) ?? emptyMenu;
-//localStorage.setItem("jsonDataSlot2", JSON.stringify(emptyMenu));
-//localStorage.setItem("jsonDataSlot3", JSON.stringify(emptyMenu));
 
 let groupedOs = {}; // Store the grouped os objects
 
@@ -16,10 +14,14 @@ let progressiveInt = parseInt(localStorage.getItem('lastProgressiveInt')) || 0;
 groupOptionSets()
 
 function setJsonData(data) {
-    jsonData = data
-    groupOptionSets()
-    itemlessOs = []
+    jsonData = data;
+    groupOptionSets();
+    itemlessOs = [];
     updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
+}
+
+function updateJsonData(newJsonData){
+    jsonData = newJsonData;
 }
 
 //Gets Index
@@ -392,5 +394,6 @@ export {
     closeOsModalContainerQuick,
     addWarningMoM,
     removePublicId,
-    removePublicIdFromOSItem
+    removePublicIdFromOSItem,
+    updateJsonData
 }

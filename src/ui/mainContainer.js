@@ -110,5 +110,5 @@ function handleCloseAll() {
     generateHTML(jsonData);
     createTaxContainer(jsonData)
 
-export { generateHTML, createBtnContainers, createLeftContainer }
+export { generateHTML, createBtnContainers, createLeftContainer, createTaxContainer }
 export { slotManagerInstance }
