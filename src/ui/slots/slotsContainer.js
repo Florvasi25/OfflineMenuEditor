@@ -41,17 +41,6 @@ function createSlotsButtons () {
 
     const firstSlot = document.createElement('button')
     firstSlot.className = 'slotBtn';
-<<<<<<< Updated upstream
-    firstSlot.textContent = '1st Slot'
-
-    const secondSlot = document.createElement('button')
-    secondSlot.className = 'slotBtn';
-    secondSlot.textContent = '2nd Slot'
-
-    const thirdSlot = document.createElement('button')
-    thirdSlot.className = 'slotBtn';
-    thirdSlot.textContent = '3rd Slot'
-=======
     firstSlot.textContent = 'First Slot'
     firstSlot.id = 'slotButton1';
 
@@ -64,7 +53,6 @@ function createSlotsButtons () {
     thirdSlot.className = 'slotBtn';
     thirdSlot.textContent = 'Third Slot'
     thirdSlot.id = 'slotButton3';
->>>>>>> Stashed changes
 
     slotsBtnsContainer.appendChild(firstSlot);
     slotsBtnsContainer.appendChild(secondSlot);
