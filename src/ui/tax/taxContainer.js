@@ -1,4 +1,8 @@
-import { updateLocalStorage } from '../context.js';
+import { 
+    updateLocalStorage,
+    getRandomInt,
+    jsonData
+} from '../context.js';
 
 import { showToolTip } from '../toolTip.js';
 
@@ -7,23 +11,27 @@ function createTaxContainer(jsonData) {
     taxContainer.innerHTML = '';
     taxContainer.className = 'taxContainer';
 
-    const taxHeaderContainer = createTaxHeaderContainer(jsonData)
+    const taxHeaderContainer = createTaxHeaderContainer()
     
     const taxTypeContainer = createTaxTypeContainer(jsonData)
 
     const displayTaxContainer = createDisplayTaxContainer(jsonData)
 
-    const addTaxContainer = createAddTaxContainer()
-
+    
+    const addTaxContainer = createAddTaxContainer(jsonData)
+    
     taxContainer.appendChild(taxHeaderContainer);
     taxContainer.appendChild(taxTypeContainer);
     taxContainer.appendChild(displayTaxContainer);
+
+    createSavedTaxContainer(taxContainer)
+
     taxContainer.appendChild(addTaxContainer);
 
     return taxContainer
 }
 
-function createTaxHeaderContainer(jsonData) {
+function createTaxHeaderContainer() {
     const taxHeaderContainer = document.createElement('div');
     taxHeaderContainer.className = 'taxHeaderContainer';
 
@@ -31,31 +39,7 @@ function createTaxHeaderContainer(jsonData) {
     taxHeaderTitle.className = 'taxHeaderTitle';
     taxHeaderTitle.textContent = 'Tax Rates';
 
-    const saveTaxButton = document.createElement('button');
-    saveTaxButton.className = 'saveTaxButton';
-    saveTaxButton.textContent = 'Save Tax';
-
     taxHeaderContainer.appendChild(taxHeaderTitle);
-    taxHeaderContainer.appendChild(saveTaxButton);
-    
-    saveTaxButton.addEventListener('click', () => {
-        const defaultOptionTaxType = document.querySelector('.taxTypeCheckboxes p');
-        const defaultOptionDisplayTax = document.querySelector('.displayTaxCheckboxes p');
-
-        if (defaultOptionTaxType.textContent === 'Excluded') {
-            jsonData.TaxType = 1;
-            console.log('TaxType: 1');
-            jsonData.DisplayTax = true;
-            console.log('DisplayTax: true');
-        } else if (defaultOptionTaxType.textContent === 'Included') {
-            jsonData.TaxType = 0;
-            console.log('TaxType: 0');
-        }
-
-        defaultOptionDisplayTax.textContent = jsonData.DisplayTax ? 'True' : 'False';
-
-        updateLocalStorage();
-    });
 
     return taxHeaderContainer
 }
@@ -190,7 +174,6 @@ function createDisplayTaxCheckboxes(jsonData) {
                 trueCheckbox.querySelector('input[type="checkbox"]').checked = false;
                 updateLocalStorage()
             }
-
         }
     });
 
@@ -215,7 +198,7 @@ function displayTaxCheckbox(displayTaxValue, checked) {
     return checkboxContainer;
 }
 
-function createAddTaxContainer() {
+function createAddTaxContainer(jsonData) {
     const addTaxContainer = document.createElement('div');
     addTaxContainer.className = 'addTaxContainer';
 
@@ -226,13 +209,13 @@ function createAddTaxContainer() {
     addTaxContainer.appendChild(addTaxButton);
 
     addTaxButton.addEventListener('click', () => {
-        createNewTaxContainer(addTaxContainer)    
+        createNewTaxContainer(addTaxContainer, jsonData)    
     });
 
     return addTaxContainer;
 }
 
-function createNewTaxContainer(addTaxContainer) {
+function createNewTaxContainer(addTaxContainer, jsonData) {
     const newTaxContainer = document.createElement('div');
     newTaxContainer.className = 'newTaxContainer';
 
@@ -246,6 +229,7 @@ function createNewTaxContainer(addTaxContainer) {
     const taxName = document.createElement('p')
     taxName.contentEditable = true
     taxName.className = 'taxName'
+    taxName.textContent = 'Tax ' + (jsonData.TaxRates.length + 1);
 
     taxNameContainer.appendChild(taxNameTitle);
     taxNameContainer.appendChild(taxName);
@@ -261,13 +245,124 @@ function createNewTaxContainer(addTaxContainer) {
     taxPercent.contentEditable = true
     taxPercent.className = 'taxPercent'
 
+    let previousValue
+
+    taxPercent.addEventListener('input', function(event) {
+        let enteredValue = taxPercent.textContent.replace(/[^\d.]/g, '');
+        enteredValue = enteredValue.replace(/(\..*)\./g, '$1');
+    
+        taxPercent.textContent = enteredValue;
+    });
+    
+    taxPercent.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const enteredValue = taxPercent.textContent;
+            previousValue = enteredValue; 
+            taxPercent.blur()
+        }
+    });
+    
+    taxPercent.addEventListener('blur', function(event) {
+        if (event.key !== 'Enter') {
+            taxPercent.textContent = previousValue;
+        }
+    });
+
+    const saveTaxButton = document.createElement('button');
+    saveTaxButton.className = 'saveTaxButton';
+    saveTaxButton.textContent = 'Save Tax';
+    
+    saveTaxButton.addEventListener('click', () => {
+        if (taxPercent.textContent == "") {
+            showToolTip(taxPercent, 'Tax Percent cannot be Empty');
+        } else {
+            const newTaxRate = {
+                TaxRateId: getRandomInt(),
+                MenuId: jsonData.MenuId,
+                Name: taxName.textContent,
+                Rate: Number(taxPercent.textContent)
+            }
+    
+            jsonData.TaxRates.push(newTaxRate);
+            console.log('new Tax added');
+
+            updateLocalStorage()
+
+            newTaxContainer.remove()
+            const savedTax = createSavedTax(newTaxRate)
+
+            addTaxContainer.parentNode.insertBefore(savedTax, addTaxContainer);
+        }
+    });
+    
     taxPercentContainer.appendChild(taxPercentTitle);
     taxPercentContainer.appendChild(taxPercent);
-
+    taxPercentContainer.appendChild(saveTaxButton);
+    
     newTaxContainer.appendChild(taxNameContainer);
     newTaxContainer.appendChild(taxPercentContainer);
-
+    
     addTaxContainer.parentNode.insertBefore(newTaxContainer, addTaxContainer);
 }
 
+function createSavedTaxContainer(taxContainer) {
+    jsonData.TaxRates.forEach(taxRate => {
+        const taxRateRow = createSavedTax(taxRate)
+
+        taxContainer.appendChild(taxRateRow)
+    })
+}
+
+function createSavedTax(taxRate) {
+    const savedTaxContainer = document.createElement('div');
+    savedTaxContainer.className = 'savedTaxContainer';
+    savedTaxContainer.id = taxRate.TaxRateId
+
+    const taxNameAndPercent = document.createElement('div')
+    taxNameAndPercent.className = 'taxNameAndPercent'
+
+    const savedTaxName = document.createElement('p')
+    savedTaxName.className = 'savedTaxName'
+    savedTaxName.textContent = 'Tax Name: ' + taxRate.Name
+
+    const savedTaxRate = document.createElement('p')
+    savedTaxRate.className = 'savedTaxRate'
+    savedTaxRate.textContent = 'Tax Percent: ' + taxRate.Rate +'%'
+
+    taxNameAndPercent.appendChild(savedTaxName)
+    taxNameAndPercent.appendChild(savedTaxRate)
+
+    const savedTaxButtons = document.createElement('div')
+    savedTaxButtons.className = 'savedTaxButtons'
+
+    const editTaxButton = document.createElement('button');
+    editTaxButton.className = 'editTaxButton';
+    editTaxButton.textContent = 'Edit Tax';
+    editTaxButton.id = taxRate.TaxRateId
+
+    editTaxButton.addEventListener('click', () => {
+        
+    })
+    
+    const removeTaxButton = document.createElement('button');
+    removeTaxButton.className = 'removeTaxButton';
+    removeTaxButton.textContent = 'Remove Tax';
+    removeTaxButton.id = taxRate.TaxRateId
+    
+    removeTaxButton.addEventListener('click', () => {
+        if (removeTaxButton.id == taxRate.TaxRateId) {
+            jsonData.TaxRates = jsonData.TaxRates.filter(tax => tax.TaxRateId !== taxRate.TaxRateId);
+            updateLocalStorage()
+            savedTaxContainer.remove();
+        }
+    })
+    
+    savedTaxButtons.appendChild(editTaxButton);
+    savedTaxButtons.appendChild(removeTaxButton);
+
+    savedTaxContainer.appendChild(taxNameAndPercent);
+    savedTaxContainer.appendChild(savedTaxButtons);
+
+    return savedTaxContainer
+}
 export { createTaxContainer }

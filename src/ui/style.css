@@ -1810,7 +1810,7 @@ selector svg {
 
 #taxContainer {
     background-color: #bec0e3;
-    height: 150px;
+    height: auto;
     width: 100%;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -1879,30 +1879,53 @@ selector svg {
 
 .taxNameContainer {
     display: flex;
+    align-items: center;
 }
 
 .taxName {
     width: 100px;
     background-color: #ffffff;
-    margin: 0 10px
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    height: 20px;
 }
 
 .taxPercentContainer {
     display: flex;
+    align-items: center;
 }
 
 .taxPercent {
     width: 100px;
     background-color: #ffffff;
-    margin: 0 10px
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    height: 20px;
 }
 
 .addTaxContainer {
     display: flex;
     padding: 5px 10px;
     justify-content: flex-end;
+    margin-bottom: 5px;
 }
 
 .addTaxButton {
     padding: 2.5px 5px;
+}
+
+.savedTaxContainer {
+    display: flex;
+    padding: 5px 10px;
+    height: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.taxNameAndPercent {
+    display: flex;
 }
