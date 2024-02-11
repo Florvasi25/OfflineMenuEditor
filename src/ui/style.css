@@ -1809,7 +1809,7 @@ selector svg {
 /* TAX - TAX TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
 
 #taxContainer {
-    background-color: #bec0e3;
+    background-color: #e8e9ff;
     height: auto;
     width: 100%;
     margin-bottom: 10px;
@@ -1822,16 +1822,12 @@ selector svg {
 .taxHeaderContainer {
     display: flex;
     align-items: center;
-    background-color: blueviolet;
+    background-color: #918ef6;
     margin: 10px;
     border-radius: 5px;
     height: 30px;
-    padding: 5px 10px;
+    padding: 0 10px;
     justify-content: space-between;
-}
-
-.saveTaxButton {
-    padding: 2.5px 5px;
 }
 
 .taxTypeContainer {
@@ -1890,6 +1886,7 @@ selector svg {
     align-items: center;
     padding: 2px;
     height: 20px;
+    border-radius: 5px;
 }
 
 .taxPercentContainer {
@@ -1905,6 +1902,7 @@ selector svg {
     align-items: center;
     padding: 2px;
     height: 20px;
+    border-radius: 5px;
 }
 
 .addTaxContainer {
@@ -1914,8 +1912,19 @@ selector svg {
     margin-bottom: 5px;
 }
 
-.addTaxButton {
+.taxButton {
     padding: 2.5px 5px;
+    border-radius: 5px;
+    border: 1px solid #6b6b6b;
+    transition: background-color 0.3s ease;
+}
+
+.taxButton:hover {
+    background-color: #dcd5ec;
+}
+
+.editTaxButton {
+    margin-right: 10px;
 }
 
 .savedTaxContainer {
@@ -1928,4 +1937,9 @@ selector svg {
 
 .taxNameAndPercent {
     display: flex;
+}
+
+.editTaxContainer {
+    display: flex;
+    padding: 5px 10px;
 }
