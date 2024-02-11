@@ -271,6 +271,22 @@ function createNewTaxContainer(addTaxContainer, jsonData) {
         }
     });
 
+    let previoustaxName
+
+    taxName.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const enteredValue = taxName.textContent;
+            previoustaxName = enteredValue; 
+            taxName.blur()
+        }
+    });
+    
+    taxName.addEventListener('blur', function(event) {
+        if (event.key !== 'Enter') {
+            taxName.textContent = previoustaxName;
+        }
+    });
+
     const saveTaxButton = document.createElement('button');
     saveTaxButton.classList.add('saveTaxButton');
     saveTaxButton.classList.add('taxButton')
@@ -291,8 +307,10 @@ function createNewTaxContainer(addTaxContainer, jsonData) {
 }
 
 function saveTax(newTaxContainer, addTaxContainer, taxPercent, taxName) {
-    if (taxPercent.textContent == "") {
-        showToolTip(taxPercent, 'Tax Percent cannot be Empty');
+    if (taxName.textContent == "") {
+        showToolTip(taxName, 'Tax Name cannot be Empty');
+    } else if (taxPercent.textContent == "") {
+        showToolTip(taxName, 'Tax Name cannot be Empty');
     } else {
         const newTaxRate = {
             TaxRateId: getRandomInt(),
@@ -434,6 +452,22 @@ function editTax(savedTaxContainer, taxRate, savedTaxName, savedTaxRate) {
         }
     });
 
+    let previousTaxName = taxRate.Name
+
+    taxName.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const enteredValue = taxName.textContent;
+            previousTaxName = enteredValue; 
+            taxName.blur()
+        }
+    });
+    
+    taxName.addEventListener('blur', function(event) {
+        if (event.key !== 'Enter') {
+            taxName.textContent = previousTaxName;
+        }
+    });
+
     const saveTaxButton = document.createElement('button');
     saveTaxButton.classList.add('saveTaxButton');
     saveTaxButton.classList.add('taxButton')
@@ -454,15 +488,20 @@ function editTax(savedTaxContainer, taxRate, savedTaxName, savedTaxRate) {
 }
 
 function updateTax(taxPercent, savedTaxContainer, editTaxContainer, savedTaxName, savedTaxRate, taxRate) {
-    if (taxPercent.textContent == "") {
+    const taxName = editTaxContainer.querySelector('.taxName');
+    
+    if (taxName.textContent == "") {
+        showToolTip(taxName, 'Tax Name cannot be Empty');
+    } else if (taxPercent.textContent == "") {
         showToolTip(taxPercent, 'Tax Percent cannot be Empty');
     } else {
         const taxRateToUpdate = jsonData.TaxRates.find(tax => tax.TaxRateId == taxRate.TaxRateId);
         taxRateToUpdate.Rate = parseFloat(taxPercent.textContent);
+        taxRateToUpdate.Name = taxName.textContent.trim();
         
         updateLocalStorage(slotManagerInstance.currentSlot);
 
-        savedTaxName.textContent = 'Tax Name: ' + taxRate.Name;
+        savedTaxName.textContent = 'Tax Name: ' + taxName.textContent;
         savedTaxRate.textContent = 'Tax Percent: ' + taxPercent.textContent + '%';
 
         editTaxContainer.replaceWith(savedTaxContainer);
