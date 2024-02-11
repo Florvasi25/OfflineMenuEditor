@@ -412,47 +412,16 @@ function createSavedTax(taxRate) {
             saveTaxButton.addEventListener('click', () => {
                 if (taxPercent.textContent == "") {
                     showToolTip(taxPercent, 'Tax Percent cannot be Empty');
-                } else {  
-                    const newSavedTaxContainer = document.createElement('div');
-                    newSavedTaxContainer.className = 'newSavedTaxContainer';
-                    newSavedTaxContainer.id = taxRate.TaxRateId
-                
-                    const newTaxNameAndPercent = document.createElement('div')
-                    newTaxNameAndPercent.className = 'newTaxNameAndPercent'
-                
-                    const newSavedTaxName = document.createElement('p')
-                    newSavedTaxName.className = 'newSavedTaxName'
-                    newSavedTaxName.textContent = 'Tax Name: ' + taxRate.Name
-                    newSavedTaxName.id = taxRate.TaxRateId
-                
-                    const newSavedTaxRate = document.createElement('p')
-                    newSavedTaxRate.className = 'newSavedTaxRate'
-                    newSavedTaxRate.textContent = 'Tax Percent: ' + taxPercent.textContent +'%'
-                    newSavedTaxRate.id = taxRate.TaxRateId
-                
-                    newTaxNameAndPercent.appendChild(newSavedTaxName)
-                    newTaxNameAndPercent.appendChild(newSavedTaxRate)
-                
-                    const newSavedTaxButtons = document.createElement('div')
-                    newSavedTaxButtons.className = 'newSavedTaxButtons'
-                
-                    const newEditTaxButton = document.createElement('button');
-                    newEditTaxButton.className = 'newEditTaxButton';
-                    newEditTaxButton.textContent = 'Edit Tax';
-                    newEditTaxButton.id = taxRate.TaxRateId
-
-                    newSavedTaxButtons.appendChild(newEditTaxButton);
-                    newSavedTaxButtons.appendChild(removeTaxButton);
-                    
-                    newSavedTaxContainer.appendChild(newTaxNameAndPercent);
-                    newSavedTaxContainer.appendChild(newSavedTaxButtons);
-
+                } else {
                     const taxRateToUpdate = jsonData.TaxRates.find(tax => tax.TaxRateId == taxRate.TaxRateId);
                     taxRateToUpdate.Rate = parseFloat(taxPercent.textContent);
                     
                     updateLocalStorage(slotManagerInstance.currentSlot);
-                    
-                    editTaxContainer.replaceWith(newSavedTaxContainer)
+            
+                    savedTaxName.textContent = 'Tax Name: ' + taxRate.Name;
+                    savedTaxRate.textContent = 'Tax Percent: ' + taxPercent.textContent + '%';
+            
+                    editTaxContainer.replaceWith(savedTaxContainer);
                 }
             });
             
