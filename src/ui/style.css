@@ -1683,6 +1683,10 @@ selector svg {
     align-items: center;
 }
 
+.sectionHeader.unavailable {
+    background-color: #00000091;
+}
+
 .addBtn {
     margin-right: 5px;
     width: 30px;

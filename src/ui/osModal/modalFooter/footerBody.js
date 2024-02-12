@@ -63,6 +63,10 @@ function createShowOsContainer(menuOs) {
             showOs.appendChild(sectionHeader);
         }
 
+        if (!section.IsAvailable) {
+            sectionHeader.classList.add('unavailable');
+        }
+
         const itemListContainer = document.createElement('ul');
         itemListContainer.className = 'itemListContainer';
 
@@ -84,7 +88,7 @@ function createShowOsContainer(menuOs) {
                 } else {
                     listedItem.style.backgroundColor = '#a2f5c0';
                 }
-                
+
                 const removeBtn = createRemoveButton(menuOs, item.MenuItemId)
                 listedItem.appendChild(removeBtn)
             } else {
