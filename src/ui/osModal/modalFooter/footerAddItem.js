@@ -29,7 +29,13 @@ function createAddButton(menuOs, menuItemId) {
 
     addBtn.addEventListener('click', (event) => {
         const targetParent = event.target.parentElement;
-        targetParent.style.backgroundColor = '#a2f5c0';
+        
+        if (foundItem.IsAvailable == false) {
+            targetParent.style.backgroundColor = '#8bad97';
+        } else {
+            targetParent.style.backgroundColor = '#a2f5c0';
+        }
+
         addBtn.style.display = 'none';
 
         let newOs = {};

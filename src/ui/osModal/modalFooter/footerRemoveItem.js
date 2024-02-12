@@ -30,7 +30,13 @@ function createRemoveButton(menuOs, menuItemId) {
         const correctOs = Array.from(foundItem.MenuItemOptionSets).find(i => i.groupOsId == menuOs.groupOsId);
 
         const targetParent = event.target.parentElement;
-        targetParent.style.backgroundColor = '#ffffff';
+
+        if (foundItem.IsAvailable == false) {
+            targetParent.style.backgroundColor = '#00000041';
+        } else {
+            targetParent.style.backgroundColor = '#ffffff';
+        }
+
         deleteBtn.style.display = 'none';
 
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(correctOs), 1)

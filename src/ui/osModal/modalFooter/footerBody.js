@@ -78,12 +78,22 @@ function createShowOsContainer(menuOs) {
 
             // Highlight the listedItem if it belongs to the filtered section
             if (sectionsWithFilteredItems[sectionName] && sectionsWithFilteredItems[sectionName].items.includes(item)) {
-                listedItem.style.backgroundColor = '#a2f5c0';
+                
+                if (item.IsAvailable == false) {
+                    listedItem.style.backgroundColor = '#8bad97';
+                } else {
+                    listedItem.style.backgroundColor = '#a2f5c0';
+                }
+                
                 const removeBtn = createRemoveButton(menuOs, item.MenuItemId)
                 listedItem.appendChild(removeBtn)
             } else {
                 const addBtn = createAddButton(menuOs, item.MenuItemId)
                 listedItem.appendChild(addBtn);
+            }
+
+            if (!item.IsAvailable) {
+                listedItem.classList.add('unavailable');
             }
 
             itemListContainer.appendChild(listedItem);
