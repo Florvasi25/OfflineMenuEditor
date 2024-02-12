@@ -35,6 +35,13 @@ function duplicateOs(menuOs) {
     removePublicIdFromOSItem(newOs)
     newOs.Name += "_copy"
 
+    // Set NextMenuItemOptionSetId to null for each option if it's not already null
+    newOs.MenuItemOptionSetItems.forEach(option => {
+        if (option.NextMenuItemOptionSetId !== null) {
+            option.NextMenuItemOptionSetId = null;
+        }
+    });
+
     addItemlessOs(newOs)
 
     closeOsModalContainerQuick()
