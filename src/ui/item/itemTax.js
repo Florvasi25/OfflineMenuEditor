@@ -13,6 +13,7 @@ function createItemTaxCell(menuItem, jsonData) {
 function createItemTax(menuItem, jsonData) {
     const itemTax = document.createElement('p');
     itemTax.classList.add('itemTax');
+    itemTax.id = menuItem.TaxRateId
     const itemTaxId = menuItem.TaxRateId
     if(itemTaxId == null) {
         itemTax.textContent = '0%'

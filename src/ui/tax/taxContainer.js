@@ -17,7 +17,6 @@ function createTaxContainer(jsonData) {
 
     const displayTaxContainer = createDisplayTaxContainer(jsonData)
 
-    
     const addTaxContainer = createAddTaxContainer(jsonData)
     
     taxContainer.appendChild(taxHeaderContainer);
