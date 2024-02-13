@@ -61,10 +61,6 @@ function toggleDropdown() {
     if (isDropdownShown) {
         checkForNullOsNames();
         const allOs = [...Object.values(groupedOs).flatMap(group => group[0]), ...itemlessOs];
-        /*const updatedAllOs = allOs.map(os => ({
-            ...os,
-            Name: os.Name || 'Empty', // Replace null or '' with 'Empty'
-          }));*/
           
           allOs.sort((a, b) => a.Name.localeCompare(b.Name));
 
