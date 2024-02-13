@@ -53,8 +53,12 @@ function createNameAndMoM(menuOption) {
     const optionNamePreview = document.createElement('p')
     optionNamePreview.className = 'optionNamePreview'
     optionNamePreview.id = menuOption.MenuItemOptionSetItemId
-    optionNamePreview.textContent = menuOption.Name
-
+    if(menuOption.Name == null || menuOption.Name == ''){
+        optionNamePreview.textContent = 'Empty'
+    }else{
+        optionNamePreview.textContent = menuOption.Name
+    }
+    
     const dashAndMoM = document.createElement('div')
     dashAndMoM.className = 'dashAndMoM'
     

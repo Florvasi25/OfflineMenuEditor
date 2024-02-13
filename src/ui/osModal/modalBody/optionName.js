@@ -24,7 +24,12 @@ function createOptionName(menuOption, menuOs) {
     const optionName = document.createElement('p');
     optionName.classList.add('optionName');
     optionName.contentEditable = true;
-    optionName.textContent = menuOption.Name;
+    if(menuOption.Name == '' || menuOption.Name == null){
+        menuOption.Name = 'Empty';
+        optionName.textContent = 'Empty';
+    }else{
+        optionName.textContent = menuOption.Name;
+    }
 
     let originalName = menuOption.Name;
 

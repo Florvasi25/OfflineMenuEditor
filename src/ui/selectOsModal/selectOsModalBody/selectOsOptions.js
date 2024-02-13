@@ -38,6 +38,7 @@ function createOptionRow(menuOption) {
 
 function createNameAndMoM(menuOption) {
     const nameAndMoM = document.createElement('div')
+    menuOption.Name = menuOption.Name || 'Empty';
     nameAndMoM.className = 'optionText'
     nameAndMoM.innerHTML = `
     <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>

@@ -58,11 +58,15 @@ function toggleDropdown() {
     expandListButton.classList.toggle('rotate');
 
     if (isDropdownShown) {
-        // Combine and sort the arrays
         const allOs = [...Object.values(groupedOs).flatMap(group => group[0]), ...itemlessOs];
-        allOs.sort((a, b) => a.Name.localeCompare(b.Name));
+        const updatedAllOs = allOs.map(os => ({
+            ...os,
+            Name: os.Name || 'Empty', // Replace null or '' with 'Empty'
+          }));
+          
+        updatedAllOs.sort((a, b) => a.Name.localeCompare(b.Name));
 
-        allOs.forEach((os) => {
+        updatedAllOs.forEach((os) => {
             const osRowList = createOsRow(os);
             dropdownContent.appendChild(osRowList);
         });

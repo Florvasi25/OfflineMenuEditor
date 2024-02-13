@@ -84,6 +84,7 @@ function createOsNameHeader(menuOs, sectionId, itemId) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'osNameHeader'
     if (menuOs.Name == null || menuOs.Name == '') {
+        menuOs.Name = 'Empty'
         osNameHeader.textContent = 'Empty'
     } else {
         osNameHeader.textContent = menuOs.Name
