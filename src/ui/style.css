@@ -1804,7 +1804,9 @@ selector svg {
     cursor: pointer;
     border: 0.5px solid #746f9b;
     transition: background-color 0.3s ease;
+    caret-color: transparent;
 }
+
 
 .slotBtn:hover {
     background-color: #dcd5ec;

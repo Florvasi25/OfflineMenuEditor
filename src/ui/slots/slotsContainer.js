@@ -12,7 +12,7 @@ function createSlotsContainer() {
     boxLeftMenu.className = 'boxLeftMenu';
     boxLeftMenu.classList.add('folded');
     
-    const slotsBtnsContainer = createSlotsButtons();
+    const slotsBtnsContainer = createSlotsButtonContainer();
 
     const leftBtnContainer = document.createElement('div');
     leftBtnContainer.className = 'leftBtnContainer';
@@ -33,32 +33,36 @@ function createSlotsContainer() {
     return boxLeftMenu;
 }
 
-function createSlotsButtons () {
+function createSlotsButtonContainer () {
     const slotsBtnsContainer = document.createElement('div');
     slotsBtnsContainer.className = 'slotsBtnsContainer';
     slotsBtnsContainer.style.left = '-40vw';
     slotsBtnsContainer.style.display = 'flex';
 
-    const firstSlot = document.createElement('button')
-    firstSlot.className = 'slotBtn';
-    firstSlot.textContent = 'First Slot'
-    firstSlot.id = 'slotButton1';
-
-    const secondSlot = document.createElement('button')
-    secondSlot.className = 'slotBtn';
-    secondSlot.textContent = 'Second Slot'
-    secondSlot.id = 'slotButton2';
-
-    const thirdSlot = document.createElement('button')
-    thirdSlot.className = 'slotBtn';
-    thirdSlot.textContent = 'Third Slot'
-    thirdSlot.id = 'slotButton3';
-
-    slotsBtnsContainer.appendChild(firstSlot);
-    slotsBtnsContainer.appendChild(secondSlot);
-    slotsBtnsContainer.appendChild(thirdSlot);
+    slotsBtnsContainer.appendChild(createSlotButton('First Slot', 'slotButton1'));
+    slotsBtnsContainer.appendChild(createSlotButton('Second Slot', 'slotButton2'));
+    slotsBtnsContainer.appendChild(createSlotButton('Third Slot', 'slotButton3'));
+    slotsBtnsContainer.appendChild(createSlotButton('Fourth Slot', 'slotButton4'));
+    slotsBtnsContainer.appendChild(createSlotButton('Fifth Slot', 'slotButton5'));
+    slotsBtnsContainer.appendChild(createSlotButton('Sixth Slot', 'slotButton6'));
+    slotsBtnsContainer.appendChild(createSlotButton('Seventh Slot', 'slotButton7'));
 
     return slotsBtnsContainer
+}
+
+function createSlotButton(buttonText, buttonId) {
+    const slotButton = document.createElement('button');
+    slotButton.className = 'slotBtn';
+    slotButton.textContent = localStorage.getItem(buttonId) || buttonText;
+    slotButton.id = buttonId;
+    slotButton.contentEditable = 'true';
+    slotButton.spellcheck = false;
+
+    slotButton.addEventListener('blur', function() {
+        localStorage.setItem(buttonId, slotButton.textContent);
+    });
+
+    return slotButton;
 }
 
 function toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer) {
