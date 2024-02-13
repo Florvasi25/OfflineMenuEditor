@@ -315,6 +315,22 @@ function closeOsModalContainer() {
         }, 300);
     }
 }
+function checkForNullOsNames(){
+    for (const section of jsonData.MenuSections) {
+        for (const item of section.MenuItems) {
+            for (const optionSet of item.MenuItemOptionSets) {
+                if (optionSet.Name == null || optionSet.Name == '') {
+                    optionSet.Name = 'Empty';
+                }
+                for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
+                    if (optionSetItem.Name == null || optionSetItem.Name == '') {
+                        optionSetItem.Name = 'Empty';
+                    }
+                }
+            }   
+        }
+    }
+}
 
 function closeOsModalContainerQuick() {
     const existingOsModal = document.querySelector('.osModalContainer')
@@ -395,5 +411,6 @@ export {
     addWarningMoM,
     removePublicId,
     removePublicIdFromOSItem,
-    updateJsonData
+    updateJsonData,
+    checkForNullOsNames
 }

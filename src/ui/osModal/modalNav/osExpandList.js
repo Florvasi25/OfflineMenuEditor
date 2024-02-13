@@ -1,7 +1,8 @@
 import {
     itemlessOs,
     groupedOs,
-    closeOsModalContainerQuick
+    closeOsModalContainerQuick,
+    checkForNullOsNames
 } from '../../context.js'
 
 import {
@@ -58,15 +59,16 @@ function toggleDropdown() {
     expandListButton.classList.toggle('rotate');
 
     if (isDropdownShown) {
+        checkForNullOsNames();
         const allOs = [...Object.values(groupedOs).flatMap(group => group[0]), ...itemlessOs];
-        const updatedAllOs = allOs.map(os => ({
+        /*const updatedAllOs = allOs.map(os => ({
             ...os,
             Name: os.Name || 'Empty', // Replace null or '' with 'Empty'
-          }));
+          }));*/
           
-        updatedAllOs.sort((a, b) => a.Name.localeCompare(b.Name));
+          allOs.sort((a, b) => a.Name.localeCompare(b.Name));
 
-        updatedAllOs.forEach((os) => {
+          allOs.forEach((os) => {
             const osRowList = createOsRow(os);
             dropdownContent.appendChild(osRowList);
         });
