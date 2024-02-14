@@ -90,10 +90,14 @@ function taxTypeCheckbox(taxTypeValue) {
 function calculateExcludedTaxValue() {
     jsonData.MenuSections.forEach(section => {
         section.MenuItems.forEach(item => {
-            item.TaxValue = Number((item.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)).toFixed(2));
+            const itemTaxRateId = item.TaxRateId
+            const itemTaxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == itemTaxRateId).Rate / 100
+            item.TaxValue = Number((item.Price * itemTaxRate).toFixed(2));
             item.MenuItemOptionSets.forEach(os => {
                 os.MenuItemOptionSetItems.forEach(option => {
-                    option.TaxValue = Number((option.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)).toFixed(2));
+                    const optionTaxRateId = option.TaxRateId
+                    const optionTaxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == optionTaxRateId).Rate / 100
+                    option.TaxValue = Number((option.Price * optionTaxRate).toFixed(2));
                 })
             })
         })
@@ -103,10 +107,14 @@ function calculateExcludedTaxValue() {
 function calculateIncludedTaxValue() {
     jsonData.MenuSections.forEach(section => {
         section.MenuItems.forEach(item => {
-            item.TaxValue = Number(((item.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)) / (1 + (jsonData.TaxRates.flatMap(i => i.Rate) / 100))).toFixed(2))
+            const itemTaxRateId = item.TaxRateId
+            const itemTaxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == itemTaxRateId).Rate / 100
+            item.TaxValue = Number(((item.Price * itemTaxRate) / (1 + itemTaxRate)).toFixed(2))
             item.MenuItemOptionSets.forEach(os => {
                 os.MenuItemOptionSetItems.forEach(option => {
-                    option.TaxValue = Number(((option.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)) / (1 + (jsonData.TaxRates.flatMap(i => i.Rate) / 100))).toFixed(2))
+                    const optionTaxRateId = option.TaxRateId
+                    const optionTaxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == optionTaxRateId).Rate / 100
+                    option.TaxValue = Number(((option.Price * optionTaxRate) / (1 + optionTaxRate)).toFixed(2));
                 })
             })
         })

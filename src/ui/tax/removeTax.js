@@ -62,11 +62,13 @@ function removeTaxFromMenu(savedTaxContainer, taxRate) {
         section.MenuItems.forEach(item => {
             if (item.TaxRateId == taxRate.TaxRateId) {
                 item.TaxRateId = null;
+                item.TaxValue = null;
             }
             item.MenuItemOptionSets.forEach(os => {
                 os.MenuItemOptionSetItems.forEach(option => {
                     if (option.TaxRateId == taxRate.TaxRateId) {
                         option.TaxRateId = null;
+                        option.TaxValue = null;
                     }
                 });
             });
