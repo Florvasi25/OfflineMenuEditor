@@ -28,6 +28,20 @@ function applyTaxToAll(taxRate) {
         })
     })
 
+    const itemTaxPreviewArray = Array.from(document.getElementsByClassName('itemTax'));
+    itemTaxPreviewArray.forEach(itemTaxPreview => {
+        if (itemTaxPreview) {
+            itemTaxPreview.textContent = taxRate.Rate + '%'
+        }
+    })
+
+    const optionTaxPreviewArray = Array.from(document.getElementsByClassName('optionTaxPreview'));
+    optionTaxPreviewArray.forEach(optionTaxPreview => {
+        if (optionTaxPreview) {
+            optionTaxPreview.textContent = taxRate.Rate + '%'
+        }
+    })
+
     updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
