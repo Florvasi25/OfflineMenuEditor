@@ -19,12 +19,20 @@ main {
 
 #fileOptionsContainer {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: #342f58;
     padding: 15px 10px;
 }
 
+.slotTitle {
+    margin-left: auto; 
+    color: white;      
+    font-weight: bold; 
+}
+  
 #loadJsonButton {
     text-wrap: nowrap;
     display: flex;

@@ -58,9 +58,9 @@ function createSlotButton(buttonText, buttonId) {
     slotButton.contentEditable = 'true';
     slotButton.spellcheck = false;
 
-    slotButton.addEventListener('blur', function() {
+    /*slotButton.addEventListener('blur', function() {
         localStorage.setItem(buttonId, slotButton.textContent);
-    });
+    });*/
 
     return slotButton;
 }

@@ -34,6 +34,7 @@ function generateHTML(jsonData) {
 
 function createBtnContainers() {
     const fileOptionsContainer = document.getElementById('fileOptionsContainer')
+    const slotTitle = createSlotTitle();
     const loadJsonButton = createLoadJsonButton()
     const saveButton = createSaveButton()
 
@@ -44,7 +45,8 @@ function createBtnContainers() {
     fileOptionsContainer.appendChild(saveButton)
     fileOptionsContainer.appendChild(expandAllButton)
     fileOptionsContainer.appendChild(closeAllButton)
-    
+    fileOptionsContainer.appendChild(slotTitle)
+
     const newSectionBtnContainer = document.getElementById('newSectionBtnContainer')
     const newSectionButton = createSectionButton()
     newSectionBtnContainer.appendChild(newSectionButton)
@@ -106,6 +108,13 @@ function handleCloseAll() {
     });
 }
 
+function createSlotTitle(){
+    var slotTitle = document.createElement("div");
+    slotTitle.className = 'slotTitle'
+    slotTitle.innerText = "Slot 1";
+
+    return slotTitle;
+}
     const slotManagerInstance = new SlotManager();
     generateHTML(jsonData);
     createTaxContainer(jsonData)

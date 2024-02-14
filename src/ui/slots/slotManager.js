@@ -6,6 +6,7 @@ export class SlotManager {
     constructor() {
       this.currentSlot = 'jsonDataSlot1';
       this.currentItemlessOs = 'itemlessOsSlot1'; 
+      this.currentSlotName = 'Slot 1';
       createBtnContainers();
       createLeftContainer();
       this.bindSlotButtonEvents();
@@ -14,17 +15,24 @@ export class SlotManager {
     bindSlotButtonEvents() {
       const slotButtons = document.querySelectorAll('.slotBtn');
       slotButtons.forEach(button => {
+
         button.addEventListener('click', event => {
             const slotNumber = event.target.id.replace('slotButton', '');
             const itemlessOsNumber = slotNumber;
-            this.changeWorkspace(`jsonDataSlot${slotNumber}`, `itemlessOsSlot${itemlessOsNumber}`);
+            this.changeWorkspace(`jsonDataSlot${slotNumber}`, `itemlessOsSlot${itemlessOsNumber}`, `Slot ${slotNumber}`);
           });
+
+        button.addEventListener('blur', function() {
+            localStorage.setItem(button.id, button.textContent);
+          });  
+
       });
     }
   
-    changeWorkspace(slotName, itemlessOsName) {
-      this.currentSlot = slotName;
+    changeWorkspace(jsonDataSlot, itemlessOsName, slotName) {
+      this.currentSlot = jsonDataSlot;
       this.currentItemlessOs = itemlessOsName;
+      this.currentSlotName = slotName;
       console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs);
       this.updateWorkspace();
     }
@@ -34,6 +42,7 @@ export class SlotManager {
       updateJsonData(jsonData);
       generateHTML(jsonData);
       createTaxContainer(jsonData);
+      this.changeSlotTitle();
     }
   
     getJsonData() {
@@ -42,5 +51,10 @@ export class SlotManager {
 
     saveJsonData(jsonData) {
       localStorage.setItem(this.currentSlot, JSON.stringify(jsonData));
+    }
+
+    changeSlotTitle(){
+      var slotTitle = document.getElementsByClassName('slotTitle')[0];
+      slotTitle.innerText = this.currentSlotName;
     }
   }
