@@ -1,4 +1,4 @@
-import { updateLocalStorage } from '../context.js';
+import { jsonData, updateLocalStorage } from '../context.js';
 
 import { slotManagerInstance } from '../mainContainer.js';
 
@@ -11,7 +11,7 @@ function createTaxTypeContainer(jsonData) {
     taxTypeTitle.textContent = 'Tax Type';
 
     const taxTypeCheckboxes = createTaxTypeCheckboxes(jsonData);
-    
+
     taxTypeContainer.appendChild(taxTypeTitle);
     taxTypeContainer.appendChild(taxTypeCheckboxes);
 
@@ -41,7 +41,7 @@ function createTaxTypeCheckboxes(jsonData) {
         if (excludedCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.TaxType = 1; // Update jsonData.TaxType
             includedCheckbox.querySelector('input[type="checkbox"]').checked = false;
-            
+
             const trueCheckbox = document.querySelector('.displayTaxCheckboxes .trueCheckbox');
             trueCheckbox.querySelector('input[type="checkbox"]').checked = true;
 
@@ -50,7 +50,8 @@ function createTaxTypeCheckboxes(jsonData) {
             const falseCheckbox = document.querySelector('.displayTaxCheckboxes .falseCheckbox');
             falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
 
-            console.log(trueCheckbox);
+            calculateExcludedTaxValue()
+
             updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
@@ -59,6 +60,9 @@ function createTaxTypeCheckboxes(jsonData) {
         if (includedCheckbox.querySelector('input[type="checkbox"]')) {
             jsonData.TaxType = 0; // Update jsonData.TaxType
             excludedCheckbox.querySelector('input[type="checkbox"]').checked = false;
+
+            calculateIncludedTaxValue()
+
             updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
@@ -81,6 +85,32 @@ function taxTypeCheckbox(taxTypeValue) {
     checkboxContainer.appendChild(label);
 
     return checkboxContainer;
+}
+
+function calculateExcludedTaxValue() {
+    jsonData.MenuSections.forEach(section => {
+        section.MenuItems.forEach(item => {
+            item.TaxValue = Number((item.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)).toFixed(2));
+            item.MenuItemOptionSets.forEach(os => {
+                os.MenuItemOptionSetItems.forEach(option => {
+                    option.TaxValue = Number((option.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)).toFixed(2));
+                })
+            })
+        })
+    })
+}
+
+function calculateIncludedTaxValue() {
+    jsonData.MenuSections.forEach(section => {
+        section.MenuItems.forEach(item => {
+            item.TaxValue = Number(((item.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)) / (1 + (jsonData.TaxRates.flatMap(i => i.Rate) / 100))).toFixed(2))
+            item.MenuItemOptionSets.forEach(os => {
+                os.MenuItemOptionSetItems.forEach(option => {
+                    option.TaxValue = Number(((option.Price * (jsonData.TaxRates.flatMap(i => i.Rate) / 100)) / (1 + (jsonData.TaxRates.flatMap(i => i.Rate) / 100))).toFixed(2))
+                })
+            })
+        })
+    })
 }
 
 export { createTaxTypeContainer }
