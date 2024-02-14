@@ -249,15 +249,24 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
 function changeSectionClockIcon(sectionRow, sectionId) {
     var section = getSection(jsonData, sectionId);
     var compareHours = compareDailySpecialHours(section);
-    if (compareHours && section?.MenuItems?.[0]?.DailySpecialHours?.length > 0) {
+    var hoursLengthIsSame = checkHoursLength(section);
+    if (compareHours && hoursLengthIsSame) {
         changeSectionClockIconColor(sectionRow, '#80d66f');
-    }else if (!compareHours && section?.MenuItems?.[0]?.DailySpecialHours?.length > 0){
+    }else if (!compareHours && hoursLengthIsSame){
         changeSectionClockIconColor(sectionRow, '#FFFF00');
     } else {
         changeSectionClockIconColor(sectionRow, '');
     }
 }
 
+function checkHoursLength(section){
+    for(let i = 1; i < section.MenuItems.length; i++){
+        if(section?.MenuItems?.[i]?.DailySpecialHours?.length > 0){
+            return true;
+        }
+    }
+    
+}
 function changeSectionClockIconColor(sectionRow, color){
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
     clockButton.style.backgroundColor = color;
