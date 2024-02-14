@@ -73,6 +73,20 @@ function removeTaxFromMenu(savedTaxContainer, taxRate) {
         });
     });
 
+    const itemTaxPreviewArray = Array.from(document.getElementsByClassName('itemTax'));
+    itemTaxPreviewArray.forEach(itemTaxPreview => {
+        if (itemTaxPreview && itemTaxPreview.id == taxRate.TaxRateId) {
+            itemTaxPreview.textContent = '0%'
+        }
+    })
+
+    const optionTaxPreviewArray = Array.from(document.getElementsByClassName('optionTaxPreview'));
+    optionTaxPreviewArray.forEach(optionTaxPreview => {
+        if (optionTaxPreview && optionTaxPreview.id == taxRate.TaxRateId) {
+            optionTaxPreview.textContent = '0%'
+        }
+    })
+
     updateLocalStorage(slotManagerInstance.currentSlot)
 }
 
