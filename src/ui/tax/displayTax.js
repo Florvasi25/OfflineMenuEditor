@@ -47,7 +47,6 @@ function createDisplayTaxCheckboxes(jsonData) {
             if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
                 falseCheckbox.querySelector('input[type="checkbox"]').checked = false;
                 showToolTip(falseCheckbox, 'Excluded Tax must always be True');
-                console.log('Excluded');
             } else {
                 jsonData.DisplayTax = false; // Update jsonData.DisplayTax
                 trueCheckbox.querySelector('input[type="checkbox"]').checked = false;

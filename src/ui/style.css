@@ -1945,6 +1945,10 @@ selector svg {
     margin-right: 10px;
 }
 
+.applyTaxToAllButton {
+    margin-right: 10px;
+}
+
 .savedTaxContainer {
     display: flex;
     padding: 5px 10px;

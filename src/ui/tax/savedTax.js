@@ -4,6 +4,8 @@ import { editTax } from './editTax.js'
 
 import { removeTax } from './removeTax.js'
 
+import { applyTaxToAll } from './applyTaxToAll.js'
+
 function createSavedTaxContainer(taxContainer) {
     jsonData.TaxRates.forEach(taxRate => {
         const taxRateRow = createSavedTax(taxRate)
@@ -41,17 +43,27 @@ function createSavedTax(taxRate) {
     const savedTaxButtons = document.createElement('div')
     savedTaxButtons.className = 'savedTaxButtons'
 
+    const applyTaxToAllButton = document.createElement('button');
+    applyTaxToAllButton.classList.add('applyTaxToAllButton');
+    applyTaxToAllButton.classList.add('taxButton')
+    applyTaxToAllButton.textContent = 'Apply to whole Menu';
+    applyTaxToAllButton.id = taxRate.TaxRateId
+
     const editTaxButton = document.createElement('button');
     editTaxButton.classList.add('editTaxButton');
     editTaxButton.classList.add('taxButton')
-    editTaxButton.textContent = 'Edit Tax';
+    editTaxButton.textContent = 'Edit';
     editTaxButton.id = taxRate.TaxRateId
 
     const removeTaxButton = document.createElement('button');
     removeTaxButton.classList.add('removeTaxButton');
     removeTaxButton.classList.add('taxButton')
-    removeTaxButton.textContent = 'Remove Tax';
+    removeTaxButton.textContent = 'Remove';
     removeTaxButton.id = taxRate.TaxRateId
+
+    applyTaxToAllButton.addEventListener('click', () => {
+        applyTaxToAll(taxRate)
+    })
 
     editTaxButton.addEventListener('click', () => {
         editTax(savedTaxContainer, taxRate, savedTaxName, savedTaxRate)
@@ -61,6 +73,7 @@ function createSavedTax(taxRate) {
         removeTax(savedTaxContainer, removeTaxButton, taxRate)
     })
 
+    savedTaxButtons.appendChild(applyTaxToAllButton);
     savedTaxButtons.appendChild(editTaxButton);
     savedTaxButtons.appendChild(removeTaxButton);
 
