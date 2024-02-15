@@ -25,30 +25,30 @@ export class SlotManager {
             button.addEventListener('click', event => {
                 const slotNumber = event.target.id.replace('slotButton', '');
                 const itemlessOsNumber = slotNumber;
-                this.changeWorkspace(`jsonDataSlot${slotNumber}`, `itemlessOsSlot${itemlessOsNumber}`, `Slot ${slotNumber}`);
+                this.changeWorkspace(`jsonDataSlot${slotNumber}`, `itemlessOsSlot${itemlessOsNumber}`, `Slot ${slotNumber}`, button.id);
             });
 
             button.addEventListener('blur', function () {
-                localStorage.setItem(button.id, button.textContent);
+                localStorage.setItem(button.id, button.id);
             });
 
         });
     }
 
-    changeWorkspace(jsonDataSlot, itemlessOsName, slotName) {
+    changeWorkspace(jsonDataSlot, itemlessOsName, slotName, slotId) {
         this.currentSlot = jsonDataSlot;
-        this.currentItemlessOs = itemlessOsName;
+        this.currentItemlessOs = itemlessOsName; 
         this.currentSlotName = slotName;
         console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs);
-        this.updateWorkspace();
+        this.updateWorkspace(slotId);
     }
 
-    updateWorkspace() {
+    updateWorkspace(slotId) {
         let jsonData = this.getJsonData();
         updateJsonData(jsonData);
         generateHTML(jsonData);
         createTaxContainer(jsonData);
-        this.changeSlotTitle();
+        this.changeSlotTitle(slotId);
     }
 
     getJsonData() {
@@ -59,8 +59,9 @@ export class SlotManager {
         localStorage.setItem(this.currentSlot, JSON.stringify(jsonData));
     }
 
-    changeSlotTitle() {
+    changeSlotTitle(slotId) {
         var slotTitle = document.getElementsByClassName('slotTitle')[0];
-        slotTitle.innerText = this.currentSlotName;
+        slotTitle.id = slotId
+        slotTitle.textContent = this.currentSlotName;
     }
 }

@@ -1796,6 +1796,7 @@ selector svg {
     margin-top: 10px;
     transition: left 0.3s ease-in-out;
     z-index: 10;
+    flex-direction: column;
 }
 
 .slotsBtnsContainer.show {
