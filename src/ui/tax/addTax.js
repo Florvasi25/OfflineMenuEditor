@@ -22,6 +22,10 @@ function createAddTaxContainer(jsonData) {
     addTaxContainer.appendChild(addTaxButton);
 
     addTaxButton.addEventListener('click', () => {
+        const nexTaxContainer = document.getElementsByClassName('newTaxContainer')
+        if (nexTaxContainer.length > 0) {
+            nexTaxContainer[0].remove()
+        }
         createNewTaxContainer(addTaxContainer, jsonData)    
     });
 
