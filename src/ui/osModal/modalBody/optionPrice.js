@@ -121,14 +121,16 @@ function updatePrice(indexOfOption, menuOs, optionPrice) {
                 const option = os.MenuItemOptionSetItems[indexOfOption]
                 option.Price = priceAsNumber
 
-                const optionTaxId = option.TaxRateId
-                const taxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == optionTaxId)
-                const taxRatePercent = taxRate.Rate / 100
-
-                if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
-                    option.TaxValue = Number((option.Price * taxRatePercent).toFixed(2));
-                } else if (includedCheckbox.querySelector('input[type="checkbox"]').checked) {
-                    option.TaxValue = Number(((option.Price * taxRatePercent) / (1 + taxRatePercent)).toFixed(2));
+                if (option.TaxRateId != null) {
+                    const optionTaxId = option.TaxRateId
+                    const taxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == optionTaxId)
+                    const taxRatePercent = taxRate.Rate / 100
+    
+                    if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
+                        option.TaxValue = Number((option.Price * taxRatePercent).toFixed(2));
+                    } else if (includedCheckbox.querySelector('input[type="checkbox"]').checked) {
+                        option.TaxValue = Number(((option.Price * taxRatePercent) / (1 + taxRatePercent)).toFixed(2));
+                    }
                 }
             })
             groupOptionSets();

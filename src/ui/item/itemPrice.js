@@ -104,9 +104,25 @@ function updatePrice(itemId, itemPrice, sectionId) {
     const { itemIndex, sectionIndex } = getItemIndex(sectionId, itemId);
     const priceAsNumber = parseFloat(parseFloat(itemPrice).toFixed(2));
 
+    const excludedCheckbox = document.querySelector('.taxTypeCheckboxes .excludedCheckbox');
+    const includedCheckbox = document.querySelector('.taxTypeCheckboxes .includedCheckbox');
+
     if (!isNaN(priceAsNumber)) {
-        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Price = priceAsNumber;
-        jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].ActualPrice = priceAsNumber;
+        const item = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex]
+        item.Price = priceAsNumber;
+        item.ActualPrice = priceAsNumber;
+
+        if (item.TaxRateId != null) {
+            const itemTaxId = item.TaxRateId
+            const taxRate = jsonData.TaxRates.find(tax => tax.TaxRateId == itemTaxId)
+            const taxRatePercent = taxRate.Rate / 100
+    
+            if (excludedCheckbox.querySelector('input[type="checkbox"]').checked) {
+                item.TaxValue = Number((item.Price * taxRatePercent).toFixed(2));
+            } else if (includedCheckbox.querySelector('input[type="checkbox"]').checked) {
+                item.TaxValue = Number(((item.Price * taxRatePercent) / (1 + taxRatePercent)).toFixed(2));
+            }
+        }
 
         updateLocalStorage(slotManagerInstance.currentSlot);
     }
