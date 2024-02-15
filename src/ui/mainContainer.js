@@ -25,7 +25,7 @@ import { createTaxContainer } from './tax/taxContainer.js';
 function generateHTML(jsonData) {
     const sectionContainer = document.getElementById('sectionContainer');
     sectionContainer.innerHTML = '';
-    
+
     jsonData.MenuSections.forEach(menuSection => {
         let sectionRow = createSection(menuSection);
         sectionContainer.appendChild(sectionRow);
@@ -108,16 +108,22 @@ function handleCloseAll() {
     });
 }
 
-function createSlotTitle(){
+function createSlotTitle() {
     var slotTitle = document.createElement("div");
     slotTitle.className = 'slotTitle'
     slotTitle.innerText = "Slot 1";
 
     return slotTitle;
 }
-    const slotManagerInstance = new SlotManager();
-    generateHTML(jsonData);
-    createTaxContainer(jsonData)
 
-export { generateHTML, createBtnContainers, createLeftContainer, createTaxContainer }
-export { slotManagerInstance }
+const slotManagerInstance = new SlotManager();
+generateHTML(jsonData);
+createTaxContainer(jsonData)
+
+export {
+    generateHTML,
+    createBtnContainers,
+    createLeftContainer,
+    createTaxContainer,
+    slotManagerInstance
+}
