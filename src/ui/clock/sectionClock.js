@@ -248,19 +248,22 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
 
 function changeSectionClockIcon(sectionRow, sectionId) {
     var section = getSection(jsonData, sectionId);
-    var compareHours = compareDailySpecialHours(section);
-    var hoursLengthIsSame = checkHoursLength(section);
-    if (compareHours && hoursLengthIsSame) {
-        changeSectionClockIconColor(sectionRow, '#80d66f');
-    }else if (!compareHours && hoursLengthIsSame){
-        changeSectionClockIconColor(sectionRow, '#FFFF00');
-    } else {
-        changeSectionClockIconColor(sectionRow, '');
+    if( section != null){
+        var compareHours = compareDailySpecialHours(section);
+        var hoursLengthIsSame = checkHoursLength(section);
+        if (compareHours && hoursLengthIsSame) {
+            changeSectionClockIconColor(sectionRow, '#80d66f');
+        }else if (!compareHours && hoursLengthIsSame){
+            changeSectionClockIconColor(sectionRow, '#FFFF00');
+        } else {
+            changeSectionClockIconColor(sectionRow, '');
+        }
     }
+    
 }
 
 function checkHoursLength(section){
-    for(let i = 1; i < section.MenuItems.length; i++){
+    for(let i = 0; i < section.MenuItems.length; i++){
         if(section?.MenuItems?.[i]?.DailySpecialHours?.length > 0){
             return true;
         }
