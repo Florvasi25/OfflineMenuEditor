@@ -16,22 +16,35 @@ export class SlotManager {
         createBtnContainers();
         createLeftContainer();
         this.bindSlotButtonEvents();
+
+        // Initialize slotTitle with the text from localStorage
+        const slotTitle = document.querySelector('.slotTitle');
+        const buttonId = 'slotButton1'; // Default id for the first slotButton
+        const localStorageText = localStorage.getItem(buttonId);
+        if (localStorageText) {
+            slotTitle.textContent = localStorageText;
+        }
     }
 
     bindSlotButtonEvents() {
         const slotButtons = document.querySelectorAll('.slotBtn');
         slotButtons.forEach(button => {
-
             button.addEventListener('click', event => {
                 const slotNumber = event.target.id.replace('slotButton', '');
                 const itemlessOsNumber = slotNumber;
                 this.changeWorkspace(`jsonDataSlot${slotNumber}`, `itemlessOsSlot${itemlessOsNumber}`, `Slot ${slotNumber}`, button.id);
+                
+                // Update slotTitle text based on the clicked slotButton's id
+                const slotTitle = document.querySelector('.slotTitle');
+                const localStorageText = localStorage.getItem(button.id);
+                if (localStorageText) {
+                    slotTitle.textContent = localStorageText;
+                }
             });
 
             button.addEventListener('blur', function () {
-                localStorage.setItem(button.id, button.id);
+                localStorage.setItem(button.id, button.textContent);
             });
-
         });
     }
 
@@ -41,6 +54,10 @@ export class SlotManager {
         this.currentSlotName = slotName;
         console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs);
         this.updateWorkspace(slotId);
+    
+        // Update slotTitle.id to match the slotId
+        const slotTitle = document.getElementsByClassName('slotTitle')[0];
+        slotTitle.id = slotId;
     }
 
     updateWorkspace(slotId) {

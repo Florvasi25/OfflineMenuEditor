@@ -35,6 +35,7 @@ function generateHTML(jsonData) {
 function createBtnContainers() {
     const fileOptionsContainer = document.getElementById('fileOptionsContainer')
     const slotTitle = createSlotTitle();
+    slotTitle.id = 'slotButton1';
     const loadJsonButton = createLoadJsonButton()
     const saveButton = createSaveButton()
 
@@ -111,7 +112,32 @@ function handleCloseAll() {
 function createSlotTitle() {
     var slotTitle = document.createElement("div");
     slotTitle.className = 'slotTitle'
-    slotTitle.innerText = "Slot 1";
+    const buttonId = 'slotButton1'; // Default id for the first slotButton
+    slotTitle.id = buttonId;
+
+    // Retrieve text content from localStorage based on slotTitle id
+    const localStorageText = localStorage.getItem(buttonId);
+    if (localStorageText) {
+        slotTitle.textContent = localStorageText;
+    } else {
+        slotTitle.textContent = "Slot 1"; // Default text if not found in localStorage
+    }
+
+    // Make it editable
+    slotTitle.setAttribute('contenteditable', 'true');
+
+    // Add event listener to update corresponding slotButton and localStorage on Enter key press
+    slotTitle.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent adding newline character
+            const buttonId = slotTitle.id;
+            const slotButton = document.getElementById(buttonId);
+            if (slotButton) {
+                slotButton.textContent = slotTitle.textContent;
+                localStorage.setItem(buttonId, slotButton.textContent);
+            }
+        }
+    });
 
     return slotTitle;
 }
