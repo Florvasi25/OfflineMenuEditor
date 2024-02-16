@@ -112,32 +112,42 @@ function handleCloseAll() {
 function createSlotTitle() {
     var slotTitle = document.createElement("div");
     slotTitle.className = 'slotTitle'
-    const buttonId = 'slotButton1'; // Default id for the first slotButton
+    const buttonId = 'slotButton1';
     slotTitle.id = buttonId;
 
-    // Retrieve text content from localStorage based on slotTitle id
     const localStorageText = localStorage.getItem(buttonId);
     if (localStorageText) {
         slotTitle.textContent = localStorageText;
     } else {
-        slotTitle.textContent = "Slot 1"; // Default text if not found in localStorage
+        slotTitle.textContent = "Slot 1"; 
     }
 
-    // Make it editable
     slotTitle.setAttribute('contenteditable', 'true');
 
-    // Add event listener to update corresponding slotButton and localStorage on Enter key press
     slotTitle.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent adding newline character
+            event.preventDefault(); 
             const buttonId = slotTitle.id;
+
             const slotButton = document.getElementById(buttonId);
-            if (slotButton) {
-                slotButton.textContent = slotTitle.textContent;
-                localStorage.setItem(buttonId, slotButton.textContent);
-            }
+            slotButton.textContent = slotTitle.textContent;
+            localStorage.setItem(buttonId, slotButton.textContent);
+            
+            slotTitle.textContent = localStorage.getItem(buttonId);
+            slotTitle.blur()
         }
     });
+
+    slotTitle.addEventListener('blur', () => {
+        slotTitle.textContent = localStorage.getItem(buttonId)
+        slotTitle.classList.remove('sectionClicked')
+        slotTitle.style.color = 'white'
+    });
+
+    slotTitle.addEventListener('click', () => {
+        slotTitle.classList.add('sectionClicked')
+        slotTitle.style.color = 'black'
+    })
 
     return slotTitle;
 }
