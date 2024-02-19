@@ -59,18 +59,14 @@ function createSectionDesc(menuSection, sectionRow) {
     return sectionDesc
 }
 
-
 //Updates descriptions when the JSON loads
 function updateSectionDesc(sectionId, sectionDesc) {
     const sectionIndex = getSectionIndex(sectionId);
 
     const normalizedDesc = sectionDesc.replace(/<br>/g, '\n');
-
     jsonData.MenuSections[sectionIndex].Description = normalizedDesc;
 
     updateLocalStorage(slotManagerInstance.currentSlot);
 }
-
-
 
 export { createSectionDescCell }

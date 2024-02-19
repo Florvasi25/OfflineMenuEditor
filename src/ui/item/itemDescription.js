@@ -22,24 +22,33 @@ function createItemDesc(itemRow, menuItem, sectionId) {
     const itemDesc = document.createElement('p');
     itemDesc.classList.add('sectionDesc');
     itemDesc.contentEditable = true;
-    itemDesc.textContent = menuItem.Description;
 
-    let originalDesc = menuItem.Description;
+    if (menuItem.Description) {
+        const formattedDesc = menuItem.Description.replace(/\n/g, '<br>');
+        itemDesc.innerHTML = formattedDesc;
+    }
+
+    let originalDesc = menuItem.Description || '';
 
     itemDesc.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && e.shiftKey) {
+            document.execCommand('insertLineBreak');
             e.preventDefault();
-            updateDesc(itemRow.id, itemDesc.textContent, sectionId);
-            originalDesc = itemDesc.textContent;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            updateDesc(itemRow.id, itemDesc.innerHTML, sectionId);
+            originalDesc = itemDesc.innerHTML;
             itemDesc.blur();
         } else if (e.key === 'Escape') {
-            itemDesc.textContent = originalDesc;
+            itemDesc.innerHTML = originalDesc;
             itemDesc.blur();
         }
     });
 
     itemDesc.addEventListener('blur', () => {
-        itemDesc.textContent = originalDesc;
+        const formattedDesc = originalDesc.replace(/\n/g, '<br>');
+
+        itemDesc.innerHTML = formattedDesc;
         itemDesc.classList.remove('sectionClicked');
     });
 
@@ -53,7 +62,9 @@ function createItemDesc(itemRow, menuItem, sectionId) {
 //Updates Desc
 function updateDesc(itemId, itemDesc, sectionId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
-    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Description = itemDesc;
+
+    const normalizedDesc = itemDesc.replace(/<br>/g, '\n');
+    jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Description = normalizedDesc;
 
     updateLocalStorage(slotManagerInstance.currentSlot);
 }
