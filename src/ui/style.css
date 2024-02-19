@@ -1838,7 +1838,7 @@ selector svg {
 /* TAX - TAX TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
 
 #taxContainer {
-    background-color: #e8e9ff;
+    background-color: #ededed;
     height: auto;
     width: 100%;
     margin-bottom: 10px;
@@ -1851,7 +1851,7 @@ selector svg {
 .taxHeaderContainer {
     display: flex;
     align-items: center;
-    background-color: #918ef6;
+    background-color: #b5b5b5;
     margin: 10px;
     border-radius: 5px;
     height: 30px;
