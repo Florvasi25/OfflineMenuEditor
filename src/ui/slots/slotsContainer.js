@@ -34,36 +34,39 @@ function createSlotsContainer() {
 }
 
 function createSlotsButtonContainer () {
+    const boxLeftMenu = document.querySelector('.boxLeftMenu');
     const slotsBtnsContainer = document.createElement('div');
     slotsBtnsContainer.className = 'slotsBtnsContainer';
     slotsBtnsContainer.style.left = '-40vw';
     slotsBtnsContainer.style.display = 'flex';
 
-    slotsBtnsContainer.appendChild(createSlotButton('First Slot', 'slotButton1'));
-    slotsBtnsContainer.appendChild(createSlotButton('Second Slot', 'slotButton2'));
-    slotsBtnsContainer.appendChild(createSlotButton('Third Slot', 'slotButton3'));
-    slotsBtnsContainer.appendChild(createSlotButton('Fourth Slot', 'slotButton4'));
-    slotsBtnsContainer.appendChild(createSlotButton('Fifth Slot', 'slotButton5'));
-    slotsBtnsContainer.appendChild(createSlotButton('Sixth Slot', 'slotButton6'));
-    slotsBtnsContainer.appendChild(createSlotButton('Seventh Slot', 'slotButton7'));
+    slotsBtnsContainer.appendChild(createSlotButton('First Slot', 'slotButton1', slotsBtnsContainer));
+    slotsBtnsContainer.appendChild(createSlotButton('Second Slot', 'slotButton2', slotsBtnsContainer));
+    slotsBtnsContainer.appendChild(createSlotButton('Third Slot', 'slotButton3', slotsBtnsContainer));
+    slotsBtnsContainer.appendChild(createSlotButton('Fourth Slot', 'slotButton4', slotsBtnsContainer));
+    slotsBtnsContainer.appendChild(createSlotButton('Fifth Slot', 'slotButton5', slotsBtnsContainer));
+    slotsBtnsContainer.appendChild(createSlotButton('Sixth Slot', 'slotButton6', slotsBtnsContainer));
+    slotsBtnsContainer.appendChild(createSlotButton('Seventh Slot', 'slotButton7', slotsBtnsContainer));
 
     return slotsBtnsContainer
 }
 
-function createSlotButton(buttonText, buttonId) {
+
+function createSlotButton(buttonText, buttonId, slotsBtnsContainer) {
     const slotButton = document.createElement('button');
     slotButton.className = 'slotBtn';
     slotButton.textContent = localStorage.getItem(buttonId) || buttonText;
     slotButton.id = buttonId;
-    slotButton.contentEditable = 'true';
-    slotButton.spellcheck = false;
 
-    /*slotButton.addEventListener('blur', function() {
-        localStorage.setItem(buttonId, slotButton.textContent);
-    });*/
+    slotButton.addEventListener('click', () => {
+        const leftBtnContainer = document.querySelector('.leftBtnContainer');
+        const boxLeftMenu = document.querySelector('.boxLeftMenu');
+        toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer);
+    });
 
     return slotButton;
 }
+
 
 function toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer) {
     const expandedClassName = 'expanded';
