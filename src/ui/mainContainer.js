@@ -139,6 +139,8 @@ function createSlotTitle() {
     });
 
     slotTitle.addEventListener('blur', () => {
+        const buttonId = slotTitle.id;
+        
         slotTitle.textContent = localStorage.getItem(buttonId)
         slotTitle.classList.remove('sectionClicked')
         slotTitle.style.color = 'white'

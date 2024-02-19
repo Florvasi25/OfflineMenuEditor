@@ -103,7 +103,7 @@ function toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer) {
 
         slotsBtnsContainer.style.display = 'flex';
         slotsBtnsContainer.style.left = '0';
-        leftBtnContainer.style.width = '17.5vw';
+        leftBtnContainer.style.width = '32vw';
     }
 }
 

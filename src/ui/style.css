@@ -28,14 +28,16 @@ main {
 }
 
 .slotTitle {
-    margin-left: 15px;
+    margin-left: 20px;
     color: white;
     font-weight: bold;
-    height: 25px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: end;
     width: -webkit-fill-available;
+    padding: 2px;
+    word-break: break-all;
 }
   
 #loadJsonButton {
@@ -1796,7 +1798,7 @@ selector svg {
     position: fixed;
     top: 0;
     height: 98vh;
-    width: 15%;
+    width: 30%;
     background-color: #342f58;
     margin-top: 10px;
     transition: left 0.3s ease-in-out;
@@ -1820,6 +1822,8 @@ selector svg {
     border: 0.5px solid #746f9b;
     transition: background-color 0.3s ease;
     caret-color: transparent;
+    text-wrap: balance;
+    word-break: break-all;
 }
 
 
