@@ -22,24 +22,28 @@ function createSectionDesc(menuSection, sectionRow) {
     const sectionDesc = document.createElement('p');
     sectionDesc.classList.add('sectionDesc');
     sectionDesc.contentEditable = true;
-    sectionDesc.textContent = menuSection.Description;
+    sectionDesc.innerHTML = menuSection.Description; // Use innerHTML instead of textContent
 
     let originalDesc = menuSection.Description;
 
     sectionDesc.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && e.shiftKey) {
+            // Insert line break
+            document.execCommand('insertLineBreak');
             e.preventDefault();
-            updateSectionDesc(sectionRow.id, sectionDesc.textContent);
-            originalDesc = sectionDesc.textContent;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            updateSectionDesc(sectionRow.id, sectionDesc.innerHTML);
+            originalDesc = sectionDesc.innerHTML;
             sectionDesc.blur();
         } else if (e.key === 'Escape') {
-            sectionDesc.textContent = originalDesc;
+            sectionDesc.innerHTML = originalDesc;
             sectionDesc.blur();
         }
     });
 
     sectionDesc.addEventListener('blur', () => {
-        sectionDesc.textContent = originalDesc;
+        sectionDesc.innerHTML = originalDesc;
         sectionDesc.classList.remove('sectionClicked')
     });
 
@@ -54,9 +58,13 @@ function createSectionDesc(menuSection, sectionRow) {
 function updateSectionDesc(sectionId, sectionDesc) {
     const sectionIndex = getSectionIndex(sectionId);
 
-    jsonData.MenuSections[sectionIndex].Description = sectionDesc;
+    const normalizedDesc = sectionDesc.replace(/<br>/g, '\n');
 
-   updateLocalStorage(slotManagerInstance.currentSlot);
+    jsonData.MenuSections[sectionIndex].Description = normalizedDesc;
+
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
+
+
 
 export { createSectionDescCell }
