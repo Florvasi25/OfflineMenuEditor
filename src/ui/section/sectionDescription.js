@@ -22,13 +22,16 @@ function createSectionDesc(menuSection, sectionRow) {
     const sectionDesc = document.createElement('p');
     sectionDesc.classList.add('sectionDesc');
     sectionDesc.contentEditable = true;
-    sectionDesc.innerHTML = menuSection.Description; // Use innerHTML instead of textContent
 
-    let originalDesc = menuSection.Description;
+    if (menuSection.Description) {
+        const formattedDesc = menuSection.Description.replace(/\n/g, '<br>');
+        sectionDesc.innerHTML = formattedDesc;
+    }
+
+    let originalDesc = menuSection.Description || '';
 
     sectionDesc.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && e.shiftKey) {
-            // Insert line break
             document.execCommand('insertLineBreak');
             e.preventDefault();
         } else if (e.key === 'Enter') {
@@ -43,7 +46,9 @@ function createSectionDesc(menuSection, sectionRow) {
     });
 
     sectionDesc.addEventListener('blur', () => {
-        sectionDesc.innerHTML = originalDesc;
+        const formattedDesc = originalDesc.replace(/\n/g, '<br>');
+
+        sectionDesc.innerHTML = formattedDesc;
         sectionDesc.classList.remove('sectionClicked')
     });
 
@@ -53,6 +58,7 @@ function createSectionDesc(menuSection, sectionRow) {
 
     return sectionDesc
 }
+
 
 //Updates descriptions when the JSON loads
 function updateSectionDesc(sectionId, sectionDesc) {
