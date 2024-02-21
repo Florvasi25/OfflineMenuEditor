@@ -1,3 +1,5 @@
+import { jsonData } from "../../context.js";
+
 function createOptionsContainer(selectOsRowHeader, osGroup) {
     const osOptionContainer = document.createElement('div');
     osOptionContainer.classList.add('osOptionContainer');
@@ -66,7 +68,7 @@ function createPriceAndTax(menuOption) {
     priceAndTax.innerHTML = `
     <p class='optionPricePreview' id='${menuOption.MenuItemOptionSetItemId}'>${priceAsNumber.toFixed(2)}</p>
     <p class='dashCountCell'> - </p>
-    <p class='optionTaxPreview' id='${menuOption.MenuItemOptionSetItemId}'>${osTax.textContent}</p>`
+    <p class='optionTaxPreview' id='${menuOption.TaxRateId}'>${osTax.textContent}</p>`
 
     return priceAndTax
 }
