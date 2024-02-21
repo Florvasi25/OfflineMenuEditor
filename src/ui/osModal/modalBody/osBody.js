@@ -21,21 +21,21 @@ import { createOptionButton } from './optionAddNew.js'
 
 import { createOptionSetListButton } from './optionList.js'
 
+import { createSameMoMButton } from './optionSameMoM.js'
+
 function createOsModalBody(menuOs) {
     const optionsBodyContainer = document.createElement('div')
     optionsBodyContainer.className = 'optionsBodyContainer'
+    
     const optionRowsContainer = document.createElement('div')
     optionRowsContainer.className = 'optionRowsContainer'
     optionRowsContainer.id = menuOs.MenuItemOptionSetId
 
-    const topButtonsCell = createTopButtonsCell()
+    const topButtonsCell = createTopButtonsCell(menuOs, optionRowsContainer)
     optionsBodyContainer.appendChild(topButtonsCell)
 
     createOptionRow(optionRowsContainer, menuOs)
     setDragListeners(optionRowsContainer, menuOs)
-
-    const optionSetListButton = createOptionSetListButton(menuOs, optionRowsContainer)
-    topButtonsCell.appendChild(optionSetListButton)
     
     optionsBodyContainer.appendChild(optionRowsContainer)
     
@@ -69,9 +69,14 @@ function createOptionRow(optionRowsContainer, menuOs) {
     });
 }
 
-function createTopButtonsCell() {
+function createTopButtonsCell(menuOs, optionRowsContainer) {
     const topButtonsCell = document.createElement('div')
     topButtonsCell.className = 'topButtonsCell'
+
+    const optionSetListButton = createOptionSetListButton(menuOs, optionRowsContainer)
+    topButtonsCell.appendChild(optionSetListButton)
+
+    createSameMoMButton(menuOs, topButtonsCell)
 
     return topButtonsCell
 }

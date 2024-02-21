@@ -100,8 +100,10 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
             const newOptionMoM = optionMoM.textContent
 
+            console.log('newOptionMoM', newOptionMoM);
+
             if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId || newOptionMoM === "" ) {
-                optionMoM.textContent = originalMoM === null ? "Empty" : originalMoM;
+                optionMoM.textContent = newOptionMoM === null ? "Empty" : newOptionMoM;
                 console.log();
                 if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
                     optionMoM.textContent = "Empty";
