@@ -1,6 +1,13 @@
-import { updateLocalStorage } from "../../context.js";
+import { 
+    updateLocalStorage,
+    itemlessOs,
+    jsonData,
+    addWarningMoM
+} from "../../context.js";
 
 import { slotManagerInstance } from  "../../mainContainer.js";
+
+import { showToolTip } from "../../toolTip.js";
 
 function createSameMoMButton(menuOs, topButtonsCell) {
     const sameMoMContainer = document.createElement('div')
@@ -14,6 +21,7 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     sameMoMInput.addEventListener('click', (e) => {
         sameMoMInput.textContent = ""
         sameMoMInput.style.textAlign = 'center'
+        sameMoMInput.style.color = '#000000'
     })
     
     const sameMoMButton = document.createElement('button');
@@ -31,6 +39,32 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     
     sameMoMButton.addEventListener('click', () => {
         const textMoM = document.getElementsByClassName('sameMoMInput')[0].textContent
+        
+        if (itemlessOs.includes(menuOs)) {
+            showToolTip(sameMoMInput, 'This OS does not belong to an Item');
+            return
+        } else {
+            const foundItem = jsonData.MenuSections
+            .flatMap(i => i.MenuItems)
+            .find(i => i.MenuItemId == menuOs.MenuItemId);
+            const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
+            const newOptionMoM = textMoM
+    
+            // If the entered value is not empty, check its validity
+            if (newOptionMoM !== "") {
+                // Allow '-1' as a valid value
+                if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM))) {
+                    // Show tooltip if the entered value doesn't exist
+                    showToolTip(sameMoMInput, 'The MenuItemOptionSetId does not exist in this Item');
+                    return;
+                } else if (newOptionMoM == menuOs.MenuItemOptionSetId) {
+                    showToolTip(sameMoMInput, 'The MenuItemOptionSetId is the same as the current OS');
+                    return;
+                }
+            } 
+        }
+        addWarningMoM()
+
         console.log('textMoM before handle', textMoM);
         handleSameMoM(menuOs, sameMoMInput, textMoM)
     })
@@ -38,11 +72,13 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     sameMoMInput.addEventListener('blur', (e) => {
         if (sameMoMInput.textContent == '') {
             sameMoMInput.textContent = 'Edit all MoM'
+            sameMoMInput.style.color = '#a3a3a3'
         }
     })
 }
 
 function handleSameMoM(menuOs, sameMoMInput, textMoM) {
+    
     menuOs.MenuItemOptionSetItems.forEach((menuOption) => {
         
         if (textMoM == "Edit all MoM") {
@@ -69,6 +105,7 @@ function handleSameMoM(menuOs, sameMoMInput, textMoM) {
     })
     
     sameMoMInput.textContent = 'Edit all MoM'
+    sameMoMInput.style.color = '#a3a3a3'
 }
 
 export { createSameMoMButton }
