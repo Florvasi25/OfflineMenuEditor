@@ -78,7 +78,6 @@ function createSameMoMButton(menuOs, topButtonsCell) {
 }
 
 function handleSameMoM(menuOs, sameMoMInput, textMoM) {
-    
     menuOs.MenuItemOptionSetItems.forEach((menuOption) => {
         
         if (textMoM == "Edit all MoM") {
