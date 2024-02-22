@@ -40,10 +40,7 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     sameMoMButton.addEventListener('click', () => {
         const textMoM = document.getElementsByClassName('sameMoMInput')[0].textContent
         
-        checkMoM(textMoM, menuOs)
-
-        handleSameMoM(menuOs, sameMoMInput, textMoM)
-        addWarningMoM()
+        checkMoM(textMoM, menuOs, sameMoMInput)
     })
     
     sameMoMInput.addEventListener('blur', (e) => {
@@ -54,7 +51,7 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     })
 }
 
-function checkMoM(textMoM, menuOs) {
+function checkMoM(textMoM, menuOs, sameMoMInput) {
     if (itemlessOs.includes(menuOs)) {
         showToolTip(sameMoMInput, 'This OS does not belong to an Item');
         return
@@ -78,6 +75,9 @@ function checkMoM(textMoM, menuOs) {
             }
         } 
     }
+
+    handleSameMoM(menuOs, sameMoMInput, textMoM)
+    addWarningMoM()
 }
 
 function handleSameMoM(menuOs, sameMoMInput, textMoM) {
