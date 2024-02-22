@@ -27,15 +27,25 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     const sameMoMButton = document.createElement('button');
     sameMoMButton.classList.add('sectionButton');
     sameMoMButton.classList.add('sameMoMButton');
+
+    const removeMoMButton = document.createElement('button');
+    removeMoMButton.classList.add('sectionButton');
+    removeMoMButton.classList.add('removeMoMButton');
     
     sameMoMContainer.appendChild(sameMoMInput);
     sameMoMContainer.appendChild(sameMoMButton);
+    sameMoMContainer.appendChild(removeMoMButton);
     topButtonsCell.appendChild(sameMoMContainer);
     
     const sameMoMButtonImg = document.createElement('img')
     sameMoMButtonImg.classList.add('sectionButtonImg')
-    sameMoMButtonImg.src = '../../assets/sameMoMIcon.svg'
+    sameMoMButtonImg.src = '../../assets/checkIcon.svg'
     sameMoMButton.appendChild(sameMoMButtonImg)
+
+    const removeMoMButtonImg = document.createElement('img')
+    removeMoMButtonImg.classList.add('sectionButtonImg')
+    removeMoMButtonImg.src = '../../assets/cancelIcon.svg'
+    removeMoMButton.appendChild(removeMoMButtonImg)
     
     sameMoMButton.addEventListener('click', () => {
         const textMoM = document.getElementsByClassName('sameMoMInput')[0].textContent
@@ -48,6 +58,10 @@ function createSameMoMButton(menuOs, topButtonsCell) {
             sameMoMInput.textContent = 'Edit all MoM'
             sameMoMInput.style.color = '#a3a3a3'
         }
+    })
+
+    removeMoMButton.addEventListener('click', () => {
+        handleRemoveAllMoM(menuOs, sameMoMInput)
     })
 }
 
@@ -78,6 +92,34 @@ function checkMoM(textMoM, menuOs, sameMoMInput) {
 
     handleSameMoM(menuOs, sameMoMInput, textMoM)
     addWarningMoM()
+}
+
+function handleRemoveAllMoM(menuOs, sameMoMInput) {
+    if (itemlessOs.includes(menuOs)) {
+        showToolTip(sameMoMInput, 'This OS does not belong to an Item');
+        return
+    } else {
+        menuOs.MenuItemOptionSetItems.forEach((menuOption) => {
+            menuOption.NextMenuItemOptionSetId = null
+            
+            const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'))
+            const optionContainerPreview = optionContainerPreviewArray.find(p => p.id == menuOs.MenuItemOptionSetId)
+            
+            const optionMoMPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('optionMoMPreview'))
+            optionMoMPreviewArray.forEach(optionMoMPreview => {
+                optionMoMPreview.textContent = 'null'
+            })
+        
+            const optionMoMModal = Array.from(document.getElementsByClassName('optionMoM'))
+            optionMoMModal.forEach(optionMoM => {
+                optionMoM.textContent = 'Empty'
+                optionMoM.style.color = '#a3a3a3'
+            })
+            
+            updateLocalStorage(slotManagerInstance.currentSlot)
+        })
+
+    }
 }
 
 function handleSameMoM(menuOs, sameMoMInput, textMoM) {

@@ -73,8 +73,12 @@ function createTopButtonsCell(menuOs, optionRowsContainer) {
     const topButtonsCell = document.createElement('div')
     topButtonsCell.className = 'topButtonsCell'
 
+    const osListContainer = document.createElement('div')
+    osListContainer.className = 'osListContainer'
+
     const optionSetListButton = createOptionSetListButton(menuOs, optionRowsContainer)
-    topButtonsCell.appendChild(optionSetListButton)
+    osListContainer.appendChild(optionSetListButton)
+    topButtonsCell.appendChild(osListContainer)
 
     createSameMoMButton(menuOs, topButtonsCell)
 

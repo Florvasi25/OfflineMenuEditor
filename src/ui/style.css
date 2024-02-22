@@ -39,6 +39,12 @@ main {
     padding: 2px;
     word-break: break-all;
 }
+
+.slotTitle:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
   
 #loadJsonButton {
     text-wrap: nowrap;
@@ -47,6 +53,7 @@ main {
     padding: 5px;
     border-radius: 5px;
     border: 0.5px solid #746f9b;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -62,6 +69,7 @@ main {
     margin-left: 20px;
     border-radius: 5px;
     border: 0.5px solid #746f9b;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -77,6 +85,7 @@ main {
     margin-left: 20px;
     border-radius: 5px;
     border: 0.5px solid #746f9b;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -92,6 +101,7 @@ main {
     margin-left: 20px;
     border-radius: 5px;
     border: 0.5px solid #746f9b;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -187,10 +197,11 @@ main {
     }
 }
 
-.sectionClicked {
+/* .sectionClicked {
     background-color: #ffffff;
     left: 50px;
-}
+    border-radius: 5px;
+} */
 
 .sectionDropdownCell {
     width: 25px;
@@ -328,6 +339,8 @@ main {
 .osOptionsRow {
     display: flex;
     padding: 10px 0;
+    align-items: center;
+    height: 30px;
     align-items: center;
 }
 
@@ -604,6 +617,12 @@ selector svg {
     align-items: center;
 }
 
+.sectionName:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
 .itemNameCell {
     display: flex;
     align-items: center;
@@ -624,6 +643,12 @@ selector svg {
     align-items: center;
 }
 
+.itemName:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
 .osNameCell {
     flex-grow: 1;
     padding-right: 10px;
@@ -635,8 +660,15 @@ selector svg {
     padding: 5px;
 }
 
+.osName:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(169, 169, 210);
+    border-radius: 5px;
+    border: none;
+}
+
 .optionNameCell {
-    /* padding: 5px; */
+    padding: 2px;
     font-size: 13px;
 }
 
@@ -648,9 +680,16 @@ selector svg {
     word-break: break-word;
 }
 
+.optionName:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 3px;
+}
+
 /* MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM - MOM */
 
 .optionMoMCell {
+    padding: 2px;
     font-size: 12px;
 }
 
@@ -659,6 +698,12 @@ selector svg {
     align-items: center;
     height: 25px;
     padding: 0 5px;
+}
+
+.optionMoM:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 3px;
 }
 
 /* DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION - DESCRIPTION */
@@ -678,6 +723,12 @@ selector svg {
     width: -webkit-fill-available;
     display: flex;
     align-items: center;
+}
+
+.sectionDesc:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
 }
 
 .itemDescCell {
@@ -708,6 +759,12 @@ selector svg {
     justify-content: center;
 }
 
+.itemPrice:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
 .optionPriceCell {
     border: solid 1px #ffffff;
     width: 50px;
@@ -726,6 +783,12 @@ selector svg {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.optionPrice:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 3px;
 }
 
 /* TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX - TAX */
@@ -1472,6 +1535,13 @@ selector svg {
     padding: 5px;
 }
 
+#searchOsInput:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 3px;
+    border: none;
+}
+
 .selectOsBodyLeft {
     width: 50%;
     overflow-y: auto;
@@ -1649,6 +1719,8 @@ selector svg {
     align-items: center;
 }
 
+
+
 .osLenghtList {
     margin: 0 20px 0 10px;
     display: flex;
@@ -1743,19 +1815,36 @@ selector svg {
 }
 
 .topButtonsCell {
-    padding: 10px 15px 0 15px;
+    padding: 5px 15px 0 15px;
     display: flex;
+    align-items: center;
+}
+
+.osListContainer {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    background-color: #a2a2a2;
+    padding: 0 5px;
+    border-radius: 5px;
 }
 
 .optionSetListButton {
-    height: 30px;
-    width: 30px;
+   transition: background-color 0.3s ease;
+}
+
+.optionSetListButton:hover {
+    background-color: #dadada;
 }
 
 .sameMoMContainer {
     display: flex;
     align-items: center;
-    margin-left: 15px;
+    margin-left: 10px;
+    height: 35px;
+    background-color: #a2a2a2;
+    padding: 0 5px;
+    border-radius: 5px;
 }
 
 .sameMoMInput {
@@ -1766,16 +1855,30 @@ selector svg {
     width: 100px;
     color: #a3a3a3;
     background-color: #f5f5f5;
-    height: 30px;
+    height: 25px;
     border-radius: 5px;
     font-size: 13px;
     justify-content: center;
 }
 
 .sameMoMButton {
-    height: 30px;
-    width: 30px;
     margin-left: 5px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.sameMoMButton:hover {
+    background-color: #dadada;
+}
+ 
+.removeMoMButton {
+    margin-left: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.removeMoMButton:hover {
+    background-color: #dadada;
 }
 
 /* LEFT CONTAINER - LEFT CONTAINER -LEFT CONTAINER -LEFT CONTAINER - LEFT CONTAINER - LEFT CONTAINER */
@@ -1920,6 +2023,8 @@ selector svg {
     margin-left: 10px;
 }
 
+
+
 .checkboxLabel {
     margin-left: 5px;
 }
@@ -1945,6 +2050,12 @@ selector svg {
     border-radius: 5px;
 }
 
+.taxName:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
 .taxPercentContainer {
     display: flex;
     align-items: center;
@@ -1961,6 +2072,12 @@ selector svg {
     border-radius: 5px;
 }
 
+.taxPercent:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
 .addTaxContainer {
     display: flex;
     padding: 5px 10px;
@@ -1972,6 +2089,7 @@ selector svg {
     padding: 3.5px 5px;
     border-radius: 5px;
     border: 1px solid #6b6b6b;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
