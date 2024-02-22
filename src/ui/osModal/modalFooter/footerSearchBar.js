@@ -1,4 +1,7 @@
 function searchItemOrSection(osModalFooter) {
+    const searchItemOrSectionContainer = document.createElement('div');
+    searchItemOrSectionContainer.className = 'searchItemOrSectionContainer';
+
     const searchItemOrSectionInput = document.createElement('input');
     searchItemOrSectionInput.type = 'text';
     searchItemOrSectionInput.placeholder = 'Search for Items or Sections';
@@ -50,7 +53,9 @@ function searchItemOrSection(osModalFooter) {
         });
     });
 
-    return searchItemOrSectionInput;
+    searchItemOrSectionContainer.appendChild(searchItemOrSectionInput);
+
+    return searchItemOrSectionContainer;
 }
 
 export { searchItemOrSection }

@@ -156,6 +156,14 @@ main {
     text-wrap: nowrap;
     padding: 5px;
     margin: 0 15px 0 0;
+    border-radius: 5px;
+    border: 0.5px solid #c4c1d5;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.optionAddNew:hover {
+    background-color: #e2def9;
 }
 
 /*OPTION SET LIST - OPTION SET LIST - OPTION SET LIST */
@@ -918,6 +926,11 @@ selector svg {
     padding: 2.5px 5px;
     border: none;
     background-color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+.closeOsModalBtn:hover {
+    color: red;
 }
 
 .closeBtnRow {
@@ -925,10 +938,6 @@ selector svg {
     justify-content: end;
     margin-bottom: 5px;
     transition: color 0.3s ease;
-}
-
-.closeOsModalBtn:hover {
-    color: red;
 }
 
 /* NEW BUTTON - NEW BUTTON - NEW BUTTON - NEW BUTTON - NEW BUTTON */
@@ -944,6 +953,7 @@ selector svg {
     margin: 10px 0;
     border-radius: 5px;
     border: 0.5px solid #cbc8bb;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -967,6 +977,7 @@ selector svg {
     margin: 10px 0;
     border-radius: 5px;
     border: 0.5px solid #c4c1d5;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -1375,6 +1386,7 @@ selector svg {
     left: 0; /* Aligns it to the left of the button */
     top: 45px;
     margin-left: 15px;
+    cursor: default;
 }
 
 .list.hidden {
@@ -1595,6 +1607,7 @@ selector svg {
     margin-bottom: 5px;
     border-radius: 5px;
     border: 0.5px solid #cbc8bb;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -1616,6 +1629,7 @@ selector svg {
     margin-left: 5px;
     border-radius: 5px;
     border: 0.5px solid #cbc8bb;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -1861,6 +1875,12 @@ selector svg {
     justify-content: center;
 }
 
+.sameMoMInput:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
 .sameMoMButton {
     margin-left: 5px;
     transition: background-color 0.3s ease;
@@ -1998,6 +2018,10 @@ selector svg {
 
 .currentTaxType {
     padding: 2.5px 5px;
+}
+
+.checkbox {
+    cursor: pointer;
 }
 
 .taxTypeCheckboxes {

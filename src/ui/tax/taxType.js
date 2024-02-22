@@ -75,6 +75,7 @@ function taxTypeCheckbox(taxTypeValue) {
     checkboxContainer.className = 'checkboxContainer';
 
     const checkbox = document.createElement('input');
+    checkbox.className = 'checkbox';
     checkbox.type = 'checkbox';
 
     const label = document.createElement('label');

@@ -64,6 +64,7 @@ function displayTaxCheckbox(displayTaxValue, checked) {
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.className = 'checkbox';
     checkbox.checked = checked;
 
     const label = document.createElement('label');
