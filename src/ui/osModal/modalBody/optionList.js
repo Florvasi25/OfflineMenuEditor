@@ -274,7 +274,6 @@ class OptionSetList {
         
             } else if (itemlessOs.includes(menuOs)){
                 const newOptionId = getRandomInt();
-                updateOptionSetItemsCounterLocalStorage(newOptionId, true);
         
                 emptyOptionJson.MenuItemOptionSetItemId = newOptionId;
         
@@ -304,15 +303,22 @@ class OptionSetList {
     deleteItems(items, menuOs, optionRowsContainer){
         for(let i = 0; i < items.length; i++){
             const { itemName, itemPrice } = this.trimItems(items[i]);
-            var menuOption = this.findOptionSetItem(menuOs, itemName, itemPrice );
-            var optionRow = document.getElementById(menuOption.MenuItemOptionSetItemId.toString());
+            var menuOptionsetItem = this.findOptionSetItem(menuOs, itemName, itemPrice );
+            var optionRow = this.findOptionRowToDelete(optionRowsContainer, menuOptionsetItem.MenuItemOptionSetItemId);
+
             if(optionRow && optionRowsContainer.contains(optionRow)) {
-                deleteOption(menuOs, menuOption, optionRow, optionRowsContainer);
+                deleteOption(menuOs, menuOptionsetItem, optionRow, optionRowsContainer);
             }
         }
 
     }
+    findOptionRowToDelete(optionRowsContainer, MenuItemOptionId){
+        var allElementsWithId = document.querySelectorAll(`[id="${MenuItemOptionId}"]`);
+        var childWithId = Array.from(allElementsWithId).find(elem => optionRowsContainer.contains(elem));
 
+        return childWithId;
+
+    }
     removeOSItemRows(container){
         while (container.firstChild) {
             container.removeChild(container.firstChild);
