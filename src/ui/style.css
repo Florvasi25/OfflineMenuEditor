@@ -109,6 +109,74 @@ main {
     background-color: #dcd5ec;
 }
 
+/*FIND BAR - FIND BAR - FIND BAR*/
+
+#findBar {
+    position: fixed; 
+    top: 10px; 
+    right: 10px; 
+    width: 300px; 
+    background: #202124; 
+    color: white; 
+    padding: 8px 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px; 
+    display: flex;
+    align-items: center;
+    z-index: 1000; 
+  }
+  
+  #findInput {
+    flex: 1; 
+    margin: 0 8px;
+    padding: 4px 8px;
+    font-size: 14px; 
+    background: #303134;
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+  }
+  
+  #findBar button {
+    padding: 4px 8px;
+    font-size: 14px; 
+    background-color: #5f6368;
+    color: white; 
+    border: none;
+    border-radius: 4px; 
+    cursor: pointer;
+    margin: 0 4px;
+  }
+  
+  #findBar button:hover {
+    background-color: #737373;
+  }
+  
+  #findBar button.closeButton {
+    background-color: #c2c2c2;
+  }
+  
+  #findBar button:active {
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  #findBar button:focus {
+    outline: none;
+    border: 1px solid #78C0E0;
+  }
+  
+  #findBar button {
+    text-align: center;
+  }
+  
+  .highlight {
+    background-color: yellow;
+  }
+
+  .current-highlight {
+    background-color: #FF9632;
+  }
+  
 /* MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL - MODAL */
 
 .leftSidebar {
