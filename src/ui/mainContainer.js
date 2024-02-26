@@ -21,6 +21,10 @@ import { SlotManager } from './slots/slotManager.js'
 
 import { createTaxContainer } from './tax/taxContainer.js';
 
+import { FindBar } from './findBar/findBar.js'
+
+//import { setFindBarEventListeners } from './findBar/findBar.js'
+
 //Builds HTML
 function generateHTML(jsonData) {
     const sectionContainer = document.getElementById('sectionContainer');
@@ -155,13 +159,23 @@ function createSlotTitle() {
 }
 
 const slotManagerInstance = new SlotManager();
+const findBarInstance = new FindBar();
+//setFindBarEventListeners(findBarInstance);
 generateHTML(jsonData);
 createTaxContainer(jsonData)
+
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'f') {
+      e.preventDefault();
+      findBarInstance.show();
+    }
+  });
 
 export {
     generateHTML,
     createBtnContainers,
     createLeftContainer,
     createTaxContainer,
-    slotManagerInstance
+    slotManagerInstance,
+    findBarInstance
 }

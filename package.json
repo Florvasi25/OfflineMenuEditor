@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "mark.js": "^8.11.1"
   }
 }
