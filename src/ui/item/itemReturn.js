@@ -1,4 +1,7 @@
-function createItemReturnCell(itemRow, menuItem, sectionId) {
+import { updateLocalStorage } from '../context.js';
+import { slotManagerInstance } from '../mainContainer.js';
+
+function createItemReturnCell(menuItem) {
     const itemReturnCell = document.createElement('div');
     itemReturnCell.classList.add('itemReturnCell');
 
@@ -12,11 +15,18 @@ function createItemReturnCell(itemRow, menuItem, sectionId) {
     const itemReturnFifteenCheckbox = document.createElement('input');
     itemReturnFifteenCheckbox.type = "checkbox";
     itemReturnFifteenCheckbox.classList.add('itemReturnFifteenCheckbox');
+    
+    itemReturnFifteenCheckbox.checked = menuItem.DepositReturnFee === 0.15;
 
-    itemReturnFifteenCheckbox.addEventListener('change', function() {
+    itemReturnFifteenCheckbox.addEventListener('change', () => {
         if (itemReturnFifteenCheckbox.checked) {
+            menuItem.DepositReturnFee = 0.15;
             itemReturnTwentyFiveCheckbox.checked = false;
+        } else {
+            menuItem.DepositReturnFee = null;
         }
+
+        updateLocalStorage(slotManagerInstance.currentSlot);
     });
 
     const itemReturnTwentyFiveCell = document.createElement('div');
@@ -29,11 +39,18 @@ function createItemReturnCell(itemRow, menuItem, sectionId) {
     const itemReturnTwentyFiveCheckbox = document.createElement('input');
     itemReturnTwentyFiveCheckbox.type = "checkbox";
     itemReturnTwentyFiveCheckbox.classList.add('itemReturnTwentyFiveCheckbox');
+    
+    itemReturnTwentyFiveCheckbox.checked = menuItem.DepositReturnFee === 0.25;
 
-    itemReturnTwentyFiveCheckbox.addEventListener('change', function() {
+    itemReturnTwentyFiveCheckbox.addEventListener('change', () => {
         if (itemReturnTwentyFiveCheckbox.checked) {
+            menuItem.DepositReturnFee = 0.25;
             itemReturnFifteenCheckbox.checked = false;
+        } else {
+            menuItem.DepositReturnFee = null;
         }
+
+        updateLocalStorage(slotManagerInstance.currentSlot);
     });
 
     itemReturnFifteenCell.appendChild(itemReturnFifteenText);

@@ -72,7 +72,7 @@ function createItem(menuItem, sectionId, itemContainer) {
     const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemDescCell)
 
-    const itemReturnCell = createItemReturnCell(itemRow, menuItem, sectionId);
+    const itemReturnCell = createItemReturnCell(menuItem);
     itemRow.appendChild(itemReturnCell)
 
     //Price Cell
