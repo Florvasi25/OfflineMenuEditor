@@ -1,4 +1,11 @@
-import { updateLocalStorage } from '../../context.js';
+import { 
+    updateLocalStorage,
+    updateItemlessLocalStorage,
+    groupedOs,
+    itemlessOs,
+    groupOptionSets
+} from '../../context.js';
+
 import { slotManagerInstance } from '../../mainContainer.js';
 
 function createOptionReturnCell(menuOption, menuOs) {
@@ -18,16 +25,37 @@ function createOptionReturnCell(menuOption, menuOs) {
     
     optionReturnFifteenCheckbox.checked = menuOption.DepositReturnFee === 0.15;
 
+    const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
+        option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
+    );
+    
     optionReturnFifteenCheckbox.addEventListener('change', () => {
-        if (optionReturnFifteenCheckbox.checked) {
-            menuOption.DepositReturnFee = 0.15;
-            optionReturnTwentyFiveCheckbox.checked = false;
-        } else {
-            menuOption.DepositReturnFee = null;
+        if (groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId].forEach(os => {
+                const option = os.MenuItemOptionSetItems[indexOfOption]
+    
+                if (optionReturnFifteenCheckbox.checked) {
+                    option.DepositReturnFee = 0.15;
+                    optionReturnTwentyFiveCheckbox.checked = false;
+                } else {
+                    option.DepositReturnFee = null;
+                }
+            })
+            groupOptionSets();
+            updateLocalStorage(slotManagerInstance.currentSlot);
+        } else if (itemlessOs.includes(menuOs)){
+            const option = menuOs.MenuItemOptionSetItems[indexOfOption]
+    
+            if (optionReturnFifteenCheckbox.checked) {
+                option.DepositReturnFee = 0.15;
+                optionReturnTwentyFiveCheckbox.checked = false;
+            } else {
+                option.DepositReturnFee = null;
+            }
+    
+            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
         }
-
-        updateLocalStorage(slotManagerInstance.currentSlot);
-    });
+    })
 
     const optionReturnTwentyFiveCell = document.createElement('div');
     optionReturnTwentyFiveCell.classList.add('optionReturnTwentyFiveCell');
@@ -52,6 +80,34 @@ function createOptionReturnCell(menuOption, menuOs) {
 
         updateLocalStorage(slotManagerInstance.currentSlot);
     });
+
+    optionReturnTwentyFiveCheckbox.addEventListener('change', () => {
+        if (groupedOs[menuOs.groupOsId]) {
+            groupedOs[menuOs.groupOsId].forEach(os => {
+                const option = os.MenuItemOptionSetItems[indexOfOption]
+    
+                if (optionReturnTwentyFiveCheckbox.checked) {
+                    option.DepositReturnFee = 0.25;
+                    optionReturnFifteenCheckbox.checked = false;
+                } else {
+                    option.DepositReturnFee = null;
+                }
+            })
+            groupOptionSets();
+            updateLocalStorage(slotManagerInstance.currentSlot);
+        } else if (itemlessOs.includes(menuOs)){
+            const option = menuOs.MenuItemOptionSetItems[indexOfOption]
+    
+            if (optionReturnTwentyFiveCheckbox.checked) {
+                option.DepositReturnFee = 0.25;
+                optionReturnFifteenCheckbox.checked = false;
+            } else {
+                option.DepositReturnFee = null;
+            }
+    
+            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
+        }
+    })
 
     optionReturnFifteenCell.appendChild(optionReturnFifteenText);
     optionReturnFifteenCell.appendChild(optionReturnFifteenCheckbox);
