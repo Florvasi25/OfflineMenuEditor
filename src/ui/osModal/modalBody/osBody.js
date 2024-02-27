@@ -11,6 +11,8 @@ import { createOptionNameCell } from './optionName.js'
 
 import { createOptionMoMCell } from './optionMoM.js'
 
+import { createOptionReturnCell } from './optionReturn.js'
+
 import { createOptionPriceCell } from './optionPrice.js'
 
 import { createOptionTaxCell } from './optionTax.js'
@@ -104,6 +106,9 @@ function createOption(optionRowsContainer, menuOs, menuOption) {
     nameAndMoM.appendChild(optionMoMCell)
 
     optionRow.appendChild(nameAndMoM)
+
+    const optionReturnCell = createOptionReturnCell(menuOption, menuOs)
+    optionRow.appendChild(optionReturnCell)
     
     const optionPrice = createOptionPriceCell(menuOption, menuOs)
     optionRow.appendChild(optionPrice)

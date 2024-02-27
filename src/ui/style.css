@@ -843,7 +843,7 @@ selector svg {
 
 .optionPriceCell {
     border: solid 1px #ffffff;
-    width: 50px;
+    width: 35px;
     flex-grow: 0;
     padding: 5px;
     display: flex;
