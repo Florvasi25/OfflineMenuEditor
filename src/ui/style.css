@@ -2213,3 +2213,39 @@ selector svg {
     display: flex;
     padding: 5px 10px;
 }
+
+.itemReturnCell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 45px;
+    border: solid 1px #ffffff;
+    flex-shrink: 0;
+}
+
+.itemReturnFifteenCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.itemReturnFifteenText {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.itemReturnTwentyFiveCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemReturnTwentyFiveText {
+    font-size: 12px;
+    margin-bottom: 5px;
+}

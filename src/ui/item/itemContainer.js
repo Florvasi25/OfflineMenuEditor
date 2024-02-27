@@ -9,6 +9,7 @@ import { createItemDragCell } from './itemDragAndDrop.js'
 import { createItemButtonsCell } from './itemButtonContainer.js'
 import { createItemButton } from './itemAddNew.js'
 import { createItemDescCell } from './itemDescription.js'
+import { createItemReturnCell } from './itemReturn.js'
 import { createItemPriceCell, } from './itemPrice.js'
 import { createItemTaxCell } from './itemTax.js'
 import { changeItemClockIcon } from '../clock/itemClock.js'
@@ -70,6 +71,9 @@ function createItem(menuItem, sectionId, itemContainer) {
     //Desc Cell
     const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemDescCell)
+
+    const itemReturnCell = createItemReturnCell(itemRow, menuItem, sectionId);
+    itemRow.appendChild(itemReturnCell)
 
     //Price Cell
     const itemPriceCell = createItemPriceCell(itemRow, menuItem, sectionId)
