@@ -19,6 +19,8 @@ import {
 
 import { slotManagerInstance } from '../../mainContainer.js';
 
+import { createOsModalContainer } from '../../osModal/modalContainer.js'
+
 function createSelectOsModalBody(itemRow) {
     const selectOsModalBody = document.createElement('div');
     selectOsModalBody.className = 'selectOsModalBody';
@@ -359,11 +361,33 @@ function createSelectOsRow(menuOs) {
 function createSelectOsNameHeader(menuOs) {
     const osNameHeader = document.createElement('p')
     osNameHeader.className = 'selectOsNameHeader'
+
     if (menuOs.Name == null || menuOs.Name == '') {
         osNameHeader.textContent = 'Empty'
     } else {
         osNameHeader.textContent = menuOs.Name
     }
+
+    osNameHeader.addEventListener('click', () => {
+        const osModalContainer = createOsModalContainer(menuOs)
+        osModalContainer.style.display = 'block';
+        setTimeout(() => {
+            osModalContainer.classList.add('show');
+        }, 10);
+
+        const selectOsModal = document.querySelector('.selectOsModal')
+
+        if (selectOsModal) {
+            selectOsModal.style.opacity = 0
+            setTimeout(() => {
+                const existingSelectOsModal = document.querySelector('.selectOsModal')
+                if (existingSelectOsModal) {
+                    existingSelectOsModal.remove()
+                }
+                selectOsModal.style.display = 'none'; 
+            }, 200);
+        }
+    });
 
     return osNameHeader
 }

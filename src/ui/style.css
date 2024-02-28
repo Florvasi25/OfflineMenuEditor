@@ -365,7 +365,6 @@ main {
     cursor: pointer;
     font-size: 14px;
     transition: opacity 0.3s ease;
-
 }
 
 .osNameHeader:hover {
@@ -1599,9 +1598,15 @@ selector svg {
 .selectOsNameHeader {
     flex-grow: 1;
     color: #ffffff;
+    cursor: pointer;
     font-size: 14px;
     display: flex;
     align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.selectOsNameHeader:hover {
+    opacity: 0.65;
 }
 
 .selectOsModalBody {
