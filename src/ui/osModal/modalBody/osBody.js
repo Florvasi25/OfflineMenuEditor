@@ -106,18 +106,18 @@ function createOption(optionRowsContainer, menuOs, menuOption) {
     nameAndMoM.appendChild(optionMoMCell)
 
     optionRow.appendChild(nameAndMoM)
-
-    const optionReturnCell = createOptionReturnCell(menuOption, menuOs)
-    optionRow.appendChild(optionReturnCell)
     
     const optionPrice = createOptionPriceCell(menuOption, menuOs)
     optionRow.appendChild(optionPrice)
-
+    
     const optionTax = createOptionTaxCell(menuOption, jsonData)
     optionRow.appendChild(optionTax)
-
+    
     const optionButtonsCell = createOptionButtonsCell(optionRow, menuOs, optionRowsContainer, menuOption)
     optionRow.appendChild(optionButtonsCell)
+    
+    const optionReturnCell = createOptionReturnCell(menuOption, menuOs)
+    optionRow.appendChild(optionReturnCell)
     
     return optionRow
 }

@@ -71,17 +71,18 @@ function createItem(menuItem, sectionId, itemContainer) {
     //Desc Cell
     const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemDescCell)
-
-    const itemReturnCell = createItemReturnCell(menuItem);
-    itemRow.appendChild(itemReturnCell)
-
+    
     //Price Cell
     const itemPriceCell = createItemPriceCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemPriceCell)
-
+    
     //Tax Cell
     const itemTaxCell = createItemTaxCell(menuItem, jsonData)
     itemRow.appendChild(itemTaxCell)
+
+    // Deposit Return Fee
+    const itemReturnCell = createItemReturnCell(menuItem);
+    itemRow.appendChild(itemReturnCell)
 
     return itemRow
 }
