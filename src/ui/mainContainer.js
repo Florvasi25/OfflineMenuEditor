@@ -40,16 +40,20 @@ function createBtnContainers() {
     const fileOptionsContainer = document.getElementById('fileOptionsContainer')
     const slotTitle = createSlotTitle();
     slotTitle.id = 'slotButton1';
+
     const loadJsonButton = createLoadJsonButton()
     const saveButton = createSaveButton()
 
     const expandAllButton = createExpandAllButton()
     const closeAllButton = createCloseAllButton()
 
+    const zoomInzoomOutButtons = createZoomInZoomOutButtonsCell()
+
     fileOptionsContainer.appendChild(loadJsonButton)
     fileOptionsContainer.appendChild(saveButton)
     fileOptionsContainer.appendChild(expandAllButton)
     fileOptionsContainer.appendChild(closeAllButton)
+    fileOptionsContainer.appendChild(zoomInzoomOutButtons)
     fileOptionsContainer.appendChild(slotTitle)
 
     const newSectionBtnContainer = document.getElementById('newSectionBtnContainer')
@@ -111,6 +115,77 @@ function handleCloseAll() {
             toggleSectionState(section);
         }
     });
+}
+
+let clickCount = 0; // Track the total number of clicks
+
+function createZoomInZoomOutButtonsCell (){
+    const zoomInZoomOutButtonsContainer = document.createElement('div')
+    zoomInZoomOutButtonsContainer.className = 'zoomInZoomOutButtonsContainer'
+
+    // Create buttons
+    const increaseBtn = document.createElement('button');
+    increaseBtn.classList.add('increaseBtn');
+    increaseBtn.classList.add('sectionButton');
+
+    const zoomInButtonImg = document.createElement('img')
+    zoomInButtonImg.classList.add('sectionButtonImg')
+    zoomInButtonImg.src = '../../assets/zoomInIcon.svg'
+    increaseBtn.appendChild(zoomInButtonImg)
+
+    increaseBtn.onclick = function() {
+        increaseFontSize(this);
+    };
+
+    const decreaseBtn = document.createElement('button');
+    decreaseBtn.classList.add('decreaseBtn');
+    decreaseBtn.classList.add('sectionButton');
+    decreaseBtn.disabled = true;
+
+    const zoomOutButtonImg = document.createElement('img')
+    zoomOutButtonImg.classList.add('sectionButtonImg')
+    zoomOutButtonImg.src = '../../assets/zoomOutIcon.svg'
+    decreaseBtn.appendChild(zoomOutButtonImg)
+
+    decreaseBtn.onclick = function() {
+        decreaseFontSize(this);
+    };
+
+    zoomInZoomOutButtonsContainer.appendChild(increaseBtn);
+    zoomInZoomOutButtonsContainer.appendChild(decreaseBtn);
+
+    return zoomInZoomOutButtonsContainer
+}
+
+function increaseFontSize(button) {
+    let paragraphs = document.querySelectorAll('p'); // Select all <p> elements
+    if (clickCount < 2) { // Check if maximum limit of 2 clicks is not reached
+        paragraphs.forEach(paragraph => {
+            let currentFontSize = parseInt(window.getComputedStyle(paragraph).fontSize); // Get the current font size
+            currentFontSize++;
+            paragraph.style.fontSize = currentFontSize + 'px';
+        });
+        clickCount++;
+        button.nextElementSibling.disabled = false; // Enable decrease button
+    }
+    if (clickCount === 2) { // Disable "+" button when maximum limit is reached
+        button.disabled = true;
+    }
+}
+
+function decreaseFontSize(button) {
+    const increaseBtn = document.querySelector('.increaseBtn');
+    let paragraphs = document.querySelectorAll('p'); // Select all <p> elements
+    if (clickCount > 0) { // Check if current font size is greater than the minimum
+        paragraphs.forEach(paragraph => {
+            let currentFontSize = parseInt(window.getComputedStyle(paragraph).fontSize); // Get the current font size
+            currentFontSize--;
+            paragraph.style.fontSize = currentFontSize + 'px';
+        });
+        clickCount--;
+        button.disabled = clickCount === 0; // Disable "-" button when minimum limit is reached
+        increaseBtn.disabled = false; // Re-enable "+" button
+    }
 }
 
 function createSlotTitle() {

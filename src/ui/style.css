@@ -2349,3 +2349,14 @@ selector svg {
     font-size: 11px;
     margin-right: 5px;
 }
+
+/* ZOOM IN ZOOM OUT - */
+
+.zoomInZoomOutButtonsContainer {
+    display: flex;
+    margin-left: 20px;
+}
+
+.decreaseBtn {
+    margin-left: 10px;
+}
