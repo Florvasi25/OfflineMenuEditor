@@ -1,6 +1,6 @@
 import { emptyMenu } from '../emptyMenu.js'
 
-import { updateJsonData } from '../context.js'
+import { setJsonData } from '../context.js'
 
 import { generateHTML, 
     createBtnContainers, 
@@ -52,7 +52,7 @@ export class SlotManager {
         this.currentSlot = jsonDataSlot;
         this.currentItemlessOs = itemlessOsName; 
         this.currentSlotName = slotName;
-        console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs);
+        console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs, " slot ID: ", slotId);
         this.updateWorkspace(slotId);
     
         // Update slotTitle.id to match the slotId
@@ -62,7 +62,8 @@ export class SlotManager {
 
     updateWorkspace(slotId) {
         let jsonData = this.getJsonData();
-        updateJsonData(jsonData);
+        setJsonData(jsonData);
+        //updateJsonData(jsonData);
         generateHTML(jsonData);
         createTaxContainer(jsonData);
         this.changeSlotTitle(slotId);

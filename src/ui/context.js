@@ -13,6 +13,10 @@ let progressiveInt = parseInt(localStorage.getItem('lastProgressiveInt')) || 0;
 
 groupOptionSets()
 
+setTimeout(() => {
+    updateLocalStorage(slotManagerInstance.currentSlot);
+    }, 1000);
+
 function setJsonData(data) {
     jsonData = data;
     groupOptionSets();
@@ -275,9 +279,6 @@ function groupOptionSets() {
             });
         });
     });
-    setTimeout(() => {
-    updateLocalStorage(slotManagerInstance.currentSlot);
-    }, 1000);
 }
 
 function addItemlessOs(os) {
