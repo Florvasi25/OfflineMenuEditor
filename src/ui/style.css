@@ -1558,6 +1558,7 @@ selector svg {
     /* Optional: background color change
     background-color: #ffebeb; */
 }
+
 /* SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL - SELECT OPTION SET MODAL */
 
 .selectOsModal {
@@ -1726,10 +1727,11 @@ selector svg {
     background-color: #fff6cf;
 }
 
-
 .osRow {
     width: 36%;
 }
+
+/* EXPAND OS LIST - EXPAND OS LIST - EXPAND OS LIST */
 
 .expandButtonContainer {
     display: flex;
@@ -1822,21 +1824,13 @@ selector svg {
     align-items: center;
 }
 
-
-
 .osLenghtList {
     margin: 0 20px 0 10px;
     display: flex;
     align-items: center;
 }
 
-.menu-item-background {
-    background-color: yellow;
-}
-
-.menu-section-background {
-    background-color: lightblue;
-}
+/* OS FOOTER - OS FOOTER - OS FOOTER - OS FOOTER - OS FOOTER */
 
 .osModalFooter {
     padding: 10px 15px 15px 15px;
@@ -2278,6 +2272,8 @@ selector svg {
 .taxNameAndPercent {
     display: flex;
 }
+
+/* DEPOSIT RETURN FEE - DEPOSIT RETURN FEE - DEPOSIT RETURN FEE */
 
 .editTaxContainer {
     display: flex;
