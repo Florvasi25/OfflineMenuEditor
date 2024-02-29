@@ -39,6 +39,9 @@ function createNewTaxContainer(addTaxContainer, jsonData) {
     const taxNameContainer = document.createElement('div');
     taxNameContainer.className = 'taxNameContainer';
 
+    const taxNameAndPercentContainer = document.createElement('div');
+    taxNameAndPercentContainer.className = 'taxNameAndPercentContainer';
+
     const taxNameTitle = document.createElement('p');
     taxNameTitle.className = 'taxNameTitle';
     taxNameTitle.textContent = 'Tax Name';
@@ -101,21 +104,38 @@ function createNewTaxContainer(addTaxContainer, jsonData) {
         }
     });
 
+    taxPercentContainer.appendChild(taxPercentTitle);
+    taxPercentContainer.appendChild(taxPercent);
+
+    taxNameAndPercentContainer.appendChild(taxNameContainer);
+    taxNameAndPercentContainer.appendChild(taxPercentContainer);
+
+    const saveTaxButtonsContainer = document.createElement('div');
+    saveTaxButtonsContainer.classList.add('saveTaxButtonsContainer');
+
     const saveTaxButton = document.createElement('button');
     saveTaxButton.classList.add('saveTaxButton');
     saveTaxButton.classList.add('taxButton')
-    saveTaxButton.textContent = 'Save Tax';
+    saveTaxButton.textContent = 'Save';
     
     saveTaxButton.addEventListener('click', () => {
         handleSaveTax(newTaxContainer, addTaxContainer, taxPercent, taxName)
     });
+
+    const cancelTaxButton = document.createElement('button');
+    cancelTaxButton.classList.add('cancelTaxButton');
+    cancelTaxButton.classList.add('taxButton')
+    cancelTaxButton.textContent = 'Cancel';
+
+    cancelTaxButton.addEventListener('click', () => {
+        newTaxContainer.remove()
+    })
+
+    saveTaxButtonsContainer.appendChild(saveTaxButton);
+    saveTaxButtonsContainer.appendChild(cancelTaxButton);
     
-    taxPercentContainer.appendChild(taxPercentTitle);
-    taxPercentContainer.appendChild(taxPercent);
-    taxPercentContainer.appendChild(saveTaxButton);
-    
-    newTaxContainer.appendChild(taxNameContainer);
-    newTaxContainer.appendChild(taxPercentContainer);
+    newTaxContainer.appendChild(taxNameAndPercentContainer);
+    newTaxContainer.appendChild(saveTaxButtonsContainer);
     
     addTaxContainer.parentNode.insertBefore(newTaxContainer, addTaxContainer);
 }

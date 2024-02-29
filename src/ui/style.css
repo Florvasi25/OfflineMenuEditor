@@ -432,7 +432,7 @@ main {
 }
 
 .dashCountCell {
-    padding: 0 10px;
+    padding: 0 5px;
     display: flex;
     align-items: center;
 }
@@ -473,6 +473,9 @@ main {
     user-select: text;
     display: flex;
     align-items: center;
+    width: 35px;
+    /* background: rebeccapurple; */
+    justify-content: center;
 }
 
 .optionRow {
@@ -522,9 +525,11 @@ main {
 
 .previewNameAndMoM {
     display: flex;
+    width: 100%;
     font-size: 13px;
     user-select: text;
-    margin-right: 10px;
+    margin-right: 5px;
+    justify-content: space-between;
 }
 
 .dashAndMoM {
@@ -927,11 +932,23 @@ selector svg {
     width: 35px;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.yesButton {
     transition: background-color 0.3s ease;
 }
 
-.confirmDeleteBtn:hover {
-    background-color: #b1b1b1;
+.yesButton:hover {
+    background-color: #9ccf9c;
+}
+
+.noButton {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.noButton:hover {
+    background-color: #d84b4b;
+    color: #ffffff;
 }
 
 /* VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON - VISIBILITY BUTTON */
@@ -2073,7 +2090,7 @@ selector svg {
 .taxHeaderContainer {
     display: flex;
     align-items: center;
-    background-color: #b5b5b5;
+    background-color: #b7b3d7;
     margin: 10px;
     border-radius: 5px;
     height: 30px;
@@ -2084,12 +2101,16 @@ selector svg {
 .taxTypeContainer {
     display: flex;
     padding: 5px 10px;
-    height: 30px;
+    height: 20px;
     align-items: center;
 }
 
-.currentTaxType {
-    padding: 2.5px 5px;
+.taxTypeTitle {
+    width: 85px;
+}
+
+.excludedCheckbox {
+    width: 85px;
 }
 
 .checkbox {
@@ -2103,12 +2124,16 @@ selector svg {
 .displayTaxContainer {
     display: flex;
     padding: 5px 10px;
-    height: 30px;
+    height: 20px;
     align-items: center;
 }
 
-.currentDisplayTax {
-    padding: 2.5px 5px;
+.displayTaxTitle {
+    width: 85px;
+}
+
+.trueCheckbox {
+    width: 85px;
 }
 
 .displayTaxCheckboxes{
@@ -2119,8 +2144,6 @@ selector svg {
     margin-left: 10px;
 }
 
-
-
 .checkboxLabel {
     margin-left: 5px;
 }
@@ -2128,6 +2151,11 @@ selector svg {
 .newTaxContainer {
     display: flex;
     padding: 5px 10px;
+    border: 1px solid #726d9b;
+    border-radius: 5px;
+    margin: 3px 10px;
+    background-color: #dcdbe9;
+    justify-content: space-between;
 }
 
 .taxNameContainer {
@@ -2186,7 +2214,7 @@ selector svg {
     border-radius: 5px;
     border: 1px solid #6b6b6b;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .taxButton:hover {
@@ -2197,16 +2225,54 @@ selector svg {
     margin-right: 10px;
 }
 
+.removeTaxButton:hover {
+    background-color: #d84b4b;
+    color: #ffffff;
+}
+
 .applyTaxToAllButton {
     margin-right: 10px;
+}
+
+.applyTaxToAllButton:hover {
+    background-color: #9ccf9c;
 }
 
 .savedTaxContainer {
     display: flex;
     padding: 5px 10px;
-    height: 30px;
+    height: 25px;
     align-items: center;
     justify-content: space-between;
+    background-color: #b7b3d7;
+    margin: 3px 10px;
+    border-radius: 5px;
+}
+
+.taxNameAndPercentContainer {
+    display: flex;
+}
+
+.saveTaxButtonsContainer {
+    display: flex;
+}
+
+.saveTaxButton {
+    transition: background-color 0.3s ease;
+}
+
+.saveTaxButton:hover {
+    background-color: #9ccf9c;
+}
+
+.cancelTaxButton {
+    margin-left: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cancelTaxButton:hover {
+    background-color: #d84b4b;
+    color: #ffffff;
 }
 
 .taxNameAndPercent {
@@ -2216,6 +2282,11 @@ selector svg {
 .editTaxContainer {
     display: flex;
     padding: 5px 10px;
+    border: 1px solid #726d9b;
+    border-radius: 5px;
+    margin: 3px 10px;
+    background-color: #dcdbe9;
+    justify-content: space-between;
 }
 
 .itemReturnCell {
@@ -2224,7 +2295,7 @@ selector svg {
     justify-content: center;
     align-items: center;
     padding: 5px;
-    width: 35px;
+    width: 25px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
