@@ -443,5 +443,6 @@ export {
     removePublicId,
     removePublicIdFromOSItem,
     updateJsonData,
-    checkForNullOsNames
+    checkForNullOsNames,
+    getRandomColor
 }

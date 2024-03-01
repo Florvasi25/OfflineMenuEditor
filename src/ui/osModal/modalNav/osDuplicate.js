@@ -2,7 +2,8 @@ import {
     addItemlessOs,
     getRandomInt,
     closeOsModalContainerQuick,
-    removePublicIdFromOSItem
+    removePublicIdFromOSItem,
+    getRandomColor
 } from '../../context.js';
 
 import { createOsModalContainer } from "../modalContainer.js";
@@ -28,12 +29,12 @@ function duplicateOs(menuOs) {
     const newOsId = getRandomInt();
 
     newOs.MenuItemOptionSetId = newOsId;
-    newOs.groupOsId = null
-    newOs.MenuItemId = null
-    newOs.groupOsId = `group${getRandomInt()}`
-    if(newOs.PublicId){ delete newOs.PublicId; }
-    removePublicIdFromOSItem(newOs)
-    newOs.Name += "_copy"
+    newOs.groupOsId = null;
+    newOs.MenuItemId = null;
+    newOs.groupOsId = `group${getRandomInt()}`;
+    if (newOs.PublicId) { delete newOs.PublicId; }
+    removePublicIdFromOSItem(newOs);
+    newOs.Name += "_copy";
 
     // Set NextMenuItemOptionSetId to null for each option if it's not already null
     newOs.MenuItemOptionSetItems.forEach(option => {
@@ -42,15 +43,19 @@ function duplicateOs(menuOs) {
         }
     });
 
-    addItemlessOs(newOs)
+    // Assign a new groupColor to the duplicated option set
+    newOs.groupColor = getRandomColor(); // Generate a new random color
 
-    closeOsModalContainerQuick()
+    addItemlessOs(newOs);
 
-    const openOsModalContainer = createOsModalContainer(newOs)
+    closeOsModalContainerQuick();
+
+    const openOsModalContainer = createOsModalContainer(newOs);
     openOsModalContainer.style.display = 'block';
     setTimeout(() => {
         openOsModalContainer.classList.add('show');
     }, 10);
 }
+
 
 export { osDuplicateButton }
