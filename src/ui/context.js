@@ -239,7 +239,6 @@ function getRandomInt() {
     return progressiveInt;
 }
 
-
 function getSectionRow(menuSectionId) {
     const sectionRowsArray = Array.from(document.getElementsByClassName('sectionRow'));
     const sectionRow = sectionRowsArray.find((p) => p.id == menuSectionId.toString())
@@ -249,12 +248,14 @@ function getSectionRow(menuSectionId) {
 function getMenuSection(jsonData, menuSectionId) {
     return jsonData.MenuSections.find(section => section.MenuSectionId.toString() === menuSectionId) || null;
 }
+
 function getGroupOsKey(os) {
     const { Name, MinSelectCount, MaxSelectCount, MenuItemOptionSetItems } = os;
     const osLength = MenuItemOptionSetItems.length;
     const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
     return `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
 }
+
 // Add a function to generate random colors
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -277,7 +278,12 @@ function groupOptionSets() {
                 if (!groupOsKeyToId[groupOsKey]) {
                     const groupId = getRandomInt();
                     groupOsKeyToId[groupOsKey] = groupId;
-                    groupColors[groupId] = getRandomColor(); // Assign random color to the group
+                    // Check if groupColor already exists for the group
+                    if (os.groupColor) {
+                        groupColors[groupId] = os.groupColor; // Use the existing color
+                    } else {
+                        groupColors[groupId] = getRandomColor(); // Assign random color to the group
+                    }
                 }
                 const groupOsId = groupOsKeyToId[groupOsKey];
 
@@ -293,15 +299,21 @@ function groupOptionSets() {
             });
         });
     });
+    console.log(groupedOs);
     setTimeout(() => {
         updateLocalStorage(slotManagerInstance.currentSlot);
     }, 1000);
 }
 
 function addItemlessOs(os) {
+    // Assign a groupColor to the itemless OS if it doesn't have one
+    if (!os.groupColor) {
+        os.groupColor = getRandomColor(); // Generate a random color
+    }
     itemlessOs.push(os);
     updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
 }
+
 
 function deleteItemlessOs(os) {
     itemlessOs = itemlessOs.filter(o => o.MenuItemOptionSetId !== os.MenuItemOptionSetId);
@@ -333,6 +345,7 @@ function closeOsModalContainer() {
         }, 300);
     }
 }
+
 function checkForNullOsNames(){
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
