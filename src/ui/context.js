@@ -255,21 +255,35 @@ function getGroupOsKey(os) {
     const optionKey = MenuItemOptionSetItems.map(option => `${option.Name}_${option.Price}_${option.IsAvailable}`).join('|');
     return `${Name}_${MinSelectCount}_${MaxSelectCount}_${osLength}_${optionKey}`;
 }
+// Add a function to generate random colors
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 function groupOptionSets() {
     groupedOs = {};
     const groupOsKeyToId = {}; // Dictionary to store groupOsKeys and their IDs
+    const groupColors = {}; // Dictionary to store groupOsIds and their corresponding colors
 
     jsonData.MenuSections.forEach(sections => {
         sections.MenuItems.forEach(items => {
             items.MenuItemOptionSets.forEach(os => {
                 const groupOsKey = getGroupOsKey(os);
                 if (!groupOsKeyToId[groupOsKey]) {
-                    groupOsKeyToId[groupOsKey] = getRandomInt();
+                    const groupId = getRandomInt();
+                    groupOsKeyToId[groupOsKey] = groupId;
+                    groupColors[groupId] = getRandomColor(); // Assign random color to the group
                 }
-                const numericId = groupOsKeyToId[groupOsKey];
+                const groupOsId = groupOsKeyToId[groupOsKey];
 
-                const groupOsKeyWithId = `group${numericId}`;
+                const groupOsKeyWithId = `group${groupOsId}`;
                 os.groupOsId = groupOsKeyWithId;
+                os.groupColor = groupColors[groupOsId]; // Assign color to the option set
 
                 if (!groupedOs[groupOsKeyWithId]) {
                     groupedOs[groupOsKeyWithId] = [os];
@@ -279,6 +293,9 @@ function groupOptionSets() {
             });
         });
     });
+    setTimeout(() => {
+        updateLocalStorage(slotManagerInstance.currentSlot);
+    }, 1000);
 }
 
 function addItemlessOs(os) {

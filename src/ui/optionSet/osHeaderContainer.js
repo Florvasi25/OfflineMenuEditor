@@ -55,6 +55,10 @@ function createOsRow(menuOs, sectionId, itemId) {
     osRowHeader.classList.add('defaultColor');
     osRowHeader.classList.add('folded')
     osRowHeader.id = menuOs.MenuItemOptionSetId
+
+    // Apply background color based on group
+    osRowHeader.style.backgroundColor = menuOs.groupColor;
+
     osRow.appendChild(osRowHeader);
 
     const dropAndName = document.createElement('div')
@@ -79,6 +83,7 @@ function createOsRow(menuOs, sectionId, itemId) {
 
     return osRow
 }
+
 
 function createOsNameHeader(menuOs, sectionId, itemId) {
     const osNameHeader = document.createElement('p')

@@ -338,6 +338,8 @@ function createSelectOsRow(menuOs) {
     selectOsRowHeader.classList.add('folded');
     selectOsRowHeader.id = menuOs.MenuItemOptionSetId;
 
+    selectOsRowHeader.style.backgroundColor = menuOs.groupColor;
+
     const dropAndName = document.createElement('div')
     dropAndName.className = 'dropAndName'
     selectOsRowHeader.appendChild(dropAndName)

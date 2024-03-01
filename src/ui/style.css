@@ -316,7 +316,7 @@ main {
 .osRowHeader {
     display: flex;
     height: auto;
-    padding: 7.5px 0px;
+    padding: 4.5px 0px;
     justify-content: space-between;
     border-radius: 5px;
     margin-top: 3px;
