@@ -8,12 +8,15 @@ import {
     setColorOfRows,
     itemlessOs,
     updateItemlessLocalStorage,
-    groupOptionSets,
+    groupOptionSets
 } from "../../context.js";
 
 import { createOptionRow } from "../../optionSet/osOptionsContainer.js";
 
-import { slotManagerInstance } from  "../../mainContainer.js";
+import { 
+    slotManagerInstance, 
+    clickCount 
+} from  "../../mainContainer.js";
 
 function createOptionButton(optionRowsContainer, menuOs) {
     const newOptionButton = document.createElement("button");
@@ -70,6 +73,14 @@ function handleClickNewOptionButton(optionRowsContainer, menuOs) {
                     emptyOptionCopy
                 );
                 optionRowsContainer.appendChild(optionRow);
+
+                if (optionRow) {
+                    var optionRowParagraphs = optionRow.querySelectorAll('p');
+                    optionRowParagraphs.forEach(function(paragraph) {
+                        var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+                        paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+                    });
+                }
             }
 
             updatePreview(os, emptyOptionCopy);

@@ -8,7 +8,10 @@ import {
 
 import { toggleSectionState } from "./sectionDropDown.js";
 
-import { slotManagerInstance, clickCount } from '../mainContainer.js';
+import { 
+    slotManagerInstance, 
+    clickCount 
+} from '../mainContainer.js';
 
 function createSectionButton() {
     const newSectionButton = document.createElement('button')
@@ -43,12 +46,19 @@ function createSectionButton() {
         let sectionRow = createSection(emptySectionJson)
     
         document.getElementById('sectionContainer').appendChild(sectionRow);
-    
+        
+        if (sectionRow) {
+            var sectionRowParagraphs = sectionRow.querySelectorAll('p');
+            sectionRowParagraphs.forEach(function(paragraph) {
+                var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+                paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+            });
+        }
+
         jsonData.MenuSections.push(emptySectionJson)
         toggleSectionState(sectionRow);
 
         updateLocalStorage(slotManagerInstance.currentSlot);
-    
     });
 
     return newSectionButton

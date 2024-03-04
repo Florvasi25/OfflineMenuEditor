@@ -1058,6 +1058,7 @@ selector svg {
 .newOsBtnContainer {
     display: flex;
     justify-content: start;
+    margin-top: 5px;
 }
 
 .itemAddNew {
@@ -1641,6 +1642,7 @@ selector svg {
 #searchOsInput {
     width: -webkit-fill-available;
     padding: 5px;
+    margin: 2px;
 }
 
 #searchOsInput:focus {
@@ -2124,7 +2126,7 @@ selector svg {
 .displayTaxContainer {
     display: flex;
     padding: 5px 10px;
-    height: 20px;
+    height: auto;
     align-items: center;
 }
 
@@ -2241,7 +2243,7 @@ selector svg {
 .savedTaxContainer {
     display: flex;
     padding: 5px 10px;
-    height: 25px;
+    height: auto;
     align-items: center;
     justify-content: space-between;
     background-color: #b7b3d7;

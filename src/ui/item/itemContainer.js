@@ -93,9 +93,6 @@ function createItem(menuItem, sectionId, itemContainer) {
     const itemReturnCell = createItemReturnCell(menuItem);
     itemRow.appendChild(itemReturnCell)
 
-
-
-
     return itemRow
 }
 

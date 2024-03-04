@@ -1,6 +1,9 @@
 import { createItem } from "./itemContainer.js";
 
-import { slotManagerInstance } from '../mainContainer.js';
+import { 
+    slotManagerInstance, 
+    clickCount 
+} from '../mainContainer.js';
 
 import {
     jsonData,
@@ -73,6 +76,14 @@ function CreateItem(itemContainer, item, sectionIndex, sectionId, newId, section
     let itemRow = createItem(item, sectionId, itemContainer)
     
     itemContainer.appendChild(itemRow);
+
+    if (itemRow) {
+        var itemRowParagraphs = itemRow.querySelectorAll('p');
+        itemRowParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
     
     if(getsectionClockColor(sectionRow) == 'rgb(128, 214, 111)'){
 

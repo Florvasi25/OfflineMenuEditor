@@ -6,7 +6,10 @@ import {
 
 import { showToolTip } from '../toolTip.js';
 
-import { slotManagerInstance } from '../mainContainer.js';
+import { 
+    slotManagerInstance, 
+    clickCount 
+} from '../mainContainer.js';
 
 import { createSavedTax } from './savedTax.js'
 
@@ -162,6 +165,14 @@ function handleSaveTax(newTaxContainer, addTaxContainer, taxPercent, taxName) {
         const savedTax = createSavedTax(newTaxRate)
 
         addTaxContainer.parentNode.insertBefore(savedTax, addTaxContainer);
+
+        if (savedTax) {
+            var savedTaxParagraphs = savedTax.querySelectorAll('p');
+            savedTaxParagraphs.forEach(function(paragraph) {
+                var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+                paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+            });
+        }
     }
 }
 

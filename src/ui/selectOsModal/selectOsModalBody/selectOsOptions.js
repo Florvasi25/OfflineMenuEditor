@@ -1,11 +1,21 @@
 import { jsonData } from "../../context.js";
 
+import { clickCount } from "../../mainContainer.js";
+
 function createOptionsContainer(selectOsRowHeader, osGroup) {
     const osOptionContainer = document.createElement('div');
     osOptionContainer.classList.add('osOptionContainer');
     osOptionContainer.id = osGroup.MenuItemOptionSetId;
     selectOsRowHeader.parentNode.insertBefore(osOptionContainer, selectOsRowHeader.nextSibling);
     createOptions(osOptionContainer, osGroup);
+
+    if (osOptionContainer) {
+        var osOptionContainerParagraphs = osOptionContainer.querySelectorAll('p');
+        osOptionContainerParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
 }
 
 function createOptions(osOptionContainer, osGroup) {
