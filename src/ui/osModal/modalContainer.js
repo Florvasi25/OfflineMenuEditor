@@ -4,6 +4,8 @@ import { createOsModalBody } from './modalBody/osBody.js'
 
 import { createOsModalFooter } from './modalFooter/osFooter.js'
 
+import { clickCount } from '../mainContainer.js'
+
 function createOsModalContainer(menuOs) {
     const rightContainer = document.getElementById('rightContainer')
     
@@ -31,6 +33,14 @@ function createOsModalContainer(menuOs) {
     });
 
     rightContainer.appendChild(osModalContainer)
+
+    if (osModalContainer) {
+        var osModalContainerParagraphs = osModalContainer.querySelectorAll('p');
+        osModalContainerParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
 
     return osModalContainer
 }

@@ -3,9 +3,9 @@ import {
     getOsIndex, 
 } from '../context.js'
 
-import {
-    showToolTipMoM
-} from '../toolTip.js'
+import { showToolTipMoM } from '../toolTip.js'
+
+import { clickCount } from '../mainContainer.js';
 
 function createOptionsContainer(osRowOption, sectionId, itemId, osId) {
     const optionContainer = document.createElement('div');
@@ -13,6 +13,14 @@ function createOptionsContainer(osRowOption, sectionId, itemId, osId) {
     optionContainer.id = osId;
     osRowOption.parentNode.insertBefore(optionContainer, osRowOption.nextSibling);
     createOptions(optionContainer, sectionId, itemId, osId);
+
+    if (optionContainer) {
+        var optionContainerParagraphs = optionContainer.querySelectorAll('p');
+        optionContainerParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
 }
 
 function createOptions(optionContainer, sectionId, itemId, osId) {

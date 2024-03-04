@@ -39,7 +39,6 @@ function createSection(menuSection) {
     //Section Desc Cell
     const sectionDescCell = createSectionDescCell(menuSection, sectionRow);
     sectionRow.appendChild(sectionDescCell)
-    
 
     return sectionRow
 }

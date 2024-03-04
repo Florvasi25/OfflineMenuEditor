@@ -252,5 +252,6 @@ export {
     createLeftContainer,
     createTaxContainer,
     slotManagerInstance,
-    findBarInstance
+    findBarInstance,
+    clickCount
 }

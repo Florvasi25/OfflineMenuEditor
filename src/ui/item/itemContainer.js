@@ -13,6 +13,7 @@ import { createItemReturnCell } from './itemReturn.js'
 import { createItemPriceCell, } from './itemPrice.js'
 import { createItemTaxCell } from './itemTax.js'
 import { changeItemClockIcon } from '../clock/itemClock.js'
+import { clickCount } from '../mainContainer.js'
 
 
 function createItemContainer(sectionRow) {
@@ -24,6 +25,14 @@ function createItemContainer(sectionRow) {
     sectionRow.parentNode.insertBefore(itemTable, sectionRow.nextSibling);
     createItemRows(sectionRow, itemContainer);
     createNewItemBtnContainer(itemTable, itemContainer, sectionRow.id)
+
+    if (itemTable) {
+        var itemTableParagraphs = itemTable.querySelectorAll('p');
+        itemTableParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
 }
 
 function createNewItemBtnContainer(itemTable, itemContainer, sectionId) {
@@ -83,6 +92,9 @@ function createItem(menuItem, sectionId, itemContainer) {
     // Deposit Return Fee
     const itemReturnCell = createItemReturnCell(menuItem);
     itemRow.appendChild(itemReturnCell)
+
+
+
 
     return itemRow
 }

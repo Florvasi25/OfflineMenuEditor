@@ -14,6 +14,8 @@ import { createSelectOsModalContainer } from '../selectOsModal/selectOsModalCont
 
 import { osNewButton } from '../osModal/modalNav/osAddNew.js'
 
+import { clickCount } from '../mainContainer.js'
+
 function createOsContainer(itemRow, sectionId, itemId) {
     const osTable = document.createElement('div')
     osTable.className = 'osTable'
@@ -28,6 +30,15 @@ function createOsContainer(itemRow, sectionId, itemId) {
 
     const osAddNew = addNewOs(itemRow)
     osTable.appendChild(osAddNew)
+
+    
+    if (osTable) {
+        var osTableParagraphs = osTable.querySelectorAll('p');
+        osTableParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
 }
 
 function createOs(osContainer, sectionId, itemId) {

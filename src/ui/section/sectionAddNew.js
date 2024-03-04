@@ -8,7 +8,7 @@ import {
 
 import { toggleSectionState } from "./sectionDropDown.js";
 
-import { slotManagerInstance } from '../mainContainer.js';
+import { slotManagerInstance, clickCount } from '../mainContainer.js';
 
 function createSectionButton() {
     const newSectionButton = document.createElement('button')

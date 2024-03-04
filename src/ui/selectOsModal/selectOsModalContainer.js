@@ -4,6 +4,8 @@ import { createSelectOsModalNav } from '../selectOsModal/selectOsModalNav/select
 
 import { createSelectOsModalBody } from '../selectOsModal/selectOsModalBody/selectOsBody.js'
 
+import { clickCount } from '../mainContainer.js'
+
 function createSelectOsModalContainer(itemRow) {
     const popupModal = document.getElementById('popupModal')
     
@@ -34,6 +36,14 @@ function createSelectOsModalContainer(itemRow) {
     });
     
     popupModal.appendChild(selectOsModal)
+
+    if (selectOsModalContainer) {
+        var selectOsModalContainerParagraphs = selectOsModalContainer.querySelectorAll('p');
+        selectOsModalContainerParagraphs.forEach(function(paragraph) {
+            var currentSize = parseInt(window.getComputedStyle(paragraph).fontSize);
+            paragraph.style.fontSize = (currentSize + clickCount) + 'px';
+        });
+    }
 
     closeOsModalContainerQuick()
 
