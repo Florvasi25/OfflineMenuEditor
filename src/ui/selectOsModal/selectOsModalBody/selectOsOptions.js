@@ -50,12 +50,38 @@ function createOptionRow(menuOption) {
 
 function createNameAndMoM(menuOption) {
     const nameAndMoM = document.createElement('div')
-    menuOption.Name = menuOption.Name || 'Empty';
-    nameAndMoM.className = 'optionText'
-    nameAndMoM.innerHTML = `
-    <p class='optionNamePreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.Name}</p>
-    <p class='dashCountCell'> - </p>
-    <p class='optionMoMPreview' id='${menuOption.MenuItemOptionSetItemId}'>${menuOption.NextMenuItemOptionSetId}</p>`
+    nameAndMoM.className = 'previewNameAndMoM'
+
+    const optionNamePreview = document.createElement('p')
+    optionNamePreview.className = 'optionNamePreview'
+    optionNamePreview.id = menuOption.MenuItemOptionSetItemId
+    if(menuOption.Name == null || menuOption.Name == ''){
+        optionNamePreview.textContent = 'Empty'
+    }else{
+        optionNamePreview.textContent = menuOption.Name
+    }
+    
+    const dashAndMoM = document.createElement('div')
+    dashAndMoM.className = 'dashAndMoM'
+    
+    const dashCountCell = document.createElement('p')
+    dashCountCell.className = 'dashCountCell'
+    dashCountCell.textContent = ' - '
+    
+    const optionMoMPreview = document.createElement('p')
+    optionMoMPreview.classList.add('optionMoMPreview')
+    optionMoMPreview.classList.add('notwarning')
+    optionMoMPreview.id = menuOption.MenuItemOptionSetItemId
+    optionMoMPreview.textContent = menuOption.NextMenuItemOptionSetId
+    if (optionMoMPreview.textContent == "") {
+        optionMoMPreview.textContent = "null"
+    }
+
+    dashAndMoM.appendChild(dashCountCell)
+    dashAndMoM.appendChild(optionMoMPreview)
+
+    nameAndMoM.appendChild(optionNamePreview)
+    nameAndMoM.appendChild(dashAndMoM)
 
     return nameAndMoM
 }
@@ -74,7 +100,7 @@ function createPriceAndTax(menuOption) {
     const priceAsNumber = parseFloat(menuOption.Price);
     
     const priceAndTax = document.createElement('div')
-    priceAndTax.className = 'optionText'
+    priceAndTax.className = 'previewPriceAndTax'
     priceAndTax.innerHTML = `
     <p class='optionPricePreview' id='${menuOption.MenuItemOptionSetItemId}'>${priceAsNumber.toFixed(2)}</p>
     <p class='dashCountCell'> - </p>
