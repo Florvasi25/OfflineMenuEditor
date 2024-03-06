@@ -2421,3 +2421,28 @@ selector svg {
 .decreaseBtn {
     margin-left: 10px;
 }
+
+#scrollUp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.scrollUpButton {
+    border: 1px solid #342f58;
+    background-color: #4e4e80;
+    color: #ffffff;
+    border-radius: 3px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.scrollUpButton:hover {
+    background-color: #292976;
+}

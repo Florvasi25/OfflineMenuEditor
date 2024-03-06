@@ -5,7 +5,8 @@ import { setJsonData } from '../context.js'
 import { generateHTML, 
     createBtnContainers, 
     createLeftContainer, 
-    createTaxContainer 
+    createTaxContainer,
+    scrollUpButton 
 } from '../mainContainer.js';
 
 export class SlotManager {
@@ -15,6 +16,7 @@ export class SlotManager {
         this.currentSlotName = 'Slot 1';
         createBtnContainers();
         createLeftContainer();
+        scrollUpButton()
         this.bindSlotButtonEvents();
 
         // Initialize slotTitle with the text from localStorage

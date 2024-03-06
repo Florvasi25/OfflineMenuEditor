@@ -246,6 +246,27 @@ document.addEventListener('keydown', (e) => {
     }
   });
 
+function scrollUpButton() {
+    const scrollUp = document.getElementById('scrollUp')
+
+    const scrollUpButton = document.createElement('button');
+    scrollUpButton.className = 'scrollUpButton'
+
+    const scrollUpButtonImg = document.createElement('img')
+    scrollUpButtonImg.className = 'scrollUpButtonImg'
+    scrollUpButtonImg.src = '../../assets/upwardIcon.svg'
+
+    scrollUpButton.appendChild(scrollUpButtonImg)
+    
+    scrollUpButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    scrollUp.appendChild(scrollUpButton);
+
+    return scrollUp;
+}
+
 export {
     generateHTML,
     createBtnContainers,
@@ -253,5 +274,6 @@ export {
     createTaxContainer,
     slotManagerInstance,
     findBarInstance,
-    clickCount
+    clickCount,
+    scrollUpButton
 }
