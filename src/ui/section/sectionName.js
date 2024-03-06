@@ -34,6 +34,12 @@ function createSectionName(sectionRow, menuSection) {
 
     let originalName = menuSection.Name.toUpperCase();
 
+    sectionName.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
     sectionName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();

@@ -30,6 +30,12 @@ function createItemDesc(itemRow, menuItem, sectionId) {
 
     let originalDesc = menuItem.Description || '';
 
+    itemDesc.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
     itemDesc.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && e.shiftKey) {
             document.execCommand('insertLineBreak');
@@ -59,11 +65,20 @@ function createItemDesc(itemRow, menuItem, sectionId) {
     return itemDesc;
 }
 
+// Utility function to decode HTML entities and replace <br> with newline characters
+function decodeAndReplace(html) {
+    var txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value.replace(/<br>/g, '\n');
+}
+
 //Updates Desc
 function updateDesc(itemId, itemDesc, sectionId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
 
-    const normalizedDesc = itemDesc.replace(/<br>/g, '\n');
+    // Decode HTML entities and replace <br> with newline characters
+    const normalizedDesc = decodeAndReplace(itemDesc);
+
     jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Description = normalizedDesc;
 
     updateLocalStorage(slotManagerInstance.currentSlot);

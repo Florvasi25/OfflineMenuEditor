@@ -30,6 +30,12 @@ function createSectionDesc(menuSection, sectionRow) {
 
     let originalDesc = menuSection.Description || '';
 
+    sectionDesc.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
     sectionDesc.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && e.shiftKey) {
             document.execCommand('insertLineBreak');
@@ -47,7 +53,6 @@ function createSectionDesc(menuSection, sectionRow) {
 
     sectionDesc.addEventListener('blur', () => {
         const formattedDesc = originalDesc.replace(/\n/g, '<br>');
-
         sectionDesc.innerHTML = formattedDesc;
         sectionDesc.classList.remove('sectionClicked')
     });
@@ -59,11 +64,20 @@ function createSectionDesc(menuSection, sectionRow) {
     return sectionDesc
 }
 
-//Updates descriptions when the JSON loads
+// Utility function to decode HTML entities and replace <br> with newline characters
+function decodeAndReplace(html) {
+    var txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value.replace(/<br>/g, '\n');
+}
+
+// Updates descriptions when the JSON loads
 function updateSectionDesc(sectionId, sectionDesc) {
     const sectionIndex = getSectionIndex(sectionId);
 
-    const normalizedDesc = sectionDesc.replace(/<br>/g, '\n');
+    // Decode HTML entities and replace <br> with newline characters
+    const normalizedDesc = decodeAndReplace(sectionDesc);
+
     jsonData.MenuSections[sectionIndex].Description = normalizedDesc;
 
     updateLocalStorage(slotManagerInstance.currentSlot);

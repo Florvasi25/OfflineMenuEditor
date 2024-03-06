@@ -29,6 +29,12 @@ function createItemName(itemRow, menuItem, sectionId) {
 
     let originalName = menuItem.Name;
 
+    itemName.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
     itemName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();

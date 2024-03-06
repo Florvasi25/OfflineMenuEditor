@@ -28,6 +28,12 @@ function createOsName(menuOs) {
 
     let originalName = menuOs.Name;
 
+    osName.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
     osName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();

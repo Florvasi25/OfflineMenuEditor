@@ -33,6 +33,12 @@ function createOptionName(menuOption, menuOs) {
 
     let originalName = menuOption.Name;
 
+    optionName.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
+
     optionName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
