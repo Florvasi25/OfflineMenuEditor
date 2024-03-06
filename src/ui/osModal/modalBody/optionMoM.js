@@ -94,26 +94,14 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             optionMoM.textContent = "Empty";
             optionMoM.style = 'color: #a3a3a3;'
         } else {
-            const foundItem = jsonData.MenuSections
-                .flatMap(i => i.MenuItems)
-                .find(i => i.MenuItemId == menuOs.MenuItemId);
-            const menuItemOptionSetIds = foundItem.MenuItemOptionSets.flatMap(i => i.MenuItemOptionSetId);
-            const newOptionMoM = optionMoM.textContent
-
-            console.log('newOptionMoM', newOptionMoM);
-
-            if (newOptionMoM !== '-1' && !menuItemOptionSetIds.includes(Number(newOptionMoM)) || newOptionMoM == menuOs.MenuItemOptionSetId || newOptionMoM === "" ) {
-                optionMoM.textContent = newOptionMoM === null ? "Empty" : newOptionMoM;
-                console.log();
-                if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
-                    optionMoM.textContent = "Empty";
-                    optionMoM.style = 'color: #a3a3a3;'
-                }
+            optionMoM.textContent = originalMoM === null ? "Empty" : originalMoM;
+            if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
+                optionMoM.textContent = "Empty";
+                optionMoM.style = 'color: #a3a3a3;'
             }
         }
         optionMoM.classList.remove('sectionClicked');
     });
-    
 
     optionMoM.addEventListener('click', () => {
         optionMoM.classList.add('sectionClicked')
