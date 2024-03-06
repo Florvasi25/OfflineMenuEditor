@@ -24,8 +24,8 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function itemClockButton(itemButtonsCell, itemId, sectionId) {
-    const clockButton = createAndAppend(itemButtonsCell, 'button', 'sectionButton', 'clockButton');
+function itemClockButton(leftItemContainer, itemId, sectionId) {
+    const clockButton = createAndAppend(leftItemContainer, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
     clockButton.addEventListener('click', () => {

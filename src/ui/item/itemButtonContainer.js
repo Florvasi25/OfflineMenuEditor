@@ -6,18 +6,32 @@ import { itemDuplicateButton } from './itemDuplicate.js'
 
 import { itemClockButton } from '../clock/itemClock.js'
 
+import { itemAlcoholButton } from './itemAlcohol.js'
+
+import { itemDiscountButton } from './itemDiscount.js'
+
+import { itemLockButton } from './itemLock.js'
+
 function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
     const itemButtonsCell = document.createElement('div');
-    itemButtonsCell.classList = "sectionButtonsCell"
+    itemButtonsCell.classList = "itemButtonsCell"
 
-    itemClockButton(itemButtonsCell, itemRow.id, sectionId)
+    const leftItemContainer = document.createElement('div');
+
+    itemClockButton(leftItemContainer, itemRow.id, sectionId)
+    itemAlcoholButton(leftItemContainer, itemRow.id, sectionId)
+    itemDiscountButton(leftItemContainer, itemRow.id, sectionId)
+    itemLockButton(leftItemContainer, itemRow.id, sectionId)
+
+    const rightItemContainer = document.createElement('div')
     
-    itemDeleteButton(itemButtonsCell, itemRow, sectionId)
+    itemDeleteButton(rightItemContainer, itemRow, sectionId)
+    itemVisibilityButton(itemRow, menuItem, rightItemContainer, sectionId);
+    itemDuplicateButton(itemRow, rightItemContainer, sectionId, itemContainer, menuItem)
 
-    itemVisibilityButton(itemRow, menuItem, itemButtonsCell, sectionId);
-
-    itemDuplicateButton(itemRow, itemButtonsCell, sectionId, itemContainer, menuItem)
-
+    itemButtonsCell.appendChild(leftItemContainer)
+    itemButtonsCell.appendChild(rightItemContainer)
+    
     return itemButtonsCell
 }
 

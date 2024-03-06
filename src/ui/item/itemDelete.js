@@ -13,22 +13,22 @@ import { changeSectionClockIconColor, changeSectionClockIcon } from '../clock/se
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function itemDeleteButton(itemButtonsCell, itemRow, sectionId) {
+function itemDeleteButton(rightItemContainer, itemRow, sectionId) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
-    itemButtonsCell.appendChild(deleteButton);
+    rightItemContainer.appendChild(deleteButton);
     const deleteButtonImg = document.createElement('img')
     deleteButtonImg.classList.add('sectionButtonImg')
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
-        confirmDelete(itemRow, itemButtonsCell, sectionId)
+        confirmDelete(itemRow, rightItemContainer, sectionId)
     });
 }
 
 //Creates a popup to confirm the deletion of the item
-function confirmDelete(itemRow, itemButtonsCell, sectionId) {
+function confirmDelete(itemRow, rightItemContainer, sectionId) {
     const popup = document.createElement("div");
     popup.className = "popup";
     const itemId = itemRow.id;
@@ -56,7 +56,7 @@ function confirmDelete(itemRow, itemButtonsCell, sectionId) {
     });
 
     popup.appendChild(popupContent); 
-    itemButtonsCell.appendChild(popup);
+    rightItemContainer.appendChild(popup);
 
     //Close the delete popup when clicked outside
     window.addEventListener("click", (e) => {
