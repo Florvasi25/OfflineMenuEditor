@@ -6,14 +6,14 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function sectionVisibilityButton(sectionRow, menuSection, sectionButtonsCell) {
+function sectionVisibilityButton(sectionRow, menuSection, rightSectionContainer) {
     const visibilityButton = document.createElement('button');
     visibilityButton.classList.add('sectionButton')
     visibilityButton.classList.add('visibilityButton')
     visibilityButton.addEventListener('click', () => {
         SectionAvailability(sectionRow);
     });
-    sectionButtonsCell.appendChild(visibilityButton);
+    rightSectionContainer.appendChild(visibilityButton);
     const visibilityButtonImg = document.createElement('img')
     visibilityButtonImg.classList.add('sectionButtonImg')
     visibilityButtonImg.src = '../../assets/visibilityIcon.svg'

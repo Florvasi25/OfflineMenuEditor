@@ -646,8 +646,10 @@ selector svg {
 /* BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL - BUTTONS CELL */
 
 .sectionButtonsCell {
-    width: 25px;
+    width: 50px;
     border: solid 1px #ffffff;
+    display: flex;
+    align-items: center;
 }
 
 .sectionButton {

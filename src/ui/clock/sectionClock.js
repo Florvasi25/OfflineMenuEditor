@@ -36,8 +36,8 @@ import { changeItemClockIcon } from "./itemClock.js";
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function sectionClockButton(sectionButtonsCell, sectionId) {
-    const clockButton = createAndAppend(sectionButtonsCell, 'button', 'sectionButton', 'clockButton');
+function sectionClockButton(leftSectionContainer, sectionId) {
+    const clockButton = createAndAppend(leftSectionContainer, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
    

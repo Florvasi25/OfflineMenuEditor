@@ -12,15 +12,19 @@ function createSectionButtonsCell(sectionRow, menuSection) {
     const sectionButtonsCell = document.createElement('div');
     sectionButtonsCell.classList = "sectionButtonsCell"
 
-    sectionClockButton(sectionButtonsCell, menuSection.MenuSectionId)
+    const leftSectionContainer = document.createElement('div');
 
-    sectionDeleteButton(sectionButtonsCell, sectionRow)
+    sectionClockButton(leftSectionContainer, menuSection.MenuSectionId)
+    sectionListButton(leftSectionContainer, menuSection);
+    
+    const rightSectionContainer = document.createElement('div')
 
-    sectionVisibilityButton(sectionRow, menuSection, sectionButtonsCell)
+    sectionDeleteButton(rightSectionContainer, sectionRow)
+    sectionVisibilityButton(sectionRow, menuSection, rightSectionContainer)
+    sectionDuplicateButton(sectionRow, rightSectionContainer, menuSection)
 
-    sectionDuplicateButton(sectionRow, sectionButtonsCell, menuSection)
-
-    sectionListButton(sectionButtonsCell, menuSection);
+    sectionButtonsCell.appendChild(leftSectionContainer)
+    sectionButtonsCell.appendChild(rightSectionContainer)
     
     return sectionButtonsCell
 }

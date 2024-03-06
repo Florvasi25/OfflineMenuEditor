@@ -19,11 +19,11 @@ import { CreateItem } from '../item/itemAddNew.js';
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function sectionListButton(sectionButtonsCell, menuSection) {
+function sectionListButton(leftSectionContainer, menuSection) {
     const listButton = document.createElement('button');
     listButton.classList.add('sectionButton')
     listButton.classList.add('listButton')
-    sectionButtonsCell.appendChild(listButton);
+    leftSectionContainer.appendChild(listButton);
     const listButtonImg = document.createElement('img')
     listButtonImg.classList.add('listButtonImg')
     listButtonImg.src = '../../assets/listIcon.svg'
