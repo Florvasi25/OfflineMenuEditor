@@ -1034,6 +1034,17 @@ selector svg {
     background-color: #1118f1;
 }
 
+/* VOUCHERS & ALCOHOL BUTTON - */
+
+.voucher {
+    background-color: #a976cd;
+    transition: background-color 0.3s ease;
+}
+
+.voucher:hover {
+    background-color: #9c11ff;
+}
+
 /* LIST BTN - LIST BTN - LIST BTN - LIST BTN - LIST BTN - LIST BTN -*/
 
 .listButton {
