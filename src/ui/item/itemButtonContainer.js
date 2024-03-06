@@ -20,7 +20,7 @@ function createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer) {
 
     itemClockButton(leftItemContainer, itemRow.id, sectionId)
     itemAlcoholButton(itemRow, menuItem, leftItemContainer, sectionId)
-    itemDiscountButton(leftItemContainer, itemRow.id, sectionId)
+    itemDiscountButton(itemRow, menuItem, leftItemContainer, sectionId)
     itemLockButton(leftItemContainer, itemRow.id, sectionId)
 
     const rightItemContainer = document.createElement('div')

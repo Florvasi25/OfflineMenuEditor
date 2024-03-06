@@ -11,7 +11,7 @@ function itemAlcoholButton(itemRow, menuItem, leftItemContainer, sectionId) {
     alcoholButton.classList.add('sectionButton')
     alcoholButton.classList.add('alcoholButton')
     alcoholButton.addEventListener('click', () => {
-        handleAlcoholVoucher(itemRow, sectionId, itemRow.id);
+        handleAlcoholVoucher(sectionId, itemRow.id);
     });
     leftItemContainer.appendChild(alcoholButton);
     const alcoholButtonImg = document.createElement('img')
@@ -33,8 +33,7 @@ function itemAlcoholButton(itemRow, menuItem, leftItemContainer, sectionId) {
 }
 
 //Alcohol Availability
-function handleAlcoholVoucher(itemRow, sectionId, itemId) {
-
+function handleAlcoholVoucher(sectionId, itemId) {
     const {itemIndex, sectionIndex} = getItemIndex(sectionId, itemId)
     if (itemIndex !== -1) {
         const isAvailableNew = !jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].Alcohol
