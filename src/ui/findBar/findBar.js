@@ -8,7 +8,7 @@ const Mark = require('mark.js');
 
 export class FindBar {
     constructor() {
-        this.markInstance = new Mark(document.querySelector('body'));
+        this.markInstance = new Mark(document.querySelector('.sectionTable'));
 
         this.findBar = createAndAppend(document.body, 'div', 'find-bar');
         this.findInput = createAndAppend(this.findBar, 'input', 'find-input');
