@@ -1,4 +1,3 @@
-
 import {
     createAndAppend,
     addTextContent
@@ -12,14 +11,13 @@ export class FindBar {
 
         this.findBar = createAndAppend(document.body, 'div', 'find-bar');
         this.findInput = createAndAppend(this.findBar, 'input', 'find-input');
+        this.counter = createAndAppend(this.findBar, 'div', 'counter');
         this.findNextButton = createAndAppend(this.findBar, 'button', 'find-next-button');
         this.findPrevButton = createAndAppend(this.findBar, 'button', 'find-prev-button');
         this.closeButton = createAndAppend(this.findBar, 'button', 'find-close-button', 'closeButton');
-        this.counter = createAndAppend(this.findBar, 'div', 'counter');
         this.counter.style.display = 'none';
         this.findNextButton.onclick = () => this.find(this.findInput.value, false);
         this.findPrevButton.onclick = () => this.find(this.findInput.value, true);
-
 
         // Configurar IDs (esto es principalmente para facilitar las pruebas y referencia, pero no es crítico para la funcionalidad)
         this.findBar.id = 'findBar';
@@ -55,7 +53,6 @@ export class FindBar {
             }
         });
 
-
         this.findInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 const searchText = this.findInput.value.trim();
@@ -75,8 +72,6 @@ export class FindBar {
         // Manejadores para ocultar la barra en ciertas acciones
         this.onKeyDown = this.onKeyDown.bind(this);
         document.addEventListener('keydown', this.onKeyDown);
-        this.onOutsideClick = this.onOutsideClick.bind(this);
-        document.addEventListener('click', this.onOutsideClick);
 
         // Preparar para la búsqueda
         this.matches = [];
@@ -88,12 +83,6 @@ export class FindBar {
 
     onKeyDown(event) {
         if (event.key === 'Escape') {
-            this.hide();
-        }
-    }
-
-    onOutsideClick(event) {
-        if (!this.findBar.contains(event.target)) {
             this.hide();
         }
     }
@@ -166,11 +155,10 @@ export class FindBar {
     }
 
     show() {
-        this.findBar.style.display = 'block';
+        this.findBar.style.display = 'flex';
 
         this.findInput.focus();
         document.addEventListener('keydown', this.onKeyDown);
-        document.addEventListener('click', this.onOutsideClick);
         this.findInput.addEventListener('keypress', this.enterKeyListener);
     }
 
@@ -180,8 +168,6 @@ export class FindBar {
         this.counter.style.display = 'none'; // Hide the counter
 
         document.removeEventListener('keydown', this.onKeyDown);
-        document.removeEventListener('click', this.onOutsideClick);
-        this.findInput.removeEventListener('keypress', this.enterKeyListener);
         this.markInstance.unmark();
     }
 }

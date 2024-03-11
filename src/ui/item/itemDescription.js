@@ -20,7 +20,7 @@ function createItemDescCell(itemRow, menuItem, sectionId) {
 //Handles Desc Edits
 function createItemDesc(itemRow, menuItem, sectionId) {
     const itemDesc = document.createElement('p');
-    itemDesc.classList.add('sectionDesc');
+    itemDesc.classList.add('itemDesc');
     itemDesc.contentEditable = true;
 
     if (menuItem.Description) {
