@@ -23,8 +23,6 @@ import { createTaxContainer } from './tax/taxContainer.js';
 
 import { FindBar } from './findBar/findBar.js'
 
-//import { setFindBarEventListeners } from './findBar/findBar.js'
-
 //Builds HTML
 function generateHTML(jsonData) {
     const sectionContainer = document.getElementById('sectionContainer');
@@ -119,7 +117,7 @@ function handleCloseAll() {
 
 let clickCount = 0; // Track the total number of clicks
 
-function createZoomInZoomOutButtonsCell (){
+function createZoomInZoomOutButtonsCell() {
     const zoomInZoomOutButtonsContainer = document.createElement('div')
     zoomInZoomOutButtonsContainer.className = 'zoomInZoomOutButtonsContainer'
 
@@ -129,11 +127,11 @@ function createZoomInZoomOutButtonsCell (){
     increaseBtn.classList.add('sectionButton');
 
     const zoomInButtonImg = document.createElement('img')
-    zoomInButtonImg.classList.add('sectionButtonImg')
+    zoomInButtonImg.classList.add('zoomButtonImg')
     zoomInButtonImg.src = '../../assets/zoomInIcon.svg'
     increaseBtn.appendChild(zoomInButtonImg)
 
-    increaseBtn.onclick = function() {
+    increaseBtn.onclick = function () {
         increaseFontSize(this);
     };
 
@@ -143,11 +141,11 @@ function createZoomInZoomOutButtonsCell (){
     decreaseBtn.disabled = true;
 
     const zoomOutButtonImg = document.createElement('img')
-    zoomOutButtonImg.classList.add('sectionButtonImg')
+    zoomOutButtonImg.classList.add('zoomButtonImg')
     zoomOutButtonImg.src = '../../assets/zoomOutIcon.svg'
     decreaseBtn.appendChild(zoomOutButtonImg)
 
-    decreaseBtn.onclick = function() {
+    decreaseBtn.onclick = function () {
         decreaseFontSize(this);
     };
 
@@ -198,20 +196,20 @@ function createSlotTitle() {
     if (localStorageText) {
         slotTitle.textContent = localStorageText;
     } else {
-        slotTitle.textContent = "Slot 1"; 
+        slotTitle.textContent = "Slot 1";
     }
 
     slotTitle.setAttribute('contenteditable', 'true');
 
-    slotTitle.addEventListener('keypress', function(event) {
+    slotTitle.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); 
+            event.preventDefault();
             const buttonId = slotTitle.id;
 
             const slotButton = document.getElementById(buttonId);
             slotButton.textContent = slotTitle.textContent;
             localStorage.setItem(buttonId, slotButton.textContent);
-            
+
             slotTitle.textContent = localStorage.getItem(buttonId);
             slotTitle.blur()
         }
@@ -219,7 +217,7 @@ function createSlotTitle() {
 
     slotTitle.addEventListener('blur', () => {
         const buttonId = slotTitle.id;
-        
+
         slotTitle.textContent = localStorage.getItem(buttonId)
         slotTitle.classList.remove('sectionClicked')
         slotTitle.style.color = 'white'
@@ -235,16 +233,16 @@ function createSlotTitle() {
 
 const slotManagerInstance = new SlotManager();
 const findBarInstance = new FindBar();
-//setFindBarEventListeners(findBarInstance);
+
 generateHTML(jsonData);
 createTaxContainer(jsonData)
 
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'f') {
-      e.preventDefault();
-      findBarInstance.show();
+        e.preventDefault();
+        findBarInstance.show();
     }
-  });
+});
 
 function scrollUpButton() {
     const scrollUp = document.getElementById('scrollUp')
@@ -257,7 +255,7 @@ function scrollUpButton() {
     scrollUpButtonImg.src = '../../assets/upwardIcon.svg'
 
     scrollUpButton.appendChild(scrollUpButtonImg)
-    
+
     scrollUpButton.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });

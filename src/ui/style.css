@@ -143,30 +143,42 @@ main {
 }
 
 #findBar button {
-    padding: 4px 8px;
     font-size: 12px;
     background-color: #ababab;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin: 0 5px;
+    transition: background-color 0.3s ease;
 }
 
 #findBar button:hover {
-    background-color: #737373;
+    background-color: #bfb7e6;
 }
 
 #findBar button.closeButton {
     background-color: #c2c2c2;
+    padding: 5px 7px;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+#findBar button.closeButton:hover {
+    background-color: #fb5555;
+}
+
+#findBar button.closeButton:focus {
+    border: none;
 }
 
 #findBar button:active {
-    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 2px #0000001a;
 }
 
 #findBar button:focus {
     outline: none;
-    border: 1px solid #78c0e0;
+    border: 2px solid #ffee7f;
 }
 
 #findBar button {
@@ -712,7 +724,6 @@ selector svg {
     font-size: 13px;
     font-weight: bold;
     padding: 5px;
-    height: -webkit-fill-available;
     width: -webkit-fill-available;
 }
 
@@ -730,13 +741,11 @@ selector svg {
     min-height: 100px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
-    cursor: text;
 }
 
 .itemName {
     font-size: 14px;
     padding: 5px;
-    height: -webkit-fill-available;
     width: -webkit-fill-available;
 }
 
@@ -817,7 +826,6 @@ selector svg {
 .sectionDesc {
     font-size: 14px;
     padding: 5px;
-    height: -webkit-fill-available;
     width: -webkit-fill-available;
 }
 
@@ -839,7 +847,6 @@ selector svg {
 .itemDesc {
     font-size: 14px;
     padding: 5px;
-    height: -webkit-fill-available;
     width: -webkit-fill-available;
 }
 
@@ -2437,8 +2444,20 @@ selector svg {
     margin-left: 20px;
 }
 
+.increaseBtn {
+    margin-left: 10px;
+    width: 27px;
+    height: 27px;
+}
+
 .decreaseBtn {
     margin-left: 10px;
+    width: 27px;
+    height: 27px;
+}
+
+.zoomButtonImg {
+    width: 25px;
 }
 
 #scrollUp {

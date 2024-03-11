@@ -27,14 +27,35 @@ export class FindBar {
         this.closeButton.id = 'findCloseButton';
 
         // Añadir texto a los botones
-        addTextContent(this.findNextButton, '↓');
-        addTextContent(this.findPrevButton, '↑');
+        
+        const downArrowImage = document.createElement('img');
+        downArrowImage.className = 'nextArrowImg';
+        downArrowImage.src = '../../assets/downwardIcon.svg';
+        this.findNextButton.appendChild(downArrowImage);
+        
+        const upArrowImage = document.createElement('img');
+        upArrowImage.className = 'previousArrowImg';
+        upArrowImage.src = '../../assets/upwardIcon.svg';
+        this.findPrevButton.appendChild(upArrowImage);
+        
         addTextContent(this.closeButton, 'X');
 
         // Evento para buscar y navegar al siguiente o anterior resultado
-        this.findNextButton.onclick = () => this.find(this.findInput.value, false);
-        this.findPrevButton.onclick = () => this.find(this.findInput.value, true);
-
+        this.findNextButton.onclick = () => {
+            const searchText = this.findInput.value.trim();
+            if (searchText !== '') {
+                this.navigate(true); // Navigate forwards
+            }
+        };
+        
+        this.findPrevButton.onclick = () => {
+            const searchText = this.findInput.value.trim();
+            if (searchText !== '') {
+                this.navigate(false); // Navigate backwards
+            }
+        };
+        
+        
         // Búsqueda inicial al presionar enter
         this.findInput.addEventListener('input', () => {
             const searchText = this.findInput.value.trim();
