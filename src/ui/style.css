@@ -695,7 +695,8 @@ selector svg {
     display: flex;
     align-items: center;
     padding: 5px;
-    width: 100px;
+    width: 150px;
+    min-height: 75px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -703,12 +704,12 @@ selector svg {
 .sectionName {
     font-size: 13px;
     font-weight: bold;
-    word-break: break-word;
+    /* word-break: break-word; */
     padding: 5px;
     height: -webkit-fill-available;
     width: -webkit-fill-available;
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
 }
 
 .sectionName:focus {
@@ -721,7 +722,8 @@ selector svg {
     display: flex;
     align-items: center;
     padding: 5px;
-    width: 100px;
+    width: 150px;
+    min-height: 100px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
     cursor: text;
@@ -729,12 +731,12 @@ selector svg {
 
 .itemName {
     font-size: 14px;
-    word-break: break-word;
+    /* word-break: break-word; */
     padding: 5px;
     height: -webkit-fill-available;
     width: -webkit-fill-available;
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
 }
 
 .itemName:focus {
@@ -806,6 +808,7 @@ selector svg {
     padding: 5px;
     flex-grow: 1;
     display: flex;
+    min-height: 75px;
     align-items: center;
     border: solid 1px #ffffff;
 }
@@ -815,8 +818,6 @@ selector svg {
     padding: 5px;
     height: -webkit-fill-available;
     width: -webkit-fill-available;
-    display: flex;
-    align-items: center;
 }
 
 .sectionDesc:focus {
@@ -830,6 +831,7 @@ selector svg {
     flex-grow: 1;
     display: flex;
     align-items: center;
+    min-height: 100px;
     border: solid 1px #ffffff;
 }
 
