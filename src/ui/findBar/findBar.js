@@ -49,6 +49,19 @@ export class FindBar {
                 this.find(searchText);
             }
         });
+
+        this.findInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                const searchText = this.findInput.value.trim();
+                if (searchText !== '') {
+                    if (event.shiftKey) {
+                        this.navigate(false); // Navigate backwards
+                    } else {
+                        this.navigate(true); // Navigate forwards
+                    }
+                }
+            }
+        });
         
         // Cerrar la barra de búsqueda
         this.closeButton.onclick = () => this.hide();
@@ -122,15 +135,15 @@ export class FindBar {
 
     navigate(forward) {
         if (this.matches.length === 0) return;
-
+    
         this.scrollToCurrentIndex();
-        this.counter.textContent = `${this.currentIndex + 1}/${this.matches.length}`;
-
+    
         this.currentIndex = forward ?
             (this.currentIndex + 1) % this.matches.length :
             (this.currentIndex - 1 + this.matches.length) % this.matches.length;
-
-        console.log("INDEX: ", this.currentIndex);
+    
+        this.counter.textContent = `${this.currentIndex + 1}/${this.matches.length}`; // Update the counter
+    
         this.scrollToCurrentIndex();
     }
 
