@@ -48,7 +48,13 @@ export class FindBar {
             } else {
                 this.find(searchText);
             }
+            // If there are no matches, set currentIndex to -1 and update the counter
+            if (this.matches.length === 0) {
+                this.currentIndex = -1;
+                this.counter.textContent = `0/0`;
+            }
         });
+
 
         this.findInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
@@ -62,7 +68,7 @@ export class FindBar {
                 }
             }
         });
-        
+
         // Cerrar la barra de búsqueda
         this.closeButton.onclick = () => this.hide();
 
@@ -71,7 +77,7 @@ export class FindBar {
         document.addEventListener('keydown', this.onKeyDown);
         this.onOutsideClick = this.onOutsideClick.bind(this);
         document.addEventListener('click', this.onOutsideClick);
-        
+
         // Preparar para la búsqueda
         this.matches = [];
         this.currentIndex = -1;
@@ -94,18 +100,13 @@ export class FindBar {
 
     find(text, backward = false) {
         if (!text.trim()) {
-            console.log("Por favor, introduce un texto válido para buscar.");
+            console.log("Please enter valid text to search.");
             return;
         }
     
-        if (this.matches.length > 0) {
-            // Show the counter
-            this.counter.textContent = `1/${this.matches.length}`;
-            this.counter.style.display = 'block';
-        } else {
-            // Hide the counter if no matches found
-            this.counter.style.display = 'none';
-        }
+        // Always reset the counter to "0/0" before starting a new search
+        this.counter.textContent = '0/0';
+        this.counter.style.display = 'block'; // Ensure the counter is visible even if there are no matches
     
         // Indicate if it's a new search
         const isNewSearch = text !== this.lastSearchText;
@@ -123,25 +124,26 @@ export class FindBar {
                             this.currentIndex = 1; // Always start at the first occurrence
                             this.navigate(false); // Move to the first result for forward search
                         } else {
-                            console.log("Texto no encontrado.");
+                            console.log("Text not found.");
                         }
                     }
                 });
             }
         });
     }
+    
 
     navigate(forward) {
         if (this.matches.length === 0) return;
-    
+
         this.scrollToCurrentIndex();
-    
+
         this.currentIndex = forward ?
             (this.currentIndex + 1) % this.matches.length :
             (this.currentIndex - 1 + this.matches.length) % this.matches.length;
-    
+
         this.counter.textContent = `${this.currentIndex + 1}/${this.matches.length}`; // Update the counter
-    
+
         this.scrollToCurrentIndex();
     }
 
@@ -174,6 +176,8 @@ export class FindBar {
 
     hide() {
         this.findBar.style.display = 'none';
+        this.findInput.value = ''; // Clear the find input
+        this.counter.style.display = 'none'; // Hide the counter
 
         document.removeEventListener('keydown', this.onKeyDown);
         document.removeEventListener('click', this.onOutsideClick);
