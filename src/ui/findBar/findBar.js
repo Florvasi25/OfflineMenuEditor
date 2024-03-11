@@ -97,20 +97,20 @@ export class FindBar {
             console.log("Por favor, introduce un texto válido para buscar.");
             return;
         }
-
+    
         if (this.matches.length > 0) {
             // Show the counter
-            this.counter.textContent = `${this.currentIndex + 1}/${this.matches.length}`;
+            this.counter.textContent = `1/${this.matches.length}`;
             this.counter.style.display = 'block';
         } else {
             // Hide the counter if no matches found
             this.counter.style.display = 'none';
         }
-
-        // Indicar si se trata de una nueva búsqueda
+    
+        // Indicate if it's a new search
         const isNewSearch = text !== this.lastSearchText;
-        this.lastSearchText = text; // Almacenar el texto de la última búsqueda
-
+        this.lastSearchText = text; // Store the text of the last search
+    
         this.markInstance.unmark({
             done: () => {
                 this.markInstance.mark(text, {
@@ -120,10 +120,8 @@ export class FindBar {
                     done: (marks) => {
                         this.matches = Array.from(document.querySelectorAll('.highlight'));
                         if (this.matches.length > 0) {
-                            if (isNewSearch) {
-                                this.currentIndex = backward ? this.matches.length - 1 : 0; // Iniciar al final para búsquedas hacia atrás
-                            }
-                            this.navigate(!backward); // Avanza al primer resultado para búsqueda hacia adelante
+                            this.currentIndex = 1; // Always start at the first occurrence
+                            this.navigate(false); // Move to the first result for forward search
                         } else {
                             console.log("Texto no encontrado.");
                         }
