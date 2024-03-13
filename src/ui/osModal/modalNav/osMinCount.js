@@ -33,6 +33,13 @@ function createMinCount(menuOs) {
     minCount.contentEditable = true;
     minCount.textContent = menuOs.MinSelectCount;
 
+    // Check if IsMasterOptionSet is true, then disable content editing
+    if (menuOs.IsMasterOptionSet) {
+        minCount.contentEditable = false;
+    } else {
+        minCount.contentEditable = true;
+    }
+
     let originalMinCount = menuOs.MinSelectCount;
 
     minCount.addEventListener('keydown', (e) => {

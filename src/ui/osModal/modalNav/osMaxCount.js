@@ -30,8 +30,14 @@ function createMaxCountCell(menuOs) {
 function createMaxCount(menuOs) {
     const maxCount = document.createElement('p');
     maxCount.classList.add('maxCount');
-    maxCount.contentEditable = true;
     maxCount.textContent = menuOs.MaxSelectCount;
+
+    // Check if IsMasterOptionSet is true, then disable content editing
+    if (menuOs.IsMasterOptionSet) {
+        maxCount.contentEditable = false;
+    } else {
+        maxCount.contentEditable = true;
+    }
 
     let originalMaxCount = menuOs.MaxSelectCount;
 

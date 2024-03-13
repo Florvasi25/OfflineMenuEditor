@@ -354,6 +354,9 @@ function createSelectOsRow(menuOs) {
     const osNameHeader = createSelectOsNameHeader(menuOs)
     nameAndOsId.appendChild(osNameHeader)
 
+    const MOContainer = createMOContainer(menuOs)
+    selectOsRowHeader.appendChild(MOContainer)
+
     const osSelectOptionContainer = createOsSelectOption(menuOs)
     selectOsRowHeader.appendChild(osSelectOptionContainer)
 
@@ -400,6 +403,20 @@ function createOptionSetIdPreview(menuOs) {
     optionSetIdPreview.className = 'optionSetIdPreview'
 
     return optionSetIdPreview
+}
+
+function createMOContainer(menuOs) {
+    const MOContainer = document.createElement('div');
+    MOContainer.className = 'MOContainer';
+
+    if (menuOs.IsMasterOptionSet === true) {
+        const MOHeader = document.createElement('p');
+        MOHeader.className = 'MOHeader';
+        MOHeader.textContent = '(Master Option)';
+        MOContainer.appendChild(MOHeader); // Append the header to the container
+    }
+
+    return MOContainer;
 }
 
 function createOsSelectOption(menuOs) {

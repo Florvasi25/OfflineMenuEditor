@@ -4,21 +4,31 @@ import { groupedOs } from '../../context.js'
 
 function createMaxLenghtButton(selectOptionContainer, menuOs) {
     const maxLengthButton = document.createElement('button');
-    maxLengthButton.classList.add('sectionButton')
-    maxLengthButton.classList.add('maxLengthButton')
+    maxLengthButton.classList.add('sectionButton');
+    maxLengthButton.classList.add('maxLengthButton');
 
     selectOptionContainer.appendChild(maxLengthButton);
 
-    const maxLengthButtonImg = document.createElement('img')
-    maxLengthButtonImg.classList.add('sectionButtonImg')
-    maxLengthButtonImg.src = '../../assets/upArrowIcon.svg'
+    const maxLengthButtonImg = document.createElement('img');
+    maxLengthButtonImg.classList.add('sectionButtonImg');
+    maxLengthButtonImg.src = '../../assets/upArrowIcon.svg';
 
-    maxLengthButton.appendChild(maxLengthButtonImg)
+    maxLengthButton.appendChild(maxLengthButtonImg);
+
+    if (menuOs.IsMasterOptionSet) {
+        maxLengthButton.style.cursor = 'default'; // Set cursor style
+        maxLengthButton.addEventListener('mouseenter', () => {
+            maxLengthButton.style.backgroundColor = '#cdcdcd'; // Set hover background color
+        });
+    }
 
     maxLengthButton.addEventListener('click', () => {
-        maxLength(menuOs)
-    })
+        if (!menuOs.IsMasterOptionSet) {
+            maxLength(menuOs);
+        }
+    });
 }
+
 
 function maxLength(menuOs) {
     const optionsArray = Array.from(document.getElementsByClassName('optionRow'));

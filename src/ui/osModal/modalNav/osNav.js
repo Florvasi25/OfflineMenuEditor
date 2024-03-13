@@ -16,6 +16,10 @@ function createOsModalNav(menuOs) {
 
     const selectOptionContainer = createSelectOptionContainer(menuOs)
     osModalNav.appendChild(selectOptionContainer)
+    
+    if (menuOs.IsMasterOptionSet) {
+        selectOptionContainer.style.opacity = 0.50
+    } 
 
     const optionSetId = document.createElement('p')
     optionSetId.textContent = menuOs.MenuItemOptionSetId
