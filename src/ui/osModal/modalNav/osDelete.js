@@ -75,15 +75,33 @@ function confirmDelete(menuOs, osBtnsCell) {
 
 function deleteOs(menuOs) {
     if (groupedOs[menuOs.groupOsId]) {
-
         // find all the ids to remove
         const osIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId);
+
+        // Loop through all items
+        jsonData.MenuSections.flatMap(i => i.MenuItems).forEach(i => {
+            // Check if any of the item's option sets match the ones being deleted
+            if (i.MenuItemOptionSets.some(os => osIds.includes(os.MenuItemOptionSetId))) {
+                const itemRow = document.getElementById(i.MenuItemId);
+                if (itemRow) {
+                    const itemPriceCell = itemRow.querySelector('.itemPriceCell');
+                    if (itemPriceCell) {
+                        itemPriceCell.style.display = 'flex'; // Set display to default (usually 'block')
+                    }
+                }
+            }
+            // delete option sets from the item
+            i.MenuItemOptionSets = i.MenuItemOptionSets.filter(os => !osIds.includes(os.MenuItemOptionSetId))
+        });
+
         // delete groupOs reference to these os
         delete groupedOs[menuOs.groupOsId];
+
         // delete jsonData reference to these os
         jsonData.MenuSections.flatMap(i => i.MenuItems).forEach(i => {
             i.MenuItemOptionSets = i.MenuItemOptionSets.filter(os => !osIds.includes(os.MenuItemOptionSetId))
-        })
+        });
+
         updatePreview(osIds.map(p => p.toString()));
         groupOptionSets();
         updateLocalStorage(slotManagerInstance.currentSlot);
@@ -94,6 +112,8 @@ function deleteOs(menuOs) {
 
     closeOsModalContainer()
 }
+
+
 
 function updatePreview(osIds) {
     const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));

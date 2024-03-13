@@ -11,17 +11,23 @@ function createItemPriceCell(itemRow, menuItem, sectionId) {
     const itemPriceCell = document.createElement('div');
     itemPriceCell.classList.add('itemPriceCell');
 
+    hasMasterOptionSet(itemRow, menuItem, sectionId, itemPriceCell)
+
+    return itemPriceCell;
+}
+
+function hasMasterOptionSet(itemRow, menuItem, sectionId, itemPriceCell) {
     const hasMasterOptionSet = menuItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
 
     // If there is a master option set, hide the itemPriceCell
     if (hasMasterOptionSet) {
         itemPriceCell.style.display = 'none';
+        const itemPrice = createItemPrice(itemRow, menuItem, sectionId)
+        itemPriceCell.appendChild(itemPrice);
     } else {
         const itemPrice = createItemPrice(itemRow, menuItem, sectionId)
         itemPriceCell.appendChild(itemPrice);
     }
-
-    return itemPriceCell;
 }
 
 //Handles Price Edits
