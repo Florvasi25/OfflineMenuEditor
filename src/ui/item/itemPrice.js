@@ -7,14 +7,21 @@ import {
 import { slotManagerInstance } from '../mainContainer.js';
 
 function createItemPriceCell(itemRow, menuItem, sectionId) {
-    //Price Cell
+    // Price Cell
     const itemPriceCell = document.createElement('div');
     itemPriceCell.classList.add('itemPriceCell');
 
-    const itemPrice = createItemPrice(itemRow, menuItem, sectionId)
-    itemPriceCell.appendChild(itemPrice);
-    
-    return itemPriceCell
+    const hasMasterOptionSet = menuItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
+
+    // If there is a master option set, hide the itemPriceCell
+    if (hasMasterOptionSet) {
+        itemPriceCell.style.display = 'none';
+    } else {
+        const itemPrice = createItemPrice(itemRow, menuItem, sectionId)
+        itemPriceCell.appendChild(itemPrice);
+    }
+
+    return itemPriceCell;
 }
 
 //Handles Price Edits
