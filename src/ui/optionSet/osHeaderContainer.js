@@ -30,7 +30,6 @@ function createOsContainer(itemRow, sectionId, itemId) {
 
     const osAddNew = addNewOs(itemRow)
     osTable.appendChild(osAddNew)
-
     
     if (osTable) {
         var osTableParagraphs = osTable.querySelectorAll('p');
@@ -44,16 +43,24 @@ function createOsContainer(itemRow, sectionId, itemId) {
 function createOs(osContainer, sectionId, itemId) {
     const { itemIndex, sectionIndex } = getItemIndex(sectionId, itemId);
     const menuOsItems = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex].MenuItemOptionSets;
-    
-    menuOsItems.forEach((menuOs, index) => {
-        const osRow = createOsRow(menuOs, sectionId, itemId);
+   
+    const justMOContainer = document.createElement('div');
+    justMOContainer.className = 'justMOContainer';
+    osContainer.appendChild(justMOContainer)
 
-        if (index % 2 === 0) {
-            osRow.firstChild.classList.add('odd');
+    const justOSContainer = document.createElement('div')
+    justOSContainer.className = 'justOSContainer'
+    osContainer.appendChild(justOSContainer)
+
+   
+    menuOsItems.forEach((menuOs) => {
+        if (menuOs.IsMasterOptionSet == true) {
+            const osRow = createOsRow(menuOs, sectionId, itemId);
+            justMOContainer.appendChild(osRow);
         } else {
-            osRow.firstChild.classList.add('even');
+            const osRow = createOsRow(menuOs, sectionId, itemId);
+            justOSContainer.appendChild(osRow);
         }
-        osContainer.appendChild(osRow);
     });
 }
 

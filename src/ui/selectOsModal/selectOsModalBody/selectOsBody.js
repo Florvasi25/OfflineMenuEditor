@@ -146,52 +146,14 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
     
         const masterOptionSetExists = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
     
-        if (!masterOptionSetExists) {
-            selectOsRowHeader.parentNode.removeChild(selectOsRowHeader);
-    
-            const newOs = JSON.parse(JSON.stringify(os));
-    
-            deleteItemlessOs(newOs)
-    
-            newOs.MenuItemId = foundItem.MenuItemId
-    
-            const newOptionSetId = getRandomInt();
-            newOs.MenuItemOptionSetId = newOptionSetId;
-    
-            newOs.MenuItemOptionSetItems.forEach(option => {
-                const newOptionId = getRandomInt();
-                option.MenuItemOptionSetItemId = newOptionId
-            })
-    
-            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-    
-            foundItem.MenuItemOptionSets.push(newOs)
-    
-            const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
-            selectOsBodyRight.replaceWith(createSelectOsBodyRight(itemRowId))
-    
-            const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
-            const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
-    
-            const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
-            osContainerPreview.appendChild(newOptionRow);
-    
-            const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-    
-            osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
-                if (index % 2 === 0) {
-                    osRowHeaderPreview.classList.remove('even');
-                    osRowHeaderPreview.classList.add('odd');
-                } else {
-                    osRowHeaderPreview.classList.remove('odd');
-                    osRowHeaderPreview.classList.add('even');
-                }
-            });
-    
-            groupOptionSets();
-            updateLocalStorage(slotManagerInstance.currentSlot);
+        if (os.IsMasterOptionSet == false) {                
+            addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft)
         } else {
-            showToolTip(addBtn, 'Only one Master Option is allowed per Item')
+            if (!masterOptionSetExists) {
+                addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft)
+            } else {
+                showToolTip(addBtn, 'Only one Master Option is allowed per Item')
+            }
         }
     }) 
 
@@ -201,6 +163,56 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
     selectOsRowHeader.appendChild(btnAndSelectOption)
 
     return selectOsRowHeader
+}
+
+function addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft) {
+    selectOsRowHeader.parentNode.removeChild(selectOsRowHeader);
+    
+    const newOs = JSON.parse(JSON.stringify(os));
+
+    deleteItemlessOs(newOs)
+
+    newOs.MenuItemId = foundItem.MenuItemId
+
+    const newOptionSetId = getRandomInt();
+    newOs.MenuItemOptionSetId = newOptionSetId;
+
+    newOs.MenuItemOptionSetItems.forEach(option => {
+        const newOptionId = getRandomInt();
+        option.MenuItemOptionSetItemId = newOptionId
+    })
+
+    newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+
+    if (os.IsMasterOptionSet == true) {
+        newOs.DisplayOrder = -1
+        foundItem.MenuItemOptionSets.unshift(newOs)
+    } else {
+        foundItem.MenuItemOptionSets.push(newOs)
+    }
+
+    const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
+    selectOsBodyRight.replaceWith(createSelectOsBodyRight(itemRowId))
+
+    const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
+    const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
+    
+    const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId);
+    
+    if (newOs.IsMasterOptionSet) {
+        const justMOContainer = osContainerPreview.querySelector('.justMOContainer');
+        if (justMOContainer) {
+            justMOContainer.appendChild(newOptionRow);
+        }
+    } else {
+        const justOSContainer = osContainerPreview.querySelector('.justOSContainer');
+        if (justOSContainer) {
+            justOSContainer.appendChild(newOptionRow);
+        } 
+    }
+    
+    groupOptionSets();
+    updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
 function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
