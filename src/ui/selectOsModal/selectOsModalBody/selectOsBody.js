@@ -150,6 +150,7 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
             addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft)
         } else {
             if (!masterOptionSetExists) {
+                foundItem.Price = 0
                 addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft)
             } else {
                 showToolTip(addBtn, 'Only one Master Option is allowed per Item')
@@ -181,14 +182,16 @@ function addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft
         const newOptionId = getRandomInt();
         option.MenuItemOptionSetItemId = newOptionId
     })
-
-    newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-
+    
     if (os.IsMasterOptionSet == true) {
         newOs.DisplayOrder = -1
+        newOs.IsMasterOptionSet = true
         foundItem.MenuItemOptionSets.unshift(newOs)
+        console.log('MO');
     } else {
         foundItem.MenuItemOptionSets.push(newOs)
+        newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+        console.log('OS');
     }
 
     const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]

@@ -50,6 +50,7 @@ function createOs(osContainer, sectionId, itemId) {
 
     const justOSContainer = document.createElement('div')
     justOSContainer.className = 'justOSContainer'
+    justOSContainer.id = itemId
     osContainer.appendChild(justOSContainer)
 
    

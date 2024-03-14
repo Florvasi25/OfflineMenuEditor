@@ -43,7 +43,7 @@ function createOsDrag(OSContainer, selectOsRowHeader, foundItem) {
                 OSContainer.insertBefore(draggable, afterElement)
             }
 
-            const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
+            const osContainerPreviewArray = Array.from(document.getElementsByClassName('justOSContainer'));
             const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
 
             const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
@@ -61,7 +61,11 @@ function createOsDrag(OSContainer, selectOsRowHeader, foundItem) {
             const rows = Array.from(OSContainer.querySelectorAll(".selectOsRowHeader"));
             const draggedIdOs = draggable.getAttribute("id");
             const osIndex = foundItem.MenuItemOptionSets.findIndex(os => os.MenuItemOptionSetId == draggedIdOs)
-            const indexNewPosition = rows.indexOf(draggable);
+            
+            let indexNewPosition = rows.indexOf(draggable)
+            if (foundItem.MenuItemOptionSets.some(os => os.IsMasterOptionSet == true)) {
+                indexNewPosition += 1;
+            }
 
             if(osIndex !== indexNewPosition) {
                 const osToMove = foundItem.MenuItemOptionSets.splice(osIndex, 1)[0];
