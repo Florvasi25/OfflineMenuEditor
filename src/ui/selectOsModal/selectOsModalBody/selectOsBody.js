@@ -104,18 +104,25 @@ function createSelectOsBodyRight(itemRowId) {
 
     selectOsBodyRight.appendChild(osInThisItem)
 
+    const MOContainer = document.createElement('div');
+    MOContainer.className = 'MOContainer';
+    selectOsBodyRight.appendChild(MOContainer)
+
+    const OSContainer = document.createElement('div')
+    OSContainer.className = 'OSContainer'
+    selectOsBodyRight.appendChild(OSContainer)
+
+
     const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
 
-    foundItem.MenuItemOptionSets.forEach((menuOs, index) => {
-        const selectOsRowHeader = createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem);
-
-        if (index % 2 === 0) {
-            selectOsRowHeader.classList.add('odd');
+    foundItem.MenuItemOptionSets.forEach((menuOs) => {
+        if (menuOs.IsMasterOptionSet == true) {
+            const selectOsRowHeader = createSelectOsRowRight(menuOs, MOContainer, foundItem);
+            MOContainer.appendChild(selectOsRowHeader);
         } else {
-            selectOsRowHeader.classList.add('even');
+            const selectOsRowHeader = createSelectOsRowRight(menuOs, OSContainer, foundItem);
+            OSContainer.appendChild(selectOsRowHeader);
         }
-
-        selectOsBodyRight.appendChild(selectOsRowHeader);
     });
 
     return selectOsBodyRight;
@@ -219,6 +226,10 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
     const osDrag = createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem)
     dropAndName.insertBefore(osDrag, nameAndOsId)
+
+    if (menuOs.IsMasterOptionSet == true) {
+        osDrag.style.display = 'none'
+    }
 
     const btnAndSelectOption = document.createElement('div')
     btnAndSelectOption.className = 'btnAndSelectOption'

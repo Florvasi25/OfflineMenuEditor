@@ -7,7 +7,7 @@ import { showToolTip } from '../../toolTip.js'
 
 import { slotManagerInstance } from '../../mainContainer.js';
 
-function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
+function createOsDrag(OSContainer, selectOsRowHeader, foundItem) {
     const osDragCell = document.createElement('div');
     osDragCell.className = 'osDragCell';
     const osDragImg = document.createElement('img');
@@ -32,15 +32,15 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
         selectOsRowHeader.classList.add('dragging')
         e.stopPropagation();
 
-        selectOsBodyRight.addEventListener('dragenter', e => {
+        OSContainer.addEventListener('dragenter', e => {
             e.preventDefault()
-            const afterElement = getDragAfterElement(selectOsBodyRight, e.clientY)
+            const afterElement = getDragAfterElement(OSContainer, e.clientY)
             draggable = document.querySelector('.dragging')
 
             if (afterElement == null) {
-                selectOsBodyRight.appendChild(draggable)
+                OSContainer.appendChild(draggable)
             } else {
-                selectOsBodyRight.insertBefore(draggable, afterElement)
+                OSContainer.insertBefore(draggable, afterElement)
             }
 
             const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
@@ -57,8 +57,8 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
             }
         })
 
-        selectOsBodyRight.addEventListener("dragend", () => {
-            const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
+        OSContainer.addEventListener("dragend", () => {
+            const rows = Array.from(OSContainer.querySelectorAll(".selectOsRowHeader"));
             const draggedIdOs = draggable.getAttribute("id");
             const osIndex = foundItem.MenuItemOptionSets.findIndex(os => os.MenuItemOptionSetId == draggedIdOs)
             const indexNewPosition = rows.indexOf(draggable);
@@ -78,7 +78,7 @@ function createOsDrag(selectOsBodyRight, selectOsRowHeader, foundItem) {
     osDragImg.addEventListener('dragend', () => {
         selectOsRowHeader.classList.remove('dragging');
 
-        const selectOsRowHeaders = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
+        const selectOsRowHeaders = Array.from(OSContainer.querySelectorAll(".selectOsRowHeader"));
 
         selectOsRowHeaders.forEach((selectOsRowHeader, index) => {
             if (index % 2 === 0) {
