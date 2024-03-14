@@ -21,6 +21,8 @@ import { slotManagerInstance } from '../../mainContainer.js';
 
 import { createOsModalContainer } from '../../osModal/modalContainer.js'
 
+import { showToolTip } from '../../toolTip.js';
+
 function createSelectOsModalBody(itemRow) {
     const selectOsModalBody = document.createElement('div');
     selectOsModalBody.className = 'selectOsModalBody';
@@ -82,14 +84,6 @@ function createSelectOsBodyLeft(itemRowId) {
         selectOsBodyLeft.appendChild(row);
     });
 
-    selectOsBodyLeft.childNodes.forEach((selectOsRowHeader, index) => {
-        if (index % 2 === 0) {
-            selectOsRowHeader.classList.add('odd');
-        } else {
-            selectOsRowHeader.classList.add('even');
-        }
-    })
-
     return selectOsBodyLeft
 }
 
@@ -149,63 +143,57 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
                 option.remove();
             }
         }
-
-        selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
-
-        const rows = Array.from(selectOsBodyLeft.querySelectorAll(".selectOsRowHeader"));
-
-        rows.forEach((row, index) => {
-            if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
-            } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
-            }
-        });
-
-        const newOs = JSON.parse(JSON.stringify(os));
-
-        deleteItemlessOs(newOs)
-
-        newOs.MenuItemId = foundItem.MenuItemId
-
-        const newOptionSetId = getRandomInt();
-        newOs.MenuItemOptionSetId = newOptionSetId;
-
-        newOs.MenuItemOptionSetItems.forEach(option => {
-            const newOptionId = getRandomInt();
-            option.MenuItemOptionSetItemId = newOptionId
-        })
-
-        newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-
-        foundItem.MenuItemOptionSets.push(newOs)
-
-        const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
-        selectOsBodyRight.replaceWith(createSelectOsBodyRight(itemRowId))
-
-        const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
-        const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
-
-        const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
-        osContainerPreview.appendChild(newOptionRow);
-
-        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-
-        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
-            if (index % 2 === 0) {
-                osRowHeaderPreview.classList.remove('even');
-                osRowHeaderPreview.classList.add('odd');
-            } else {
-                osRowHeaderPreview.classList.remove('odd');
-                osRowHeaderPreview.classList.add('even');
-            }
-        });
-
-        groupOptionSets();
-        updateLocalStorage(slotManagerInstance.currentSlot);
-    })
+    
+        const masterOptionSetExists = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
+    
+        if (!masterOptionSetExists) {
+            selectOsRowHeader.parentNode.removeChild(selectOsRowHeader);
+    
+            const newOs = JSON.parse(JSON.stringify(os));
+    
+            deleteItemlessOs(newOs)
+    
+            newOs.MenuItemId = foundItem.MenuItemId
+    
+            const newOptionSetId = getRandomInt();
+            newOs.MenuItemOptionSetId = newOptionSetId;
+    
+            newOs.MenuItemOptionSetItems.forEach(option => {
+                const newOptionId = getRandomInt();
+                option.MenuItemOptionSetItemId = newOptionId
+            })
+    
+            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+    
+            foundItem.MenuItemOptionSets.push(newOs)
+    
+            const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
+            selectOsBodyRight.replaceWith(createSelectOsBodyRight(itemRowId))
+    
+            const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
+            const osContainerPreview = osContainerPreviewArray.find((p) => p.id == foundItem.MenuItemId);
+    
+            const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
+            osContainerPreview.appendChild(newOptionRow);
+    
+            const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
+    
+            osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
+                if (index % 2 === 0) {
+                    osRowHeaderPreview.classList.remove('even');
+                    osRowHeaderPreview.classList.add('odd');
+                } else {
+                    osRowHeaderPreview.classList.remove('odd');
+                    osRowHeaderPreview.classList.add('even');
+                }
+            });
+    
+            groupOptionSets();
+            updateLocalStorage(slotManagerInstance.currentSlot);
+        } else {
+            showToolTip(addBtn, 'Only one Master Option is allowed per Item')
+        }
+    }) 
 
     btnAndSelectOption.appendChild(addBtn)
     btnAndSelectOption.appendChild(selectOptionContainer)
@@ -250,18 +238,6 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
         selectOsRowHeader.parentNode.removeChild(selectOsRowHeader)
 
-        const rows = Array.from(selectOsBodyRight.querySelectorAll(".selectOsRowHeader"));
-
-        rows.forEach((row, index) => {
-            if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
-            } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
-            }
-        });
-
         foundItem.MenuItemOptionSets.splice(foundItem.MenuItemOptionSets.indexOf(menuOs), 1)
 
         if (groupedOs[menuOs.groupOsId].length === 1) {
@@ -269,8 +245,13 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
             addItemlessOs(menuOs)
         }
 
-        const selectOsBodyLeft = selectOsBodyRight.parentNode.getElementsByClassName('selectOsBodyLeft')[0]
-        selectOsBodyLeft.replaceWith(createSelectOsBodyLeft(foundItem.MenuItemId))
+        const parentContainer = selectOsRowHeader.closest('.MOContainer, .OSContainer'); // Get the parent container
+        if (parentContainer) {
+            parentContainer.removeChild(selectOsRowHeader); // Remove selectOsRowHeader from parent container
+        }
+
+        const selectOsBodyLeft = selectOsBodyRight.closest('.selectOsModalBody').querySelector('.selectOsBodyLeft');
+        selectOsBodyLeft.replaceWith(createSelectOsBodyLeft(foundItem.MenuItemId));
 
         const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
         const osRowOptionPreview = osRowHeaderPreviewArray.find((p) => p.id == menuOs.MenuItemOptionSetId);
@@ -337,7 +318,7 @@ function searchOs(selectOsBodyLeft) {
             }
         });
     });
-    
+
     return searchOsInput;
 }
 
@@ -400,7 +381,7 @@ function createSelectOsNameHeader(menuOs) {
                 if (existingSelectOsModal) {
                     existingSelectOsModal.remove()
                 }
-                selectOsModal.style.display = 'none'; 
+                selectOsModal.style.display = 'none';
             }, 200);
         }
     });
