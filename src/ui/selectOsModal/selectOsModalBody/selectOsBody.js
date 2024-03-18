@@ -151,6 +151,13 @@ function createSelectOsRowLeft(os, selectOsBodyLeft, itemRowId) {
         } else {
             if (!masterOptionSetExists) {
                 foundItem.Price = 0
+                const itemRow = document.getElementById(foundItem.MenuItemId);
+                if (itemRow) {
+                    const itemPriceCell = itemRow.querySelector('.itemPriceCell');
+                    if (itemPriceCell) {
+                        itemPriceCell.style.display = 'none';
+                    }
+                }
                 addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft)
             } else {
                 showToolTip(addBtn, 'Only one Master Option is allowed per Item')
@@ -246,6 +253,17 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
             let option = selectOsRowHeader.nextElementSibling;
             if (option.tagName == 'DIV' && option.classList.contains('osOptionContainer')) {
                 option.remove();
+            }
+        }
+
+        const masterOptionSetExists = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
+        if (masterOptionSetExists) {
+            const itemRow = document.getElementById(foundItem.MenuItemId);
+            if (itemRow) {
+                const itemPriceCell = itemRow.querySelector('.itemPriceCell');
+                if (itemPriceCell) {
+                    itemPriceCell.style.display = 'flex';
+                }
             }
         }
 

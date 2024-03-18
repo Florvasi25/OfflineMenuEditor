@@ -37,6 +37,13 @@ function createAddButton(menuOs, menuItemId) {
         } else {
             if (!masterOptionSetExists) {
                 foundItem.Price = 0
+                const itemRow = document.getElementById(foundItem.MenuItemId);
+                if (itemRow) {
+                    const itemPriceCell = itemRow.querySelector('.itemPriceCell');
+                    if (itemPriceCell) {
+                        itemPriceCell.style.display = 'none';
+                    }
+                }
                 addOsOrMo(menuOs, foundItem, addBtn, menuItemId)
             } else {
                 showToolTipMO(addBtn, 'Only one Master Option is allowed per Item')

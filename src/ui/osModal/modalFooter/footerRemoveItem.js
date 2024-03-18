@@ -25,8 +25,19 @@ function createRemoveButton(menuOs, menuItemId) {
     const foundItem = jsonData.MenuSections
     .flatMap(i => i.MenuItems)
     .find(i => i.MenuItemId == menuItemId);
-    
+
     deleteBtn.addEventListener('click', (event) => {
+        const masterOptionSetExists = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
+        if (masterOptionSetExists) {
+            const itemRow = document.getElementById(foundItem.MenuItemId);
+            if (itemRow) {
+                const itemPriceCell = itemRow.querySelector('.itemPriceCell');
+                if (itemPriceCell) {
+                    itemPriceCell.style.display = 'flex';
+                }
+            }
+        }
+        
         const correctOs = Array.from(foundItem.MenuItemOptionSets).find(i => i.groupOsId == menuOs.groupOsId);
 
         const targetParent = event.target.parentElement;
