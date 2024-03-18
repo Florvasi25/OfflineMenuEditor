@@ -108,6 +108,9 @@ function handleRemoveAllMoM(menuOs, sameMoMInput) {
             const optionMoMPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('optionMoMPreview'))
             optionMoMPreviewArray.forEach(optionMoMPreview => {
                 optionMoMPreview.textContent = 'null'
+                optionMoMPreview.classList.remove('warning');
+                optionMoMPreview.classList.add('notwarning');
+                optionMoMPreview.style.color = '#000000';
             })
         
             const optionMoMModal = Array.from(document.getElementsByClassName('optionMoM'))
@@ -118,7 +121,6 @@ function handleRemoveAllMoM(menuOs, sameMoMInput) {
             
             updateLocalStorage(slotManagerInstance.currentSlot)
         })
-
     }
 }
 
