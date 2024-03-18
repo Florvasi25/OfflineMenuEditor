@@ -66,6 +66,8 @@ function osNewButton(osBtnsCell) {
             ExternalImageUrl: null,
             groupOsId: `group${getRandomInt()}`
         };
+        
+        addItemlessOs(emptyOsJson)
 
         closeOsModalContainerQuick()
 
@@ -74,8 +76,6 @@ function osNewButton(osBtnsCell) {
         setTimeout(() => {
             osModalContainer.classList.add('show');
         }, 10);
-
-        addItemlessOs(emptyOsJson)
     });
 
     return newOsButton

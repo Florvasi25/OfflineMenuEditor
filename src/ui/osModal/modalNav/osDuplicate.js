@@ -45,6 +45,7 @@ function duplicateOs(menuOs) {
 
     // Assign a new groupColor to the duplicated option set
     newOs.groupColor = getRandomColor(); // Generate a new random color
+    newOs.IsMasterOptionSet = false
 
     addItemlessOs(newOs);
 

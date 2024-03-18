@@ -1,9 +1,9 @@
-import { 
-    updateLocalStorage,
-    jsonData
-} from "../../context.js";
+import {
+    itemlessOs,
+    updateItemlessLocalStorage,
+} from '../../context.js'
+
 import { slotManagerInstance } from "../../mainContainer.js";
-import { showToolTipMO } from "../../toolTip.js";
 
 function createIsMOContainer(menuOs) {
     const isMOContainer = document.createElement('div');
@@ -20,10 +20,15 @@ function createIsMOContainer(menuOs) {
 
     checkbox.checked = menuOs.IsMasterOptionSet; // Checkbox checked state reflects menuOs.IsMasterOptionSet
 
-    // Make checkbox non-interactive
     checkbox.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default click behavior
-        event.stopPropagation(); // Stop event propagation
+        if (itemlessOs.includes(menuOs)) {
+            this.checked != this.checked;
+            menuOs.IsMasterOptionSet = this.checked; // Update IsMasterOptionSet based on checkbox state
+            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
+        } else {
+            event.preventDefault(); // Prevent default click behavior
+            event.stopPropagation(); // Stop event propagation
+        }
     });
 
     // Append checkbox to isMOContainer

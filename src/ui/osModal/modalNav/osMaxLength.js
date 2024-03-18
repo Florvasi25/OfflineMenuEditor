@@ -16,11 +16,7 @@ function createMaxLenghtButton(selectOptionContainer, menuOs) {
     maxLengthButton.appendChild(maxLengthButtonImg);
 
     if (menuOs.IsMasterOptionSet) {
-        // maxLengthButton.style.cursor = 'default'; // Set cursor style
-        // maxLengthButton.addEventListener('mouseenter', () => {
-            //     maxLengthButton.style.backgroundColor = '#cdcdcd'; // Set hover background color
-            // });
-        maxLengthButton.style.display = 'none'; // Set cursor style
+        maxLengthButton.style.display = 'none';
     }
 
     maxLengthButton.addEventListener('click', () => {
