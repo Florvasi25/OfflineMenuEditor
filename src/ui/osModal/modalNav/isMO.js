@@ -22,13 +22,34 @@ function createIsMOContainer(menuOs) {
 
     checkbox.addEventListener('click', function(event) {
         if (itemlessOs.includes(menuOs)) {
-            this.checked != this.checked;
             menuOs.IsMasterOptionSet = this.checked; // Update IsMasterOptionSet based on checkbox state
-            updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
+
+            const selectOptionContainer = document.getElementsByClassName('selectOptionContainer')[0];
+            const maxLengthButton = document.getElementsByClassName('maxLengthButton')[0];
+
+            if (menuOs.IsMasterOptionSet) {
+                const minCount = document.querySelector('.minCount');
+                minCount.textContent = 1
+                menuOs.MinSelectCount = 1
+    
+                const maxCount = document.querySelector('.maxCount');
+                maxCount.textContent = 1
+                menuOs.MaxSelectCount = 1
+
+                selectOptionContainer.style.opacity = 0.50;
+                selectOptionContainer.style.cursor = 'not-allowed';
+                maxLengthButton.style.display = 'none';
+            } else {
+                selectOptionContainer.style.opacity = 1;
+                selectOptionContainer.style.cursor = 'default';
+                maxLengthButton.style.display = 'flex';
+            }
         } else {
             event.preventDefault(); // Prevent default click behavior
             event.stopPropagation(); // Stop event propagation
         }
+
+        updateItemlessLocalStorage(slotManagerInstance.currentItemlessOs);
     });
 
     // Append checkbox to isMOContainer
