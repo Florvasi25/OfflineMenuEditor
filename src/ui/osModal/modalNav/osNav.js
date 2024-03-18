@@ -4,6 +4,8 @@ import {  createOsBtnsCell  } from './osButtonContainer.js'
 
 import { createSelectOptionContainer } from './osSelectOption.js'
 
+import { createIsMOContainer } from './isMO.js'
+
 function createOsModalNav(menuOs) {
     const osModalNav = document.createElement('div')
     osModalNav.className = 'osModalNav'
@@ -14,13 +16,22 @@ function createOsModalNav(menuOs) {
     const osOptionsRow = createOsOptionsNav(menuOs)
     osModalNav.appendChild(osOptionsRow)
 
+    const selectOptionAndMO = document.createElement('div')
+    selectOptionAndMO.className = 'selectOptionAndMO'
+
     const selectOptionContainer = createSelectOptionContainer(menuOs)
-    osModalNav.appendChild(selectOptionContainer)
     
     if (menuOs.IsMasterOptionSet) {
         selectOptionContainer.style.opacity = 0.50
+        selectOptionContainer.style.cursor = 'not-allowed'
     } 
 
+    const isMOContainer = createIsMOContainer(menuOs)
+    
+    selectOptionAndMO.appendChild(selectOptionContainer)
+    selectOptionAndMO.appendChild(isMOContainer)
+    osModalNav.appendChild(selectOptionAndMO)
+    
     const optionSetId = document.createElement('p')
     optionSetId.textContent = menuOs.MenuItemOptionSetId
     optionSetId.className = 'optionSetId'

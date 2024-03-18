@@ -452,7 +452,7 @@ main {
 .selectOptionContainer {
     background-color: #f0f0f0;
     border-radius: 5px;
-    width: 150px;
+    padding: 0 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -475,8 +475,15 @@ main {
 }
 
 .maxCount {
-    padding: 5px 7.5px;
+    padding: 2px 5.5px;
     font-size: 13px;
+    margin: 3px 0;
+}
+
+.maxCount:focus {
+    background-color: #ffffff;
+    outline: 2px solid #5e5e5e;
+    border-radius: 5px;
 }
 
 .minCountCell {
@@ -486,8 +493,15 @@ main {
 }
 
 .minCount {
-    padding: 5px 7.5px;
+    padding: 2px 5.5px;
     font-size: 13px;
+    margin: 3px 0;
+}
+
+.minCount:focus {
+    background-color: #ffffff;
+    outline: 2px solid #5e5e5e;
+    border-radius: 5px;
 }
 
 .countText {
@@ -1180,6 +1194,7 @@ selector svg {
 
 .maxLengthButton {
     background-color: #cdcdcd;
+    margin-left: 15px;
     transition: background-color 0.3s ease;
 }
 
@@ -2035,12 +2050,10 @@ selector svg {
 .sameMoMInput {
     display: flex;
     align-items: center;
-    height: 25px;
-    padding: 0 5px;
+    padding: 5px;
     width: 100px;
     color: #a3a3a3;
     background-color: #f5f5f5;
-    height: 25px;
     border-radius: 5px;
     font-size: 13px;
     justify-content: center;
@@ -2502,4 +2515,22 @@ selector svg {
     font-size: 13px;
     font-weight: bold;
     color: #ffffff;
+}
+
+.isMOContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.textMO {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.selectOptionAndMO {
+    display: flex;
 }
