@@ -187,11 +187,9 @@ function addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft
         newOs.DisplayOrder = -1
         newOs.IsMasterOptionSet = true
         foundItem.MenuItemOptionSets.unshift(newOs)
-        console.log('MO');
     } else {
         foundItem.MenuItemOptionSets.push(newOs)
         newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-        console.log('OS');
     }
 
     const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
