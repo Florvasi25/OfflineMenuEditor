@@ -73,6 +73,10 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 if (optionMoMPreview) {
                     if (newOptionMoM == "") {
                         optionMoMPreview.textContent = "null"
+                        optionMoMPreview.classList.remove('warning');
+                        optionMoMPreview.classList.add('notwarning');
+                        optionMoMPreview.style.color = '#000000';
+        
                     } else {
                         optionMoMPreview.textContent = newOptionMoM;
                     }
@@ -81,6 +85,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 if (optionMoM.textContent == "" || optionMoM.textContent == "Empty") {
                     optionMoM.textContent = "Empty";
                     optionMoM.style = 'color: #a3a3a3;'
+                    
                 }
             }
             addWarningMoM()
@@ -94,7 +99,9 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             optionMoM.textContent = "Empty";
             optionMoM.style = 'color: #a3a3a3;'
         } else {
-            optionMoM.textContent = originalMoM === null ? "Empty" : originalMoM;
+            originalMoM = menuOption.NextMenuItemOptionSetId
+            console.log(originalMoM);
+            optionMoM.textContent = originalMoM == null ? "Empty" : originalMoM;
             if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
                 optionMoM.textContent = "Empty";
                 optionMoM.style = 'color: #a3a3a3;'
