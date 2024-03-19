@@ -29,11 +29,13 @@ function createRemoveButton(menuOs, menuItemId) {
     deleteBtn.addEventListener('click', (event) => {
         const masterOptionSetExists = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet === true);
         if (masterOptionSetExists) {
-            const itemRow = document.getElementById(foundItem.MenuItemId);
-            if (itemRow) {
-                const itemPriceCell = itemRow.querySelector('.itemPriceCell');
-                if (itemPriceCell) {
-                    itemPriceCell.style.display = 'flex';
+            if (menuOs.IsMasterOptionSet == true) {
+                const itemRow = document.getElementById(foundItem.MenuItemId);
+                if (itemRow) {
+                    const itemPriceCell = itemRow.querySelector('.itemPriceCell');
+                    if (itemPriceCell) {
+                        itemPriceCell.style.display = 'flex';
+                    }
                 }
             }
         }
