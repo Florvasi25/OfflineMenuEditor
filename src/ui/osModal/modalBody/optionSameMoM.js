@@ -104,15 +104,17 @@ function handleRemoveAllMoM(menuOs, sameMoMInput) {
             
             const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'))
             const optionContainerPreview = optionContainerPreviewArray.find(p => p.id == menuOs.MenuItemOptionSetId)
+
+            if (optionContainerPreview) {
+                const optionMoMPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('optionMoMPreview'))
+                optionMoMPreviewArray.forEach(optionMoMPreview => {
+                    optionMoMPreview.textContent = 'null'
+                    optionMoMPreview.classList.remove('warning');
+                    optionMoMPreview.classList.add('notwarning');
+                    optionMoMPreview.style.color = '#000000';
+                })
+            }
             
-            const optionMoMPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('optionMoMPreview'))
-            optionMoMPreviewArray.forEach(optionMoMPreview => {
-                optionMoMPreview.textContent = 'null'
-                optionMoMPreview.classList.remove('warning');
-                optionMoMPreview.classList.add('notwarning');
-                optionMoMPreview.style.color = '#000000';
-            })
-        
             const optionMoMModal = Array.from(document.getElementsByClassName('optionMoM'))
             optionMoMModal.forEach(optionMoM => {
                 optionMoM.textContent = 'Empty'
@@ -135,11 +137,13 @@ function handleSameMoM(menuOs, sameMoMInput, textMoM) {
 
         const optionContainerPreviewArray = Array.from(document.getElementsByClassName('optionContainer'))
         const optionContainerPreview = optionContainerPreviewArray.find(p => p.id == menuOs.MenuItemOptionSetId)
-    
-        const optionMoMPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('optionMoMPreview'))
-        optionMoMPreviewArray.forEach(optionMoMPreview => {
-            optionMoMPreview.textContent = textMoM
-        })
+
+        if (optionContainerPreview) {
+            const optionMoMPreviewArray = Array.from(optionContainerPreview.getElementsByClassName('optionMoMPreview'))
+            optionMoMPreviewArray.forEach(optionMoMPreview => {
+                optionMoMPreview.textContent = textMoM
+            })
+        }
     
         const optionMoMModal = Array.from(document.getElementsByClassName('optionMoM'))
         optionMoMModal.forEach(optionMoM => {
