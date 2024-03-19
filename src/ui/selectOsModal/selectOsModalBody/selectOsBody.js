@@ -190,13 +190,27 @@ function addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft
         option.MenuItemOptionSetItemId = newOptionId
     })
     
-    if (os.IsMasterOptionSet == true) {
-        newOs.DisplayOrder = -1
-        newOs.IsMasterOptionSet = true
-        foundItem.MenuItemOptionSets.unshift(newOs)
+    // Filter if foundItem has some MenuItemOptionSets that have its key IsMasterOptionSet == true
+    const hasMasterOptionSet = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet);
+
+    if (hasMasterOptionSet) {
+        if (os.IsMasterOptionSet == true) {
+            newOs.DisplayOrder = -1
+            newOs.IsMasterOptionSet = true
+            foundItem.MenuItemOptionSets.unshift(newOs)
+        } else {
+            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length - 1
+            foundItem.MenuItemOptionSets.push(newOs)
+        }
     } else {
-        foundItem.MenuItemOptionSets.push(newOs)
-        newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+        if (os.IsMasterOptionSet == false) {
+            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+            foundItem.MenuItemOptionSets.push(newOs)
+        } else {
+            newOs.DisplayOrder = -1
+            newOs.IsMasterOptionSet = true
+            foundItem.MenuItemOptionSets.unshift(newOs)
+        }
     }
 
     const selectOsBodyRight = selectOsBodyLeft.parentNode.getElementsByClassName('selectOsBodyRight')[0]
