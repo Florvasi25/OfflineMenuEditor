@@ -88,15 +88,27 @@ function addOsOrMo(menuOs, foundItem, addBtn, menuItemId) {
     }
 
     newOs.MenuItemId = foundItem.MenuItemId
-    newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
 
-    if (menuOs.IsMasterOptionSet == true) {
-        newOs.DisplayOrder = -1
-        newOs.IsMasterOptionSet = true
-        foundItem.MenuItemOptionSets.unshift(newOs)
+    const hasMasterOptionSet = foundItem.MenuItemOptionSets.some(optionSet => optionSet.IsMasterOptionSet);
+
+    if (hasMasterOptionSet) {
+        if (menuOs.IsMasterOptionSet == true) {
+            newOs.DisplayOrder = -1
+            newOs.IsMasterOptionSet = true
+            foundItem.MenuItemOptionSets.unshift(newOs)
+        } else {
+            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length - 1
+            foundItem.MenuItemOptionSets.push(newOs)
+        }
     } else {
-        newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-        foundItem.MenuItemOptionSets.push(newOs)
+        if (menuOs.IsMasterOptionSet == false) {
+            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
+            foundItem.MenuItemOptionSets.push(newOs)
+        } else {
+            newOs.DisplayOrder = -1
+            newOs.IsMasterOptionSet = true
+            foundItem.MenuItemOptionSets.unshift(newOs)
+        }
     }
 
     const osContainerPreviewArray = Array.from(document.getElementsByClassName('osContainer'));
