@@ -93,21 +93,23 @@ function addOsOrMo(menuOs, foundItem, addBtn, menuItemId) {
 
     if (hasMasterOptionSet) {
         if (menuOs.IsMasterOptionSet == true) {
-            newOs.DisplayOrder = -1
-            newOs.IsMasterOptionSet = true
-            foundItem.MenuItemOptionSets.unshift(newOs)
+            newOs.IsMasterOptionSet = true;
+            newOs.DisplayOrder = -1;
+            foundItem.MenuItemOptionSets.unshift(newOs);
         } else {
-            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length - 1
-            foundItem.MenuItemOptionSets.push(newOs)
+            const maxDisplayOrder = Math.max(...foundItem.MenuItemOptionSets.map(optionSet => optionSet.DisplayOrder));
+            newOs.DisplayOrder = maxDisplayOrder + 1;
+            foundItem.MenuItemOptionSets.push(newOs);
         }
     } else {
         if (menuOs.IsMasterOptionSet == false) {
-            newOs.DisplayOrder = foundItem.MenuItemOptionSets.length
-            foundItem.MenuItemOptionSets.push(newOs)
+            const maxDisplayOrder = Math.max(...foundItem.MenuItemOptionSets.map(optionSet => optionSet.DisplayOrder));
+            newOs.DisplayOrder = maxDisplayOrder + 1;
+            foundItem.MenuItemOptionSets.push(newOs);
         } else {
-            newOs.DisplayOrder = -1
-            newOs.IsMasterOptionSet = true
-            foundItem.MenuItemOptionSets.unshift(newOs)
+            newOs.IsMasterOptionSet = true;
+            newOs.DisplayOrder = -1;
+            foundItem.MenuItemOptionSets.unshift(newOs);
         }
     }
 
