@@ -126,6 +126,9 @@ function setOptionSetId(jsonData) {
     for (const section of jsonData.MenuSections) {
         for (const item of section.MenuItems) {
             itemIDInOS = item.MenuItemId;
+            let foundMasterOptionSet = false; // Flag to track if a master option set is found
+            let displayOrderCounter = 0; // Counter for setting display order
+            
             for (const optionSet of item.MenuItemOptionSets) {
                 const oldId = optionSet.MenuItemOptionSetId;
                 const newId = getRandomInt();
@@ -134,6 +137,17 @@ function setOptionSetId(jsonData) {
                 optionSet.MenuItemOptionSetId = newId;
 
                 window.optionSetIdMap[oldId] = newId; // Map old ID to new ID
+
+                if (optionSet.IsMasterOptionSet) {
+                    if (foundMasterOptionSet) {
+                        optionSet.DisplayOrder = displayOrderCounter++;
+                    } else {
+                        optionSet.DisplayOrder = -1;
+                        foundMasterOptionSet = true;
+                    }
+                } else {
+                    optionSet.DisplayOrder = displayOrderCounter++;
+                }
             }
         }
     }
