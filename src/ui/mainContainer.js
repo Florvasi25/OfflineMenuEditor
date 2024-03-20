@@ -36,6 +36,7 @@ function generateHTML(jsonData) {
 
 function createBtnContainers() {
     const fileOptionsContainer = document.getElementById('fileOptionsContainer')
+    
     const slotTitle = createSlotTitle();
     slotTitle.id = 'slotButton1';
 
@@ -70,28 +71,127 @@ function createExpandAllButton() {
     return expandAllButton
 }
 
-function handleExpandAll() {
-    const sectionRow = document.querySelectorAll('.sectionRow');
-    sectionRow.forEach(section => {
+async function handleExpandAll() {
+    // Show loading indicator
+    showLoadingIndicator();
+
+    // Introduce a small delay (e.g., 100 milliseconds) before executing asynchronous operations
+    await delay(100);
+
+    await expandAllSections();
+    await expandAllItemRows();
+    await expandAllOsRowHeaders();
+
+    // Hide loading indicator
+    hideLoadingIndicator();
+}
+
+// Function to introduce a delay using Promises
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function showLoadingIndicator() {
+    // Create a loading element
+    const loadingIndicator = document.getElementById('loadingIndicator');
+
+    // Check if the loading element already exists
+    let loadingElement = document.getElementById('loadingElement');
+    if (!loadingElement) {
+        loadingElement = document.createElement('div');
+        loadingElement.id = 'loadingElement';
+        loadingElement.textContent = 'LOADING...'; // You can customize the loading text/style
+        loadingElement.style.display = 'flex';
+        loadingIndicator.appendChild(loadingElement);
+    }
+}
+
+function hideLoadingIndicator() {
+    // Hide loading element
+    const loadingElement = document.getElementById('loadingElement');
+    if (loadingElement) {
+        loadingElement.parentNode.removeChild(loadingElement);
+    }
+}
+
+
+// Rest of your code remains unchanged...
+
+async function expandAllSections() {
+    const sectionRows = document.querySelectorAll('.sectionRow');
+    for (const section of sectionRows) {
         if (section.classList.contains('folded')) {
-            toggleSectionState(section);
+            await toggleSectionState(section);
         }
-        const itemRow = section.nextElementSibling.querySelectorAll('.itemRow');
-        if (itemRow) {
-            itemRow.forEach(item => {
-                if (item.classList.contains('folded')) {
-                    toggleItemState(item, section.id);
-                }
-                const osRowHeader = item.nextElementSibling.querySelectorAll('.osRowHeader');
-                if (osRowHeader) {
-                    osRowHeader.forEach(os => {
-                        if (os.classList.contains('folded')) {
-                            toggleOsState(os, section.id, item.id);
-                        }
-                    });
-                }
-            });
+    }
+}
+
+async function expandAllItemRows() {
+    const itemRows = document.querySelectorAll('.itemRow');
+    for (const itemRow of itemRows) {
+        if (itemRow.classList.contains('folded')) {
+            const itemTable = itemRow.parentElement.parentElement;
+            const sectionId = itemTable.previousElementSibling.id;
+            await toggleItemState(itemRow, sectionId);
         }
+    }
+}
+
+async function expandAllOsRowHeaders() {
+    const sizeInBytes = measureJsonSize(jsonData);
+
+    if (sizeInBytes > 1500000) {
+        console.log('lazy');
+        await setupLazyLoading();
+    } else {
+        console.log('all');
+        const osRowHeaders = document.querySelectorAll('.osRowHeader');
+        for (const osRowHeader of osRowHeaders) {
+            if (osRowHeader.classList.contains('folded')) {
+                const osTable = osRowHeader.parentElement.parentElement.parentElement.parentElement;
+                const itemRow = osTable.previousElementSibling;
+                const sectionRow = itemRow.parentElement.parentElement.previousElementSibling;
+                await toggleOsState(osRowHeader, sectionRow.id, itemRow.id);
+            }
+        }
+    }
+}
+
+
+// Function to check if lazy loading should be activated based on JSON size
+function measureJsonSize(jsonData) {
+    console.log(jsonData);
+    const jsonString = JSON.stringify(jsonData);
+    const sizeInBytes = new Blob([jsonString]).size;
+    console.log(`JSON size: ${sizeInBytes} bytes`);
+    return sizeInBytes;
+}
+
+function setupLazyLoading() {
+    const osRowHeaders = document.querySelectorAll('.osRowHeader');
+    
+    const observerOptions = {
+        root: null, // Use the viewport as the root
+        threshold: 0.1 // Trigger when 50% of the element is in the viewport
+    };
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const osRowHeader = entry.target;
+                if (osRowHeader.classList.contains('folded')) {
+                    const osTable = osRowHeader.parentElement.parentElement.parentElement.parentElement;
+                    const itemRow = osTable.previousElementSibling;
+                    const sectionRow = itemRow.parentElement.parentElement.previousElementSibling;
+                    toggleOsState(osRowHeader, sectionRow.id, itemRow.id);
+                    observer.unobserve(osRowHeader); // Unobserve after toggling
+                }
+            }
+        });
+    }, observerOptions);
+
+    osRowHeaders.forEach(osRowHeader => {
+        observer.observe(osRowHeader);
     });
 }
 

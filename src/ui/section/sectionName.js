@@ -27,6 +27,9 @@ function createSectionName(sectionRow, menuSection) {
     const sectionName = document.createElement('p');
     sectionName.classList.add('sectionName');
     sectionName.contentEditable = true;
+    if (menuSection.Name == null || menuSection.Name == '') {
+        menuSection.Name = 'EMPTY'
+    }
     sectionName.textContent = menuSection.Name.toUpperCase();
     if (sectionName.textContent == "EMPTY") {
         sectionName.style.color = "#a9a9a9";
