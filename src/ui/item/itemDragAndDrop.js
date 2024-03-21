@@ -3,6 +3,7 @@ import {
     updateLocalStorage,
     getItemIndex,
     getDragAfterElement,
+    closeOsModalContainer
 } from '../context.js';
 
 import { showToolTip } from '../toolTip.js'
@@ -25,6 +26,7 @@ function createItemDragCell(itemRow) {
     })
     
     itemDragImg.addEventListener('dragstart', (e) => {
+        closeOsModalContainer()
         const expandedItemsInContainer = itemRow.parentElement.querySelector('.expanded');
         if (expandedItemsInContainer) {
             e.preventDefault();

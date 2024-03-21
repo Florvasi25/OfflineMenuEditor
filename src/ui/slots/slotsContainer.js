@@ -1,3 +1,5 @@
+import { closeOsModalContainer } from "../context.js";
+
 function createLeftContainer() {
     const leftContainer = document.getElementById('leftContainer');
     leftContainer.className = "leftContainer";
@@ -62,6 +64,8 @@ function createSlotButton(buttonText, buttonId, slotsBtnsContainer) {
         const leftBtnContainer = document.querySelector('.leftBtnContainer');
         const boxLeftMenu = document.querySelector('.boxLeftMenu');
         toggleOsState(boxLeftMenu, slotsBtnsContainer, leftBtnContainer);
+
+        closeOsModalContainer()
     });
 
     return slotButton;

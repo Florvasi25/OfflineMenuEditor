@@ -23,6 +23,7 @@ function itemDeleteButton(rightItemContainer, itemRow, sectionId) {
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
     deleteButton.appendChild(deleteButtonImg)
     deleteButton.addEventListener('click', () => {
+        closeOsModalContainer()
         confirmDelete(itemRow, rightItemContainer, sectionId)
     });
 }
@@ -45,8 +46,6 @@ function confirmDelete(itemRow, rightItemContainer, sectionId) {
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
         deleteItem(itemRow, sectionId);
-
-        closeOsModalContainer()
 
         popup.remove();
     });

@@ -7,7 +7,7 @@ import {
     setSectionDisplayOrder,
     setOptionSetId,
     setOptionSetItemsId,
-    closeOsModalContainer,
+    closeOsModalContainer
 } from './context.js';
 
 import { generateHTML, slotManagerInstance } from './mainContainer.js'
@@ -67,14 +67,13 @@ function createLoadJsonButton() {
     return container
 }
 
-
-
 function createSaveButton() {
     const saveButton = document.createElement('button')
     saveButton.setAttribute('id', 'saveButton')
     saveButton.textContent = 'Save Changes'
 
     saveButton.addEventListener('click', function () {
+        closeOsModalContainer()
         console.log(jsonData);
         saveToFile(jsonData);
     });

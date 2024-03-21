@@ -3,6 +3,7 @@ import {
     updateLocalStorage,
     getSectionIndex,
     getDragAfterElement,
+    closeOsModalContainer
 } from '../context.js';
 
 import { showToolTip } from '../toolTip.js'
@@ -18,6 +19,8 @@ function createSectionDragCell(sectionRow) {
     sectionDragCell.appendChild(sectionDragImg)
 
     sectionDragImg.addEventListener('dragstart', (e) => {
+        closeOsModalContainer()
+
         if (sectionRow.classList.contains('expanded')) {
             e.preventDefault();
             return; // Si hay alguna sección expandida, no hagas nada.
