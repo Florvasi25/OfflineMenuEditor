@@ -153,7 +153,7 @@ function changeItemClockIcon(itemRow, itemId) {
     const clockButton = itemRow.querySelector('.sectionButton.clockButton');
 
     if (item?.DailySpecialHours?.length > 1) {
-        clockButton.style.backgroundColor = '#80d66f';
+        clockButton.style.backgroundColor = '#54f234';
     } else {
         clockButton.style.backgroundColor = ''; // Revert back to default or set a specific color
     }

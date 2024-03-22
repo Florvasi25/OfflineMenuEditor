@@ -410,7 +410,7 @@ main {
 
 .optionSetIdPreview {
     font-size: 11px;
-    padding-top: 5px;
+    padding-top: 3px;
     color: #ffffff;
     user-select: text;
 }
@@ -745,7 +745,7 @@ selector svg {
     align-items: center;
     padding: 5px;
     width: 150px;
-    min-height: 38px;
+    min-height: 64px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -775,7 +775,7 @@ selector svg {
     align-items: center;
     padding: 5px;
     width: 150px;
-    min-height: 38px;
+    min-height: 64px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }

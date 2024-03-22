@@ -6,8 +6,6 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-import { sectionClockButton } from '../clock/sectionClock.js'
-
 import { sectionListButton } from './sectionList.js'
 
 function createSectionNameCell(sectionRow, menuSection) {
@@ -22,7 +20,6 @@ function createSectionNameCell(sectionRow, menuSection) {
     const sectionButtons = document.createElement('div');
     sectionButtons.classList.add('sectionButtons');
 
-    sectionClockButton(sectionButtons, menuSection.MenuSectionId)
     sectionListButton(sectionButtons, menuSection);
 
     sectionNameAndButtons.appendChild(sectionNameCell);

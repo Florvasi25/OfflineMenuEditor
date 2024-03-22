@@ -6,8 +6,6 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-import { itemClockButton } from '../clock/itemClock.js'
-
 import { itemAlcoholButton } from './itemAlcohol.js'
 
 import { itemDiscountButton } from './itemDiscount.js'
@@ -25,7 +23,6 @@ function createItemNameCell(itemRow, menuItem, sectionId) {
     const itemButtons = document.createElement('div');
     itemButtons.classList.add('itemButtons');
 
-    itemClockButton(itemButtons, itemRow.id, sectionId)
     itemAlcoholButton(itemRow, menuItem, itemButtons, sectionId)
     itemDiscountButton(itemRow, menuItem, itemButtons, sectionId)
     itemLockButton(itemRow, menuItem, itemButtons, sectionId)

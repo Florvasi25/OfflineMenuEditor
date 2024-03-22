@@ -59,7 +59,7 @@ function sectionClockButton(sectionButtons, sectionId) {
             const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
             addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
             createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId, sectionIndex);
-            if(section.MenuItems?.[0]?.DailySpecialHours?.length > 1){ clockButton.style.backgroundColor = '#80D66F'; }
+            if(section.MenuItems?.[0]?.DailySpecialHours?.length > 1){ clockButton.style.backgroundColor = '#54f234'; }
         } else {
             showErrorMessage(clockBodyDiv);
             appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex);
@@ -252,14 +252,13 @@ function changeSectionClockIcon(sectionRow, sectionId) {
         var compareHours = compareDailySpecialHours(section);
         var hoursLengthIsSame = checkHoursLength(section);
         if (compareHours && hoursLengthIsSame) {
-            changeSectionClockIconColor(sectionRow, '#80d66f');
+            changeSectionClockIconColor(sectionRow, '#54f234');
         }else if (!compareHours && hoursLengthIsSame){
-            changeSectionClockIconColor(sectionRow, '#FFFF00');
+            changeSectionClockIconColor(sectionRow, '#ffdf00');
         } else {
             changeSectionClockIconColor(sectionRow, '');
         }
     }
-    
 }
 
 function checkHoursLength(section){

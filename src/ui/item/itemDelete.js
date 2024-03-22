@@ -119,7 +119,7 @@ function deleteItem(itemRow, sectionId) {
                 changeSectionClockIconColor(sectionRow, '')
             } else if (jsonData.MenuSections[sectionIndex].MenuItems.length == 1 && 
                             jsonData.MenuSections[sectionIndex].MenuItems[0].DailySpecialHours.length > 0){
-                changeSectionClockIconColor(sectionRow, '#80d66f')                    
+                changeSectionClockIconColor(sectionRow, '#54f234')                    
             }else{ changeSectionClockIcon(sectionRow, sectionId) }
 
             groupOptionSets();

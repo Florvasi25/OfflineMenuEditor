@@ -114,7 +114,7 @@ function modifyBusinessHoursPeriodIds(itemDailyHours) {
 function setClockIcon(itemRow){
     const clockButton = itemRow.querySelector('.sectionButton.clockButton');
 
-    clockButton.style.backgroundColor = '#80d66f';
+    clockButton.style.backgroundColor = '#54f234';
 }
 
 export { createItemButton, CreateItem }
