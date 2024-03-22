@@ -4,6 +4,7 @@ import {
 } from '../../context.js'
 
 import { slotManagerInstance } from "../../mainContainer.js";
+import { showToolTip } from '../../toolTip.js';
 
 function createIsMOContainer(menuOs) {
     const isMOContainer = document.createElement('div');
@@ -45,6 +46,7 @@ function createIsMOContainer(menuOs) {
                 maxLengthButton.style.display = 'flex';
             }
         } else {
+            showToolTip(checkbox, 'Only Itemless OS can be modified');
             event.preventDefault(); // Prevent default click behavior
             event.stopPropagation(); // Stop event propagation
         }

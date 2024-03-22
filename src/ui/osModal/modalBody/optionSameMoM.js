@@ -63,6 +63,13 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     removeMoMButton.addEventListener('click', () => {
         handleRemoveAllMoM(menuOs, sameMoMInput)
     })
+
+    // Handle the paste event to strip formatting
+    sameMoMInput.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+    });
 }
 
 function checkMoM(textMoM, menuOs, sameMoMInput) {
