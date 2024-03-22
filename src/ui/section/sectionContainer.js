@@ -30,11 +30,11 @@ function createSection(menuSection) {
     //Creates Buttons Cell
     const sectionButtonsCell = createSectionButtonsCell(sectionRow, menuSection)
     sectionRow.appendChild(sectionButtonsCell)
-    changeSectionClockIcon(sectionRow, menuSection.MenuSectionId);
-
+    
     //Creates Section Name Cell
     const sectionNameCell = createSectionNameCell(sectionRow, menuSection)
     sectionRow.appendChild(sectionNameCell)
+    changeSectionClockIcon(sectionRow, menuSection.MenuSectionId);
 
     //Section Desc Cell
     const sectionDescCell = createSectionDescCell(menuSection, sectionRow);

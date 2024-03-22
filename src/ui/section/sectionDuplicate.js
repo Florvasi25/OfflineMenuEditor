@@ -19,11 +19,11 @@ import { changeSectionClockIcon } from '../clock/sectionClock.js'
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function sectionDuplicateButton(sectionRow, rightSectionContainer) {
+function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
     const duplicateButton = document.createElement('button');
     duplicateButton.classList.add('sectionButton')
     duplicateButton.classList.add('duplicateButton')
-    rightSectionContainer.appendChild(duplicateButton);
+    sectionButtonsCell.appendChild(duplicateButton);
     const duplicateButtonImg = document.createElement('img')
     duplicateButtonImg.classList.add('sectionButtonImg')
     duplicateButtonImg.src = '../../assets/duplicateIcon.svg'

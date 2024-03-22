@@ -6,10 +6,27 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
+import { sectionClockButton } from '../clock/sectionClock.js'
+
+import { sectionListButton } from './sectionList.js'
+
 function createSectionNameCell(sectionRow, menuSection) {
     //Name Cell
+
+    const sectionNameAndButtons = document.createElement('div');
+    sectionNameAndButtons.classList.add('sectionNameAndButtons');
+
     const sectionNameCell = document.createElement('div');
     sectionNameCell.classList.add('sectionNameCell');
+
+    const sectionButtons = document.createElement('div');
+    sectionButtons.classList.add('sectionButtons');
+
+    sectionClockButton(sectionButtons, menuSection.MenuSectionId)
+    sectionListButton(sectionButtons, menuSection);
+
+    sectionNameAndButtons.appendChild(sectionNameCell);
+    sectionNameAndButtons.appendChild(sectionButtons);
 
     const sectionName = createSectionName(sectionRow, menuSection)
     sectionNameCell.appendChild(sectionName);
@@ -19,7 +36,7 @@ function createSectionNameCell(sectionRow, menuSection) {
         jsonData.MenuSections[sectionIndex].Name = menuSection.Name.toUpperCase();
     }
 
-    return sectionNameCell
+    return sectionNameAndButtons
 }
 
 //Handles Name Edits

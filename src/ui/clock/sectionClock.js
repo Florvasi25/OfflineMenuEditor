@@ -36,8 +36,8 @@ import { changeItemClockIcon } from "./itemClock.js";
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function sectionClockButton(leftSectionContainer, sectionId) {
-    const clockButton = createAndAppend(leftSectionContainer, 'button', 'sectionButton', 'clockButton');
+function sectionClockButton(sectionButtons, sectionId) {
+    const clockButton = createAndAppend(sectionButtons, 'button', 'sectionButton', 'clockButton');
     const clockButtonImg = createAndAppend(clockButton, 'img', 'sectionButtonImg');
     clockButtonImg.src = '../../assets/clockIcon.svg';
    
@@ -271,7 +271,9 @@ function checkHoursLength(section){
     
 }
 function changeSectionClockIconColor(sectionRow, color){
+    console.log(sectionRow);
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
+    console.log(clockButton);
     clockButton.style.backgroundColor = color;
 }
 

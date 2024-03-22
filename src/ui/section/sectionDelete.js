@@ -10,11 +10,11 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
-function sectionDeleteButton(rightSectionContainer, sectionRow) {
+function sectionDeleteButton(sectionButtonsCell, sectionRow) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('sectionButton')
     deleteButton.classList.add('deleteButton')
-    rightSectionContainer.appendChild(deleteButton);
+    sectionButtonsCell.appendChild(deleteButton);
     const deleteButtonImg = document.createElement('img')
     deleteButtonImg.classList.add('sectionButtonImg')
     deleteButtonImg.src = '../../assets/deleteIcon.svg'
@@ -22,12 +22,12 @@ function sectionDeleteButton(rightSectionContainer, sectionRow) {
     deleteButton.addEventListener('click', () => {
         closeOsModalContainer()
 
-        confirmDelete(sectionRow, rightSectionContainer)
+        confirmDelete(sectionRow, sectionButtonsCell)
     });
 }
 
 //Creates a popup to confirm the deletion of the section
-function confirmDelete(sectionRow, rightSectionContainer) {
+function confirmDelete(sectionRow, sectionButtonsCell) {
     const popup = document.createElement("div");
     popup.className = "popup";
     const sectionId = sectionRow.id;
@@ -52,7 +52,7 @@ function confirmDelete(sectionRow, rightSectionContainer) {
     });
 
     popup.appendChild(popupContent); 
-    rightSectionContainer.appendChild(popup);
+    sectionButtonsCell.appendChild(popup);
 
     //Close the delete popup when clicked outside
     window.addEventListener("click", (e) => {
