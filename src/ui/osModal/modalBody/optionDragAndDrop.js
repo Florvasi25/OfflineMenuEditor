@@ -4,7 +4,8 @@ import {
     groupedOs,
     groupOptionSets,
     itemlessOs,
-    updateItemlessLocalStorage
+    updateItemlessLocalStorage,
+    setColorOfRows
 } from '../../context.js';
 
 import { slotManagerInstance } from  "../../mainContainer.js";
@@ -24,17 +25,7 @@ function createOptionDragCell(optionRowsContainer, optionRow) {
     optionDragImg.addEventListener('dragend', () => {
         optionRow.classList.remove('dragging');
 
-        const rows = Array.from(optionRowsContainer.querySelectorAll(".optionRow"));
-
-        rows.forEach((row, index) => {
-            if (index % 2 === 0) {
-                row.classList.remove('even');
-                row.classList.add('odd');
-            } else {
-                row.classList.remove('odd');
-                row.classList.add('even');
-            }
-        });
+        setColorOfRows(optionRowsContainer);
     });
 
     return optionDragCell

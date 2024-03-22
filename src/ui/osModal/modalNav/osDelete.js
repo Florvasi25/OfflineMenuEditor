@@ -9,10 +9,6 @@ import {
     addWarningMoM
 } from '../../context.js';
 
-import {
-    showToolTip
-} from '../../toolTip.js';
-
 import { slotManagerInstance } from  "../../mainContainer.js";
 
 function osDeleteButton(osBtnsCell, menuOs) {
@@ -113,8 +109,6 @@ function deleteOs(menuOs) {
     closeOsModalContainer()
 }
 
-
-
 function updatePreview(osIds) {
     const osRowHeaderPreviewArray = Array.from(document.getElementsByClassName('osRowHeader'));
     const osRowHeaderPreview = osRowHeaderPreviewArray.filter(p => osIds.includes(p.id));
@@ -129,18 +123,6 @@ function updatePreview(osIds) {
             os.remove()
         })
     }
-
-    const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-        
-    osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
-        if (index % 2 === 0) {
-            osRowHeaderPreview.classList.remove('even');
-            osRowHeaderPreview.classList.add('odd');
-        } else {
-            osRowHeaderPreview.classList.remove('odd');
-            osRowHeaderPreview.classList.add('even');
-        }
-    });
 }
 
 export { 

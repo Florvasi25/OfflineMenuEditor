@@ -81,30 +81,6 @@ function createOsDrag(OSContainer, selectOsRowHeader, foundItem) {
 
     osDragImg.addEventListener('dragend', () => {
         selectOsRowHeader.classList.remove('dragging');
-
-        const selectOsRowHeaders = Array.from(OSContainer.querySelectorAll(".selectOsRowHeader"));
-
-        selectOsRowHeaders.forEach((selectOsRowHeader, index) => {
-            if (index % 2 === 0) {
-                selectOsRowHeader.classList.remove('even');
-                selectOsRowHeader.classList.add('odd');
-            } else {
-                selectOsRowHeader.classList.remove('odd');
-                selectOsRowHeader.classList.add('even');
-            }
-        });
-
-        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-
-        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
-            if (index % 2 === 0) {
-                osRowHeaderPreview.classList.remove('even');
-                osRowHeaderPreview.classList.add('odd');
-            } else {
-                osRowHeaderPreview.classList.remove('odd');
-                osRowHeaderPreview.classList.add('even');
-            }
-        });
     });
 
     return osDragCell

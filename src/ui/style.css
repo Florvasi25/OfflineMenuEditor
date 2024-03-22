@@ -370,14 +370,6 @@ main {
     }
 }
 
-.osRowHeader.odd {
-    background-color: #342f58;
-}
-
-.osRowHeader.even {
-    background-color: #b29346;
-}
-
 .MOContainer {
     display: flex;
     flex-direction: column;
@@ -1721,14 +1713,6 @@ selector svg {
     }
 }
 
-.selectOsRowHeader.odd {
-    background-color: #342f58;
-}
-
-.selectOsRowHeader.even {
-    background-color: #b29346;
-}
-
 .selectOsNameHeader {
     flex-grow: 1;
     color: #ffffff;
@@ -1768,12 +1752,14 @@ selector svg {
 }
 
 .osInThisItem {
-    height: 30px;
+    height: auto;
+    padding: 5px 10px;
     background-color: #bebccb;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    text-align: center;
 }
 
 .selectOsBodyRight {

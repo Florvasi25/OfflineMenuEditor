@@ -94,10 +94,9 @@ function createSelectOsBodyRight(itemRowId) {
 
     const osInThisItem = document.createElement('div')
     osInThisItem.className = 'osInThisItem'
-    osInThisItem.textContent = 'OS in this item:'
-
+    
     selectOsBodyRight.appendChild(osInThisItem)
-
+    
     const MOContainer = document.createElement('div');
     MOContainer.className = 'MOContainer';
     selectOsBodyRight.appendChild(MOContainer)
@@ -105,9 +104,9 @@ function createSelectOsBodyRight(itemRowId) {
     const OSContainer = document.createElement('div')
     OSContainer.className = 'OSContainer'
     selectOsBodyRight.appendChild(OSContainer)
-
-
+    
     const foundItem = jsonData.MenuSections.flatMap(i => i.MenuItems).find(i => i.MenuItemId == itemRowId)
+    osInThisItem.textContent = `OS in "${foundItem.Name}"`
 
     foundItem.MenuItemOptionSets.forEach((menuOs) => {
         if (menuOs.IsMasterOptionSet == true) {
@@ -314,18 +313,6 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
         osRowOptionPreview.remove();
 
-        const osRowHeadersPreview = Array.from(document.getElementsByClassName('osRowHeader'))
-
-        osRowHeadersPreview.forEach((osRowHeaderPreview, index) => {
-            if (index % 2 === 0) {
-                osRowHeaderPreview.classList.remove('even');
-                osRowHeaderPreview.classList.add('odd');
-            } else {
-                osRowHeaderPreview.classList.remove('odd');
-                osRowHeaderPreview.classList.add('even');
-            }
-        });
-
         groupOptionSets();
         updateLocalStorage(slotManagerInstance.currentSlot);
     })
@@ -354,13 +341,6 @@ function searchOs(selectOsBodyLeft) {
             const text = selectOsRowHeader.querySelector('.selectOsNameHeader').textContent.toLowerCase();
             if (text.includes(searchText)) {
                 selectOsRowHeader.style.display = 'flex';
-                if (visibleRowCounter % 2 === 0) {
-                    selectOsRowHeader.classList.remove('even');
-                    selectOsRowHeader.classList.add('odd');
-                } else {
-                    selectOsRowHeader.classList.remove('odd');
-                    selectOsRowHeader.classList.add('even');
-                }
                 visibleRowCounter++;
             } else {
                 selectOsRowHeader.style.display = 'none';

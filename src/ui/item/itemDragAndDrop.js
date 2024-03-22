@@ -27,6 +27,7 @@ function createItemDragCell(itemRow) {
     
     itemDragImg.addEventListener('dragstart', (e) => {
         closeOsModalContainer()
+        
         const expandedItemsInContainer = itemRow.parentElement.querySelector('.expanded');
         if (expandedItemsInContainer) {
             e.preventDefault();
