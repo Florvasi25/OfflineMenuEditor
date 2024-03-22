@@ -71,11 +71,11 @@ function createItem(menuItem, sectionId, itemContainer) {
     //Creates Buttons Cell
     const itemButtonsCell = createItemButtonsCell(itemRow, menuItem, sectionId, itemContainer);
     itemRow.appendChild(itemButtonsCell)
-    changeItemClockIcon(itemRow, menuItem.MenuItemId);
-
+    
     //Creates Section Name Cell
     const itemNameCell = createItemNameCell(itemRow, menuItem, sectionId)
     itemRow.appendChild(itemNameCell)
+    changeItemClockIcon(itemRow, menuItem.MenuItemId);
 
     //Desc Cell
     const itemDescCell = createItemDescCell(itemRow, menuItem, sectionId)

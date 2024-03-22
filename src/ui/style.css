@@ -200,7 +200,7 @@ main {
 }
 
 .highlight {
-    background-color: yellow;
+    background-color: #fbfb00;
 }
 
 .current-highlight {
@@ -717,10 +717,11 @@ selector svg {
 }
 
 .itemButtonsCell {
-    width: 50px;
+    width: 25px;
     border: solid 1px #ffffff;
     display: flex;
-    align-items: center;
+    flex-direction: column-reverse;
+    align-items: end;
 }
 
 .osBtnsCell {
@@ -744,7 +745,7 @@ selector svg {
     align-items: center;
     padding: 5px;
     width: 150px;
-    min-height: 40px;
+    min-height: 38px;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -752,8 +753,6 @@ selector svg {
 .sectionButtons {
     display: flex;
     align-items: center;
-    /* width: 150px; */
-    /* min-height: 75px; */
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -776,7 +775,14 @@ selector svg {
     align-items: center;
     padding: 5px;
     width: 150px;
-    min-height: 100px;
+    min-height: 38px;
+    border: solid 1px #ffffff;
+    flex-shrink: 0;
+}
+
+.itemButtons {
+    display: flex;
+    align-items: center;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -856,7 +862,6 @@ selector svg {
     padding: 5px;
     flex-grow: 1;
     display: flex;
-    /* min-height: 75px; */
     align-items: center;
     border: solid 1px #ffffff;
 }
@@ -878,7 +883,6 @@ selector svg {
     flex-grow: 1;
     display: flex;
     align-items: center;
-    min-height: 100px;
     border: solid 1px #ffffff;
 }
 
@@ -2421,7 +2425,6 @@ selector svg {
 
 .itemReturnFifteenText {
     font-size: 12px;
-    margin-bottom: 5px;
 }
 
 .itemReturnTwentyFiveCell {
@@ -2437,7 +2440,6 @@ selector svg {
 
 .itemReturnTwentyFiveText {
     font-size: 12px;
-    margin-bottom: 5px;
 }
 
 .optionReturnCell {

@@ -6,15 +6,37 @@ import {
 
 import { slotManagerInstance } from '../mainContainer.js';
 
+import { itemClockButton } from '../clock/itemClock.js'
+
+import { itemAlcoholButton } from './itemAlcohol.js'
+
+import { itemDiscountButton } from './itemDiscount.js'
+
+import { itemLockButton } from './itemLock.js'
+
 function createItemNameCell(itemRow, menuItem, sectionId) {
     //Name Cell
+    const itemNameAndButtons = document.createElement('div')
+    itemNameAndButtons.className = 'itemNameAndButtons'
+
     const itemNameCell = document.createElement('div');
     itemNameCell.classList.add('itemNameCell');
+
+    const itemButtons = document.createElement('div');
+    itemButtons.classList.add('itemButtons');
+
+    itemClockButton(itemButtons, itemRow.id, sectionId)
+    itemAlcoholButton(itemRow, menuItem, itemButtons, sectionId)
+    itemDiscountButton(itemRow, menuItem, itemButtons, sectionId)
+    itemLockButton(itemRow, menuItem, itemButtons, sectionId)
 
     const itemName = createItemName(itemRow, menuItem, sectionId)
     itemNameCell.appendChild(itemName);
     
-    return itemNameCell
+    itemNameAndButtons.appendChild(itemNameCell);
+    itemNameAndButtons.appendChild(itemButtons);
+
+    return itemNameAndButtons
 }
 
 //Handles Name Edits
