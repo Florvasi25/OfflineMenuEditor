@@ -2425,6 +2425,7 @@ selector svg {
 
 .itemReturnFifteenText {
     font-size: 12px;
+    margin-bottom: 5px;
 }
 
 .itemReturnTwentyFiveCell {
@@ -2440,6 +2441,7 @@ selector svg {
 
 .itemReturnTwentyFiveText {
     font-size: 12px;
+    margin-bottom: 5px;
 }
 
 .optionReturnCell {
