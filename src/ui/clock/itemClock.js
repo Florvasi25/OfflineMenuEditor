@@ -143,6 +143,7 @@ function addRemoveButton(clockModalDiv, parentElement, item, itemId, sectionId) 
             clockModalDiv.style.display = 'none'; 
             changeItemClockIcon(itemRow, itemId)
             changeSectionClockIcon(sectionRow, sectionId);
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 

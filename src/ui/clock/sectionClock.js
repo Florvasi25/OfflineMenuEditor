@@ -92,6 +92,7 @@ function addSaveChangesButton(parentElement) {
             removeAvailabilityTimes(sectionId);
             resetSectionClockIcons(sectionId);
             resetItemsClockIcons(sectionId);
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 
@@ -236,7 +237,22 @@ function appendUnsetButton(clockFooterDiv, clockModalDiv, sectionId) {
             removeAvailabilityTimes(sectionId);
             resetSectionClockIcons(sectionId);
             resetItemsClockIcons(sectionId);
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
+        
+        /*const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
+        addSectionAvailabilityButton(availabilityContainer, section);
+        addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
+        createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId, sectionIndex);
+        createDropDownMenu(clockHeaderBottomDiv, sectionIndex);
+
+        const tableRows = clockBodyDiv.querySelector('table').querySelector('tbody').rows;
+        processSaveChanges(tableRows, section, sectionId, clockFooterDiv, sectionIndex);
+        resetSectionClockIcons(sectionId);
+        resetItemsClockIcons(sectionId);
+
+        updateLocalStorage(slotManagerInstance.currentSlot);
+        clockModalDiv.style.display = 'none';*/
     });
 }
 
