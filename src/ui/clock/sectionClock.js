@@ -62,7 +62,7 @@ function sectionClockButton(sectionButtons, sectionId) {
             if(section.MenuItems?.[0]?.DailySpecialHours?.length > 1){ clockButton.style.backgroundColor = '#54f234'; }
         } else {
             showErrorMessage(clockBodyDiv);
-            appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex);
+            appendUnsetButton(clockFooterDiv, clockModalDiv, sectionId);
             clockButton.style.backgroundColor = '#ffee00';
         }
     });
@@ -92,6 +92,7 @@ function addSaveChangesButton(parentElement) {
             removeAvailabilityTimes(sectionId);
             resetSectionClockIcons(sectionId);
             resetItemsClockIcons(sectionId);
+            updateLocalStorage(slotManagerInstance.currentSlot);
         }
     });
 
@@ -219,7 +220,7 @@ function showErrorMessage(parentElement) {
     errorMsgElement.textContent = errorMessage;
 }
 
-function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockFooterDiv, clockModalDiv, clockBodyDiv, clockHeaderBottomDiv, section, sectionId, sectionIndex) {
+function appendUnsetButton(clockFooterDiv, clockModalDiv, sectionId) {
     const unsetButton = createAndAppend(clockFooterDiv, 'button');
     unsetButton.textContent = "Unset - Click to reset";
     unsetButton.classList.add('clockBtn-unsetButton');
@@ -231,7 +232,15 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         if (errorMsgElement) {
             errorMsgElement.remove();
         }
-        const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
+        if(removeSectionTimetable(jsonData, sectionId)) { 
+            clockModalDiv.style.display = 'none'; 
+            removeAvailabilityTimes(sectionId);
+            resetSectionClockIcons(sectionId);
+            resetItemsClockIcons(sectionId);
+            updateLocalStorage(slotManagerInstance.currentSlot);
+        }
+        
+        /*const clockSaveBtn = addSaveChangesButton(actionButtonsContainer);
         addSectionAvailabilityButton(availabilityContainer, section);
         addRemoveButton(clockModalDiv, actionButtonsContainer, jsonData, sectionId, section);
         createClockTable(clockModalDiv, clockBodyDiv, clockFooterDiv, clockSaveBtn, section, sectionId, sectionIndex);
@@ -242,7 +251,8 @@ function appendUnsetButton(availabilityContainer, actionButtonsContainer, clockF
         resetSectionClockIcons(sectionId);
         resetItemsClockIcons(sectionId);
 
-        clockModalDiv.style.display = 'none';
+        updateLocalStorage(slotManagerInstance.currentSlot);
+        clockModalDiv.style.display = 'none';*/
     });
 }
 
