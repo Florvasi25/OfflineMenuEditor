@@ -50,6 +50,7 @@ function duplicateOption(optionRow, optionRowsContainer, menuOption, menuOs) {
             newOption.MenuItemOptionSetItemId = newOptionId;
             if(newOption.PublicId){ delete newOption.PublicId; }
             newOption.Name = menuOption.Name + "_copy"
+            newOption.NextMenuItemOptionSetId = null
 
             os.MenuItemOptionSetItems.splice(indexOfOption+1, 0, newOption)
             os.MenuItemOptionSetItems.forEach((obj, index) => {

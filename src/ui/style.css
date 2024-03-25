@@ -581,7 +581,7 @@ main {
     width: 100%;
     font-size: 13px;
     user-select: text;
-    margin-right: 5px;
+    margin-right: 15px;
     justify-content: space-between;
 }
 
@@ -740,6 +740,12 @@ selector svg {
 
 /* NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME - NAME */
 
+.sectionNameAndButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .sectionNameCell {
     display: flex;
     align-items: center;
@@ -747,7 +753,7 @@ selector svg {
     width: 150px;
     min-height: 64px;
     border: solid 1px #ffffff;
-    flex-shrink: 0;
+    flex-grow: 1; 
 }
 
 .sectionButtons {
@@ -770,6 +776,12 @@ selector svg {
     border-radius: 5px;
 }
 
+.itemNameAndButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .itemNameCell {
     display: flex;
     align-items: center;
@@ -777,7 +789,7 @@ selector svg {
     width: 150px;
     min-height: 64px;
     border: solid 1px #ffffff;
-    flex-shrink: 0;
+    flex-grow: 1;
 }
 
 .itemButtons {
