@@ -280,9 +280,9 @@ function checkHoursLength(section){
     
 }
 function changeSectionClockIconColor(sectionRow, color){
-    console.log(sectionRow);
+    // console.log(sectionRow);
     const clockButton = sectionRow.querySelector('.sectionButton.clockButton');
-    console.log(clockButton);
+    // console.log(clockButton);
     clockButton.style.backgroundColor = color;
 }
 

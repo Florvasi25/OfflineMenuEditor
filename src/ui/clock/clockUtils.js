@@ -215,11 +215,11 @@ function removeSectionTimetable(jsonData, sectionId) {
     const targetSection = jsonData.MenuSections.find(section => section.MenuSectionId === sectionId);
 
     if (!targetSection) {
-        console.log('Section with id ' + sectionId + ' not found.');
+        // console.log('Section with id ' + sectionId + ' not found.');
         return false;
     }
     if (!targetSection.MenuItems || !Array.isArray(targetSection.MenuItems)) {
-        console.log('No MenuItems found in section ' + sectionId);
+        // console.log('No MenuItems found in section ' + sectionId);
         return false;
     }
     for (let item of targetSection.MenuItems) {
@@ -232,7 +232,7 @@ function removeSectionTimetable(jsonData, sectionId) {
 
 function removeItemTimetable(item) {
     if (!item) {
-        console.log('item with name ' + item.Name + ' not found.');
+        // console.log('item with name ' + item.Name + ' not found.');
         return false;
     }
     if (item.DailySpecialHours && Array.isArray(item.DailySpecialHours) && item.DailySpecialHours.length > 0) {

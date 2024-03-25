@@ -103,9 +103,16 @@ function addOsOrMo(menuOs, foundItem, addBtn, menuItemId) {
         }
     } else {
         if (menuOs.IsMasterOptionSet == false) {
-            const maxDisplayOrder = Math.max(...foundItem.MenuItemOptionSets.map(optionSet => optionSet.DisplayOrder));
-            newOs.DisplayOrder = maxDisplayOrder + 1;
-            foundItem.MenuItemOptionSets.push(newOs);
+            if (!foundItem.MenuItemOptionSets.length) {
+                newOs.DisplayOrder = 0;
+                console.log('sin OS', newOs.DisplayOrder);
+                foundItem.MenuItemOptionSets.push(newOs);
+            } else {
+                const maxDisplayOrder = Math.max(...foundItem.MenuItemOptionSets.map(optionSet => optionSet.DisplayOrder));
+                newOs.DisplayOrder = maxDisplayOrder + 1;
+                console.log('con OS', maxDisplayOrder + 1);
+                foundItem.MenuItemOptionSets.push(newOs);
+            }
         } else {
             newOs.IsMasterOptionSet = true;
             newOs.DisplayOrder = -1;
@@ -118,16 +125,18 @@ function addOsOrMo(menuOs, foundItem, addBtn, menuItemId) {
     
     const newOptionRow = createOsRow(newOs, foundItem.MenuSectionId, foundItem.MenuItemId)
     
-    if (newOs.IsMasterOptionSet) {
-        const justMOContainer = osContainerPreview.querySelector('.justMOContainer');
-        if (justMOContainer) {
-            justMOContainer.appendChild(newOptionRow);
+    if (osContainerPreview) {
+        if (newOs.IsMasterOptionSet) {
+            const justMOContainer = osContainerPreview.querySelector('.justMOContainer');
+            if (justMOContainer) {
+                justMOContainer.appendChild(newOptionRow);
+            }
+        } else {
+            const justOSContainer = osContainerPreview.querySelector('.justOSContainer');
+            if (justOSContainer) {
+                justOSContainer.appendChild(newOptionRow);
+            } 
         }
-    } else {
-        const justOSContainer = osContainerPreview.querySelector('.justOSContainer');
-        if (justOSContainer) {
-            justOSContainer.appendChild(newOptionRow);
-        } 
     }
 
     const removeBtn = createRemoveButton(menuOs, menuItemId);

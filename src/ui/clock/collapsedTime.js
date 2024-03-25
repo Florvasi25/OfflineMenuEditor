@@ -49,7 +49,7 @@ function createDropDownMenu(clockHeaderDiv, sectionIndex) {
         label.textContent = optionText; 
 
         radio.addEventListener('click', function() {
-            console.log(label.textContent);
+            // console.log(label.textContent);
             setAvailabilityMode(sectionIndex, index);
         });
     });

@@ -160,7 +160,6 @@ async function expandAllOsRowHeaders() {
 
 // Function to check if lazy loading should be activated based on JSON size
 function measureJsonSize(jsonData) {
-    console.log(jsonData);
     const jsonString = JSON.stringify(jsonData);
     const sizeInBytes = new Blob([jsonString]).size;
     console.log(`JSON size: ${sizeInBytes} bytes`);
