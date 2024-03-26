@@ -27,14 +27,19 @@ function createIsMOContainer(menuOs) {
 
             const selectOptionContainer = document.getElementsByClassName('selectOptionContainer')[0];
             const maxLengthButton = document.getElementsByClassName('maxLengthButton')[0];
-
+            
+            const minCount = document.querySelector('.minCount');
+            const maxCount = document.querySelector('.maxCount');
+            
             if (menuOs.IsMasterOptionSet) {
-                const minCount = document.querySelector('.minCount');
                 minCount.textContent = 1
+                minCount.contentEditable = false;
+                minCount.style.cursor = 'not-allowed';
                 menuOs.MinSelectCount = 1
     
-                const maxCount = document.querySelector('.maxCount');
                 maxCount.textContent = 1
+                maxCount.contentEditable = false;
+                maxCount.style.cursor = 'not-allowed';
                 menuOs.MaxSelectCount = 1
 
                 selectOptionContainer.style.opacity = 0.50;
@@ -43,7 +48,14 @@ function createIsMOContainer(menuOs) {
             } else {
                 selectOptionContainer.style.opacity = 1;
                 selectOptionContainer.style.cursor = 'default';
+                
                 maxLengthButton.style.display = 'flex';
+
+                minCount.contentEditable = true;
+                minCount.style.cursor = 'text';
+
+                maxCount.contentEditable = true;
+                maxCount.style.cursor = 'text';
             }
         } else {
             showToolTip(checkbox, 'Only Itemless OS can be modified');
