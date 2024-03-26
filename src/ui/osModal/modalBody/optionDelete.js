@@ -7,10 +7,13 @@ import {
     updateItemlessLocalStorage
 } from '../../context.js';
 
-import {
-    deleteOs
-} from '../modalNav/osDelete.js'
+import { deleteOs } from '../modalNav/osDelete.js'
+
 import { slotManagerInstance } from  "../../mainContainer.js";
+
+import { maxLength } from '../modalNav/osMaxLength.js'
+
+import { minLength } from '../modalNav/osMinCount.js'
 
 function optionDeleteButton(optionButtonsCell, menuOs, menuOption, optionRow, optionRowsContainer) {
     const deleteButton = document.createElement('button');
@@ -41,6 +44,7 @@ function confirmDelete(menuOs, menuOption, optionRow, optionButtonsCell, optionR
 
     popupContent.querySelector(".yesButton").addEventListener("click", function () {
         deleteOption(menuOs, menuOption, optionRow, optionRowsContainer);
+        checkMaxLength(menuOs)
         popup.remove();
     });
 
@@ -117,6 +121,21 @@ function updatePreview(indexOfOption, menuOs) {
         osRowOptionPreview.forEach(os => {
             os.remove()
         })
+    }
+}
+
+function checkMaxLength(menuOs) {
+    const maxSelectCount = menuOs.MaxSelectCount
+    const minSelectCount = menuOs.MinSelectCount
+
+    const optionsLength = Array.from(document.getElementsByClassName('optionRow')).length;
+
+    if (maxSelectCount > optionsLength) {
+        maxLength(menuOs)
+    } 
+    
+    if (minSelectCount > optionsLength) {
+        minLength(menuOs)
     }
 }
 

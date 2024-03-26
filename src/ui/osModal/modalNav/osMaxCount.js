@@ -2,7 +2,6 @@ import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
-    groupOptionSets,
     updateItemlessLocalStorage
 } from '../../context.js'
 
@@ -39,11 +38,11 @@ function createMaxCount(menuOs) {
         maxCount.contentEditable = true;
     }
 
-    let originalMaxCount = menuOs.MaxSelectCount;
-
     maxCount.addEventListener('keydown', (e) => {
         const inputKey = e.key;
         const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        let originalMaxCount = menuOs.MaxSelectCount;
 
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -64,8 +63,8 @@ function createMaxCount(menuOs) {
                 originalMaxCount = newMaxOsCount; // Update the original number
             }
 
-            maxCount.blur();
             updateMaxCount(menuOs, newMaxOsCount);
+            maxCount.blur();
 
             if (groupedOs[menuOs.groupOsId]) {
                 const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
@@ -84,7 +83,7 @@ function createMaxCount(menuOs) {
     });
 
     maxCount.addEventListener('blur', () => {
-        maxCount.textContent = originalMaxCount;
+        maxCount.textContent = menuOs.MaxSelectCount;
         maxCount.classList.remove('sectionClicked');
     });
 
@@ -101,7 +100,6 @@ function updateMaxCount(menuOs, osMaxCount) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.MaxSelectCount = Number(osMaxCount)
         })
-        // groupOptionSets()
         updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MaxSelectCount = Number(osMaxCount)

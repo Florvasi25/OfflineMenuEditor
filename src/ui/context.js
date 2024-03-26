@@ -313,7 +313,6 @@ function groupOptionSets() {
             });
         });
     });
-    console.log(groupedOs);
     setTimeout(() => {
         updateLocalStorage(slotManagerInstance.currentSlot);
     }, 1000);

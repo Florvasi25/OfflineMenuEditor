@@ -2,7 +2,6 @@ import {
     updateLocalStorage,
     groupedOs,
     itemlessOs,
-    groupOptionSets,
     updateItemlessLocalStorage
 } from '../../context.js'
 
@@ -40,11 +39,12 @@ function createMinCount(menuOs) {
         minCount.contentEditable = true;
     }
 
-    let originalMinCount = menuOs.MinSelectCount;
-
     minCount.addEventListener('keydown', (e) => {
         const inputKey = e.key;
         const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        let originalMinCount = menuOs.MinSelectCount;
+        console.log('originalMinCount', originalMinCount);
 
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -66,12 +66,13 @@ function createMinCount(menuOs) {
                 showToolTip(minCount, 'MinCount cannot be greater than MaxCount');
                 minCount.textContent = originalMinCount; // Revert back to the original number
                 return;
-            }else {
+            } else {
                 originalMinCount = newMinOsCount; // Update the original number
+                console.log('OK - newMinOsCount', newMinOsCount);
             }
 
-            minCount.blur();
             updateMinCount(menuOs, newMinOsCount);
+            minCount.blur();
 
             if (groupedOs[menuOs.groupOsId]) {
                 const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
@@ -90,7 +91,7 @@ function createMinCount(menuOs) {
     });
 
     minCount.addEventListener('blur', () => {
-        minCount.textContent = originalMinCount;
+        minCount.textContent = menuOs.MinSelectCount;
         minCount.classList.remove('sectionClicked')
     });
 
@@ -107,7 +108,6 @@ function updateMinCount(menuOs, osMinCount) {
         groupedOs[menuOs.groupOsId].forEach(os => {
             os.MinSelectCount = Number(osMinCount)
         })
-        // groupOptionSets()
         updateLocalStorage(slotManagerInstance.currentSlot);
     } else if (itemlessOs.includes(menuOs)){
         menuOs.MinSelectCount = Number(osMinCount)
@@ -115,4 +115,27 @@ function updateMinCount(menuOs, osMinCount) {
     }
 }
 
-export { createMinCountCell }
+function minLength(menuOs) {
+    const optionsLength = Array.from(document.getElementsByClassName('optionRow')).length;
+
+    const minCount = document.querySelector('.minCount');
+    if (minCount) {
+        minCount.textContent = optionsLength;
+    }
+
+    if (groupedOs[menuOs.groupOsId]) {
+        const optionSetIds = groupedOs[menuOs.groupOsId].map(os => os.MenuItemOptionSetId.toString());
+        const minSelectCountArray = Array.from(document.getElementsByClassName('minSelectCount'));
+        const minSelectCount = minSelectCountArray.filter(p => optionSetIds.includes(p.id));
+        minSelectCount.forEach(os => {
+            os.textContent = optionsLength
+        })
+    }
+
+    updateMinCount(menuOs, optionsLength);
+}
+
+export { 
+    createMinCountCell,
+    minLength
+}

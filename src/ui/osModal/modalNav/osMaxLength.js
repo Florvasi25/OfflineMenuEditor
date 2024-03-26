@@ -26,7 +26,6 @@ function createMaxLenghtButton(selectOptionContainer, menuOs) {
     });
 }
 
-
 function maxLength(menuOs) {
     const optionsArray = Array.from(document.getElementsByClassName('optionRow'));
     const optionsLength = optionsArray.length;
@@ -49,4 +48,7 @@ function maxLength(menuOs) {
 }
 
 
-export { createMaxLenghtButton }
+export { 
+    createMaxLenghtButton, 
+    maxLength 
+}
