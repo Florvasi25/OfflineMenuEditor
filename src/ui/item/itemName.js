@@ -2,6 +2,7 @@ import {
     updateLocalStorage,
     jsonData,
     getItemIndex,
+    closeOsModalContainer
 } from '../context.js'
 
 import { slotManagerInstance } from '../mainContainer.js';
@@ -84,6 +85,8 @@ function createItemName(itemRow, menuItem, sectionId) {
     });
 
     itemName.addEventListener('click', () => {
+        closeOsModalContainer()
+
         if (itemName.textContent == "Empty") {
             itemName.textContent = ""
         }

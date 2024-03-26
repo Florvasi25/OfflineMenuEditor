@@ -2,6 +2,7 @@ import {
     updateLocalStorage,
     jsonData,
     getItemIndex,
+    closeOsModalContainer
 } from '../context.js'
 
 import { slotManagerInstance } from '../mainContainer.js';
@@ -59,6 +60,7 @@ function createItemDesc(itemRow, menuItem, sectionId) {
     });
 
     itemDesc.addEventListener('click', () => {
+        closeOsModalContainer()
         itemDesc.classList.add('sectionClicked');
     })
 

@@ -10,7 +10,8 @@ import {
     updateLocalStorage,
     getRandomInt,
     getSectionIndex,
-    getSectionRow
+    getSectionRow,
+    closeOsModalContainer
 } from '../context.js';
 
 import {
@@ -28,6 +29,7 @@ function createItemButton(itemContainer, sectionId) {
     
     //Add Section
     newItemButton.addEventListener('click', () => {
+        closeOsModalContainer()
 
         const newId = getRandomInt();
         const sectionIndex = getSectionIndex(sectionId);

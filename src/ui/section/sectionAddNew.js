@@ -4,6 +4,7 @@ import {
     jsonData,
     updateLocalStorage,
     getRandomInt,
+    closeOsModalContainer
 } from '../context.js';
 
 import { toggleSectionState } from "./sectionDropDown.js";
@@ -19,6 +20,7 @@ function createSectionButton() {
     newSectionButton.textContent = 'New Section'
 
     newSectionButton.addEventListener('click', () => {
+        closeOsModalContainer()
         const newId = getRandomInt();
     
         const emptySectionJson = {
