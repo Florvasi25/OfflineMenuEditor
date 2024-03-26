@@ -59,6 +59,10 @@ function createMaxCount(menuOs) {
                 showToolTip(maxCount, 'MaxCount cannot be greater than the length of Options');
                 maxCount.textContent = originalMaxCount; // Revert back to the original number
                 return;
+            } else if (parseInt(newMaxOsCount) < parseInt(menuOs.MinSelectCount)) {
+                showToolTip(maxCount, 'MaxCount cannot be lower than MinCount');
+                maxCount.textContent = originalMaxCount; // Revert back to the original number
+                return;
             } else {
                 originalMaxCount = newMaxOsCount; // Update the original number
             }
