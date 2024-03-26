@@ -83,6 +83,8 @@ function createOsRow(os) {
     osListRowHeader.classList.add('folded')
     osListRowHeader.id = os.MenuItemOptionSetId
 
+    osListRowHeader.style.backgroundColor = os.groupColor
+
     const osNameList = createOsNameHeader(os)
     
     const osSelectOptionList = createOsSelectOption(os)
@@ -109,8 +111,8 @@ function createOsNameHeader(os) {
     const osNameAndLengthList = document.createElement('div')
     osNameAndLengthList.className = 'osNameAndLengthList'
     osNameAndLengthList.innerHTML = `
-    <p class='osNameList'>${os.Name}</p>
-    <p class='osLenghtList'> (${osLenght})</p>`
+    <p class='osNameList' style='color:#ffffff'>${os.Name}</p>
+    <p class='osLenghtList' style='color:#ffffff'> (${osLenght})</p>`
     osNameAndLengthList.id = os.MenuItemOptionSetId
 
     return osNameAndLengthList
@@ -120,9 +122,9 @@ function createOsSelectOption(os) {
     const osListSelectOptionContainer = document.createElement('div')
     osListSelectOptionContainer.className = 'osListSelectOptionContainer'
     osListSelectOptionContainer.innerHTML = `
-    <p class='minSelectCount' id='${os.MenuItemOptionSetId}'>${os.MinSelectCount}</p>
-    <p class='dashCountCell'> - </p>
-    <p class='maxSelectCount' id='${os.MenuItemOptionSetId}'>${os.MaxSelectCount}</p>`
+    <p class='minSelectCount' style='color:#ffffff' id='${os.MenuItemOptionSetId}'>${os.MinSelectCount}</p>
+    <p class='dashCountCell'style='color:#ffffff'> - </p>
+    <p class='maxSelectCount' style='color:#ffffff' id='${os.MenuItemOptionSetId}'>${os.MaxSelectCount}</p>`
     
     return osListSelectOptionContainer
 }
