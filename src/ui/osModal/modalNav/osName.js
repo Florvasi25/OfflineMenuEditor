@@ -68,15 +68,21 @@ function createOsName(menuOs) {
 
     osName.addEventListener('blur', () => {
         osName.textContent = originalName;
-        osName.classList.remove('sectionClicked')
     });
 
     osName.addEventListener('click', () => {
-        osName.classList.add('sectionClicked')
-    })
+        if (osName.textContent.startsWith("New Option Set")) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(osName);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    });
 
-    return osName
+    return osName;
 }
+
 
 //Updates Name
 function updateName(menuOs, osName) {

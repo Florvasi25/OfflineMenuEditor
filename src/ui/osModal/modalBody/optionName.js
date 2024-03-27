@@ -44,13 +44,13 @@ function createOptionName(menuOption, menuOs) {
             e.preventDefault();
             const newOptionName = optionName.textContent;
             originalName = newOptionName;
-            optionName.blur();
-
+            
             const indexOfOption = menuOs.MenuItemOptionSetItems.findIndex(
                 option => option.MenuItemOptionSetItemId == menuOption.MenuItemOptionSetItemId
-            )
-
+                )
+                
             updateOptionName(indexOfOption, menuOs, newOptionName);
+            optionName.blur();
 
             if (groupedOs[menuOs.groupOsId]) {
                 const optionsIds = groupedOs[menuOs.groupOsId].map(
@@ -69,12 +69,17 @@ function createOptionName(menuOption, menuOs) {
 
     optionName.addEventListener('blur', () => {
         optionName.textContent = originalName;
-        optionName.classList.remove('sectionClicked')
     });
 
     optionName.addEventListener('click', () => {
-        optionName.classList.add('sectionClicked')
-    })
+        if (optionName.textContent.startsWith("New Option")) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(optionName);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    });
 
     return optionName
 }
