@@ -4,7 +4,7 @@ import {
     updateLocalStorage,
     setSectionDisplayOrder,
     getRandomInt,
-    groupOptionSets,
+    groupedOs,
     setOptionSetIdForSection,
     setOptionSetItemsIdForSection,
     closeOsModalContainer,
@@ -53,6 +53,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
         const newItem = JSON.parse(JSON.stringify(originalItem));
         const item = newIDs(newItem, sectionId);
+        console.log(item);
         const newItemRow = createItem(item, sectionId, itemContainer);
         
         itemContainer.insertBefore(newItemRow, itemRow.nextSibling);
@@ -61,7 +62,15 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
-        groupOptionSets()
+
+        item.MenuItemOptionSets.forEach((menuOs) => {
+            if (!groupedOs[menuOs.groupOsId]) {
+                groupedOs[menuOs.groupOsId] = [menuOs];
+            } else {
+                groupedOs[menuOs.groupOsId].push(menuOs)
+            }
+        })
+
         changeItemClockIcon(newItemRow, newItemRow.id);
         updateLocalStorage(slotManagerInstance.currentSlot);
     }
