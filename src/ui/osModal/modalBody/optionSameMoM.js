@@ -18,6 +18,12 @@ function createSameMoMButton(menuOs, topButtonsCell) {
     sameMoMInput.contentEditable = true
     sameMoMInput.textContent = 'Edit all MoM'
 
+    sameMoMInput.addEventListener('input', (e) => {
+        // Filter out non-numeric characters and allow '-1'
+        const sanitizedInput = sameMoMInput.textContent.replace(/[^0-9-]|(?<=-1.*)[0-9]/g, '');
+        sameMoMInput.textContent = sanitizedInput;
+    });
+    
     sameMoMInput.addEventListener('click', (e) => {
         sameMoMInput.textContent = ""
         sameMoMInput.style.textAlign = 'center'

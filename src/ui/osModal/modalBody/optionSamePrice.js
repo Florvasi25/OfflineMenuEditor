@@ -26,6 +26,15 @@ function createSamePriceButton(menuOs, topButtonsCell) {
         samePriceInput.style.textAlign = 'center'
         samePriceInput.style.color = '#000000'
     })
+
+    // Modify keydown event listener to allow only whole numbers and decimals
+    samePriceInput.addEventListener('keydown', (e) => {
+        const allowedChars = /^[0-9.\b]+$/;
+        const value = e.target.textContent + e.key;
+        if (!allowedChars.test(value)) {
+            e.preventDefault();
+        }
+    })
     
     const samePriceButton = document.createElement('button');
     samePriceButton.classList.add('sectionButton');

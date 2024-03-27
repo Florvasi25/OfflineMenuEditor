@@ -858,8 +858,7 @@ selector svg {
 .optionMoM {
     display: flex;
     align-items: center;
-    height: 25px;
-    padding: 0 5px;
+    padding: 3px 5px;
 }
 
 .optionMoM:focus {
@@ -914,8 +913,11 @@ selector svg {
 
 .itemPriceCell {
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px;
-    width: 35px;
+    min-width: 35px;
+    width: auto;
     border: solid 1px #ffffff;
     flex-shrink: 0;
 }
@@ -923,11 +925,8 @@ selector svg {
 .itemPrice {
     font-size: 12px;
     padding: 5px;
-    height: -webkit-fill-available;
     width: -webkit-fill-available;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
 }
 
 .itemPrice:focus {
@@ -937,23 +936,21 @@ selector svg {
 }
 
 .optionPriceCell {
-    border: solid 1px #ffffff;
-    width: 35px;
-    flex-grow: 0;
-    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 5px;
+    min-width: 35px;
+    width: auto;
+    border: solid 1px #ffffff;
+    flex-shrink: 0;
 }
 
 .optionPrice {
     font-size: 12px;
-    padding: 0 5px;
-    height: -webkit-fill-available;
+    padding: 5px;
     width: -webkit-fill-available;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
 }
 
 .optionPrice:focus {
@@ -2081,7 +2078,7 @@ selector svg {
     min-width: 100px;
     color: #a3a3a3;
     background-color: #f5f5f5;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 11px;
     justify-content: center;
     height: auto;
@@ -2100,7 +2097,7 @@ selector svg {
     min-width: 75px;
     color: #a3a3a3;
     background-color: #f5f5f5;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 11px;
     justify-content: center;
 }
