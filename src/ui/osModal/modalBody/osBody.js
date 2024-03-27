@@ -25,6 +25,8 @@ import { createOptionSetListButton } from './optionList.js'
 
 import { createSameMoMButton } from './optionSameMoM.js'
 
+import { createSamePriceButton } from './optionSamePrice.js'
+
 function createOsModalBody(menuOs) {
     const optionsBodyContainer = document.createElement('div')
     optionsBodyContainer.className = 'optionsBodyContainer'
@@ -83,6 +85,8 @@ function createTopButtonsCell(menuOs, optionRowsContainer) {
     topButtonsCell.appendChild(osListContainer)
 
     createSameMoMButton(menuOs, topButtonsCell)
+
+    createSamePriceButton(menuOs, topButtonsCell)
 
     return topButtonsCell
 }

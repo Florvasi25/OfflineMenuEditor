@@ -2068,9 +2068,9 @@ selector svg {
     display: flex;
     align-items: center;
     margin-left: 10px;
-    height: 35px;
+    height: auto;
     background-color: #a2a2a2;
-    padding: 0 5px;
+    padding: 5px;
     border-radius: 5px;
 }
 
@@ -2078,15 +2078,34 @@ selector svg {
     display: flex;
     align-items: center;
     padding: 5px;
-    width: 100px;
+    min-width: 100px;
     color: #a3a3a3;
     background-color: #f5f5f5;
     border-radius: 5px;
-    font-size: 13px;
+    font-size: 11px;
     justify-content: center;
+    height: auto;
 }
 
 .sameMoMInput:focus {
+    background-color: #ffffff;
+    outline: 2px solid rgb(78, 78, 128);
+    border-radius: 5px;
+}
+
+.samePriceInput {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    min-width: 75px;
+    color: #a3a3a3;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    font-size: 11px;
+    justify-content: center;
+}
+
+.samePriceInput:focus {
     background-color: #ffffff;
     outline: 2px solid rgb(78, 78, 128);
     border-radius: 5px;
