@@ -2,7 +2,6 @@ import {
     groupedOs,
     jsonData,
     updateLocalStorage,
-    groupOptionSets,
     getRandomInt,
     itemlessOs,
     deleteItemlessOs,
@@ -13,9 +12,7 @@ import { createSelectOsDropdown } from './selectOsDropDown.js'
 
 import { createOsDrag } from './selectOsDragAndDrop.js'
 
-import {
-    createOsRow
-} from '../../optionSet/osHeaderContainer.js'
+import { createOsRow } from '../../optionSet/osHeaderContainer.js'
 
 import { slotManagerInstance } from '../../mainContainer.js';
 
@@ -241,7 +238,6 @@ function addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft
         } 
     }
     
-    groupOptionSets();
     updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
@@ -320,7 +316,6 @@ function createSelectOsRowRight(menuOs, selectOsBodyRight, foundItem) {
 
         osRowOptionPreview.remove();
 
-        groupOptionSets();
         updateLocalStorage(slotManagerInstance.currentSlot);
     })
 
