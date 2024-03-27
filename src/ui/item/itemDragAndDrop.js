@@ -58,11 +58,11 @@ function createItemDragCell(itemRow) {
     
         itemDragImg.addEventListener("dragend", (e) => {
             // Access the sectionRow id
-            const itemTable = itemRow.closest('.itemTable');
+            const itemTable = itemContainer.parentElement
             const sectionRow = itemTable ? itemTable.previousElementSibling : null;
             const sectionId = sectionRow ? sectionRow.getAttribute("id") : null;
-        
-            const rows = Array.from(itemDragImg.parentElement.querySelectorAll(".itemRow")); // Get rows from the current itemContainer
+
+            const rows = Array.from(itemContainer.querySelectorAll(".itemRow")); // Get rows from the current itemContainer
             const draggedIdItem = itemRow.getAttribute("id");
             const {itemIndex, sectionIndex} = getItemIndex(sectionId, draggedIdItem);
             const indexNewPosition = rows.indexOf(itemRow);
