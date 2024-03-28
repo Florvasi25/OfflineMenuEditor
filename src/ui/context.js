@@ -176,47 +176,34 @@ function setOptionSetItemsId(jsonData) {
 }
 
 
-function setOptionSetIdForSection(sectionId) {
-    var itemIDInOS;
-    var optionSetIdMap = {}; // Local map to store ID mapping
-
-    for (const section of jsonData.MenuSections) {
-        if (section.MenuSectionId == sectionId) {
-            for (const item of section.MenuItems) {
-                itemIDInOS = item.MenuItemId;
-                for (const optionSet of item.MenuItemOptionSets) {
-                    const oldId = optionSet.MenuItemOptionSetId;
-                    const newId = getRandomInt();
-                    optionSet.MenuItemId = itemIDInOS;
-                    optionSet.MenuItemOptionSetId = newId;
-
-                    optionSetIdMap[oldId] = newId; // Map old ID to new ID in the local map
-                }
-            }
-        }
+function setOptionSetIdItem(menuItem) {
+    let optionSetIdMap = {}; // Local map to store ID mapping
+    for (const optionSet of menuItem.MenuItemOptionSets) {
+        const oldId = optionSet.MenuItemOptionSetId;
+        const newId = getRandomInt();
+        optionSet.MenuItemId = menuItem.MenuItemId;
+        optionSet.MenuItemOptionSetId = newId;
+    
+        optionSetIdMap[oldId] = newId; // Map old ID to new ID in the local map
     }
+
     updateLocalStorage(slotManagerInstance.currentSlot);
     return optionSetIdMap; // Return the map
 }
 
-function setOptionSetItemsIdForSection(sectionId, optionSetIdMap) {
-    for (const section of jsonData.MenuSections) {
-        if (section.MenuSectionId == sectionId) {
-            for (const item of section.MenuItems) {
-                for (const optionSet of item.MenuItemOptionSets) {
-                    for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
-                        optionSetItem.MenuItemOptionSetItemId = getRandomInt();
-                        if (optionSetItem.NextMenuItemOptionSetId !== null) {
-                            const newNextId = optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
-                            if (newNextId) {
-                                optionSetItem.NextMenuItemOptionSetId = newNextId;
-                            }
-                        }
-                    }
+function setOptionSetItemsIdForItem(menuItem, optionSetIdMap) {
+    for (const optionSet of menuItem.MenuItemOptionSets) {
+        for (const optionSetItem of optionSet.MenuItemOptionSetItems) {
+            optionSetItem.MenuItemOptionSetItemId = getRandomInt();
+            if (optionSetItem.NextMenuItemOptionSetId !== null) {
+                const newNextId = optionSetIdMap[optionSetItem.NextMenuItemOptionSetId];
+                if (newNextId) {
+                    optionSetItem.NextMenuItemOptionSetId = newNextId;
                 }
             }
         }
     }
+
     updateLocalStorage(slotManagerInstance.currentSlot);
 }
 
@@ -448,8 +435,8 @@ export {
     updateItemlessLocalStorage,
     getSectionRow,
     getMenuSection,
-    setOptionSetIdForSection,
-    setOptionSetItemsIdForSection,
+    setOptionSetIdItem,
+    setOptionSetItemsIdForItem,
     closeOsModalContainer,
     closeOsModalContainerQuick,
     addWarningMoM,

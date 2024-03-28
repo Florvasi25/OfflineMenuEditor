@@ -5,8 +5,8 @@ import {
     setSectionDisplayOrder,
     getRandomInt,
     groupOptionSets,
-    setOptionSetIdForSection,
-    setOptionSetItemsIdForSection,
+    // setOptionSetIdItem,
+    // setOptionSetItemsIdForSection,
     closeOsModalContainer,
     removePublicId
 } from '../context.js';
@@ -83,8 +83,8 @@ function newIDs(newSection, sectionId){
                 if( item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0)
                 {
                     removePublicId(item.MenuItemOptionSets);
-                    let map = setOptionSetIdForSection(sectionId);
-                    setOptionSetItemsIdForSection(sectionId, map);
+                    // let map = setOptionSetIdItem(sectionId);
+                    // setOptionSetItemsIdForSection(sectionId, map);
                 }
             }
         });

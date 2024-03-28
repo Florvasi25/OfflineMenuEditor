@@ -5,8 +5,8 @@ import {
     setSectionDisplayOrder,
     getRandomInt,
     groupedOs,
-    setOptionSetIdForSection,
-    setOptionSetItemsIdForSection,
+    setOptionSetIdItem,
+    setOptionSetItemsIdForItem,
     closeOsModalContainer,
     removePublicId
 } from '../context.js';
@@ -52,18 +52,18 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
     if (itemIndex !== -1) {
         const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
         const newItem = JSON.parse(JSON.stringify(originalItem));
-        const item = newIDs(newItem, sectionId);
-        console.log(item);
-        const newItemRow = createItem(item, sectionId, itemContainer);
+        newIDs(newItem, sectionId);
+        console.log(newItem);
+        const newItemRow = createItem(newItem, sectionId, itemContainer);
         
         itemContainer.insertBefore(newItemRow, itemRow.nextSibling);
         
-        jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex+1, 0, item);
+        jsonData.MenuSections[sectionIndex].MenuItems.splice(itemIndex+1, 0, newItem);
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
 
-        item.MenuItemOptionSets.forEach((menuOs) => {
+        newItem.MenuItemOptionSets.forEach((menuOs) => {
             if (!groupedOs[menuOs.groupOsId]) {
                 groupedOs[menuOs.groupOsId] = [menuOs];
             } else {
@@ -83,10 +83,9 @@ function newIDs(newItem, sectionId){
     if( newItem.MenuItemOptionSets && newItem.MenuItemOptionSets.length > 0)
     {
         removePublicId(newItem.MenuItemOptionSets);
-        let map = setOptionSetIdForSection(sectionId);
-        setOptionSetItemsIdForSection(sectionId, map);
+        let map = setOptionSetIdItem(newItem);
+        setOptionSetItemsIdForItem(newItem, map);
     }
-    return newItem;
 }
 
 export { itemDuplicateButton }
