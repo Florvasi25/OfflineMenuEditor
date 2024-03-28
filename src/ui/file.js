@@ -43,7 +43,7 @@ function createLoadJsonButton() {
                 setJsonData(jsonData);
                 updateLocalStorage(slotManagerInstance.currentSlot);
                 const datas = slotManagerInstance.getJsonData();
-                console.log("Data: ", datas);
+                // console.log("Data: ", datas);
                 setSectionId(jsonData);
                 setSectionDisplayOrder(jsonData);
                 setItemId(jsonData);

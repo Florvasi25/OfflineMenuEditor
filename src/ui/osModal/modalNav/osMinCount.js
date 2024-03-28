@@ -44,7 +44,7 @@ function createMinCount(menuOs) {
         const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
         let originalMinCount = menuOs.MinSelectCount;
-        console.log('originalMinCount', originalMinCount);
+        // console.log('originalMinCount', originalMinCount);
 
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -68,7 +68,7 @@ function createMinCount(menuOs) {
                 return;
             } else {
                 originalMinCount = newMinOsCount; // Update the original number
-                console.log('OK - newMinOsCount', newMinOsCount);
+                // console.log('OK - newMinOsCount', newMinOsCount);
             }
 
             updateMinCount(menuOs, newMinOsCount);

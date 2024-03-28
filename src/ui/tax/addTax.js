@@ -157,7 +157,7 @@ function handleSaveTax(newTaxContainer, addTaxContainer, taxPercent, taxName) {
         }
 
         jsonData.TaxRates.push(newTaxRate);
-        console.log('new Tax added');
+        // console.log('new Tax added');
 
         updateLocalStorage(slotManagerInstance.currentSlot);
 

@@ -32,6 +32,7 @@ function duplicateOs(menuOs) {
     newOs.groupOsId = null;
     newOs.MenuItemId = null;
     newOs.groupOsId = `group${getRandomInt()}`;
+    console.log(newOs.groupOsId);
     if (newOs.PublicId) { delete newOs.PublicId; }
     removePublicIdFromOSItem(newOs);
     newOs.Name += "_copy";

@@ -100,7 +100,7 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
             optionMoM.style = 'color: #a3a3a3;'
         } else {
             originalMoM = menuOption.NextMenuItemOptionSetId
-            console.log(originalMoM);
+            // console.log(originalMoM);
             optionMoM.textContent = originalMoM == null ? "Empty" : originalMoM;
             if (optionMoM.textContent == "Empty" || optionMoM.textContent == "") {
                 optionMoM.textContent = "Empty";

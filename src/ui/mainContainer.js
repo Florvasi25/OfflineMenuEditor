@@ -141,10 +141,10 @@ async function expandAllOsRowHeaders() {
     const sizeInBytes = measureJsonSize(jsonData);
 
     if (sizeInBytes > 1500000) {
-        console.log('lazy');
+        // console.log('lazy');
         await setupLazyLoading();
     } else {
-        console.log('all');
+        // console.log('all');
         const osRowHeaders = document.querySelectorAll('.osRowHeader');
         for (const osRowHeader of osRowHeaders) {
             if (osRowHeader.classList.contains('folded')) {
@@ -162,7 +162,7 @@ async function expandAllOsRowHeaders() {
 function measureJsonSize(jsonData) {
     const jsonString = JSON.stringify(jsonData);
     const sizeInBytes = new Blob([jsonString]).size;
-    console.log(`JSON size: ${sizeInBytes} bytes`);
+    // console.log(`JSON size: ${sizeInBytes} bytes`);
     return sizeInBytes;
 }
 

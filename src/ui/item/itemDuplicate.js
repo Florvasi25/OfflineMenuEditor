@@ -51,8 +51,9 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
     
     if (itemIndex !== -1) {
         const originalItem = jsonData.MenuSections[sectionIndex].MenuItems[itemIndex];
+        console.log('original item OS', originalItem.MenuItemOptionSets);
         const newItem = JSON.parse(JSON.stringify(originalItem));
-        newIDs(newItem, sectionId);
+        newIDs(newItem);
         console.log(newItem);
         const newItemRow = createItem(newItem, sectionId, itemContainer);
         
@@ -62,6 +63,8 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
         jsonData.MenuSections[sectionIndex].MenuItems.forEach((obj, index) => {
             obj.DisplayOrder = index;
         });
+
+        console.log('new item OS', newItem.MenuItemOptionSets);
 
         newItem.MenuItemOptionSets.forEach((menuOs) => {
             if (!groupedOs[menuOs.groupOsId]) {
@@ -76,7 +79,7 @@ function duplicateItem(itemRow, sectionId, itemId, itemContainer) {
     }
 }
 
-function newIDs(newItem, sectionId){
+function newIDs(newItem){
     const newItemId = getRandomInt();
     newItem.MenuItemId = newItemId;
     if(newItem.PublicId) { delete newItem.PublicId;}

@@ -78,7 +78,7 @@ function checkPrice(textPrice, menuOs, samePriceInput) {
         // Ensure only two decimals are kept
         const roundedPrice = parseFloat(enteredPrice).toFixed(2);
         textPrice = roundedPrice;
-        console.log(textPrice);
+        // console.log(textPrice);
     } 
 
     handleSamePrice(menuOs, samePriceInput, textPrice)

@@ -203,12 +203,12 @@ function addOsOrMo(selectOsRowHeader, os, itemRowId, foundItem, selectOsBodyLeft
         if (os.IsMasterOptionSet == false) {
             if (!foundItem.MenuItemOptionSets.length) {
                 newOs.DisplayOrder = 0;
-                console.log('sin OS', newOs.DisplayOrder);
+                // console.log('sin OS', newOs.DisplayOrder);
                 foundItem.MenuItemOptionSets.push(newOs);
             } else {
                 const maxDisplayOrder = Math.max(...foundItem.MenuItemOptionSets.map(optionSet => optionSet.DisplayOrder));
                 newOs.DisplayOrder = maxDisplayOrder + 1;
-                console.log('con OS', maxDisplayOrder + 1);
+                // console.log('con OS', maxDisplayOrder + 1);
                 foundItem.MenuItemOptionSets.push(newOs);
             }
         } else {

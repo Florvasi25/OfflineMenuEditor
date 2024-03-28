@@ -54,7 +54,7 @@ export class SlotManager {
         this.currentSlot = jsonDataSlot;
         this.currentItemlessOs = itemlessOsName; 
         this.currentSlotName = slotName;
-        console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs, " slot ID: ", slotId);
+        // console.log("SLOT: ", this.currentSlot, " Itemless: ", this.currentItemlessOs, " slot ID: ", slotId);
         this.updateWorkspace(slotId);
     
         // Update slotTitle.id to match the slotId
