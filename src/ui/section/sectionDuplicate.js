@@ -5,8 +5,8 @@ import {
     setSectionDisplayOrder,
     getRandomInt,
     groupOptionSets,
-    // setOptionSetIdItem,
-    // setOptionSetItemsIdForSection,
+    setOptionSetIdItem,
+    setOptionSetItemsIdForItem,
     closeOsModalContainer,
     removePublicId
 } from '../context.js';
@@ -34,16 +34,16 @@ function sectionDuplicateButton(sectionRow, sectionButtonsCell) {
             showToolTip(duplicateButton, "You must close this Section before duplicating");
         }
     });
-    
+
     duplicateButton.addEventListener('click', () => {
         if (sectionRow.classList.contains('expanded')) return;
-        
+
         closeOsModalContainer()
 
         duplicateSection(sectionRow);
         setSectionDisplayOrder(jsonData);
     });
-    
+
 }
 
 function duplicateSection(sectionRow) {
@@ -52,12 +52,12 @@ function duplicateSection(sectionRow) {
         const originalSection = jsonData.MenuSections[sectionIndex];
         const newSection = JSON.parse(JSON.stringify(originalSection));
 
-        const section = newIDs(newSection, originalSection.MenuSectionId);
+        const section = newIDs(newSection);
 
         const newSectionRow = createSection(section);
 
         document.getElementById('sectionContainer').insertBefore(newSectionRow, sectionRow.nextSibling);
-        jsonData.MenuSections.splice(sectionIndex+1, 0, section);
+        jsonData.MenuSections.splice(sectionIndex + 1, 0, section);
         jsonData.MenuSections.forEach((menuSection, index) => {
             menuSection.DisplayOrder = index;
         });
@@ -67,11 +67,11 @@ function duplicateSection(sectionRow) {
     }
 }
 
-function newIDs(newSection, sectionId){
+function newIDs(newSection) {
     const newSectionId = getRandomInt();
     newSection.MenuSectionId = newSectionId;
     newSection.MenuSectionAvailability.MenuSectionId = newSectionId;
-    if(newSection.PublicId){ delete newSection.PublicId; }
+    if (newSection.PublicId) { delete newSection.PublicId; }
 
     if (newSection.MenuItems) {
         newSection.MenuItems.forEach(item => {
@@ -79,12 +79,11 @@ function newIDs(newSection, sectionId){
                 const newItemId = getRandomInt();
                 item.MenuItemId = newItemId;
                 item.MenuSectionId = newSectionId;
-                if( item.PublicId ) { delete item.PublicId}
-                if( item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0)
-                {
+                if (item.PublicId) { delete item.PublicId }
+                if (item.MenuItemOptionSets && item.MenuItemOptionSets.length > 0) {
                     removePublicId(item.MenuItemOptionSets);
-                    // let map = setOptionSetIdItem(sectionId);
-                    // setOptionSetItemsIdForSection(sectionId, map);
+                    let map = setOptionSetIdItem(item);
+                    setOptionSetItemsIdForItem(item, map);
                 }
             }
         });
