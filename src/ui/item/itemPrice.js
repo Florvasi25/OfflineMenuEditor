@@ -66,14 +66,12 @@ function createItemPrice(itemRow, menuItem, sectionId) {
     
     itemPrice.addEventListener('blur', () => {
         itemPrice.textContent = originalPrice.toFixed(2);
-        itemPrice.classList.remove('sectionClicked');
     });
 
     itemPrice.addEventListener('click', () => {
         if (itemPrice.textContent === '0.00') {
             itemPrice.textContent = '';
         }
-        itemPrice.classList.add('sectionClicked');
     });
 
     itemPrice.addEventListener('input', () => {

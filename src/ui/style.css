@@ -305,12 +305,6 @@ main {
     }
 }
 
-/* .sectionClicked {
-    background-color: #ffffff;
-    left: 50px;
-    border-radius: 5px;
-} */
-
 .sectionDropdownCell {
     width: 25px;
     border: solid 1px #ffffff;
@@ -525,8 +519,8 @@ main {
     display: flex;
     align-items: center;
     width: 35px;
-    /* background: rebeccapurple; */
     justify-content: center;
+    margin-left: 5px;
 }
 
 .optionRow {

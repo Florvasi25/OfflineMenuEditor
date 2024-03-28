@@ -56,12 +56,10 @@ function createItemDesc(itemRow, menuItem, sectionId) {
         const formattedDesc = originalDesc.replace(/\n/g, '<br>');
 
         itemDesc.innerHTML = formattedDesc;
-        itemDesc.classList.remove('sectionClicked');
     });
 
     itemDesc.addEventListener('click', () => {
         closeOsModalContainer()
-        itemDesc.classList.add('sectionClicked');
     })
 
     return itemDesc;

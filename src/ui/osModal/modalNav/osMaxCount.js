@@ -88,11 +88,6 @@ function createMaxCount(menuOs) {
 
     maxCount.addEventListener('blur', () => {
         maxCount.textContent = menuOs.MaxSelectCount;
-        maxCount.classList.remove('sectionClicked');
-    });
-
-    maxCount.addEventListener('click', () => {
-        maxCount.classList.add('sectionClicked');
     });
 
     return maxCount;

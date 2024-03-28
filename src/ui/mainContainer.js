@@ -318,12 +318,10 @@ function createSlotTitle() {
         const buttonId = slotTitle.id;
 
         slotTitle.textContent = localStorage.getItem(buttonId)
-        slotTitle.classList.remove('sectionClicked')
         slotTitle.style.color = 'white'
     });
 
     slotTitle.addEventListener('click', () => {
-        slotTitle.classList.add('sectionClicked')
         slotTitle.style.color = 'black'
     })
 

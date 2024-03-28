@@ -55,12 +55,10 @@ function createSectionDesc(menuSection, sectionRow) {
     sectionDesc.addEventListener('blur', () => {
         const formattedDesc = originalDesc.replace(/\n/g, '<br>');
         sectionDesc.innerHTML = formattedDesc;
-        sectionDesc.classList.remove('sectionClicked')
     });
 
     sectionDesc.addEventListener('click', () => {
         closeOsModalContainer()
-        sectionDesc.classList.add('sectionClicked')
     })
 
     return sectionDesc

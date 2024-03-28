@@ -107,11 +107,9 @@ function createOptionMoM(menuOption, menuOs, optionMoMCell) {
                 optionMoM.style = 'color: #a3a3a3;'
             }
         }
-        optionMoM.classList.remove('sectionClicked');
     });
 
     optionMoM.addEventListener('click', () => {
-        optionMoM.classList.add('sectionClicked')
         if (optionMoM.textContent == "Empty") {
             optionMoM.textContent = "";
             optionMoM.style = 'color: #000000;'

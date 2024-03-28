@@ -84,7 +84,6 @@ function createSectionName(sectionRow, menuSection) {
         if (sectionName.textContent == "EMPTY") {
             sectionName.style.color = "#a9a9a9";
         }
-        sectionName.classList.remove('sectionClicked')
     });
 
     sectionName.addEventListener('click', () => {
@@ -93,7 +92,6 @@ function createSectionName(sectionRow, menuSection) {
             sectionName.textContent = ""
         }
         sectionName.style.color = "#000000";
-        sectionName.classList.add('sectionClicked')
     })
 
     return sectionName

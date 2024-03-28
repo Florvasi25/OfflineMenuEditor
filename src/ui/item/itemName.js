@@ -81,7 +81,6 @@ function createItemName(itemRow, menuItem, sectionId) {
         if (itemName.textContent == "Empty") {
             itemName.style.color = "#a9a9a9";
         }
-        itemName.classList.remove('sectionClicked')
     });
 
     itemName.addEventListener('click', () => {
@@ -91,7 +90,6 @@ function createItemName(itemRow, menuItem, sectionId) {
             itemName.textContent = ""
         }
         itemName.style.color = "#000000";
-        itemName.classList.add('sectionClicked')
     })
 
     return itemName

@@ -92,12 +92,7 @@ function createMinCount(menuOs) {
 
     minCount.addEventListener('blur', () => {
         minCount.textContent = menuOs.MinSelectCount;
-        minCount.classList.remove('sectionClicked')
     });
-
-    minCount.addEventListener('click', () => {
-        minCount.classList.add('sectionClicked')
-    })
 
     return minCount
 }

@@ -72,14 +72,12 @@ function createOptionPrice(menuOption, menuOs) {
 
     optionPrice.addEventListener('blur', () => {
         optionPrice.textContent = originalPrice.toFixed(2);
-        optionPrice.classList.remove('sectionClicked');
     });
 
     optionPrice.addEventListener('click', () => {
         if (optionPrice.textContent == '0.00') {
             optionPrice.textContent = '';
         }
-        optionPrice.classList.add('sectionClicked');
     });
 
     optionPrice.addEventListener('input', () => {
